@@ -609,6 +609,40 @@ export class BattleSim {
     }
   }
 
+  /** 选一个合法且未被占据的投放点（用于全军冲锋自动投兵） */
+  private pickDeployPoint(): { x: number; y: number } | null {
+    const zones = [ZONES.throne, ...this.state.territories.filter((t) => t.owner === 'undead' && t.activeForDeploy).map((t) => ZONES[t.id])];
+    for (let attempt = 0; attempt < 30; attempt++) {
+      const z = zones[Math.floor(this.rng() * zones.length)];
+      const a = this.rng() * Math.PI * 2;
+      const r = Math.sqrt(this.rng()) * z.r * 0.85;
+      const x = z.x * 32 + Math.cos(a) * r;
+      const y = z.y * 32 + Math.sin(a) * r * 0.65;
+      if (this.nav.blockedAtWorld(x, y)) continue;
+      if (this.structAt.has(this.tileIndexAt(x, y))) continue;
+      return { x, y };
+    }
+    return null;
+  }
+
+  /** 全军冲锋：把剩余库存分批自动投入，并解除各单位锁定目标 */
+  allOutCharge(): { deployed: number } {
+    const order: UnitType[] = ['zombie', 'runner', 'brute', 'spider', 'boss'];
+    let total = 0;
+    for (const t of order) {
+      let guard = 0;
+      while (this.reserve[t] > 0 && guard++ < 60) {
+        const p = this.pickDeployPoint();
+        if (!p) break;
+        const r = this.deploy(t, p.x, p.y);
+        if (!r.ok || r.count === 0) break;
+        total += r.count;
+      }
+    }
+    this.chargeAll();
+    return { deployed: total };
+  }
+
   chargeAll(): void {
     for (const u of this.units) {
       if (u.side !== 'undead' || u.dead) continue;

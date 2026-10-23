@@ -131,11 +131,12 @@ export class BattleHUD {
           el('button', { class: 'hud-btn', text: '全选', on: { click: () => this.scene.selectAll() } }),
           el('button', {
             class: 'hud-btn',
-            text: '冲锋',
+            text: '冲锋 (F)',
+            title: '把剩余预备队全部投入并向前推进',
             on: {
               click: () => {
-                this.scene.sim?.chargeAll();
-                this.log('全军冲锋：各单位自行寻找目标', 'gold');
+                const r = this.scene.sim?.allOutCharge();
+                this.log(r && r.deployed > 0 ? `全军冲锋：投入 ${r.deployed} 个单位` : '全军冲锋：已无预备队', 'gold');
               },
             },
           }),

@@ -6,7 +6,7 @@ import { GameHost } from '../game/host';
 import { createCampaign } from '../core/state';
 import { BattleSim } from '../battle/sim';
 import { makeBattleResult } from '../battle/result';
-import { advanceDay, executeSacrifice, makeFinalReport } from '../core/campaign';
+import { advanceDay, applyBattleResult, executeSacrifice, makeFinalReport } from '../core/campaign';
 import { clearSave, hasSave, loadGame, saveGame } from '../core/save';
 import { CouncilScreen } from './council';
 import { showEnding, showReport, type EndingInfo } from './report';
@@ -206,6 +206,11 @@ export class Shell {
     this.current = 'council';
     this.clearScreen();
     state.phase = 'council';
+    // 已发动万骸归一时不允许回到经营阶段，直接续接终局战
+    if (state.finalAssaultTriggered) {
+      await this.startBattle(true);
+      return;
+    }
     saveGame(state);
 
     const scene = await this.gameHost.mount(
@@ -246,6 +251,7 @@ export class Shell {
     this.battleFinal = final;
     this.battleEnded = false;
     this.current = 'battle';
+    state.phase = 'battle';
     this.clearScreen();
     const sim = new BattleSim({ state, final, seed: state.seed + state.day * 31, lowQuality: settings.quality === 'low' });
     this.sim = sim;
@@ -329,6 +335,8 @@ export class Shell {
     this.clearScreen();
 
     if (this.battleFinal) {
+      applyBattleResult(state, result);
+      if (victory) state.lighthouse.hp = 0;
       state.phase = victory ? 'won' : 'lost';
       saveGame(state);
       const report = makeFinalReport(state, result);
@@ -337,6 +345,7 @@ export class Shell {
     }
 
     if (victory) {
+      applyBattleResult(state, result);
       state.lighthouse.hp = 0;
       state.phase = 'won';
       const report = makeFinalReport(state, result);

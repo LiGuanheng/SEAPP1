@@ -412,7 +412,9 @@ export class WorldScene extends Phaser.Scene {
       this.updateZoneHighlight();
     });
     kb.on('keydown-F', () => {
-      if (this.mode === 'battle') this.sim?.chargeAll();
+      if (this.mode !== 'battle' || !this.sim) return;
+      const r = this.sim.allOutCharge();
+      this.hooks.onLog?.(r.deployed > 0 ? `全军冲锋：投入 ${r.deployed} 个单位` : '全军冲锋：已无预备队', 'gold');
     });
     const cardKeys = ['ONE', 'TWO', 'THREE', 'FOUR', 'FIVE'];
     cardKeys.forEach((k, i) => {
@@ -917,7 +919,7 @@ export class WorldScene extends Phaser.Scene {
   /** 调试/自动化：同步快进模拟（不依赖浏览器帧率），随后渲染层会同步一次 */
   advanceFor(seconds: number): void {
     if (!this.sim) return;
-    const steps = Math.min(6000, Math.round(seconds * 30));
+    const steps = Math.min(30000, Math.round(seconds * 30));
     for (let i = 0; i < steps; i++) this.sim.update(1 / 30);
     this.processEvents();
     this.syncUnits(0);

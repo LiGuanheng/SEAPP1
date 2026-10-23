@@ -1204,17 +1204,17 @@ body {
   inset: 0;
   background-size: cover;
   background-position: center;
-  opacity: 0.55;
-  filter: saturate(0.9);
+  opacity: 0.72;
+  filter: saturate(0.95);
 }
 .ending-screen.lose .end-bg {
-  filter: saturate(0.5) brightness(0.7);
+  filter: saturate(0.55) brightness(0.82);
 }
 .ending-screen::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(60% 60% at 50% 45%, transparent 10%, rgba(2, 4, 4, 0.9) 90%);
+  background: radial-gradient(70% 65% at 50% 45%, transparent 18%, rgba(2, 4, 4, 0.78) 90%);
 }
 .ending-inner {
   position: relative;
