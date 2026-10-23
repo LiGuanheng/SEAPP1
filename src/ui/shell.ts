@@ -5,6 +5,9 @@ import { showIntro } from './intro';
 import { GameHost } from '../game/host';
 import { createCampaign } from '../core/state';
 import { BattleSim } from '../battle/sim';
+import type { CampaignState } from '../core/types';
+import { BattleHUD, stackLine } from './hud';
+import { UNITS } from '../config/balance';
 
 export type ScreenName = 'menu' | 'intro' | 'council' | 'battle' | 'report' | 'ending';
 
@@ -27,7 +30,9 @@ export class Shell {
   current: ScreenName = 'menu';
   private escHandler: ((ev: KeyboardEvent) => void) | null = null;
   private gameHost = new GameHost();
-  private demoSim: BattleSim | null = null;
+  private state: CampaignState | null = null;
+  private sim: BattleSim | null = null;
+  private hud: BattleHUD | null = null;
 
   constructor() {
     this.root = document.getElementById('ui-root') as HTMLElement;
@@ -47,6 +52,10 @@ export class Shell {
   }
 
   clearScreen(): void {
+    this.hud?.destroy();
+    this.hud = null;
+    this.gameHost.destroy();
+    this.sim = null;
     clear(this.host);
     if (this.escHandler) {
       window.removeEventListener('keydown', this.escHandler);
@@ -176,7 +185,8 @@ export class Shell {
   }
 
   protected onStart(): void {
-    this.showIntro(() => void this.startDemoBattle());
+    this.state = createCampaign('normal');
+    this.showIntro(() => void this.startBattle(false));
   }
 
   protected showIntro(onDone: () => void): void {
@@ -187,38 +197,73 @@ export class Shell {
     return this.root;
   }
 
-  /** M1 视觉样板：在地图上自动投放一支尸潮，验证地图/单位/塔防/特效/镜头 */
-  async startDemoBattle(): Promise<void> {
-    const state = createCampaign('normal');
-    const sim = new BattleSim({ state, final: false, seed: state.seed, lowQuality: settings.quality === 'low' });
-    sim.deploy('zombie', 80 * 32, 106 * 32);
-    sim.deploy('zombie', 76 * 32, 104 * 32);
-    sim.deploy('zombie', 84 * 32, 105 * 32);
-    this.demoSim = sim;
+  /** 进入攻城战：真实模拟 + HUD + 胜负判定 */
+  async startBattle(final: boolean): Promise<void> {
+    const state = this.state;
+    if (!state) return;
+    this.clearScreen();
+    const sim = new BattleSim({ state, final, seed: state.seed + state.day * 31, lowQuality: settings.quality === 'low' });
+    this.sim = sim;
 
-    const screen = el('div', { class: 'screen', style: { pointerEvents: 'none' } });
-    const badge = el('div', { class: 'demo-badge', html: '<b>视觉样板</b> · 尸潮自动推进 · WASD 平移 / 滚轮缩放' });
-    screen.append(badge);
-    this.mount(screen);
-
-    await this.gameHost.mount(
+    const scene = await this.gameHost.mount(
       state,
       {
-        onLog: (text: string, kind?: 'good' | 'bad' | 'gold') =>
-          this.toast(text, kind === 'bad' ? 'bad' : kind === 'gold' ? 'gold' : 'info', 1800),
-        onStats: (s: { fps: number; units: number; time: number; alive: number }) => {
-          badge.innerHTML = `<b>视觉样板</b> · 剩余 ${Math.ceil(s.time)}s · 在场 ${s.alive} · FPS ${s.fps}`;
+        onLog: (text: string, kind?: 'good' | 'bad' | 'gold') => this.hud?.log(text, kind ?? 'info'),
+        onDeploy: (ok: boolean, message: string, count: number) => {
+          if (!ok) this.toast(message || '无法在此部署', 'bad', 1600);
+          else if (count > 0) this.hud?.log(`投放 ${count} 个单位`, 'good');
         },
-        onBattleEnd: () => {
-          this.toast('战斗结束（样板）', 'gold');
-        },
+        onSelection: (ids: number[], info: string) => this.hud?.updateSelection(ids, info),
+        onStats: (s: { fps: number; units: number; time: number; commandUsed: number; commandCap: number; alive: number }) =>
+          this.hud?.updateStats(s),
+        onBattleEnd: () => this.finishBattle(final),
       },
       'battle',
       sim,
     );
-    this.onEscape(() => {
-      this.demoSim?.retreat();
+
+    this.hud = new BattleHUD(this.root, state, scene, {
+      onRetreat: () => {
+        sim.retreat();
+      },
+      onExit: () => {
+        this.clearScreen();
+        this.showMenu();
+      },
+      onRestart: () => {
+        void this.startBattle(final);
+      },
     });
+    this.hud.log(final ? '万骸归一 · 最终总攻开始' : `第 ${state.day} 天攻城开始`, 'gold');
+    this.onEscape(() => {
+      if (scene.deployType) scene.setDeployType(null);
+    });
+  }
+
+  private finishBattle(final: boolean): void {
+    const sim = this.sim;
+    const state = this.state;
+    if (!sim || !state || !this.hud) return;
+    const victory = sim.outcome === 'victory';
+    const survivors = sim.survivors();
+    const lostTotal = Object.values(sim.lostTotal).reduce((a, b) => a + b, 0);
+    const lines = [
+      { k: '战斗结果', v: victory ? '灯塔被摧毁' : sim.outcome === 'retreat' ? '主动撤退' : final ? '总攻失败' : '时间耗尽', tone: (victory ? 'good' : 'bad') as 'good' | 'bad' },
+      { k: '击杀守军', v: String(sim.kills), tone: 'good' as const },
+      { k: '转化亡灵', v: String(sim.converted) },
+      { k: '阵亡', v: String(lostTotal), tone: 'bad' as const },
+      { k: '幸存返回', v: stackLine(survivors) || '无' },
+      { k: '灯塔受损', v: `${Math.round(sim.lighthouseDamage)} / ${state.lighthouse.maxHp}` },
+      { k: '摧毁设施', v: sim.destroyedStructures().map((s) => s.name).join('、') || '无' },
+      { k: '占领据点', v: sim.captured.length ? sim.captured.map((c) => (c === 'west' ? '西侧哨站' : c === 'east' ? '东侧补给站' : '城门前哨')).join('、') : '无' },
+    ];
+    const note = victory
+      ? '灯塔的光柱正在崩塌，曙光城的防线出现了无法修补的裂缝。'
+      : final
+        ? '最后一批亡灵倒在了城墙下。灯塔完成净化，黑蚀退去。'
+        : '攻势被挡下。城墙留下了伤痕，而人类的预算又转入了新的防御。';
+    this.hud.showResult({ ok: victory, title: victory ? '灯塔陨落' : final ? '万骸散尽' : '攻势受挫', lines, note });
+    void UNITS;
   }
 
   protected onContinue(): void {

@@ -286,7 +286,7 @@ export class BattleSim {
     }
 
     // 亡灵王座与建筑阻挡（单位会绕行）
-    this.nav.setRect(77, 99, 7, 7, 60);
+    this.nav.setRect(78, 100, 5, 4, 60);
     this.state.buildings.forEach((b) => {
       if (!b.destroyed) this.nav.setRect(b.x - 1, b.y - 1, 3, 3, 60);
     });
@@ -1066,7 +1066,7 @@ export class BattleSim {
       const f = this.state.human.find((v) => v.id === s.id);
       if (f) f.hp = Math.max(0, s.hp);
     }
-    if (s.facilityKind === 'lighthouse') this.lighthouseDamage += dmg;
+    if (s.facilityKind === 'lighthouse') this.lighthouseDamage = Math.min(s.maxHp, this.lighthouseDamage + dmg);
     if (s.hp <= 0) {
       s.hp = 0;
       s.destroyed = true;

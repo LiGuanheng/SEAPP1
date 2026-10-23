@@ -81,7 +81,7 @@ export class WorldScene extends Phaser.Scene {
     cam.setBounds(0, 0, MAP_W * TILE_SIZE, MAP_H * TILE_SIZE);
     cam.setZoom(this.mode === 'battle' ? 0.92 : 0.6);
     cam.setBackgroundColor('#070a09');
-    const start = this.mode === 'battle' ? { x: 80 * 32, y: 98 * 32 } : { x: 80 * 32, y: 66 * 32 };
+    const start = this.mode === 'battle' ? { x: 80 * 32, y: 99 * 32 } : { x: 80 * 32, y: 66 * 32 };
     cam.centerOn(start.x, start.y);
 
     if (this.game.renderer.type === Phaser.WEBGL) {
@@ -423,7 +423,9 @@ export class WorldScene extends Phaser.Scene {
     if (this.deployType) this.drawGhost(p.worldX, p.worldY);
   }
 
+  debugPts = 0;
   private onPointerDown(p: Phaser.Input.Pointer): void {
+    this.debugPts++;
     if (p.rightButtonDown()) {
       if (this.deployType) {
         this.setDeployType(null);
@@ -580,12 +582,18 @@ export class WorldScene extends Phaser.Scene {
       if (t.owner === 'undead' && t.activeForDeploy) zones.push({ x: ZONES[t.id].x * 32, y: ZONES[t.id].y * 32, r: ZONES[t.id].r, active: true });
     }
     for (const z of zones) {
-      this.zoneGraphics.lineStyle(2, 0x7dffb0, 0.55);
-      this.zoneGraphics.strokeEllipse(z.x, z.y, z.r * 2, z.r * 1.5);
-      this.zoneGraphics.lineStyle(1, 0x7dffb0, 0.2);
-      this.zoneGraphics.strokeEllipse(z.x, z.y, z.r * 2 - 12, z.r * 1.5 - 12);
-      this.zoneGraphics.fillStyle(0x7dffb0, 0.05);
-      this.zoneGraphics.fillEllipse(z.x, z.y, z.r * 2, z.r * 1.5);
+      // 虚线椭圆边界
+      const steps = 72;
+      for (let i = 0; i < steps; i += 2) {
+        const a0 = (i / steps) * Math.PI * 2;
+        const a1 = ((i + 1) / steps) * Math.PI * 2;
+        this.zoneGraphics.lineStyle(1.6, 0x7dffb0, 0.5);
+        this.zoneGraphics.beginPath();
+        this.zoneGraphics.arc(z.x, z.y, z.r, a0, a1, false);
+        this.zoneGraphics.strokePath();
+      }
+      this.zoneGraphics.fillStyle(0x7dffb0, 0.035);
+      this.zoneGraphics.fillEllipse(z.x, z.y, z.r * 2, z.r * 1.6);
     }
   }
 
@@ -602,6 +610,7 @@ export class WorldScene extends Phaser.Scene {
     this.ghost.fillCircle(wx, wy, 26);
   }
 
+  private firstDeploy = true;
   private tryDeploy(wx: number, wy: number): void {
     if (!this.sim || !this.deployType) return;
     const res = this.sim.deploy(this.deployType, wx, wy);
@@ -609,6 +618,11 @@ export class WorldScene extends Phaser.Scene {
     if (res.ok) {
       this.pulseMarker(wx, wy, 0x7dffb0);
       this.hooks.onLog?.(`投放 ${UNITS[this.deployType].name} ×${res.count}`, 'good');
+      if (this.firstDeploy) {
+        this.firstDeploy = false;
+        this.cameras.main.pan(wx, wy - 300, 700, 'Sine.easeInOut');
+      }
+      if (this.sim.reserve[this.deployType] <= 0) this.setDeployType(null);
     }
   }
 
@@ -693,14 +707,23 @@ export class WorldScene extends Phaser.Scene {
       }
       case 'shot': {
         const color = e.kind === 'cannon' ? 0xffb054 : e.kind === 'holy' ? 0xfff3c4 : 0xffd27a;
-        const line = this.add.line(0, 0, e.x0, e.y0, e.x1, e.y1, color, 0.85).setOrigin(0, 0).setDepth(8000);
-        line.setLineWidth(e.kind === 'cannon' ? 2 : 1);
-        this.tweens.add({ targets: line, alpha: 0, duration: e.kind === 'cannon' ? 160 : 90, onComplete: () => line.destroy() });
         if (e.kind === 'mg') {
-          const m = this.add.image(e.x0, e.y0, 'fx:muzzle').setDepth(8001).setScale(0.7).setBlendMode(Phaser.BlendModes.ADD);
+          // 短促曳光：从炮口射出的一小段光，避免整张图出现白色细线
+          const t = 0.42;
+          const mx = e.x0 + (e.x1 - e.x0) * t;
+          const my = e.y0 + (e.y1 - e.y0) * t;
+          const line = this.add.line(0, 0, e.x0, e.y0, mx, my, color, 0.55).setOrigin(0, 0).setDepth(8000);
+          line.setLineWidth(1);
+          this.tweens.add({ targets: line, alpha: 0, duration: 110, onComplete: () => line.destroy() });
+          const m = this.add.image(e.x0, e.y0, 'fx:muzzle').setDepth(8001).setScale(0.6).setBlendMode(Phaser.BlendModes.ADD);
           this.tweens.add({ targets: m, alpha: 0, duration: 90, onComplete: () => m.destroy() });
-        }
-        if (e.kind === 'cannon') {
+          const spark = this.add.image(e.x1, e.y1 - 12, 'fx:spark').setDepth(e.y1 + 40).setTint(0xffd27a).setScale(0.8);
+          this.tweens.add({ targets: spark, alpha: 0, scale: 0.2, duration: 140, onComplete: () => spark.destroy() });
+        } else if (e.kind === 'holy') {
+          const line = this.add.line(0, 0, e.x0, e.y0, e.x1, e.y1, color, 0.5).setOrigin(0, 0).setDepth(8000);
+          line.setLineWidth(2);
+          this.tweens.add({ targets: line, alpha: 0, duration: 200, onComplete: () => line.destroy() });
+        } else {
           const shell = this.add.image(e.x0, e.y0, 'fx:shell').setDepth(8002);
           this.tweens.add({ targets: shell, x: e.x1, y: e.y1, duration: 260, ease: 'Linear', onComplete: () => shell.destroy() });
         }

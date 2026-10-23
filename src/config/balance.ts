@@ -145,8 +145,8 @@ export interface TowerDef {
 }
 
 export const TOWERS: Record<TowerKind, TowerDef> = {
-  mg: { name: '机枪塔', hp: 800, dps: 28, range: 250, interval: 0.22, art: 'mgtower', desc: '高射速单体，专杀密集轻装。' },
-  cannon: { name: '重炮塔', hp: 950, dps: 60 / 3.5, range: 330, interval: 3.5, splash: 62, art: 'cannontower', desc: '每 3.5 秒一发范围炮击。' },
+  mg: { name: '机枪塔', hp: 950, dps: 34, range: 250, interval: 0.22, art: 'mgtower', desc: '高射速单体，专杀密集轻装。' },
+  cannon: { name: '重炮塔', hp: 1100, dps: 80 / 3.5, range: 330, interval: 3.5, splash: 62, art: 'cannontower', desc: '每 3.5 秒一发范围炮击。' },
   aa: { name: '防空塔', hp: 700, dps: 55, range: 300, interval: 0.3, art: 'aatower', desc: '对空火力；对地面目标效率减半。' },
   holy: { name: '圣光塔', hp: 1100, dps: 30, range: 230, interval: 0.8, art: 'holytower', desc: '压制精锐，需能源站供电。' },
 };
@@ -203,7 +203,7 @@ export const CONVERT = {
 } as const;
 
 export const ECONOMY = {
-  startCorpses: 50,
+  startCorpses: 80,
   startEssence: 8,
   startInventory: { zombie: 60, runner: 0, brute: 0, spider: 0, boss: 0 },
   throneCorpsesPerDay: 20,

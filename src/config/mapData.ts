@@ -61,30 +61,30 @@ export const LIGHTHOUSE = { x: 84, y: 40 };
 
 export const WALLS: WallDef[] = [
   // 外墙 · 南
-  { id: 'ow-s1', x: 44, y: 84, len: 30, dir: 'h', kind: 'outer', hp: 1400 },
-  { id: 'ow-gate', x: 74, y: 84, len: 12, dir: 'h', kind: 'gate', hp: 2600 },
-  { id: 'ow-s2', x: 86, y: 84, len: 32, dir: 'h', kind: 'outer', hp: 1400 },
+  { id: 'ow-s1', x: 44, y: 84, len: 30, dir: 'h', kind: 'outer', hp: 3200 },
+  { id: 'ow-gate', x: 74, y: 84, len: 12, dir: 'h', kind: 'gate', hp: 5200 },
+  { id: 'ow-s2', x: 86, y: 84, len: 32, dir: 'h', kind: 'outer', hp: 3200 },
   // 外墙 · 西 / 西北
-  { id: 'ow-w1', x: 44, y: 44, len: 41, dir: 'v', kind: 'outer', hp: 1400 },
-  { id: 'ow-nw', x: 45, y: 44, len: 11, dir: 'h', kind: 'outer', hp: 1400 },
-  { id: 'ow-w2', x: 56, y: 28, len: 16, dir: 'v', kind: 'outer', hp: 1400 },
+  { id: 'ow-w1', x: 44, y: 44, len: 41, dir: 'v', kind: 'outer', hp: 3200 },
+  { id: 'ow-nw', x: 45, y: 44, len: 11, dir: 'h', kind: 'outer', hp: 3200 },
+  { id: 'ow-w2', x: 56, y: 28, len: 16, dir: 'v', kind: 'outer', hp: 3200 },
   // 外墙 · 北
-  { id: 'ow-n', x: 56, y: 28, len: 48, dir: 'h', kind: 'outer', hp: 1400 },
+  { id: 'ow-n', x: 56, y: 28, len: 48, dir: 'h', kind: 'outer', hp: 3200 },
   // 外墙 · 东 / 东北
-  { id: 'ow-e2', x: 104, y: 28, len: 16, dir: 'v', kind: 'outer', hp: 1400 },
-  { id: 'ow-ne', x: 104, y: 44, len: 14, dir: 'h', kind: 'outer', hp: 1400 },
-  { id: 'ow-e1', x: 118, y: 44, len: 41, dir: 'v', kind: 'outer', hp: 1400 },
+  { id: 'ow-e2', x: 104, y: 28, len: 16, dir: 'v', kind: 'outer', hp: 3200 },
+  { id: 'ow-ne', x: 104, y: 44, len: 14, dir: 'h', kind: 'outer', hp: 3200 },
+  { id: 'ow-e1', x: 118, y: 44, len: 41, dir: 'v', kind: 'outer', hp: 3200 },
   // 内墙
-  { id: 'iw-s1', x: 68, y: 56, len: 12, dir: 'h', kind: 'inner', hp: 1800 },
-  { id: 'iw-gate', x: 80, y: 56, len: 8, dir: 'h', kind: 'innerGate', hp: 2200 },
-  { id: 'iw-s2', x: 88, y: 56, len: 13, dir: 'h', kind: 'inner', hp: 1800 },
-  { id: 'iw-w', x: 68, y: 30, len: 26, dir: 'v', kind: 'inner', hp: 1800 },
-  { id: 'iw-e', x: 100, y: 30, len: 26, dir: 'v', kind: 'inner', hp: 1800 },
-  { id: 'iw-n', x: 68, y: 30, len: 33, dir: 'h', kind: 'inner', hp: 1800 },
+  { id: 'iw-s1', x: 68, y: 56, len: 12, dir: 'h', kind: 'inner', hp: 4200 },
+  { id: 'iw-gate', x: 80, y: 56, len: 8, dir: 'h', kind: 'innerGate', hp: 5200 },
+  { id: 'iw-s2', x: 88, y: 56, len: 13, dir: 'h', kind: 'inner', hp: 4200 },
+  { id: 'iw-w', x: 68, y: 30, len: 26, dir: 'v', kind: 'inner', hp: 4200 },
+  { id: 'iw-e', x: 100, y: 30, len: 26, dir: 'v', kind: 'inner', hp: 4200 },
+  { id: 'iw-n', x: 68, y: 30, len: 33, dir: 'h', kind: 'inner', hp: 4200 },
 ];
 
 export const FACILITIES: FacilityDef[] = [
-  { id: 'lighthouse', kind: 'lighthouse', name: '中央灯塔', x: 84, y: 40, w: 3, h: 3, hp: 6000 },
+  { id: 'lighthouse', kind: 'lighthouse', name: '中央灯塔', x: 84, y: 40, w: 3, h: 3, hp: 12000 },
   { id: 'barracksA', kind: 'barracks', name: '西军营', x: 60, y: 70, w: 3, h: 2, hp: 1500 },
   { id: 'barracksB', kind: 'barracks', name: '东军营', x: 104, y: 70, w: 3, h: 2, hp: 1500 },
   { id: 'arsenal', kind: 'arsenal', name: '兵工厂', x: 58, y: 50, w: 3, h: 2, hp: 1700 },
@@ -103,6 +103,10 @@ export const TOWERS: TowerDef[] = [
   { id: 'tw-mg-4', kind: 'mg', x: 110, y: 44, hp: 800 },
   { id: 'tw-aa-1', kind: 'aa', x: 94, y: 34, hp: 700 },
   { id: 'tw-holy-1', kind: 'holy', x: 76, y: 34, hp: 1100 },
+  { id: 'tw-mg-5', kind: 'mg', x: 74, y: 48, hp: 950 },
+  { id: 'tw-mg-6', kind: 'mg', x: 94, y: 48, hp: 950 },
+  { id: 'tw-cannon-3', kind: 'cannon', x: 84, y: 62, hp: 1100 },
+  { id: 'tw-holy-2', kind: 'holy', x: 90, y: 40, hp: 1100 },
 ];
 
 export const NODES: NodeDef[] = [
@@ -122,7 +126,7 @@ export const SLOTS: SlotDef[] = [
 
 /** 部署圈：王座后方始终可用，前线需占领并激活 */
 export const ZONES: Record<'throne' | NodeId, { x: number; y: number; r: number }> = {
-  throne: { x: THRONE.x, y: THRONE.y, r: 330 },
+  throne: { x: THRONE.x, y: THRONE.y + 1, r: 390 },
   west: { x: 30, y: 68, r: 210 },
   east: { x: 128, y: 68, r: 210 },
   center: { x: 80, y: 90, r: 180 },
