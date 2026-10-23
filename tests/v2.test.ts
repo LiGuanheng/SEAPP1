@@ -252,6 +252,41 @@ describe("V2 six manual heroes and commands", () => {
   });
 });
 describe("V2 siege and forward reinforcements", () => {
+  it("tower artwork can be targeted at its visible upper body", () => {
+    const b = new Battle(createLoadout());
+    const tower = b.structures.find((s) => s.kind === "arrow")!;
+    expect(b.targetAt(tower.x, tower.y - 150)?.id).toBe(tower.id);
+  });
+  it("wolf cavalry earns a real first charge bonus after running", () => {
+    const b = new Battle(createLoadout());
+    const u = b.spawn("rider", 800, 2000),
+      t = b.spawn("soldier", 800, 2020, 1);
+    u.runDistance = 100;
+    u.cooldown = 0;
+    u.target = t.id;
+    u.think = 1;
+    t.root = 1;
+    b.step(0.05);
+    expect(t.hp).toBeCloseTo(t.maxHp - u.damage * u.period * 1.4);
+    expect(u.runDistance).toBe(0);
+  });
+  it("multiple treants cannot multiply a single healing pulse", () => {
+    const b = new Battle(createLoadout());
+    const u = b.spawn("golem", 800, 2100);
+    u.hp = 200;
+    for (let i = 0; i < 8; i++) b.spawn("treant", 800 + i, 2100).heal = 0;
+    b.step(0.05);
+    expect(u.hp).toBeCloseTo(200 + u.maxHp * 0.02);
+  });
+  it("out of range casting neither spends a use nor starts cooldown", () => {
+    const l = createLoadout();
+    recruit(l, "titan");
+    const b = new Battle(l);
+    b.spawn("titan", 850, 2070);
+    expect(b.cast("titan", 1550, 1700)).toContain("距离");
+    expect(b.uses.size).toBe(0);
+    expect(b.readyAt.size).toBe(0);
+  });
   it("intact enclosure blocks ground connectivity; real breach opens it", () => {
     const b = new Battle(createLoadout());
     expect(b.outposts[0].connected).toBe(false);

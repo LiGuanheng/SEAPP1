@@ -1,0 +1,130 @@
+{
+  "date": "2026-10-23T22:02:20.727Z",
+  "note": "Screenshots are rendered by Chrome from actual simulation. Long battle segments use deterministic fast-forward through the same simulation; titan/dragon skills use keyboard and mouse.",
+  "results": [
+    {
+      "name": "titan keyboard aimed skill breaks real wall",
+      "ok": true
+    },
+    {
+      "name": "actual battle captured west post",
+      "ok": true,
+      "evidence": {
+        "time": 23.79,
+        "remaining": 576.21,
+        "money": 575,
+        "active": 164,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "西境哨所",
+            "x": 850,
+            "y": 1360,
+            "w": 360,
+            "h": 230,
+            "progress": 8,
+            "captured": true,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "东境哨所",
+            "x": 2300,
+            "y": 1360,
+            "w": 330,
+            "h": 230,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 284,
+          "kills": 17,
+          "lost": 120,
+          "income": 370,
+          "walls": 3,
+          "skills": 3,
+          "peak": 181
+        }
+      }
+    },
+    {
+      "name": "new paid reinforcements deployed at captured front",
+      "ok": true
+    },
+    {
+      "name": "ground strategy actual battle wins",
+      "ok": true,
+      "evidence": {
+        "time": 45.7,
+        "remaining": 554.3,
+        "money": 86,
+        "active": 54,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 0,
+        "status": "victory",
+        "outposts": [
+          {
+            "name": "西境哨所",
+            "x": 850,
+            "y": 1360,
+            "w": 360,
+            "h": 230,
+            "progress": 8,
+            "captured": true,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "东境哨所",
+            "x": 2300,
+            "y": 1360,
+            "w": 330,
+            "h": 230,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 300,
+          "kills": 23,
+          "lost": 246,
+          "income": 441,
+          "walls": 5,
+          "skills": 3,
+          "peak": 181
+        }
+      }
+    },
+    {
+      "name": "retry clears battle time and destruction",
+      "ok": true
+    },
+    {
+      "name": "dragon keyboard aimed cone skill",
+      "ok": true
+    },
+    {
+      "name": "timeout defeat is shown",
+      "ok": true
+    },
+    {
+      "name": "return to menu works",
+      "ok": true
+    },
+    {
+      "name": "no uncaught browser errors",
+      "ok": true,
+      "evidence": []
+    }
+  ],
+  "errors": []
+}

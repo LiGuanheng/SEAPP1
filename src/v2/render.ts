@@ -947,8 +947,10 @@ export class Renderer {
       y = f.y,
       r = f.radius ?? 60;
     if (f.type === "shot") {
-      const tx = f.tx ?? x,
-        ty = f.ty ?? y;
+      const tracked =
+        f.target && !f.radius ? this.battle.byId.get(f.target) : undefined;
+      const tx = tracked?.x ?? f.tx ?? x,
+        ty = tracked?.y ?? f.ty ?? y;
       const q = Math.min(1, f.age / (f.kind === "cannon" ? 0.95 : 0.3));
       const xx = x + (tx - x) * q,
         yy =

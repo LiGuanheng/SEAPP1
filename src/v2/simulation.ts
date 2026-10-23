@@ -43,6 +43,7 @@ export interface Unit extends Stats {
   poison: number;
   heal: number;
   healedAt: number;
+  runDistance: number;
   small: boolean;
   splitDone: boolean;
   deadAt: number;
@@ -58,6 +59,7 @@ export interface Event {
   radius?: number;
   angle?: number;
   text?: string;
+  target?: number;
 }
 interface Queue {
   kind: Kind;
@@ -281,6 +283,7 @@ export class Battle {
       poison: 0,
       heal: 4,
       healedAt: -100,
+      runDistance: 0,
       small,
       splitDone: small,
       deadAt: 0,
@@ -391,6 +394,28 @@ export class Battle {
         this.selected.add(u.id);
   }
   targetAt(x: number, y: number): Target | undefined {
+    const visible = [
+      ...this.structures,
+      ...this.units.filter((u) => u.side === 1),
+    ]
+      .filter((t) => t.hp > 0)
+      .sort((a, b) => b.y - a.y);
+    for (const t of visible) {
+      if (isStructure(t) && !["wall", "gate"].includes(t.kind)) {
+        const half =
+          t.kind === "crystal" ? 130 : t.kind === "barracks" ? 100 : 65;
+        const height =
+          t.kind === "crystal"
+            ? 280
+            : t.kind === "barracks"
+              ? 165
+              : t.kind === "cannon"
+                ? 140
+                : 205;
+        if (Math.abs(x - t.x) < half && y > t.y - height && y < t.y + 24)
+          return t;
+      }
+    }
     let best: Target | undefined,
       dist = 65;
     for (const t of [
@@ -476,6 +501,17 @@ export class Battle {
   private hit(u: Unit, t: Target) {
     let damage =
       u.damage * u.period * (u.buff > 0 ? 1.2 : 1) * (u.hunt > 0 ? 1.15 : 1);
+    if ((u.kind === "rider" || u.kind === "moon") && u.runDistance >= 80) {
+      damage *= 1.4;
+      this.events.push({
+        type: "impact",
+        x: t.x,
+        y: t.y,
+        kind: u.kind,
+        radius: 45,
+      });
+    }
+    u.runDistance = 0;
     if (isStructure(t) && (t.kind === "wall" || t.kind === "gate"))
       damage *= u.wallBonus ?? 1;
     if (
@@ -494,6 +530,7 @@ export class Battle {
       kind: u.kind,
       side: u.side,
       radius: u.splash ?? 0,
+      target: t.id,
     });
     if (u.range > 80)
       this.projectiles.push({
@@ -702,6 +739,11 @@ export class Battle {
     this.spawnClock = Math.min(this.spawnClock, 0.1);
     this.spatial.rebuild(this.units);
     for (const p of this.projectiles) {
+      const tracked = this.byId.get(p.target);
+      if (!p.splash && tracked && tracked.hp > 0) {
+        p.x = tracked.x;
+        p.y = tracked.y;
+      }
       p.time -= dt;
       if (p.time > 0) continue;
       const t = this.byId.get(p.target);
@@ -929,6 +971,7 @@ export class Battle {
       u.x = Math.max(40, Math.min(3160, nx));
       u.y = Math.max(40, Math.min(2360, ny));
       u.moving = true;
+      u.runDistance = Math.min(150, u.runDistance + stride);
       u.facing = dx >= 0 ? 1 : -1;
     }
   }
@@ -1007,6 +1050,7 @@ export class Battle {
         kind: s.kind,
         side: 1,
         radius: splash,
+        target: target.id,
       });
       this.projectiles.push({
         x: target.x,
