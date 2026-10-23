@@ -28,20 +28,13 @@ try {
   await page.waitForSelector('[data-action="new"]');
   const init = async (strategy) => {
     await page.evaluate(
-      (s) =>
-        window.__SIEGE__.startBattle(
-          window.__SIEGE__.preset("normal", "evolve", s),
-        ),
+      (s) => window.__SIEGE__.startBattle(window.__SIEGE__.preset("normal", "evolve", s)),
       strategy,
     );
     await page.click('[data-action="skip-intro"]');
   };
   const clickWorld = async (x, y) => {
-    const p = await page.evaluate(
-      (x, y) => window.__SIEGE__.worldToScreen(x, y),
-      x,
-      y,
-    );
+    const p = await page.evaluate((x, y) => window.__SIEGE__.worldToScreen(x, y), x, y);
     await page.mouse.click(p.x, p.y);
   };
   await init("breach");
@@ -54,9 +47,7 @@ try {
     const b = window.__SIEGE__.battle,
       u = b.getUnit("titan");
     return b.structures
-      .filter(
-        (s) => s.hp > 0 && s.weak && Math.hypot(s.x - u.x, s.y - u.y) < 280,
-      )
+      .filter((s) => s.hp > 0 && s.weak && Math.hypot(s.x - u.x, s.y - u.y) < 280)
       .sort((a, b) => a.hp - b.hp)[0];
   });
   if (wall) {
@@ -65,10 +56,7 @@ try {
     await wait(150);
     check(
       "titan keyboard aimed skill breaks real wall",
-      await page.evaluate(
-        (id) => window.__SIEGE__.battle.byId.get(id).hp === 0,
-        wall.id,
-      ),
+      await page.evaluate((id) => window.__SIEGE__.battle.byId.get(id).hp === 0, wall.id),
     );
     await page.screenshot({ path: `${dir}/09-titan-breach.png` });
   } else check("titan has reachable wall", false);
@@ -85,8 +73,7 @@ try {
         b.advance(0.8);
         for (const c of b.loadout.commanders) {
           const u = b.getUnit(c);
-          if (u && b.skillInfo(c).available && c !== "titan")
-            b.cast(c, u.x, u.y);
+          if (u && b.skillInfo(c).available && c !== "titan") b.cast(c, u.x, u.y);
         }
       }
       return b.snapshot();
@@ -100,9 +87,7 @@ try {
       forward = true;
       check("actual battle captured west post", true, snap);
       await page.screenshot({ path: `${dir}/11-forward-captured.png` });
-      const bought = await page.evaluate(() =>
-        window.__SIEGE__.battle.buy("golem", 1),
-      );
+      const bought = await page.evaluate(() => window.__SIEGE__.battle.buy("golem", 1));
       if (bought) {
         await page.click('[data-action="deploy"][data-key="golem"]');
         await clickWorld(850, 1360);
@@ -111,9 +96,7 @@ try {
           return (
             b.loadout.inventory.golem === 0 &&
             (b.queue.some((q) => q.kind === "golem" && q.y === 1360) ||
-              b.units.some(
-                (u) => u.kind === "golem" && Math.abs(u.homeY - 1360) < 50,
-              ))
+              b.units.some((u) => u.kind === "golem" && Math.abs(u.homeY - 1360) < 50))
           );
         });
         check("new paid reinforcements deployed at captured front", reinforced);
@@ -143,9 +126,7 @@ try {
     check(
       "retry clears battle time and destruction",
       await page.evaluate(
-        () =>
-          window.__SIEGE__.battle.time === 0 &&
-          window.__SIEGE__.battle.stats.walls === 0,
+        () => window.__SIEGE__.battle.time === 0 && window.__SIEGE__.battle.stats.walls === 0,
       ),
     );
   }
@@ -173,9 +154,7 @@ try {
   check(
     "timeout defeat is shown",
     await page.evaluate(
-      () =>
-        window.__SIEGE__.battle.status === "defeat" &&
-        window.__SIEGE__.battle.remaining === 0,
+      () => window.__SIEGE__.battle.status === "defeat" && window.__SIEGE__.battle.remaining === 0,
     ),
   );
   await page.screenshot({ path: `${dir}/15-defeat.png` });

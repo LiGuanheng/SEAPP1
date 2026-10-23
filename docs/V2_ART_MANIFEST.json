@@ -1,0 +1,100 @@
+[
+  {
+    "name": "city.webp",
+    "width": 1774,
+    "height": 887,
+    "sourceBytes": 2716135,
+    "packedBytes": 733430
+  },
+  {
+    "name": "cover.webp",
+    "width": 1672,
+    "height": 941,
+    "sourceBytes": 2741697,
+    "packedBytes": 441748
+  },
+  {
+    "name": "grove.webp",
+    "width": 1254,
+    "height": 1254,
+    "sourceBytes": 3167275,
+    "packedBytes": 883626
+  },
+  {
+    "name": "hero-dragon.webp",
+    "width": 1254,
+    "height": 1254,
+    "sourceBytes": 2453980,
+    "packedBytes": 722096
+  },
+  {
+    "name": "hero-emperor.webp",
+    "width": 1254,
+    "height": 1254,
+    "sourceBytes": 2449442,
+    "packedBytes": 638818
+  },
+  {
+    "name": "hero-forest.webp",
+    "width": 1254,
+    "height": 1254,
+    "sourceBytes": 2249585,
+    "packedBytes": 677054
+  },
+  {
+    "name": "hero-moon.webp",
+    "width": 1254,
+    "height": 1254,
+    "sourceBytes": 1945461,
+    "packedBytes": 481918
+  },
+  {
+    "name": "hero-titan.webp",
+    "width": 1254,
+    "height": 1254,
+    "sourceBytes": 2172411,
+    "packedBytes": 569040
+  },
+  {
+    "name": "hero-web.webp",
+    "width": 1254,
+    "height": 1254,
+    "sourceBytes": 1952413,
+    "packedBytes": 548272
+  },
+  {
+    "name": "materials.webp",
+    "width": 1254,
+    "height": 1254,
+    "sourceBytes": 3894807,
+    "packedBytes": 711936
+  },
+  {
+    "name": "portraits.webp",
+    "width": 1536,
+    "height": 1024,
+    "sourceBytes": 3637368,
+    "packedBytes": 690402
+  },
+  {
+    "name": "structures.webp",
+    "width": 1536,
+    "height": 1024,
+    "sourceBytes": 2800111,
+    "packedBytes": 600448
+  },
+  {
+    "name": "units-move.webp",
+    "width": 1278,
+    "height": 1230,
+    "sourceBytes": 2859151,
+    "packedBytes": 864554
+  },
+  {
+    "name": "units.webp",
+    "width": 1278,
+    "height": 1230,
+    "sourceBytes": 2841327,
+    "packedBytes": 918618
+  }
+]

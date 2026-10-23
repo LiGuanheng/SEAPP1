@@ -14,14 +14,11 @@ for (const strategy of ["breach", "sky", "slime"] as const) {
       purchase(l, "slime", Infinity);
     }
     const b = new Battle(l, seed);
-    b.deployAll(
-      strategy === "slime" ? 1600 : strategy === "breach" ? 850 : 2330,
-      2070,
-    );
+    b.deployAll(strategy === "slime" ? 1600 : strategy === "breach" ? 850 : 2330, 2070);
     let lastBuy = 0;
     const start = performance.now();
     while (b.status === "battle" && b.time < 601) {
-      b.step(0.05);
+      b.step(1 / 60);
       b.events.length = 0;
       if (strategy !== "slime" && Math.floor(b.time) > lastBuy + 5) {
         lastBuy = Math.floor(b.time);
@@ -52,8 +49,7 @@ for (const strategy of ["breach", "sky", "slime"] as const) {
         const buy: Army = strategy === "breach" ? "golem" : "wyvern";
         b.buy(buy, 1);
         b.deploy(buy, x, y, Infinity);
-        for (const k of ARMY_KEYS)
-          if (b.loadout.inventory[k]) b.deploy(k, x, y, Infinity);
+        for (const k of ARMY_KEYS) if (b.loadout.inventory[k]) b.deploy(k, x, y, Infinity);
       }
     }
     const result = {

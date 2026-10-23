@@ -41,8 +41,7 @@ export class Navigation {
         ) {
           const i = y * W + x;
           this.solids[i] = o.id;
-          this.costs[i] =
-            o.kind === "wall" || o.kind === "gate" ? (o.weak ? 5 : 18) : 12;
+          this.costs[i] = o.kind === "wall" || o.kind === "gate" ? (o.weak ? 5 : 18) : 12;
         }
     }
   }
@@ -55,8 +54,7 @@ export class Navigation {
   obstacleAt(x: number, y: number, climber = false): number {
     for (const o of this.obstacles) {
       if (climber && o.weak) continue;
-      if (Math.abs(x - o.x) < o.w / 2 + 4 && Math.abs(y - o.y) < o.h / 2 + 4)
-        return o.id;
+      if (Math.abs(x - o.x) < o.w / 2 + 4 && Math.abs(y - o.y) < o.h / 2 + 4) return o.id;
     }
     return 0;
   }
@@ -123,6 +121,7 @@ export class Navigation {
       }
     }
     this.fields.set(key, f);
+    if (this.fields.size > 48) this.fields.delete(this.fields.keys().next().value!);
     return f;
   }
   direction(x: number, y: number, tx: number, ty: number): Point {
@@ -176,8 +175,7 @@ export class Navigation {
         const xx = x + dx,
           yy = y + dy,
           j = yy * W + xx;
-        if (xx < 0 || yy < 0 || xx >= W || yy >= H || seen[j] || this.solids[j])
-          continue;
+        if (xx < 0 || yy < 0 || xx >= W || yy >= H || seen[j] || this.solids[j]) continue;
         seen[j] = 1;
         q.push(j);
       }

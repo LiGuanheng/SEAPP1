@@ -29,11 +29,7 @@ class Sound {
       const heavy = ["wall", "cannon", "destroy", "titan"].includes(type),
         magic = ["skill", "capture", "deploy", "victory"].includes(type);
       if (heavy) {
-        const buffer = this.ctx.createBuffer(
-            1,
-            this.ctx.sampleRate * 0.35,
-            this.ctx.sampleRate,
-          ),
+        const buffer = this.ctx.createBuffer(1, this.ctx.sampleRate * 0.35, this.ctx.sampleRate),
           data = buffer.getChannelData(0);
         for (let i = 0; i < data.length; i++)
           data[i] = (Math.random() * 2 - 1) * (1 - i / data.length);
@@ -55,10 +51,7 @@ class Sound {
         g = this.ctx.createGain();
       o.type = heavy ? "sawtooth" : magic ? "sine" : "triangle";
       o.frequency.setValueAtTime(heavy ? 95 : magic ? 440 : 620, now);
-      o.frequency.exponentialRampToValueAtTime(
-        heavy ? 25 : magic ? 880 : 270,
-        now + 0.2,
-      );
+      o.frequency.exponentialRampToValueAtTime(heavy ? 25 : magic ? 880 : 270, now + 0.2);
       g.gain.setValueAtTime(heavy ? 0.065 : magic ? 0.045 : 0.015, now);
       g.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
       o.connect(g);

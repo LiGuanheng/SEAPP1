@@ -17,7 +17,8 @@ import { batchPrice, purchase, unlocked, type Loadout } from "./economy";
 import { Navigation, type Point } from "./navigation";
 import { createStructures, OUTPOSTS, type Structure } from "./world";
 export type Order =
-  { type: "move"; x: number; y: number } | { type: "attack"; target: number };
+  | { type: "move"; x: number; y: number; anchorX?: number; anchorY?: number }
+  | { type: "attack"; target: number };
 export interface Unit extends Stats {
   id: number;
   kind: Kind;
@@ -32,6 +33,7 @@ export interface Unit extends Stats {
   think: number;
   target: number;
   order?: Order;
+  rally?: Point[];
   lane: number;
   facing: number;
   moving: boolean;
@@ -96,20 +98,11 @@ class Spatial {
   }
   near(x: number, y: number, r: number): Unit[] {
     const a: Unit[] = [];
-    for (
-      let iy = Math.floor((y - r) / 180);
-      iy <= Math.floor((y + r) / 180);
-      iy++
-    )
-      for (
-        let ix = Math.floor((x - r) / 180);
-        ix <= Math.floor((x + r) / 180);
-        ix++
-      ) {
+    for (let iy = Math.floor((y - r) / 180); iy <= Math.floor((y + r) / 180); iy++)
+      for (let ix = Math.floor((x - r) / 180); ix <= Math.floor((x + r) / 180); ix++) {
         const b = this.cells.get(`${ix},${iy}`);
         if (b)
-          for (const u of b)
-            if (u.hp > 0 && (u.x - x) ** 2 + (u.y - y) ** 2 <= r * r) a.push(u);
+          for (const u of b) if (u.hp > 0 && (u.x - x) ** 2 + (u.y - y) ** 2 <= r * r) a.push(u);
       }
     return a;
   }
@@ -142,6 +135,7 @@ export class Battle {
   private captureClock = 0;
   private reinforcementWave = 0;
   private navDirty = false;
+  private accumulator = 0;
   time = 0;
   paused = false;
   speed = 1;
@@ -169,10 +163,7 @@ export class Battle {
     return this.loadout.money;
   }
   get remaining() {
-    return Math.max(
-      0,
-      DIFFICULTIES[this.loadout.difficulty].seconds - this.time,
-    );
+    return Math.max(0, DIFFICULTIES[this.loadout.difficulty].seconds - this.time);
   }
   get crystal() {
     return this.structures.find((s) => s.kind === "crystal")!;
@@ -185,10 +176,8 @@ export class Battle {
   }
   get reserves() {
     return (
-      ARMY_KEYS.reduce(
-        (s, k) => s + this.loadout.inventory[k],
-        this.heroInventory.size,
-      ) + this.queued
+      ARMY_KEYS.reduce((s, k) => s + this.loadout.inventory[k], this.heroInventory.size) +
+      this.queued
     );
   }
   get living() {
@@ -213,29 +202,16 @@ export class Battle {
     ];
     for (const [[x, y], kind, n] of positions)
       for (let i = 0; i < Math.round(n * density); i++)
-        this.spawn(
-          kind,
-          x + (this.random() - 0.5) * 180,
-          y + (this.random() - 0.5) * 100,
-          1,
-        );
+        this.spawn(kind, x + (this.random() - 0.5) * 180, y + (this.random() - 0.5) * 100, 1);
     this.spawn("captain", 1600, 1130, 1);
     this.spatial.rebuild(this.units);
   }
   private refreshNav() {
     this.nav.rebuild(this.structures.filter((s) => s.hp > 0));
     this.navDirty = false;
-    for (const p of this.outposts)
-      p.connected = this.nav.connected({ x: p.x, y: 2070 }, p);
+    for (const p of this.outposts) p.connected = this.nav.connected({ x: p.x, y: 2070 }, p);
   }
-  spawn(
-    kind: Kind,
-    x: number,
-    y: number,
-    side: 0 | 1 = 0,
-    small = false,
-    lane = 0,
-  ): Unit {
+  spawn(kind: Kind, x: number, y: number, side: 0 | 1 = 0, small = false, lane = 0): Unit {
     const base: Stats = isArmy(kind)
       ? ARMIES[kind]
       : isCommander(kind)
@@ -245,16 +221,10 @@ export class Battle {
           : ENEMIES[kind]!;
     if (!base) throw new Error(`Invalid unit ${kind}`);
     const evo =
-      side === 0 &&
-      this.loadout.spec === "evolve" &&
-      isArmy(kind) &&
-      ARMIES[kind].commander
+      side === 0 && this.loadout.spec === "evolve" && isArmy(kind) && ARMIES[kind].commander
         ? 1.1
         : 1;
-    const elemental =
-      side === 0 && this.loadout.spec === "element" && base.range > 80
-        ? 1.1
-        : 1;
+    const elemental = side === 0 && this.loadout.spec === "element" && base.range > 80 ? 1.1 : 1;
     const hp = base.hp * evo * (small ? 0.32 : 1);
     const u: Unit = {
       ...base,
@@ -306,9 +276,7 @@ export class Battle {
     if (
       y >= 1870 &&
       y <= 2270 &&
-      ((x >= 550 && x <= 1120) ||
-        (x >= 1270 && x <= 1910) ||
-        (x >= 2100 && x <= 2660))
+      ((x >= 550 && x <= 1120) || (x >= 1270 && x <= 1910) || (x >= 2100 && x <= 2660))
     )
       return true;
     return this.outposts.some(
@@ -318,9 +286,7 @@ export class Battle {
         !p.contested &&
         Math.abs(x - p.x) <= p.w / 2 &&
         Math.abs(y - p.y) <= p.h / 2 &&
-        !this.units.some(
-          (u) => u.side === 1 && u.hp > 0 && distance(u, { x, y }) < 80,
-        ),
+        !this.units.some((u) => u.side === 1 && u.hp > 0 && distance(u, { x, y }) < 80),
     );
   }
   deploy(kind: Kind, x: number, y: number, batches: number = 1): boolean {
@@ -330,9 +296,7 @@ export class Battle {
       if (!unlocked(this.loadout, kind)) return false;
       count = Math.min(
         this.loadout.inventory[kind],
-        batches === Infinity
-          ? Infinity
-          : Math.max(0, Math.floor(batches)) * ARMIES[kind].batch,
+        batches === Infinity ? Infinity : Math.max(0, Math.floor(batches)) * ARMIES[kind].batch,
       );
       if (!count) return false;
       this.loadout.inventory[kind] -= count;
@@ -363,10 +327,38 @@ export class Battle {
     return purchase(this.loadout, k, n);
   }
   command(ids: Iterable<number>, order: Order) {
-    for (const id of ids) {
+    const members = [...ids].filter((id) => {
+      const u = this.byId.get(id);
+      return u && !isStructure(u) && u.side === 0 && u.hp > 0;
+    });
+    const columns = Math.ceil(Math.sqrt(members.length)),
+      rows = Math.ceil(members.length / columns);
+    for (const [index, id] of members.entries()) {
       const u = this.byId.get(id);
       if (u && !isStructure(u) && u.side === 0 && u.hp > 0) {
         u.order = { ...order };
+        if (u.order.type === "move" && members.length > 1) {
+          if (order.type === "move") {
+            u.order.anchorX = order.x;
+            u.order.anchorY = order.y;
+          }
+          u.order.x = Math.max(
+            40,
+            Math.min(
+              3160,
+              order.type === "move" ? order.x + ((index % columns) - (columns - 1) / 2) * 22 : 0,
+            ),
+          );
+          u.order.y = Math.max(
+            40,
+            Math.min(
+              2360,
+              order.type === "move"
+                ? order.y + (Math.floor(index / columns) - (rows - 1) / 2) * 22
+                : 0,
+            ),
+          );
+        }
         u.target = order.type === "attack" ? order.target : 0;
         u.think = 0;
       }
@@ -394,16 +386,12 @@ export class Battle {
         this.selected.add(u.id);
   }
   targetAt(x: number, y: number): Target | undefined {
-    const visible = [
-      ...this.structures,
-      ...this.units.filter((u) => u.side === 1),
-    ]
+    const visible = [...this.structures, ...this.units.filter((u) => u.side === 1)]
       .filter((t) => t.hp > 0)
       .sort((a, b) => b.y - a.y);
     for (const t of visible) {
       if (isStructure(t) && !["wall", "gate"].includes(t.kind)) {
-        const half =
-          t.kind === "crystal" ? 130 : t.kind === "barracks" ? 100 : 65;
+        const half = t.kind === "crystal" ? 130 : t.kind === "barracks" ? 100 : 65;
         const height =
           t.kind === "crystal"
             ? 280
@@ -412,20 +400,14 @@ export class Battle {
               : t.kind === "cannon"
                 ? 140
                 : 205;
-        if (Math.abs(x - t.x) < half && y > t.y - height && y < t.y + 24)
-          return t;
+        if (Math.abs(x - t.x) < half && y > t.y - height && y < t.y + 24) return t;
       }
     }
     let best: Target | undefined,
       dist = 65;
-    for (const t of [
-      ...this.structures,
-      ...this.units.filter((u) => u.side === 1),
-    ]) {
+    for (const t of [...this.structures, ...this.units.filter((u) => u.side === 1)]) {
       if (t.hp <= 0) continue;
-      const d =
-        distance(t, { x, y }) -
-        (isStructure(t) ? Math.max(t.w, t.h) / 2 : t.size / 2);
+      const d = distance(t, { x, y }) - (isStructure(t) ? Math.max(t.w, t.h) / 2 : t.size / 2);
       if (d < dist) {
         dist = d;
         best = t;
@@ -477,9 +459,7 @@ export class Battle {
       this.selected.delete(target.id);
       if (target.side === 1) {
         this.stats.kills++;
-        this.reward(
-          ["paladin", "knight", "captain"].includes(target.kind) ? 4 : 1,
-        );
+        this.reward(["paladin", "knight", "captain"].includes(target.kind) ? 4 : 1);
       } else {
         this.stats.lost++;
         if (target.kind === "split" && !target.splitDone) {
@@ -495,12 +475,10 @@ export class Battle {
         }
       }
     }
-    if (source?.kind === "spider" && !isStructure(target) && target.hp > 0)
-      target.poison = 3;
+    if (source?.kind === "spider" && !isStructure(target) && target.hp > 0) target.poison = 3;
   }
   private hit(u: Unit, t: Target) {
-    let damage =
-      u.damage * u.period * (u.buff > 0 ? 1.2 : 1) * (u.hunt > 0 ? 1.15 : 1);
+    let damage = u.damage * u.period * (u.buff > 0 ? 1.2 : 1) * (u.hunt > 0 ? 1.15 : 1);
     if ((u.kind === "rider" || u.kind === "moon") && u.runDistance >= 80) {
       damage *= 1.4;
       this.events.push({
@@ -512,13 +490,8 @@ export class Battle {
       });
     }
     u.runDistance = 0;
-    if (isStructure(t) && (t.kind === "wall" || t.kind === "gate"))
-      damage *= u.wallBonus ?? 1;
-    if (
-      ["knight", "paladin"].includes(u.kind) &&
-      ["wolf", "rider"].includes(t.kind)
-    )
-      damage *= 1.5;
+    if (isStructure(t) && (t.kind === "wall" || t.kind === "gate")) damage *= u.wallBonus ?? 1;
+    if (["knight", "paladin"].includes(u.kind) && ["wolf", "rider"].includes(t.kind)) damage *= 1.5;
     u.cooldown = u.period;
     u.attack = 0.26;
     this.events.push({
@@ -545,20 +518,12 @@ export class Battle {
       });
     else {
       this.damage(t, damage, u);
-      if (u.splash)
-        this.splash(t.x, t.y, u.splash, damage * 0.65, u.side, t.id);
+      if (u.splash) this.splash(t.x, t.y, u.splash, damage * 0.65, u.side, t.id);
       if (u.kind === "spider" && !isStructure(t)) t.poison = 3;
     }
   }
   private projectiles: Projectile[] = [];
-  private splash(
-    x: number,
-    y: number,
-    r: number,
-    d: number,
-    side: number,
-    exclude = 0,
-  ) {
+  private splash(x: number, y: number, r: number, d: number, side: number, exclude = 0) {
     for (const t of this.spatial.near(x, y, r))
       if (t.side !== side && t.id !== exclude) this.damage(t, d);
   }
@@ -566,14 +531,12 @@ export class Battle {
     const u = this.getUnit(kind);
     const cd = Math.max(0, (this.readyAt.get(kind) ?? 0) - this.time);
     const exhausted =
-      (kind === "emperor" ||
-        (kind === "king" && this.loadout.spec === "summon")) &&
+      (kind === "emperor" || (kind === "king" && this.loadout.spec === "summon")) &&
       (this.uses.get(kind) ?? 0) >= 2;
     return {
       unit: u,
       cooldown: cd,
-      available:
-        !!u && !cd && !exhausted && this.status === "battle" && !this.paused,
+      available: !!u && !cd && !exhausted && this.status === "battle" && !this.paused,
       exhausted,
     };
   }
@@ -581,33 +544,20 @@ export class Battle {
     const info = this.skillInfo(kind);
     if (!info.unit) return "英雄尚未部署或已阵亡";
     if (this.paused) return "请先恢复战斗";
-    if (!info.available)
-      return info.exhausted ? "本场次数已用尽" : "技能尚未冷却";
+    if (!info.available) return info.exhausted ? "本场次数已用尽" : "技能尚未冷却";
     const hero = info.unit;
     const c = isCommander(kind) ? COMMANDERS[kind] : null;
     const r = c?.radius ?? 180;
-    if (
-      x < 0 ||
-      y < 0 ||
-      x > 3200 ||
-      y > 2400 ||
-      distance(hero, { x, y }) > (c?.castRange ?? 460)
-    )
+    if (x < 0 || y < 0 || x > 3200 || y > 2400 || distance(hero, { x, y }) > (c?.castRange ?? 460))
       return "超出施法距离";
-    if (
-      kind === "king" &&
-      this.loadout.spec === "summon" &&
-      !this.canDeploy(x, y)
-    )
+    if (kind === "king" && this.loadout.spec === "summon" && !this.canDeploy(x, y))
       return "异界召唤需要合法部署区";
     let wall: Structure | undefined;
     if (kind === "titan") {
       wall = this.structures
         .filter(
           (s) =>
-            s.hp > 0 &&
-            (s.kind === "wall" || s.kind === "gate") &&
-            distance(s, { x, y }) < 100,
+            s.hp > 0 && (s.kind === "wall" || s.kind === "gate") && distance(s, { x, y }) < 100,
         )
         .sort((a, b) => distance(a, { x, y }) - distance(b, { x, y }))[0];
       if (!wall) return "请指定一段城墙或城门";
@@ -623,10 +573,7 @@ export class Battle {
       )
     )
       return "范围内没有可分裂的史莱姆";
-    this.readyAt.set(
-      kind,
-      this.time + (c?.cooldown ?? SPECS[this.loadout.spec].cooldown),
-    );
+    this.readyAt.set(kind, this.time + (c?.cooldown ?? SPECS[this.loadout.spec].cooldown));
     this.uses.set(kind, (this.uses.get(kind) ?? 0) + 1);
     this.stats.skills++;
     const angle = Math.atan2(y - hero.y, x - hero.x);
@@ -643,17 +590,12 @@ export class Battle {
     });
     if (kind === "titan") {
       this.damage(wall!, 750);
-      for (const u of this.spatial.near(x, y, 145))
-        if (u.side === 1) u.root = 2;
+      for (const u of this.spatial.near(x, y, 145)) if (u.side === 1) u.root = 2;
     } else if (kind === "dragon") {
-      for (const t of [
-        ...this.structures,
-        ...this.units.filter((u) => u.side === 1),
-      ]) {
+      for (const t of [...this.structures, ...this.units.filter((u) => u.side === 1)]) {
         const a = Math.atan2(t.y - hero.y, t.x - hero.x);
         const delta = Math.atan2(Math.sin(a - angle), Math.cos(a - angle));
-        if (t.hp > 0 && distance(t, hero) <= r && Math.abs(delta) <= 0.65)
-          this.damage(t, 170);
+        if (t.hp > 0 && distance(t, hero) <= r && Math.abs(delta) <= 0.65) this.damage(t, 170);
       }
     } else if (kind === "king" && this.loadout.spec === "summon")
       this.queue.push({
@@ -665,12 +607,8 @@ export class Battle {
         lane: hero.lane,
       });
     else if (kind === "king" && this.loadout.spec === "element") {
-      for (const t of [
-        ...this.structures,
-        ...this.units.filter((u) => u.side === 1),
-      ])
-        if (t.hp > 0 && distance(t, { x, y }) <= r)
-          this.damage(t, t.kind === "crystal" ? 35 : 140);
+      for (const t of [...this.structures, ...this.units.filter((u) => u.side === 1)])
+        if (t.hp > 0 && distance(t, { x, y }) <= r) this.damage(t, t.kind === "crystal" ? 35 : 140);
     } else if (kind === "emperor") {
       for (const u of this.units
         .filter(
@@ -704,22 +642,17 @@ export class Battle {
   }
   advance(realSeconds: number) {
     if (this.paused || this.status !== "battle") return;
-    let remaining = Math.max(0, realSeconds * this.speed);
-    while (remaining > 1e-6 && this.status === "battle") {
-      const dt = Math.min(0.05, remaining);
-      this.step(dt);
-      remaining -= dt;
+    this.accumulator += Math.max(0, realSeconds * this.speed);
+    while (this.accumulator >= 1 / 60 - 1e-8 && this.status === "battle") {
+      this.step(1 / 60);
+      this.accumulator = Math.max(0, this.accumulator - 1 / 60);
     }
   }
   step(dt = 0.05) {
     if (this.paused || this.status !== "battle") return;
     this.time += dt;
     this.spawnClock += dt;
-    while (
-      this.spawnClock >= 0.035 &&
-      this.queue.length &&
-      this.active < WORLD.cap
-    ) {
+    while (this.spawnClock >= 0.035 && this.queue.length && this.active < WORLD.cap) {
       this.spawnClock -= 0.035;
       const q = this.queue[0];
       let x = q.x + (this.random() - 0.5) * 92,
@@ -796,9 +729,7 @@ export class Battle {
       }
       const target = this.byId.get(u.target);
       if (target && target.hp > 0) {
-        const rad = isStructure(target)
-          ? Math.min(target.w, target.h) / 2
-          : target.size * 0.28;
+        const rad = isStructure(target) ? Math.min(target.w, target.h) / 2 : target.size * 0.28;
         const d = distance(u, target);
         if (d <= u.range + rad) {
           if (u.cooldown <= 0) this.hit(u, target);
@@ -817,25 +748,36 @@ export class Battle {
     }
     if (
       this.time >
-        45 * (this.reinforcementWave + 1) +
-          DIFFICULTIES[this.loadout.difficulty].response &&
+        45 * (this.reinforcementWave + 1) + DIFFICULTIES[this.loadout.difficulty].response &&
       this.reinforcementWave < 3
     ) {
       this.reinforcementWave++;
       for (const b of this.structures
         .filter((s) => s.kind === "barracks" && s.hp > 0)
         .slice(0, 1)) {
+        const threat = this.units
+          .filter((u) => u.side === 0 && u.hp > 0)
+          .sort((a, b) => distance(a, WORLD.crystal) - distance(b, WORLD.crystal))[0];
+        const laneX = threat ? (threat.x < 1200 ? 960 : threat.x > 2000 ? 2440 : 1480) : 1480;
         for (
           let i = 0;
           i < 4 + Math.round(DIFFICULTIES[this.loadout.difficulty].density * 3);
           i++
-        )
-          this.spawn(
+        ) {
+          const reserve = this.spawn(
             i % 3 === 0 ? "knight" : "soldier",
-            b.x + 90 + (i % 3) * 25,
-            b.y + 30 + Math.floor(i / 3) * 25,
+            b.x + ((i % 3) - 1) * 26,
+            b.y + 95 + Math.floor(i / 3) * 26,
             1,
           );
+          reserve.homeX = laneX + ((i % 3) - 1) * 24;
+          reserve.homeY = 1620 + (Math.floor(i / 3) - 1) * 20;
+          reserve.rally = [
+            { x: reserve.x, y: 1450 },
+            { x: reserve.homeX, y: 1450 },
+            { x: reserve.homeX, y: reserve.homeY },
+          ];
+        }
         this.events.push({
           type: "reinforce",
           x: b.x,
@@ -849,8 +791,7 @@ export class Battle {
   }
   private chooseTarget(u: Unit) {
     if (u.order?.type === "move") {
-      if (distance(u, u.order) < 25) u.order = undefined;
-      else {
+      if (distance(u, u.order) >= 25) {
         u.target = 0;
         return;
       }
@@ -868,13 +809,9 @@ export class Battle {
     let best = Infinity;
     for (const v of nearby) {
       if (v.side === u.side || (v.flying && u.range < 80)) continue;
-      if (u.side === 1 && distance(v, { x: u.homeX, y: u.homeY }) > 360)
-        continue;
+      if (u.side === 1 && distance(v, { x: u.homeX, y: u.homeY }) > 360) continue;
       let score = distance(u, v);
-      if (
-        ["wolf", "rider", "moon"].includes(u.kind) &&
-        ["archer", "mage"].includes(v.kind)
-      )
+      if (["wolf", "rider", "moon"].includes(u.kind) && ["archer", "mage"].includes(v.kind))
         score *= 0.55;
       if (score < best) {
         best = score;
@@ -897,23 +834,29 @@ export class Battle {
       ty: number,
       flow = false;
     if (u.order?.type === "move") {
+      if (distance(u, u.order) < 18) return;
       tx = u.order.x;
       ty = u.order.y;
       flow = true;
+      if (u.order.anchorX !== undefined && u.order.anchorY !== undefined) {
+        if (distance(u, u.order) < 240) flow = false;
+        else {
+          tx = u.order.anchorX;
+          ty = u.order.anchorY;
+        }
+      }
     } else if (target) {
       tx = target.x;
       ty = target.y;
     } else if (u.side === 1) {
-      tx = u.homeX;
-      ty = u.homeY;
-      if (distance(u, { x: tx, y: ty }) < 18) return;
+      tx = u.rally?.[0]?.x ?? u.homeX;
+      ty = u.rally?.[0]?.y ?? u.homeY;
+      if (distance(u, { x: tx, y: ty }) < 18) {
+        u.rally?.shift();
+        return;
+      }
     } else {
-      const p =
-        u.lane < 0
-          ? this.outposts[0]
-          : u.lane > 0
-            ? this.outposts[1]
-            : undefined;
+      const p = u.lane < 0 ? this.outposts[0] : u.lane > 0 ? this.outposts[1] : undefined;
       if (p && !p.captured && !u.flying) {
         if (distance(u, p) < 60) return;
         tx = p.x;
@@ -938,11 +881,7 @@ export class Battle {
     let nx = u.x + dx * stride,
       ny = u.y + dy * stride;
     if (!u.flying) {
-      const blocker = this.nav.obstacleAt(
-        nx,
-        ny,
-        u.kind === "spider" || u.kind === "web",
-      );
+      const blocker = this.nav.obstacleAt(nx, ny, u.kind === "spider" || u.kind === "web");
       if (blocker) {
         const wall = this.byId.get(blocker);
         if (wall && u.side === 0) {
@@ -955,8 +894,7 @@ export class Battle {
     // Light local separation prevents single pixel columns without heavy rigid body physics.
     if (u.id % 3 === Math.floor(this.time * 10) % 3) {
       for (const v of this.spatial.near(u.x, u.y, 18)) {
-        if (v.id === u.id || v.side !== u.side || !!v.flying !== !!u.flying)
-          continue;
+        if (v.id === u.id || v.side !== u.side || !!v.flying !== !!u.flying) continue;
         const d = distance(u, v) || 1;
         if (d < 14) {
           nx += ((u.x - v.x) / d) * dt * 18;
@@ -964,10 +902,7 @@ export class Battle {
         }
       }
     }
-    if (
-      u.flying ||
-      !this.nav.obstacleAt(nx, ny, u.kind === "spider" || u.kind === "web")
-    ) {
+    if (u.flying || !this.nav.obstacleAt(nx, ny, u.kind === "spider" || u.kind === "web")) {
       u.x = Math.max(40, Math.min(3160, nx));
       u.y = Math.max(40, Math.min(2360, ny));
       u.moving = true;
@@ -978,21 +913,12 @@ export class Battle {
   private updateTowers(dt: number) {
     for (const s of this.structures) {
       s.attackFlash = Math.max(0, s.attackFlash - dt);
-      if (
-        s.hp <= 0 ||
-        !["arrow", "cannon", "antiAir", "holy", "crystal"].includes(s.kind)
-      )
+      if (s.hp <= 0 || !["arrow", "cannon", "antiAir", "holy", "crystal"].includes(s.kind))
         continue;
       s.cooldown -= dt;
       if (s.cooldown > 0) continue;
       const range =
-        s.kind === "crystal"
-          ? 170
-          : s.kind === "cannon"
-            ? 370
-            : s.kind === "holy"
-              ? 300
-              : 340;
+        s.kind === "crystal" ? 170 : s.kind === "cannon" ? 370 : s.kind === "holy" ? 300 : 340;
       const targets = this.spatial
         .near(s.x, s.y, range)
         .filter(
@@ -1015,10 +941,7 @@ export class Battle {
         )[0];
       else if (s.kind === "cannon")
         target = targets.reduce((a, b) =>
-          this.spatial.near(a.x, a.y, 95).length >
-          this.spatial.near(b.x, b.y, 95).length
-            ? a
-            : b,
+          this.spatial.near(a.x, a.y, 95).length > this.spatial.near(b.x, b.y, 95).length ? a : b,
         );
       else target = targets.sort((a, b) => distance(a, s) - distance(b, s))[0];
       const damage =
@@ -1033,13 +956,7 @@ export class Battle {
                 : 16;
       const splash = s.kind === "cannon" ? 110 : s.kind === "crystal" ? 75 : 0;
       s.cooldown =
-        s.kind === "cannon"
-          ? 4.4
-          : s.kind === "holy"
-            ? 2.3
-            : s.kind === "crystal"
-              ? 3
-              : 1.35;
+        s.kind === "cannon" ? 4.4 : s.kind === "holy" ? 2.3 : s.kind === "crystal" ? 3 : 1.35;
       s.attackFlash = 0.3;
       this.events.push({
         type: "shot",
@@ -1097,11 +1014,7 @@ export class Battle {
     } else if (
       this.active === 0 &&
       this.reserves === 0 &&
-      !ARMY_KEYS.some(
-        (k) =>
-          unlocked(this.loadout, k) &&
-          this.money >= batchPrice(this.loadout, k),
-      )
+      !ARMY_KEYS.some((k) => unlocked(this.loadout, k) && this.money >= batchPrice(this.loadout, k))
     ) {
       this.status = "defeat";
       this.reason = "军团力竭 · 已无可用作战手段";

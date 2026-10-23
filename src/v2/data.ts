@@ -9,8 +9,7 @@ export type Army =
   | "spider"
   | "treant"
   | "split";
-export type Commander =
-  "dragon" | "titan" | "moon" | "web" | "forest" | "emperor";
+export type Commander = "dragon" | "titan" | "moon" | "web" | "forest" | "emperor";
 export type Specialization = "summon" | "evolve" | "element";
 export type Difficulty = "easy" | "normal" | "hard";
 export type Kind =
@@ -229,8 +228,7 @@ export const COMMANDERS: Record<
     cooldown: 60,
     radius: 270,
     castRange: 420,
-    description:
-      "扇形雷霆吐息，对前方敌人造成170伤害。飞行越墙，防空塔是主要威胁。",
+    description: "扇形雷霆吐息，对前方敌人造成170伤害。飞行越墙，防空塔是主要威胁。",
     color: "#73caed",
     portrait: 0,
     stats: {
@@ -364,16 +362,14 @@ export const SPECS: Record<
   summon: {
     name: "召唤魔王",
     title: "万军自虚空而来",
-    description:
-      "四种通用兵价格 −15%。异界召唤：合法区域召唤30只史莱姆，每场2次。",
+    description: "四种通用兵价格 −15%。异界召唤：合法区域召唤30只史莱姆，每场2次。",
     skill: "异界召唤",
     cooldown: 15,
   },
   evolve: {
     name: "进化魔王",
     title: "超越血脉的极限",
-    description:
-      "专属兵生命和伤害 +10%。进化祝福：范围内友军伤害 +20%，持续10秒。",
+    description: "专属兵生命和伤害 +10%。进化祝福：范围内友军伤害 +20%，持续10秒。",
     skill: "进化祝福",
     cooldown: 65,
   },

@@ -1,23 +1,26 @@
 {
-  "name": "zombie-siege-ash-sovereign",
+  "name": "monster-siege-sovereign",
   "private": true,
-  "version": "1.0.0",
+  "version": "2.0.0",
   "type": "module",
-  "description": "《丧尸围城：亡骸君主》— 暗黑奇幻像素风攻城策略游戏（软件工程课程项目）",
+  "description": "《异界围城：魔物之王》— 原创奇幻魔物军团实时攻城策略游戏",
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "sim": "tsx scripts/simulate.ts"
-  },
-  "dependencies": {
-    "phaser": "^3.90.0"
+    "sim": "tsx scripts/v2-simulate.ts",
+    "typecheck": "tsc --noEmit",
+    "test:e2e": "node scripts/run-browser.mjs",
+    "assets:pack": "node scripts/pack-art.mjs",
+    "format": "prettier --write src tests scripts/*.ts scripts/*.mjs *.json",
+    "format:check": "prettier --check src tests scripts/*.ts scripts/*.mjs *.json"
   },
   "devDependencies": {
+    "@types/node": "^24.19.2",
     "prettier": "^3.9.10",
-    "puppeteer-core": "^24.43.1",
+    "puppeteer-core": "^25.16.0",
     "tsx": "^4.23.15",
     "typescript": "^5.9.3",
     "vite": "^7.1.12",

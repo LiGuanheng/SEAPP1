@@ -34,8 +34,7 @@ await page.click('[data-action="preset"][data-key="breach"]');
 await page.click('[data-action="launch"]');
 await page.click('[data-action="skip-intro"]');
 await page.click('[data-action="pause"]');
-const position = (x, y) =>
-  page.evaluate((x, y) => window.__SIEGE__.worldToScreen(x, y), x, y);
+const position = (x, y) => page.evaluate((x, y) => window.__SIEGE__.worldToScreen(x, y), x, y);
 const before = await page.evaluate(() => ({
   stock: window.__SIEGE__.battle.loadout.inventory.goblin,
   money: window.__SIEGE__.battle.money,
@@ -47,11 +46,7 @@ const after = await page.evaluate(() => ({
   stock: window.__SIEGE__.battle.loadout.inventory.goblin,
   money: window.__SIEGE__.battle.money,
 }));
-check(
-  "illegal click consumes nothing",
-  JSON.stringify(before) === JSON.stringify(after),
-  after,
-);
+check("illegal click consumes nothing", JSON.stringify(before) === JSON.stringify(after), after);
 await page.keyboard.press("Escape");
 await page.select("#deploy-batch", "3");
 await page.click('[data-action="deploy"][data-key="goblin"]');
@@ -72,17 +67,13 @@ const start = { x: rect.x + rect.width / 2, y: rect.y + rect.height / 2 };
 await page.mouse.dragAndDrop(start, good, { delay: 250 });
 check(
   "native HTML5 drag deploy",
-  await page.evaluate(
-    () => window.__SIEGE__.battle.loadout.inventory.slime === 40,
-  ),
+  await page.evaluate(() => window.__SIEGE__.battle.loadout.inventory.slime === 40),
   await page.evaluate(() => window.__SIEGE__.battle.snapshot()),
 );
 await page.mouse.dragAndDrop(start, bad, { delay: 200 });
 check(
   "native illegal drag keeps inventory",
-  await page.evaluate(
-    () => window.__SIEGE__.battle.loadout.inventory.slime === 40,
-  ),
+  await page.evaluate(() => window.__SIEGE__.battle.loadout.inventory.slime === 40),
 );
 await page.setDragInterception(false);
 const frozen = await page.evaluate(() => window.__SIEGE__.battle.time);
@@ -99,9 +90,7 @@ await page.mouse.click(move.x, move.y, { button: "right" });
 check(
   "right click creates real movement orders",
   await page.evaluate(() =>
-    window.__SIEGE__.battle.units.some(
-      (u) => u.side === 0 && u.order?.type === "move",
-    ),
+    window.__SIEGE__.battle.units.some((u) => u.side === 0 && u.order?.type === "move"),
   ),
 );
 await page.keyboard.down("Control");
@@ -113,8 +102,7 @@ check(
   await page.evaluate(
     () =>
       window.__SIEGE__.battle.groups[0].size > 0 &&
-      window.__SIEGE__.battle.selected.size ===
-        window.__SIEGE__.battle.groups[0].size,
+      window.__SIEGE__.battle.selected.size === window.__SIEGE__.battle.groups[0].size,
   ),
 );
 await page.click('[data-action="charge"]');

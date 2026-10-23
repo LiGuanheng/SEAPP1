@@ -1,0 +1,29 @@
+{
+  "date": "2026-10-23T22:19:42.428Z",
+  "environment": "Real headless Chrome on local Windows host; requestAnimationFrame measured for 10s. No extrapolated FPS.",
+  "bootMs": 854,
+  "viewport": {
+    "width": 1920,
+    "height": 1080
+  },
+  "sampleSeconds": 10.0118,
+  "renderedFrames": 1299,
+  "averageFps": 129.74689865958172,
+  "p95FrameMs": 12.200000000000728,
+  "minFriendly": 300,
+  "maxFriendly": 300,
+  "queued": 151,
+  "heapMiB": 3.8883543014526367,
+  "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+  "logicalCores": 32,
+  "deviceMemoryGiB": 32,
+  "selected": 300,
+  "lifecycle": {
+    "canvasCount": 2,
+    "oldSceneStopped": true,
+    "oldListenersReleased": true,
+    "currentPaused": true
+  },
+  "errors": [],
+  "pass": true
+}

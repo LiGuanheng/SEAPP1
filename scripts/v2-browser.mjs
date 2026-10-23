@@ -8,11 +8,7 @@ if (!executablePath) throw new Error("Chrome/Edge not found");
 const browser = await puppeteer.launch({
   executablePath,
   headless: true,
-  args: [
-    "--no-sandbox",
-    "--disable-background-timer-throttling",
-    "--mute-audio",
-  ],
+  args: ["--no-sandbox", "--disable-background-timer-throttling", "--mute-audio"],
   defaultViewport: { width: 1440, height: 900 },
 });
 const page = await browser.newPage(),
@@ -31,10 +27,7 @@ await page.goto(process.argv[2] ?? "http://127.0.0.1:5173/", {
 });
 await page.waitForSelector('[data-action="new"]');
 await page.screenshot({ path: `${dir}/01-menu.png` });
-check(
-  "main menu",
-  (await page.title()) === "异界围城：魔物之王 · Monster Sovereign",
-);
+check("main menu", (await page.title()) === "异界围城：魔物之王 · Monster Sovereign");
 await page.click('[data-action="new"]');
 await page.click('[data-action="next"]');
 await page.click('[data-action="next"]');
@@ -51,13 +44,8 @@ await wait(1000);
 await page.screenshot({ path: `${dir}/04-city.png` });
 await page.click('[data-action="overview"]');
 await page.screenshot({ path: `${dir}/16-city-panorama.png` });
-check(
-  "battle starts",
-  await page.evaluate(() => window.__SIEGE__.battle.status === "battle"),
-);
-const point = await page.evaluate(() =>
-  window.__SIEGE__.worldToScreen(850, 1970),
-);
+check("battle starts", await page.evaluate(() => window.__SIEGE__.battle.status === "battle"));
+const point = await page.evaluate(() => window.__SIEGE__.worldToScreen(850, 1970));
 await page.click('[data-action="all-deploy"]');
 await page.mouse.click(point.x, point.y);
 await wait(9000);
@@ -79,8 +67,7 @@ check(
     const r = document.querySelector(".battle-dock").getBoundingClientRect();
     return (
       r.bottom <= innerHeight &&
-      document.querySelector(".battle-view").getBoundingClientRect().height >
-        350
+      document.querySelector(".battle-view").getBoundingClientRect().height > 350
     );
   }),
 );

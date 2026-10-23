@@ -41,15 +41,7 @@ export const OUTPOSTS = [
 export function createStructures(difficulty: string): Structure[] {
   let id = 1;
   const a: Structure[] = [];
-  function add(
-    kind: Kind,
-    x: number,
-    y: number,
-    w: number,
-    h: number,
-    hp: number,
-    weak = false,
-  ) {
+  function add(kind: Kind, x: number, y: number, w: number, h: number, hp: number, weak = false) {
     a.push({
       id: id++,
       kind,
@@ -62,11 +54,7 @@ export function createStructures(difficulty: string): Structure[] {
       weak,
       cooldown: 1 + (id % 7) * 0.13,
       reward:
-        kind === "barracks"
-          ? 100
-          : ["arrow", "cannon", "antiAir", "holy"].includes(kind)
-            ? 25
-            : 0,
+        kind === "barracks" ? 100 : ["arrow", "cannon", "antiAir", "holy"].includes(kind) ? 25 : 0,
       paid: false,
       attackFlash: 0,
     });
@@ -75,15 +63,7 @@ export function createStructures(difficulty: string): Structure[] {
   for (let x = 550; x <= 2650; x += 100) {
     const gate = x >= 1450 && x <= 1650,
       weak = (x >= 850 && x <= 1050) || (x >= 2250 && x <= 2450);
-    add(
-      gate ? "gate" : "wall",
-      x,
-      1700,
-      100,
-      48,
-      gate ? 1500 : weak ? 650 : 1050,
-      weak,
-    );
+    add(gate ? "gate" : "wall", x, 1700, 100, 48, gate ? 1500 : weak ? 650 : 1050, weak);
     add("wall", x, 300, 100, 48, 1400);
   }
   for (let y = 400; y < 1700; y += 100) {

@@ -1,30 +1,14 @@
 import { describe, it, expect } from "vitest";
-import {
-  ARMIES,
-  ARMY_KEYS,
-  COMMANDER_KEYS,
-  DIFFICULTIES,
-  type Commander,
-} from "../src/v2/data";
-import {
-  createLoadout,
-  purchase,
-  recruit,
-  refund,
-  batchPrice,
-  preset,
-} from "../src/v2/economy";
+import { ARMIES, ARMY_KEYS, COMMANDER_KEYS, DIFFICULTIES, type Commander } from "../src/v2/data";
+import { createLoadout, purchase, recruit, refund, batchPrice, preset } from "../src/v2/economy";
 import { Battle } from "../src/v2/simulation";
 describe("V2 ledger and loadout", () => {
-  it.each(["easy", "normal", "hard"] as const)(
-    "difficulty %s has exact money/time",
-    (d) => {
-      const l = createLoadout(d),
-        b = new Battle(l);
-      expect(l.money).toBe(DIFFICULTIES[d].money);
-      expect(b.remaining).toBe(DIFFICULTIES[d].seconds);
-    },
-  );
+  it.each(["easy", "normal", "hard"] as const)("difficulty %s has exact money/time", (d) => {
+    const l = createLoadout(d),
+      b = new Battle(l);
+    expect(l.money).toBe(DIFFICULTIES[d].money);
+    expect(b.remaining).toBe(DIFFICULTIES[d].seconds);
+  });
   it("buy is atomic, deployment is separate, no negative funds on rapid buy", () => {
     const l = createLoadout();
     expect(purchase(l, "slime", 1)).toBe(1);
@@ -32,9 +16,7 @@ describe("V2 ledger and loadout", () => {
     expect(l.money).toBe(2720);
     for (let i = 0; i < 100; i++) purchase(l, "goblin", 1);
     expect(l.money).toBeGreaterThanOrEqual(0);
-    expect(
-      (l.inventory.goblin / 20) * 95 + (l.inventory.slime / 40) * 80 + l.money,
-    ).toBe(2800);
+    expect((l.inventory.goblin / 20) * 95 + (l.inventory.slime / 40) * 80 + l.money).toBe(2800);
   });
   it("recruitment caps at four and unlocks only its own special", () => {
     const l = createLoadout();
@@ -54,8 +36,7 @@ describe("V2 ledger and loadout", () => {
   it("invalid amounts and locked purchases have zero effects", () => {
     const l = createLoadout(),
       before = structuredClone(l);
-    for (const n of [0, -1, NaN, -Infinity])
-      expect(purchase(l, "slime", n)).toBe(0);
+    for (const n of [0, -1, NaN, -Infinity]) expect(purchase(l, "slime", n)).toBe(0);
     expect(purchase(l, "wyvern", 3)).toBe(0);
     expect(l).toEqual(before);
   });
@@ -68,6 +49,17 @@ describe("V2 ledger and loadout", () => {
   });
 });
 describe("V2 deployment, clock and result invariants", () => {
+  it("fixed simulation gives identical results across render frame rates", () => {
+    const l = preset("normal", "evolve"),
+      a = new Battle(l, 42),
+      b = new Battle(l, 42);
+    a.deployAll(850, 2070);
+    b.deployAll(850, 2070);
+    a.advance(1);
+    for (let i = 0; i < 120; i++) b.advance(1 / 120);
+    expect(a.snapshot()).toEqual(b.snapshot());
+    expect(a.units).toEqual(b.units);
+  });
   it("invalid crystal deployment never consumes stock or money", () => {
     const b = new Battle(preset("normal", "evolve"));
     const m = b.money,
@@ -180,9 +172,7 @@ describe("V2 six manual heroes and commands", () => {
   });
   it("titan breaks a real collision segment, cooldown forbids repeat", () => {
     const b = hero("titan");
-    const wall = b.structures.find(
-      (s) => s.weak && s.x === 850 && s.y === 1700,
-    )!;
+    const wall = b.structures.find((s) => s.weak && s.x === 850 && s.y === 1700)!;
     const hp = wall.hp;
     expect(b.cast("titan", wall.x, wall.y)).toBe("");
     expect(wall.hp).toBe(Math.max(0, hp - 750));
@@ -252,6 +242,33 @@ describe("V2 six manual heroes and commands", () => {
   });
 });
 describe("V2 siege and forward reinforcements", () => {
+  it("finite reserves spawn outside collision and physically march to a defense lane", () => {
+    const b = new Battle(createLoadout());
+    const firstId = Math.max(...b.units.map((u) => u.id));
+    b.time = 57;
+    b.step(0.05);
+    const reserves = b.units.filter((u) => u.id > firstId);
+    expect(reserves).toHaveLength(7);
+    expect(reserves.every((u) => !b.nav.obstacleAt(u.x, u.y))).toBe(true);
+    const before = reserves.map((u) => ({ x: u.x, y: u.y }));
+    b.advance(2);
+    expect(reserves.some((u, i) => Math.hypot(u.x - before[i].x, u.y - before[i].y) > 40)).toBe(
+      true,
+    );
+  });
+  it("move command holds its destination until the player orders a charge", () => {
+    const b = new Battle(createLoadout());
+    const u = b.spawn("goblin", 700, 2000);
+    b.command([u.id], { type: "move", x: 700, y: 2150 });
+    b.advance(6);
+    expect(u.order?.type).toBe("move");
+    expect(Math.hypot(u.x - 700, u.y - 2150)).toBeLessThan(25);
+    const y = u.y;
+    b.advance(4);
+    expect(u.y).toBeCloseTo(y);
+    b.charge();
+    expect(u.order).toBeUndefined();
+  });
   it("tower artwork can be targeted at its visible upper body", () => {
     const b = new Battle(createLoadout());
     const tower = b.structures.find((s) => s.kind === "arrow")!;
@@ -291,9 +308,7 @@ describe("V2 siege and forward reinforcements", () => {
     const b = new Battle(createLoadout());
     expect(b.outposts[0].connected).toBe(false);
     expect(b.canDeploy(850, 1360)).toBe(false);
-    const wall = b.structures.find(
-      (s) => s.weak && s.x === 850 && s.y === 1700,
-    )!;
+    const wall = b.structures.find((s) => s.weak && s.x === 850 && s.y === 1700)!;
     b.damage(wall, 9999);
     b.step(0.05);
     expect(b.outposts[0].connected).toBe(true);
@@ -339,19 +354,14 @@ describe("V2 siege and forward reinforcements", () => {
   it("air defense ignores ground units and fires on flyers", () => {
     const b = new Battle(createLoadout());
     for (const u of b.units) u.hp = 0;
-    for (const s of b.structures)
-      if (!["crystal", "antiAir"].includes(s.kind)) b.damage(s, 99999);
+    for (const s of b.structures) if (!["crystal", "antiAir"].includes(s.kind)) b.damage(s, 99999);
     b.spawn("golem", 2330, 1650);
     b.events.length = 0;
     b.step(0.05);
-    expect(
-      b.events.filter((e) => e.type === "shot" && e.kind === "antiAir"),
-    ).toHaveLength(0);
+    expect(b.events.filter((e) => e.type === "shot" && e.kind === "antiAir")).toHaveLength(0);
     b.spawn("wyvern", 2330, 1630);
     for (let i = 0; i < 50; i++) b.step(0.05);
-    expect(
-      b.events.some((e) => e.type === "shot" && e.kind === "antiAir"),
-    ).toBe(true);
+    expect(b.events.some((e) => e.type === "shot" && e.kind === "antiAir")).toBe(true);
   });
   it("destroyed barracks prevents future reserves; only three waves exist", () => {
     const b = new Battle(createLoadout());

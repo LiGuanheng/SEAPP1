@@ -1,8 +1,9 @@
 import { COMMANDERS, isCommander, type Kind } from "./data";
 import type { Battle, Event, Unit } from "./simulation";
 import type { Structure } from "./world";
-export const artUrl = (s: string) => `${import.meta.env.BASE_URL}art/${s}.png`;
+export const artUrl = (s: string) => `${import.meta.env.BASE_URL}art/${s}.webp`;
 const images = new Map<string, HTMLImageElement>();
+const atlasFrames = new Map<string, HTMLCanvasElement>();
 export async function loadArt() {
   await Promise.all(
     [
@@ -11,7 +12,6 @@ export async function loadArt() {
       "units",
       "units-move",
       "structures",
-      "heroes",
       "hero-dragon",
       "hero-titan",
       "hero-moon",
@@ -33,12 +33,7 @@ export async function loadArt() {
     ),
   );
 }
-const polygon = (
-  c: CanvasRenderingContext2D,
-  pts: number[][],
-  fill: string,
-  stroke?: string,
-) => {
+const polygon = (c: CanvasRenderingContext2D, pts: number[][], fill: string, stroke?: string) => {
   c.beginPath();
   pts.forEach(([x, y], i) => (i ? c.lineTo(x, y) : c.moveTo(x, y)));
   c.closePath();
@@ -68,10 +63,8 @@ export class Renderer {
   private miniClock = 0;
   private shake = 0;
   pointer = { x: 1600, y: 2070 };
-  mode:
-    | { type: "none" }
-    | { type: "deploy"; kind: Kind | "all" }
-    | { type: "skill"; kind: Kind } = { type: "none" };
+  mode: { type: "none" } | { type: "deploy"; kind: Kind | "all" } | { type: "skill"; kind: Kind } =
+    { type: "none" };
   selection: { x: number; y: number; tx: number; ty: number } | null = null;
   onFrame: () => void = () => {};
   onEvent: (e: Event) => void = () => {};
@@ -125,10 +118,7 @@ export class Renderer {
   }
   zoomAt(delta: number, x: number, y: number) {
     const before = this.screenToWorld(x, y);
-    this.camera.zoom = Math.max(
-      0.22,
-      Math.min(1.45, this.camera.zoom * (delta > 0 ? 0.88 : 1.12)),
-    );
+    this.camera.zoom = Math.max(0.22, Math.min(1.45, this.camera.zoom * (delta > 0 ? 0.88 : 1.12)));
     const after = this.screenToWorld(x, y);
     this.camera.x += before.x - after.x;
     this.camera.y += before.y - after.y;
@@ -163,8 +153,7 @@ export class Renderer {
                       ? 9
                       : 1.5,
         });
-        if (e.type === "wall" || (e.kind === "titan" && e.type === "skill"))
-          this.shake = 9;
+        if (e.type === "wall" || (e.kind === "titan" && e.type === "skill")) this.shake = 9;
         this.onEvent(e);
       }
       this.fx = this.fx
@@ -189,6 +178,9 @@ export class Renderer {
     cancelAnimationFrame(this.raf);
     this.resizeObserver.disconnect();
     this.canvas.remove();
+    this.ground.width = 1;
+    this.ground.height = 1;
+    this.fx.length = 0;
   }
   private drawAtlas(
     c: CanvasRenderingContext2D,
@@ -203,19 +195,31 @@ export class Renderer {
   ) {
     const img = images.get(name);
     if (!img?.complete || !img.naturalWidth) return;
-    const sw = img.naturalWidth / cols,
-      sh = img.naturalHeight / rows;
-    c.drawImage(
-      img,
-      (index % cols) * sw,
-      Math.floor(index / cols) * sh,
-      sw,
-      sh,
-      x - w / 2,
-      y - h,
-      w,
-      h,
-    );
+    const key = `${name}:${index}`;
+    let frame = atlasFrames.get(key);
+    if (!frame) {
+      const sw = img.naturalWidth / cols,
+        sh = img.naturalHeight / rows;
+      frame = document.createElement("canvas");
+      const size = name.startsWith("units") ? 112 : name.startsWith("hero-") ? 256 : 512;
+      frame.width = size;
+      frame.height = Math.round((size * sh) / sw);
+      frame
+        .getContext("2d")!
+        .drawImage(
+          img,
+          (index % cols) * sw,
+          Math.floor(index / cols) * sh,
+          sw,
+          sh,
+          0,
+          0,
+          frame.width,
+          frame.height,
+        );
+      atlasFrames.set(key, frame);
+    }
+    c.drawImage(frame, x - w / 2, y - h, w, h);
   }
   private material(
     c: CanvasRenderingContext2D,
@@ -264,8 +268,7 @@ export class Renderer {
     for (let i = 0; i < 26000; i++) {
       const x = rng() * 3200,
         y = rng() * 2400;
-      c.fillStyle =
-        rng() > 0.5 ? "rgba(204,195,140,.065)" : "rgba(8,25,23,.09)";
+      c.fillStyle = rng() > 0.5 ? "rgba(204,195,140,.065)" : "rgba(8,25,23,.09)";
       c.fillRect(x, y, 2 + rng() * 13, 1 + rng() * 6);
     }
     // Ring moat and raised limestone precinct.
@@ -280,8 +283,7 @@ export class Renderer {
     for (let i = 0; i < 18000; i++) {
       const x = 530 + rng() * 2140,
         y = 330 + rng() * 1340;
-      c.fillStyle =
-        rng() > 0.5 ? "rgba(224,222,185,.12)" : "rgba(30,42,40,.10)";
+      c.fillStyle = rng() > 0.5 ? "rgba(224,222,185,.12)" : "rgba(30,42,40,.10)";
       c.fillRect(x, y, 4 + rng() * 22, 2 + rng() * 8);
     }
     c.fillStyle = this.material(c, 0, 240);
@@ -378,13 +380,7 @@ export class Renderer {
       c.lineTo(1600 + Math.cos(angle) * 330, 1010 + Math.sin(angle) * 264);
       c.stroke();
     }
-    const house = (
-      x: number,
-      y: number,
-      w: number,
-      h: number,
-      royal = false,
-    ) => {
+    const house = (x: number, y: number, w: number, h: number, royal = false) => {
       c.fillStyle = "rgba(13,26,25,.18)";
       c.beginPath();
       c.ellipse(x + 12, y + 4, w * 0.58, 19, 0, 0, 7);
@@ -407,13 +403,7 @@ export class Renderer {
         const x = 660 + col * 170,
           y = 510 + row * 175;
         if (Math.abs(x - 1600) < 160) continue;
-        house(
-          x + (rng() - 0.5) * 28,
-          y,
-          95 + rng() * 25,
-          60 + rng() * 20,
-          col % 4 === 0,
-        );
+        house(x + (rng() - 0.5) * 28, y, 95 + rng() * 25, 60 + rng() * 20, col % 4 === 0);
       }
     for (const side of [0, 1])
       for (let row = 0; row < 3; row++)
@@ -477,24 +467,22 @@ export class Renderer {
     c.translate(-this.camera.x, -this.camera.y);
     c.drawImage(this.ground, 0, 0);
     this.drawZones(c, t);
-    for (const s of this.battle.structures.filter(
-      (s) => s.hp <= 0 && s.kind !== "crystal",
-    ))
+    for (const s of this.battle.structures.filter((s) => s.hp <= 0 && s.kind !== "crystal"))
       this.drawRuin(c, s);
     const objects: (
-      | { y: number; type: "unit"; u: Unit }
-      | { y: number; type: "structure"; s: Structure }
+      { y: number; type: "unit"; u: Unit } | { y: number; type: "structure"; s: Structure }
     )[] = [];
+    const visible = (x: number, y: number) =>
+      Math.abs(x - this.camera.x) < this.width / 2 / this.camera.zoom + 230 &&
+      Math.abs(y - this.camera.y) < this.height / 2 / this.camera.zoom + 320;
     for (const s of this.battle.structures)
-      if (s.hp > 0) objects.push({ y: s.y, type: "structure", s });
+      if (s.hp > 0 && visible(s.x, s.y)) objects.push({ y: s.y, type: "structure", s });
     for (const u of this.battle.units)
-      if (u.hp > 0 || this.battle.time - u.deadAt < 1.4)
+      if ((u.hp > 0 || this.battle.time - u.deadAt < 1.4) && visible(u.x, u.y))
         objects.push({ y: u.y + (u.flying ? 100 : 0), type: "unit", u });
     objects.sort((a, b) => a.y - b.y);
     for (const o of objects)
-      o.type === "unit"
-        ? this.drawUnit(c, o.u, t)
-        : this.drawStructure(c, o.s, t);
+      o.type === "unit" ? this.drawUnit(c, o.u, t) : this.drawStructure(c, o.s, t);
     for (const f of this.fx) this.drawEffect(c, f, t);
     this.drawPointer(c, t);
     if (this.selection) {
@@ -538,19 +526,10 @@ export class Renderer {
       c.strokeRect(x - 260, 1870, 520, 400);
       c.fillRect(x - 260, 1870, 520, 400);
       c.setLineDash([]);
-      this.text(
-        c,
-        ["西境召唤阵", "正门召唤阵", "东境召唤阵"][i],
-        x,
-        2220,
-        22,
-        "#c0cbb2",
-      );
+      this.text(c, ["西境召唤阵", "正门召唤阵", "东境召唤阵"][i], x, 2220, 22, "#c0cbb2");
     }
     for (const p of this.battle.outposts) {
-      c.fillStyle = p.captured
-        ? "rgba(75,192,154,.13)"
-        : "rgba(164,143,94,.10)";
+      c.fillStyle = p.captured ? "rgba(75,192,154,.13)" : "rgba(164,143,94,.10)";
       c.beginPath();
       c.ellipse(p.x, p.y, 145, 95, 0, 0, 7);
       c.fill();
@@ -561,13 +540,7 @@ export class Renderer {
         c.strokeStyle = "#83e3c2";
         c.lineWidth = 10;
         c.beginPath();
-        c.arc(
-          p.x,
-          p.y,
-          90,
-          -Math.PI / 2,
-          -Math.PI / 2 + (Math.PI * 2 * p.progress) / 8,
-        );
+        c.arc(p.x, p.y, 90, -Math.PI / 2, -Math.PI / 2 + (Math.PI * 2 * p.progress) / 8);
         c.stroke();
       }
       this.text(
@@ -598,13 +571,7 @@ export class Renderer {
     c.fillStyle = color;
     c.fillText(s, x, y);
   }
-  private flag(
-    c: CanvasRenderingContext2D,
-    x: number,
-    y: number,
-    t: number,
-    green = false,
-  ) {
+  private flag(c: CanvasRenderingContext2D, x: number, y: number, t: number, green = false) {
     c.fillStyle = "#bca877";
     c.fillRect(x, y - 85, 3, 90);
     polygon(
@@ -655,8 +622,7 @@ export class Renderer {
         }
       }
       c.fillStyle = "#c6c4ab";
-      for (let xx = x; xx < x + s.w; xx += 22)
-        c.fillRect(xx, y - tall - 15, 13, 15);
+      for (let xx = x; xx < x + s.w; xx += 22) c.fillRect(xx, y - tall - 15, 13, 15);
       if (s.kind === "gate") {
         c.fillStyle = "#584e3c";
         c.fillRect(x + 8, y - tall + 22, s.w - 16, tall + 2);
@@ -684,8 +650,7 @@ export class Renderer {
       if (s.id % 5 === 0) this.flag(c, s.x, s.y - tall, t);
       if (s.y === 1700 && [550, 1150, 2050, 2650].includes(s.x))
         this.drawAtlas(c, "city", 4, 4, 2, s.x, s.y + 14, 140, 180);
-      if (s.y === 1700 && s.x === 1550)
-        this.drawAtlas(c, "city", 7, 4, 2, s.x, s.y + 18, 240, 250);
+      if (s.y === 1700 && s.x === 1550) this.drawAtlas(c, "city", 7, 4, 2, s.x, s.y + 18, 240, 250);
     } else {
       const indices: Partial<Record<Kind, number>> = {
         arrow: 0,
@@ -696,34 +661,15 @@ export class Renderer {
         crystal: 5,
       };
       const width =
-        s.kind === "crystal"
-          ? 290
-          : s.kind === "barracks"
-            ? 220
-            : s.kind === "cannon"
-              ? 175
-              : 152;
+        s.kind === "crystal" ? 290 : s.kind === "barracks" ? 220 : s.kind === "cannon" ? 175 : 152;
       const height =
-        s.kind === "crystal"
-          ? 310
-          : s.kind === "barracks"
-            ? 180
-            : s.kind === "cannon"
-              ? 155
-              : 220;
+        s.kind === "crystal" ? 310 : s.kind === "barracks" ? 180 : s.kind === "cannon" ? 155 : 220;
       c.fillStyle = "rgba(7,23,25,.22)";
       c.beginPath();
       c.ellipse(s.x + 12, s.y + 9, width * 0.42, 24, 0, 0, 7);
       c.fill();
       if (s.kind === "crystal") {
-        const glow = c.createRadialGradient(
-          s.x,
-          s.y - 130,
-          10,
-          s.x,
-          s.y - 130,
-          230,
-        );
+        const glow = c.createRadialGradient(s.x, s.y - 130, 10, s.x, s.y - 130, 230);
         glow.addColorStop(0, "rgba(255,235,161,.24)");
         glow.addColorStop(1, "transparent");
         c.fillStyle = glow;
@@ -744,22 +690,10 @@ export class Renderer {
         c.restore();
       }
       c.save();
-      if (s.attackFlash > 0 && s.kind === "cannon")
-        c.translate(0, (5 * s.attackFlash) / 0.3);
-      this.drawAtlas(
-        c,
-        "structures",
-        indices[s.kind] ?? 0,
-        3,
-        2,
-        s.x,
-        s.y + 24,
-        width,
-        height,
-      );
+      if (s.attackFlash > 0 && s.kind === "cannon") c.translate(0, (5 * s.attackFlash) / 0.3);
+      this.drawAtlas(c, "structures", indices[s.kind] ?? 0, 3, 2, s.x, s.y + 24, width, height);
       c.restore();
-      if (s.kind === "crystal")
-        this.text(c, "日 轮 圣 晶", s.x, s.y - 290, 26, "#f5e1a5");
+      if (s.kind === "crystal") this.text(c, "日 轮 圣 晶", s.x, s.y - 290, 26, "#f5e1a5");
       if (s.attackFlash > 0 && s.kind !== "crystal") {
         c.save();
         c.globalCompositeOperation = "lighter";
@@ -771,27 +705,12 @@ export class Renderer {
       }
     }
     if (s.hp < s.maxHp && s.kind !== "crystal")
-      this.health(
-        c,
-        s.x,
-        s.y + 22,
-        Math.max(45, s.w * 0.8),
-        s.hp / s.maxHp,
-        "#dbc08a",
-      );
+      this.health(c, s.x, s.y + 22, Math.max(45, s.w * 0.8), s.hp / s.maxHp, "#dbc08a");
   }
   private drawRuin(c: CanvasRenderingContext2D, s: Structure) {
     c.fillStyle = "#747b6b";
     c.beginPath();
-    c.ellipse(
-      s.x,
-      s.y,
-      Math.max(30, s.w * 0.52),
-      Math.max(18, s.h * 0.4),
-      0,
-      0,
-      7,
-    );
+    c.ellipse(s.x, s.y, Math.max(30, s.w * 0.52), Math.max(18, s.h * 0.4), 0, 0, 7);
     c.fill();
     for (let i = 0; i < 9; i++) {
       const x = s.x + Math.sin(i * 17 + s.id) * s.w * 0.48,
@@ -829,12 +748,9 @@ export class Renderer {
     const selected = this.battle.selected.has(u.id);
     const size = u.size;
     const phase =
-      this.battle.time *
-        (u.kind === "slime" || u.kind === "split" ? 7 : u.speed * 0.08) +
-      u.id;
+      this.battle.time * (u.kind === "slime" || u.kind === "split" ? 7 : u.speed * 0.08) + u.id;
     const bob = u.moving
-      ? Math.sin(phase) *
-        (u.flying ? 9 : u.kind === "slime" || u.kind === "split" ? 6 : 2.2)
+      ? Math.sin(phase) * (u.flying ? 9 : u.kind === "slime" || u.kind === "split" ? 6 : 2.2)
       : Math.sin(t * 2 + u.id) * 0.8;
     c.save();
     c.globalAlpha = 1 - death;
@@ -843,11 +759,7 @@ export class Renderer {
     c.ellipse(u.x + 4, u.y + 3, size * 0.36, size * 0.14, 0, 0, 7);
     c.fill();
     if (selected || hero) {
-      c.strokeStyle = selected
-        ? "#adffe2"
-        : u.side === 0
-          ? "#b5a56c"
-          : "#dcb37d";
+      c.strokeStyle = selected ? "#adffe2" : u.side === 0 ? "#b5a56c" : "#dcb37d";
       c.lineWidth = selected ? 3 : 1.5;
       c.beginPath();
       c.ellipse(u.x, u.y, size * 0.43, size * 0.17, 0, 0, 7);
@@ -862,16 +774,11 @@ export class Renderer {
     }
     c.translate(u.x, u.y - bob - (u.flying ? 30 : 0) + death * 10);
     c.scale(u.facing, 1);
-    c.rotate(
-      u.attack > 0 ? Math.sin(u.attack * 20) * 0.12 : dead ? death * 0.7 : 0,
-    );
+    c.rotate(u.attack > 0 ? Math.sin(u.attack * 20) * 0.12 : dead ? death * 0.7 : 0);
     const squash =
-      (u.kind === "slime" || u.kind === "split") && u.moving
-        ? Math.sin(phase) * 0.1
-        : 0;
+      (u.kind === "slime" || u.kind === "split") && u.moving ? Math.sin(phase) * 0.1 : 0;
     c.scale(1 + squash, 1 - squash);
-    if (isCommander(u.kind))
-      this.drawAtlas(c, "hero-" + u.kind, 0, 1, 1, 0, 6, size, size);
+    if (isCommander(u.kind)) this.drawAtlas(c, "hero-" + u.kind, 0, 1, 1, 0, 6, size, size);
     else
       this.drawAtlas(
         c,
@@ -888,8 +795,7 @@ export class Renderer {
     if (u.flying && u.moving) {
       c.globalAlpha *= 0.12;
       c.scale(1 + Math.sin(phase) * 0.12, 0.98);
-      if (isCommander(u.kind))
-        this.drawAtlas(c, "hero-dragon", 0, 1, 1, 0, 6, size, size);
+      if (isCommander(u.kind)) this.drawAtlas(c, "hero-dragon", 0, 1, 1, 0, 6, size, size);
       else this.drawAtlas(c, "units", u.sprite, 4, 4, 0, 6, size, size);
     }
     if (u.hit > 0) {
@@ -908,15 +814,7 @@ export class Renderer {
         u.hp / u.maxHp,
         u.side === 0 ? "#80dbb2" : "#df9c84",
       );
-    if (hero)
-      this.text(
-        c,
-        u.name,
-        u.x,
-        u.y + 23,
-        16,
-        u.side === 0 ? "#e4d3a5" : "#f2c6a6",
-      );
+    if (hero) this.text(c, u.name, u.x, u.y + 23, 16, u.side === 0 ? "#e4d3a5" : "#f2c6a6");
   }
   private drawEffect(
     c: CanvasRenderingContext2D,
@@ -931,18 +829,13 @@ export class Renderer {
       y = f.y,
       r = f.radius ?? 60;
     if (f.type === "shot") {
-      const tracked =
-        f.target && !f.radius ? this.battle.byId.get(f.target) : undefined;
+      const tracked = f.target && !f.radius ? this.battle.byId.get(f.target) : undefined;
       const tx = tracked?.x ?? f.tx ?? x,
         ty = tracked?.y ?? f.ty ?? y;
       const q = Math.min(1, f.age / (f.kind === "cannon" ? 0.95 : 0.3));
       const xx = x + (tx - x) * q,
-        yy =
-          y +
-          (ty - y) * q -
-          (f.kind === "cannon" ? Math.sin(q * Math.PI) * 120 : 0);
-      c.strokeStyle =
-        f.side === 0 ? "#a5efd0" : f.kind === "antiAir" ? "#91d4ff" : "#ffcd87";
+        yy = y + (ty - y) * q - (f.kind === "cannon" ? Math.sin(q * Math.PI) * 120 : 0);
+      c.strokeStyle = f.side === 0 ? "#a5efd0" : f.kind === "antiAir" ? "#91d4ff" : "#ffcd87";
       c.lineWidth = f.kind === "cannon" ? 6 : 2.5;
       c.beginPath();
       c.moveTo(xx - (tx - x) * 0.07, yy - (ty - y) * 0.07);
@@ -1090,11 +983,7 @@ export class Renderer {
       c.setTransform(c.getTransform());
     } else if (["wall", "destroy", "impact", "hit"].includes(f.type)) {
       const dust = f.type === "wall" || f.type === "destroy";
-      c.fillStyle = dust
-        ? "#c7bda0"
-        : f.kind === "cannon"
-          ? "#ffc87c"
-          : "#c4efdc";
+      c.fillStyle = dust ? "#c7bda0" : f.kind === "cannon" ? "#ffc87c" : "#c4efdc";
       for (let i = 0; i < (dust ? 22 : 7); i++) {
         const a = i * 2.399,
           d = (15 + p * r) * Math.sin(i * 23 + 4);
@@ -1107,10 +996,7 @@ export class Renderer {
       }
     } else if (f.type === "victory" || f.type === "defeat") {
       const g = c.createRadialGradient(x, y, 0, x, y, r * (p * 3 + 0.3));
-      g.addColorStop(
-        0,
-        f.type === "victory" ? "rgba(123,240,219,.7)" : "rgba(255,233,166,.8)",
-      );
+      g.addColorStop(0, f.type === "victory" ? "rgba(123,240,219,.7)" : "rgba(255,233,166,.8)");
       g.addColorStop(1, "transparent");
       c.fillStyle = g;
       c.fillRect(x - r * 3, y - r * 3, r * 6, r * 6);
@@ -1161,9 +1047,7 @@ export class Renderer {
           x - this.battle.getUnit(kind as Kind)!.x,
           y - this.battle.getUnit(kind as Kind)!.y,
         ) <
-          (isCommander(kind as Kind)
-            ? COMMANDERS[kind as keyof typeof COMMANDERS].castRange
-            : 460)
+          (isCommander(kind as Kind) ? COMMANDERS[kind as keyof typeof COMMANDERS].castRange : 460)
       : this.battle.canDeploy(x, y);
     const r = skill
       ? isCommander(kind as Kind)
@@ -1195,11 +1079,7 @@ export class Renderer {
     }
     this.text(
       c,
-      skill
-        ? "左键施放 · Esc取消"
-        : legal
-          ? "松开部署 · 库存出征"
-          : "此处不可部署",
+      skill ? "左键施放 · Esc取消" : legal ? "松开部署 · 库存出征" : "此处不可部署",
       x,
       y - r - 20 + Math.sin(t * 3) * 2,
       22,

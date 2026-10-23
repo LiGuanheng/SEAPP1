@@ -1,1 +1,1 @@
-import './v2/app';
+import "./v2/app";

@@ -1,0 +1,84 @@
+{
+  "date": "2026-10-23T22:28:41.473Z",
+  "note": "All skills use actual deployment, keys and map targeting. Exhaustion uses UI-bought pure slime army and spends earned money through the normal ledger, without HP or wallet overrides.",
+  "results": [
+    {
+      "name": "moon manual targeted skill",
+      "ok": true
+    },
+    {
+      "name": "forest manual targeted skill",
+      "ok": true
+    },
+    {
+      "name": "web manual targeted skill",
+      "ok": true
+    },
+    {
+      "name": "emperor manual targeted skill",
+      "ok": true
+    },
+    {
+      "name": "summoner F queues exactly 30 free slimes",
+      "ok": true
+    },
+    {
+      "name": "elemental F deals real 140 area damage",
+      "ok": true
+    },
+    {
+      "name": "natural exhaustion after spending real resources",
+      "ok": true,
+      "evidence": {
+        "time": 99.37,
+        "remaining": 500.63,
+        "money": 62,
+        "active": 0,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "defeat",
+        "outposts": [
+          {
+            "name": "西境哨所",
+            "x": 850,
+            "y": 1360,
+            "w": 360,
+            "h": 230,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "东境哨所",
+            "x": 2300,
+            "y": 1360,
+            "w": 330,
+            "h": 230,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 1562,
+          "kills": 9,
+          "lost": 1562,
+          "income": 74,
+          "walls": 3,
+          "skills": 0,
+          "peak": 300
+        },
+        "reason": "军团力竭 · 已无可用作战手段"
+      }
+    },
+    {
+      "name": "no uncaught browser errors",
+      "ok": true,
+      "evidence": []
+    }
+  ],
+  "errors": []
+}

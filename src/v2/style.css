@@ -464,7 +464,7 @@ em {
   transition: transform 0.4s;
 }
 .portrait {
-  background-image: url("/art/portraits.png");
+  background-image: url("/art/portraits.webp");
   background-size: 300% 200%;
   background-position: calc(var(--col) * 50%) calc(var(--row) * 100%);
   background-repeat: no-repeat;
@@ -583,7 +583,7 @@ em {
   flex-shrink: 0;
   width: 52px;
   height: 52px;
-  background-image: url("/art/units.png");
+  background-image: url("/art/units.webp");
   background-size: 400% 400%;
   background-position: calc(var(--col) * 33.33333%) calc(var(--row) * 33.33333%);
   background-repeat: no-repeat;

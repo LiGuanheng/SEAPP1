@@ -41,8 +41,7 @@ let noticeTimer = 0;
 let resultTimer = 0;
 let introTimer = 0;
 let helpWasPaused: boolean | null = null;
-const $ = <T extends Element = HTMLElement>(s: string) =>
-  document.querySelector<T>(s)!;
+const $ = <T extends Element = HTMLElement>(s: string) => document.querySelector<T>(s)!;
 const money = (n: number) => Math.floor(n).toLocaleString("zh-CN");
 const icon = (key: Kind) => {
   const i = isArmy(key) ? ARMIES[key].sprite : 15;
@@ -111,10 +110,7 @@ function bindActions() {
       showWizard();
     } else if (a === "spec") {
       if (loadout.spec !== b.dataset.key)
-        loadout = createLoadout(
-          loadout.difficulty,
-          b.dataset.key as Specialization,
-        );
+        loadout = createLoadout(loadout.difficulty, b.dataset.key as Specialization);
       showWizard();
     } else if (a === "commander") {
       const k = b.dataset.key as Commander;
@@ -135,11 +131,7 @@ function bindActions() {
       );
       showWizard();
     } else if (a === "buy-pre") {
-      const n = purchase(
-        loadout,
-        b.dataset.key as Army,
-        Number(b.dataset.count),
-      );
+      const n = purchase(loadout, b.dataset.key as Army, Number(b.dataset.count));
       showWizard();
       if (!n) notice("魔晶不足或尚未解锁");
     } else if (a === "refund") {
@@ -186,8 +178,7 @@ function bindActions() {
       sound.toggle();
       b.textContent = sound.muted ? "音效 关" : "音效 开";
     } else if (a === "buy") {
-      if (!battle!.buy(b.dataset.key as Army, buyBatch))
-        notice("魔晶不足或兵种未解锁");
+      if (!battle!.buy(b.dataset.key as Army, buyBatch)) notice("魔晶不足或兵种未解锁");
       updateHud();
     } else if (a === "deploy") aimDeploy(b.dataset.key as Kind);
     else if (a === "skill") aimSkill(b.dataset.key as Kind);
@@ -211,18 +202,14 @@ function showWizard() {
     .join("");
   let content = "";
   if (wizard === 0)
-    content = `<div class="choice-grid difficulty">${(
-      Object.keys(DIFFICULTIES) as Difficulty[]
-    )
+    content = `<div class="choice-grid difficulty">${(Object.keys(DIFFICULTIES) as Difficulty[])
       .map((k, i) => {
         const d = DIFFICULTIES[k];
         return `<button class="choice ${loadout.difficulty === k ? "selected" : ""}" data-action="difficulty" data-key="${k}"><span class="choice-number">0${i + 1}</span><div class="sigil">${["✧", "♜", "♛"][i]}</div><h3>${d.name}</h3><p>${["见证史诗，熟悉攻城与技能", "合理配兵，多路突破帝国防线", "高压城防，考验每一次决策"][i]}</p><div class="choice-detail"><span>初始魔晶 <b>${d.money}</b></span><span>净化倒计时 <b>${d.seconds / 60} 分钟</b></span></div></button>`;
       })
       .join("")}</div>`;
   if (wizard === 1)
-    content = `<div class="choice-grid specs">${(
-      Object.keys(SPECS) as Specialization[]
-    )
+    content = `<div class="choice-grid specs">${(Object.keys(SPECS) as Specialization[])
       .map((k, i) => {
         const s = SPECS[k];
         return `<button class="choice ${loadout.spec === k ? "selected" : ""}" data-action="spec" data-key="${k}"><div class="spec-art spec-${i}">${icon((["split", "golem", "wyvern"] as Army[])[i])}</div><span class="eyebrow">${["THE SUMMONER", "THE ASCENDANT", "THE STARFALL"][i]}</span><h3>${s.name}</h3><em>${s.title}</em><p>${s.description}</p><div class="skill-badge">F / ${s.skill}</div></button>`;
@@ -251,11 +238,7 @@ function showWizard() {
 }
 function aimDeploy(kind: Kind) {
   if (!renderer || !battle) return;
-  if (
-    isArmy(kind)
-      ? battle.loadout.inventory[kind] <= 0
-      : !battle.heroInventory.has(kind)
-  ) {
+  if (isArmy(kind) ? battle.loadout.inventory[kind] <= 0 : !battle.heroInventory.has(kind)) {
     notice("没有库存：请先购买，已出场英雄不可重复部署");
     return;
   }
@@ -323,17 +306,7 @@ function startBattle(l: Loadout) {
     if ($("#intro-overlay")) $('[data-action="skip-intro"]').click();
   }, 12000);
   renderer.onEvent = (e) => {
-    if (
-      [
-        "skill",
-        "wall",
-        "deploy",
-        "capture",
-        "victory",
-        "defeat",
-        "destroy",
-      ].includes(e.type)
-    )
+    if (["skill", "wall", "deploy", "capture", "victory", "defeat", "destroy"].includes(e.type))
       sound.play(e.kind === "titan" && e.type === "skill" ? "titan" : e.type);
     else if (e.type === "shot" && e.kind === "cannon") sound.play("cannon");
     if (e.type === "capture" || e.type === "reinforce") notice(e.text ?? "");
@@ -371,18 +344,13 @@ function updateHud() {
   $("#clock").textContent = `${Math.floor(time / 60)
     .toString()
     .padStart(2, "0")}:${(time % 60).toString().padStart(2, "0")}`;
-  $("#crystal-hp").textContent =
-    `${Math.ceil((b.crystal.hp / b.crystal.maxHp) * 100)}%`;
+  $("#crystal-hp").textContent = `${Math.ceil((b.crystal.hp / b.crystal.maxHp) * 100)}%`;
   $("#crystal-fill").style.width = `${(b.crystal.hp / b.crystal.maxHp) * 100}%`;
-  $("#charge-fill").style.width =
-    `${(b.time / DIFFICULTIES[b.loadout.difficulty].seconds) * 100}%`;
+  $("#charge-fill").style.width = `${(b.time / DIFFICULTIES[b.loadout.difficulty].seconds) * 100}%`;
   $("#clock").classList.toggle("urgent", b.remaining < 60);
   $("#pause").textContent = b.paused ? "继续 ▶" : "暂停 Ⅱ";
   $("#speed").textContent = `${b.speed}×`;
-  $("#pause-indicator").classList.toggle(
-    "visible",
-    b.paused && !$("#intro-overlay"),
-  );
+  $("#pause-indicator").classList.toggle("visible", b.paused && !$("#intro-overlay"));
   $("#fps").textContent = `${Math.round(renderer.fps)} FPS`;
   $("#mode-hint").textContent =
     renderer.mode.type === "none"
@@ -393,13 +361,8 @@ function updateHud() {
   for (const k of ARMY_KEYS) {
     const el = $(`[data-troop="${k}"]`);
     if (!el) continue;
-    el.querySelector(".troop-stock")!.textContent = String(
-      b.loadout.inventory[k],
-    );
-    el.classList.toggle(
-      "aiming",
-      renderer.mode.type === "deploy" && renderer.mode.kind === k,
-    );
+    el.querySelector(".troop-stock")!.textContent = String(b.loadout.inventory[k]);
+    el.classList.toggle("aiming", renderer.mode.type === "deploy" && renderer.mode.kind === k);
     el.querySelector<HTMLButtonElement>(".buy-button")!.disabled =
       b.money < batchPrice(b.loadout, k);
   }
@@ -421,14 +384,8 @@ function updateHud() {
           ? `${Math.ceil(info.cooldown)}s`
           : "就绪"
       : "—";
-    el.querySelector(".skill-button")!.classList.toggle(
-      "ready",
-      info.available,
-    );
-    el.classList.toggle(
-      "aiming",
-      renderer.mode.type !== "none" && renderer.mode.kind === k,
-    );
+    el.querySelector(".skill-button")!.classList.toggle("ready", info.available);
+    el.classList.toggle("aiming", renderer.mode.type !== "none" && renderer.mode.kind === k);
   }
 }
 function bindBattleInput() {
@@ -468,9 +425,7 @@ function bindBattleInput() {
         const t = b.targetAt(p.x, p.y);
         b.command(
           b.selected,
-          t
-            ? { type: "attack", target: t.id }
-            : { type: "move", x: p.x, y: p.y },
+          t ? { type: "attack", target: t.id } : { type: "move", x: p.x, y: p.y },
         );
         b.events.push({ type: "deploy", x: p.x, y: p.y, radius: 35 });
         notice(t ? "已下达集火命令" : "已下达移动命令");
@@ -536,11 +491,7 @@ function bindBattleInput() {
     down = null;
   }) as EventListener);
   on(document, "keydown", ((e: KeyboardEvent) => {
-    if (
-      (e.target as HTMLElement).matches("select,input,textarea") ||
-      $("#help-modal")
-    )
-      return;
+    if ((e.target as HTMLElement).matches("select,input,textarea") || $("#help-modal")) return;
     if (e.code === "Escape") {
       r.mode = { type: "none" };
       r.selection = null;
@@ -549,8 +500,7 @@ function bindBattleInput() {
       return;
     }
     if ($("#intro-overlay")) {
-      if (e.code === "Space" || e.code === "Enter")
-        $('[data-action="skip-intro"]').click();
+      if (e.code === "Space" || e.code === "Enter") $('[data-action="skip-intro"]').click();
       return;
     }
     if (e.code === "Space") {
@@ -559,9 +509,7 @@ function bindBattleInput() {
       updateHud();
     }
     if (e.key.toLowerCase() === "a") {
-      b.selected = new Set(
-        b.units.filter((u) => u.hp > 0 && u.side === 0).map((u) => u.id),
-      );
+      b.selected = new Set(b.units.filter((u) => u.hp > 0 && u.side === 0).map((u) => u.id));
       updateHud();
     }
     if (e.key.toLowerCase() === "f") aimSkill("king");
@@ -574,9 +522,7 @@ function bindBattleInput() {
         b.groups[gi] = new Set(b.selected);
         notice(`编队${e.key}已保存`);
       } else {
-        b.selected = new Set(
-          [...b.groups[gi]].filter((id) => (b.byId.get(id)?.hp ?? 0) > 0),
-        );
+        b.selected = new Set([...b.groups[gi]].filter((id) => (b.byId.get(id)?.hp ?? 0) > 0));
         updateHud();
       }
     }
@@ -602,9 +548,7 @@ function bindBattleInput() {
   on(c, "dragover", ((e: DragEvent) => {
     e.preventDefault();
     r.pointer = r.screenToWorld(e.clientX, e.clientY);
-    e.dataTransfer!.dropEffect = b.canDeploy(r.pointer.x, r.pointer.y)
-      ? "copy"
-      : "none";
+    e.dataTransfer!.dropEffect = b.canDeploy(r.pointer.x, r.pointer.y) ? "copy" : "none";
   }) as EventListener);
   on(c, "drop", ((e: DragEvent) => {
     e.preventDefault();
