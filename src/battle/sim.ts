@@ -42,6 +42,8 @@ export interface SimUnit {
   spawnT: number;
   targetId: number | null;
   targetStructure: string | null;
+  /** Boss 蓄力技能冷却 */
+  skill: number;
 }
 
 export interface SimStructure {
@@ -510,6 +512,7 @@ export class BattleSim {
       spawnT: 0,
       targetId: null,
       targetStructure: null,
+      skill: 6,
     };
     this.unitById.set(unit.id, unit);
     return unit;
@@ -729,6 +732,27 @@ export class BattleSim {
   }
 
   private updateUndead(u: SimUnit, dt: number, doRetarget: boolean): void {
+    // 斧头巨汉：每 22 秒一次蓄力劈砸，对周围建筑造成范围破坏
+    if (u.type === 'boss') {
+      u.skill -= dt;
+      if (u.skill <= 0) {
+        let hit = 0;
+        for (const s of this.structures.values()) {
+          if (s.destroyed || s.kind === 'nodeCamp') continue;
+          if (this.distToStructure(u, s) > 150) continue;
+          this.damageStructure(s, 420 * u.siege, u);
+          hit++;
+        }
+        if (hit > 0) {
+          u.skill = 22;
+          u.attackAnim = 0.5;
+          this.events.push({ t: 'blast', x: u.x, y: u.y - 20, r: 150 });
+          this.events.push({ t: 'notice', text: '斧头巨汉蓄力劈砸！' });
+        } else {
+          u.skill = 0.5;
+        }
+      }
+    }
     if (doRetarget && u.focusId === null && u.focusStructure === null) this.acquireTarget(u);
 
     // 攻击判定
