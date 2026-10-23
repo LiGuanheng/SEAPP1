@@ -1039,7 +1039,7 @@ em {
   height: 48px;
 }
 .troop-name {
-  font-size: 10px;
+  font-size: 12px;
   white-space: nowrap;
   color: #cad4bd;
   line-height: 17px;
@@ -1055,13 +1055,13 @@ em {
   text-shadow: 0 1px 4px #000;
 }
 .troop-deploy small {
-  font-size: 8px;
+  font-size: 9px;
   color: #7e9e8e;
 }
 .buy-button {
   border-width: 1px 0 0;
   width: 100%;
-  font-size: 10px;
+  font-size: 11px;
   padding: 4px;
   background: #3f523a33;
   color: #d8c58d;
@@ -1117,7 +1117,7 @@ em {
   position: absolute;
   bottom: 16px;
   z-index: 1;
-  font-size: 10px;
+  font-size: 11px;
   color: #dfd2ab;
 }
 .hero-state {
@@ -1132,7 +1132,7 @@ em {
   padding: 4px 1px;
   border-width: 1px 0 0;
   background: #263b39;
-  font-size: 8px;
+  font-size: 10px;
   color: #879d8d;
   display: grid;
   grid-template-columns: 18px 1fr;

@@ -39,6 +39,8 @@ let buyBatch = 1;
 let deployBatch = 1;
 let noticeTimer = 0;
 let resultTimer = 0;
+let introTimer = 0;
+let helpWasPaused: boolean | null = null;
 const $ = <T extends Element = HTMLElement>(s: string) =>
   document.querySelector<T>(s)!;
 const money = (n: number) => Math.floor(n).toLocaleString("zh-CN");
@@ -57,6 +59,7 @@ function notice(s: string) {
   noticeTimer = window.setTimeout(() => n.classList.remove("show"), 2800);
 }
 function clearBattle() {
+  clearTimeout(introTimer);
   abort?.abort();
   abort = null;
   renderer?.destroy();
@@ -82,8 +85,14 @@ function bindActions() {
       wizard = 0;
       showWizard();
     } else if (a === "help") showHelp();
-    else if (a === "close-help") $("#help-modal").remove();
-    else if (a === "menu") menu();
+    else if (a === "close-help") {
+      $("#help-modal").remove();
+      if (battle && helpWasPaused !== null) {
+        battle.paused = helpWasPaused;
+        helpWasPaused = null;
+        updateHud();
+      }
+    } else if (a === "menu") menu();
     else if (a === "prev") {
       if (wizard > 0) {
         wizard--;
@@ -149,8 +158,10 @@ function bindActions() {
       clearBattle();
       showWizard();
     } else if (a === "skip-intro") {
+      clearTimeout(introTimer);
       battle!.paused = false;
       $("#intro-overlay")?.remove();
+      renderer?.overview(false);
       updateHud();
     } else if (a === "pause") {
       battle!.paused = !battle!.paused;
@@ -295,7 +306,22 @@ function startBattle(l: Loadout) {
   renderer = new Renderer(battle, $("#battle-view"), $("#minimap"));
   bindActions();
   bindBattleInput();
-  renderer.onFrame = updateHud;
+  const introStart = performance.now();
+  renderer.onFrame = () => {
+    if ($("#intro-overlay") && renderer) {
+      const q = Math.min(1, (performance.now() - introStart) / 12000),
+        ease = q * q * (3 - 2 * q);
+      renderer.camera.x = 1600;
+      renderer.camera.y = 1070 + 390 * ease;
+      const far = Math.min(renderer.width / 3000, renderer.height / 2100),
+        near = Math.max(renderer.width / 3200, renderer.height / 1800);
+      renderer.camera.zoom = far + (near - far) * ease;
+    }
+    updateHud();
+  };
+  introTimer = window.setTimeout(() => {
+    if ($("#intro-overlay")) $('[data-action="skip-intro"]').click();
+  }, 12000);
   renderer.onEvent = (e) => {
     if (
       [
@@ -308,11 +334,13 @@ function startBattle(l: Loadout) {
         "destroy",
       ].includes(e.type)
     )
-      sound.play(e.type);
+      sound.play(e.kind === "titan" && e.type === "skill" ? "titan" : e.type);
     else if (e.type === "shot" && e.kind === "cannon") sound.play("cannon");
     if (e.type === "capture" || e.type === "reinforce") notice(e.text ?? "");
-    if (e.type === "victory" || e.type === "defeat")
+    if (e.type === "victory" || e.type === "defeat") {
+      if (renderer) renderer.camera = { x: 1600, y: 1050, zoom: 0.72 };
       resultTimer = window.setTimeout(showResult, 1600);
+    }
   };
   renderer.start();
   updateHud();
@@ -611,6 +639,11 @@ function showResult() {
 }
 function showHelp() {
   if ($("#help-modal")) return;
+  if (battle && battle.status === "battle") {
+    helpWasPaused = battle.paused;
+    battle.paused = true;
+    updateHud();
+  }
   const div = document.createElement("div");
   div.id = "help-modal";
   div.className = "modal";

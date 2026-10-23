@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-23T22:02:20.727Z",
+  "date": "2026-10-23T22:08:38.283Z",
   "note": "Screenshots are rendered by Chrome from actual simulation. Long battle segments use deterministic fast-forward through the same simulation; titan/dragon skills use keyboard and mouse.",
   "results": [
     {
@@ -12,8 +12,8 @@
       "evidence": {
         "time": 23.79,
         "remaining": 576.21,
-        "money": 575,
-        "active": 164,
+        "money": 579,
+        "active": 170,
         "queued": 0,
         "reserves": 0,
         "crystalHp": 5600,
@@ -44,12 +44,12 @@
         ],
         "stats": {
           "deployed": 284,
-          "kills": 17,
-          "lost": 120,
-          "income": 370,
+          "kills": 18,
+          "lost": 114,
+          "income": 374,
           "walls": 3,
           "skills": 3,
-          "peak": 181
+          "peak": 180
         }
       }
     },
@@ -61,10 +61,10 @@
       "name": "ground strategy actual battle wins",
       "ok": true,
       "evidence": {
-        "time": 45.7,
-        "remaining": 554.3,
-        "money": 86,
-        "active": 54,
+        "time": 55.94,
+        "remaining": 544.06,
+        "money": 88,
+        "active": 15,
         "queued": 0,
         "reserves": 0,
         "crystalHp": 0,
@@ -95,12 +95,12 @@
         ],
         "stats": {
           "deployed": 300,
-          "kills": 23,
-          "lost": 246,
-          "income": 441,
+          "kills": 25,
+          "lost": 285,
+          "income": 443,
           "walls": 5,
           "skills": 3,
-          "peak": 181
+          "peak": 180
         }
       }
     },

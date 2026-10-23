@@ -28,6 +28,29 @@ class Sound {
       this.last = now;
       const heavy = ["wall", "cannon", "destroy", "titan"].includes(type),
         magic = ["skill", "capture", "deploy", "victory"].includes(type);
+      if (heavy) {
+        const buffer = this.ctx.createBuffer(
+            1,
+            this.ctx.sampleRate * 0.35,
+            this.ctx.sampleRate,
+          ),
+          data = buffer.getChannelData(0);
+        for (let i = 0; i < data.length; i++)
+          data[i] = (Math.random() * 2 - 1) * (1 - i / data.length);
+        const noise = this.ctx.createBufferSource(),
+          filter = this.ctx.createBiquadFilter(),
+          envelope = this.ctx.createGain();
+        noise.buffer = buffer;
+        filter.type = "lowpass";
+        filter.frequency.value = 500;
+        envelope.gain.setValueAtTime(0.16, now);
+        envelope.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+        noise.connect(filter);
+        filter.connect(envelope);
+        envelope.connect(this.ctx.destination);
+        noise.start();
+        noise.stop(now + 0.36);
+      }
       const o = this.ctx.createOscillator(),
         g = this.ctx.createGain();
       o.type = heavy ? "sawtooth" : magic ? "sine" : "triangle";

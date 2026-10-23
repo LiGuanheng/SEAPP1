@@ -49,6 +49,8 @@ await wait(400);
 await page.click('[data-action="skip-intro"]');
 await wait(1000);
 await page.screenshot({ path: `${dir}/04-city.png` });
+await page.click('[data-action="overview"]');
+await page.screenshot({ path: `${dir}/16-city-panorama.png` });
 check(
   "battle starts",
   await page.evaluate(() => window.__SIEGE__.battle.status === "battle"),

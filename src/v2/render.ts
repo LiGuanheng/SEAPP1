@@ -12,6 +12,13 @@ export async function loadArt() {
       "units-move",
       "structures",
       "heroes",
+      "hero-dragon",
+      "hero-titan",
+      "hero-moon",
+      "hero-web",
+      "hero-forest",
+      "hero-emperor",
+      "grove",
       "city",
       "materials",
     ].map(
@@ -278,7 +285,9 @@ export class Renderer {
       c.fillRect(x, y, 4 + rng() * 22, 2 + rng() * 8);
     }
     c.fillStyle = this.material(c, 0, 240);
+    c.globalAlpha = 0.3;
     c.fillRect(530, 330, 2140, 1340);
+    c.globalAlpha = 1;
     c.fillStyle = "rgba(81,99,89,.19)";
     c.fillRect(530, 330, 2140, 1340);
     const road = (pts: number[][], width: number) => {
@@ -291,7 +300,7 @@ export class Renderer {
       c.strokeStyle = this.material(c, 0, 160);
       c.lineWidth = width;
       c.stroke();
-      c.strokeStyle = "rgba(226,216,175,.12)";
+      c.strokeStyle = "rgba(226,216,175,.28)";
       c.lineWidth = width - 8;
       c.stroke();
     };
@@ -429,24 +438,8 @@ export class Renderer {
       const x = rng() * 3200,
         y = rng() * 2400;
       if (x > 380 && x < 2820 && y > 180 && y < 2320) continue;
-      c.fillStyle = "rgba(12,31,29,.22)";
-      c.beginPath();
-      c.ellipse(x + 10, y + 12, 27, 15, 0, 0, 7);
-      c.fill();
-      for (let j = 0; j < 4; j++) {
-        c.fillStyle = ["#2c4940", "#3b5747", "#4b6250", "#61745c"][j];
-        c.beginPath();
-        c.ellipse(
-          x + (rng() - 0.5) * 18,
-          y - j * 6,
-          24 - j * 3,
-          20 - j * 2,
-          0,
-          0,
-          7,
-        );
-        c.fill();
-      }
+      const treeSize = 90 + rng() * 75;
+      this.drawAtlas(c, "grove", 0, 1, 1, x, y, treeSize, treeSize);
     }
     for (let lane = 0; lane < 3; lane++) {
       const x = [850, 1600, 2380][lane];
@@ -836,7 +829,8 @@ export class Renderer {
     const selected = this.battle.selected.has(u.id);
     const size = u.size;
     const phase =
-      t * (u.kind === "slime" || u.kind === "split" ? 7 : u.speed * 0.08) +
+      this.battle.time *
+        (u.kind === "slime" || u.kind === "split" ? 7 : u.speed * 0.08) +
       u.id;
     const bob = u.moving
       ? Math.sin(phase) *
@@ -877,17 +871,7 @@ export class Renderer {
         : 0;
     c.scale(1 + squash, 1 - squash);
     if (isCommander(u.kind))
-      this.drawAtlas(
-        c,
-        "heroes",
-        COMMANDERS[u.kind].portrait,
-        3,
-        2,
-        0,
-        6,
-        size,
-        size,
-      );
+      this.drawAtlas(c, "hero-" + u.kind, 0, 1, 1, 0, 6, size, size);
     else
       this.drawAtlas(
         c,
@@ -905,7 +889,7 @@ export class Renderer {
       c.globalAlpha *= 0.12;
       c.scale(1 + Math.sin(phase) * 0.12, 0.98);
       if (isCommander(u.kind))
-        this.drawAtlas(c, "heroes", 0, 3, 2, 0, 6, size, size);
+        this.drawAtlas(c, "hero-dragon", 0, 1, 1, 0, 6, size, size);
       else this.drawAtlas(c, "units", u.sprite, 4, 4, 0, 6, size, size);
     }
     if (u.hit > 0) {
@@ -1003,7 +987,60 @@ export class Renderer {
       c.strokeStyle = color;
       c.fillStyle = color;
       c.lineWidth = 4;
-      if (f.kind === "dragon") {
+      if (f.kind === "titan") {
+        c.strokeStyle = "#e7bf80";
+        c.lineWidth = 7;
+        c.globalAlpha = alpha * 0.8;
+        c.beginPath();
+        c.ellipse(x, y, r * (0.5 + p), r * (0.25 + p * 0.45), 0, 0, 7);
+        c.stroke();
+        for (let i = 0; i < 28; i++) {
+          const a = i * 2.399,
+            spread = r * (0.15 + p) * (0.5 + Math.sin(i * 17) * 0.4),
+            xx = x + Math.cos(a) * spread,
+            yy = y + Math.sin(a) * spread * 0.5 - Math.sin(p * Math.PI) * 70;
+          c.globalAlpha = alpha * 0.8;
+          polygon(
+            c,
+            [
+              [xx - 5, yy + 3],
+              [xx - 8, yy - 7],
+              [xx + 4, yy - 11],
+              [xx + 8, yy + 1],
+            ],
+            i % 3 ? "#cfc2a3" : "#777b68",
+            "#d8b77c",
+          );
+        }
+        c.globalAlpha = alpha * 0.15;
+        c.fillStyle = "#d3bc90";
+        c.beginPath();
+        c.ellipse(x, y, r * (0.5 + p), r * 0.4, 0, 0, 7);
+        c.fill();
+      } else if (f.kind === "king" && this.battle.loadout.spec === "element") {
+        const q = Math.min(1, p * 4),
+          mx = x - 180 * (1 - q),
+          my = y - 420 * (1 - q);
+        const fire = c.createRadialGradient(mx, my, 0, mx, my, 65);
+        fire.addColorStop(0, "#fff5c8");
+        fire.addColorStop(0.3, "#ffb765");
+        fire.addColorStop(1, "rgba(243,139,70,0)");
+        c.fillStyle = fire;
+        c.fillRect(mx - 65, my - 65, 130, 130);
+        c.strokeStyle = "#f4b77b";
+        c.lineWidth = 8;
+        c.beginPath();
+        c.moveTo(mx - 60 * (1 - q), my - 140 * (1 - q));
+        c.lineTo(mx, my);
+        c.stroke();
+        if (q >= 1) {
+          c.globalAlpha = alpha * 0.4;
+          c.fillStyle = "#f6d190";
+          c.beginPath();
+          c.arc(x, y, r * Math.min(1, p * 2), 0, 7);
+          c.fill();
+        }
+      } else if (f.kind === "dragon") {
         c.translate(x, y);
         c.rotate(f.angle ?? 0);
         const g = c.createRadialGradient(0, 0, 0, 0, 0, r);
@@ -1077,6 +1114,39 @@ export class Renderer {
       g.addColorStop(1, "transparent");
       c.fillStyle = g;
       c.fillRect(x - r * 3, y - r * 3, r * 6, r * 6);
+      if (f.type === "victory") {
+        for (let i = 0; i < 36; i++) {
+          const a = i * 2.399,
+            spread = (60 + p * 1300) * (0.3 + Math.sin(i * 8) * 0.65),
+            xx = x + Math.cos(a) * spread,
+            yy = y - 140 + Math.sin(a) * spread * 0.6 - p * 180;
+          c.globalAlpha = alpha;
+          polygon(
+            c,
+            [
+              [xx, yy - 16],
+              [xx + 7, yy],
+              [xx, yy + 20],
+              [xx - 8, yy],
+            ],
+            i % 2 ? "#f8e4a7" : "#b6f2e4",
+            "#fff4cf",
+          );
+        }
+      } else {
+        c.globalAlpha = alpha * 0.45;
+        c.fillStyle = "#fff4cf";
+        polygon(
+          c,
+          [
+            [x - 35, y - 120],
+            [x - 900, 0],
+            [x + 900, 0],
+            [x + 35, y - 120],
+          ],
+          c.fillStyle,
+        );
+      }
     }
     c.restore();
   }
@@ -1104,10 +1174,12 @@ export class Renderer {
     c.strokeStyle = legal ? "#a7f1cf" : "#ee9687";
     c.lineWidth = 2 / this.camera.zoom;
     c.setLineDash([12, 8]);
-    c.beginPath();
-    c.arc(x, y, r, 0, 7);
-    c.fill();
-    c.stroke();
+    if (!(skill && kind === "dragon")) {
+      c.beginPath();
+      c.arc(x, y, r, 0, 7);
+      c.fill();
+      c.stroke();
+    }
     c.setLineDash([]);
     if (skill && kind === "dragon") {
       const hero = this.battle.getUnit("dragon");
@@ -1117,6 +1189,7 @@ export class Renderer {
         c.moveTo(hero.x, hero.y);
         c.arc(hero.x, hero.y, r, angle - 0.65, angle + 0.65);
         c.closePath();
+        c.fill();
         c.stroke();
       }
     }
