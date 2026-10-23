@@ -65,6 +65,24 @@ try {
       await page.evaluate(() => window.__SIEGE__.battle.stats.skills === 1),
     );
   }
+  await init("evolve", "breach");
+  await page.click('[data-action="deploy"][data-key="king"]');
+  await clickWorld(850, 2070);
+  await page.click('[data-action="deploy"][data-key="goblin"]');
+  await clickWorld(850, 2070);
+  await page.evaluate(() => window.__SIEGE__.battle.advance(1));
+  const blessing = await page.evaluate(() => {
+    const u = window.__SIEGE__.battle.getUnit("king");
+    return { x: u.x, y: u.y };
+  });
+  await page.keyboard.press("f");
+  await clickWorld(blessing.x, blessing.y);
+  check(
+    "evolution F buffs actual troops",
+    await page.evaluate(() =>
+      window.__SIEGE__.battle.units.some((u) => u.side === 0 && u.kind !== "king" && u.buff > 0),
+    ),
+  );
   await init("summon", "swarm");
   await page.click('[data-action="deploy"][data-key="king"]');
   await clickWorld(850, 2130);

@@ -1,9 +1,11 @@
 import puppeteer from "puppeteer-core";
 import { existsSync, writeFileSync } from "node:fs";
-const executablePath = [
-  "C:/Program Files/Google/Chrome/Application/chrome.exe",
-  "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
-].find(existsSync);
+const executablePath =
+  process.env.CHROME_PATH ||
+  [
+    "C:/Program Files/Google/Chrome/Application/chrome.exe",
+    "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
+  ].find(existsSync);
 const browser = await puppeteer.launch({
   executablePath,
   headless: true,
@@ -72,6 +74,42 @@ try {
   await page.keyboard.press("a");
   const selected = await page.evaluate(() => window.__SIEGE__.battle.selected.size);
   await page.screenshot({ path: "docs/screenshots/v2/17-300-units.png" });
+  await page.select("#buy-batch", "Infinity");
+  await page.click('[data-action="buy"][data-key="slime"]');
+  await page.select("#deploy-batch", "Infinity");
+  await page.click('[data-action="deploy"][data-key="slime"]');
+  const drop = await page.evaluate(() => window.__SIEGE__.worldToScreen(850, 2230));
+  await page.mouse.click(drop.x, drop.y);
+  await page.click('[data-action="charge"]');
+  const combat = await page.evaluate(
+    () =>
+      new Promise((resolve) => {
+        const start = performance.now(),
+          lost = window.__SIEGE__.battle.stats.lost;
+        let last = start;
+        const deltas = [],
+          counts = [];
+        const frame = (now) => {
+          deltas.push(now - last);
+          last = now;
+          counts.push(window.__SIEGE__.battle.active);
+          if (now - start < 10000) requestAnimationFrame(frame);
+          else {
+            const sorted = [...deltas].sort((a, b) => a - b);
+            resolve({
+              sampleSeconds: (now - start) / 1000,
+              averageFps: (deltas.length * 1000) / (now - start),
+              p95FrameMs: sorted[Math.floor(sorted.length * 0.95)],
+              minFriendly: Math.min(...counts),
+              maxFriendly: Math.max(...counts),
+              lostDuringSample: window.__SIEGE__.battle.stats.lost - lost,
+            });
+          }
+        };
+        requestAnimationFrame(frame);
+      }),
+  );
+  await page.screenshot({ path: "docs/screenshots/v2/19-mass-attack.png" });
   await page.evaluate(() => {
     window.__retiredBattle = window.__SIEGE__.battle;
     window.__retiredTime = window.__retiredBattle.time;
@@ -100,11 +138,15 @@ try {
     viewport: { width: 1920, height: 1080 },
     ...sampled,
     selected,
+    combat,
     lifecycle,
     errors,
     pass:
       sampled.minFriendly === 300 &&
       sampled.averageFps >= 30 &&
+      combat.averageFps >= 30 &&
+      combat.maxFriendly >= 200 &&
+      combat.lostDuringSample > 0 &&
       selected === 300 &&
       lifecycle.canvasCount === 2 &&
       lifecycle.oldSceneStopped &&

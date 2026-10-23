@@ -2,10 +2,12 @@ import puppeteer from "puppeteer-core";
 import { existsSync, readdirSync, readFileSync, writeFileSync, mkdirSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 // Asset encoding only: original generated PNGs stay in art-source for audit and re-export.
-const executablePath = [
-  "C:/Program Files/Google/Chrome/Application/chrome.exe",
-  "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
-].find(existsSync);
+const executablePath =
+  process.env.CHROME_PATH ||
+  [
+    "C:/Program Files/Google/Chrome/Application/chrome.exe",
+    "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
+  ].find(existsSync);
 const browser = await puppeteer.launch({
   executablePath,
   headless: true,

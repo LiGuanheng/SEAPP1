@@ -1,9 +1,11 @@
 import puppeteer from "puppeteer-core";
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
-const executablePath = [
-  "C:/Program Files/Google/Chrome/Application/chrome.exe",
-  "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
-].find(existsSync);
+const executablePath =
+  process.env.CHROME_PATH ||
+  [
+    "C:/Program Files/Google/Chrome/Application/chrome.exe",
+    "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
+  ].find(existsSync);
 if (!executablePath) throw new Error("Chrome/Edge not found");
 const browser = await puppeteer.launch({
   executablePath,
@@ -15,6 +17,9 @@ const page = await browser.newPage(),
   errors = [],
   results = [];
 page.on("pageerror", (e) => errors.push(e.message));
+page.on("response", (r) => {
+  if (r.status() >= 400) errors.push(`HTTP ${r.status()} ${r.url()}`);
+});
 const dir = "docs/screenshots/v2";
 mkdirSync(dir, { recursive: true });
 const wait = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -28,6 +33,9 @@ await page.goto(process.argv[2] ?? "http://127.0.0.1:5173/", {
 await page.waitForSelector('[data-action="new"]');
 await page.screenshot({ path: `${dir}/01-menu.png` });
 check("main menu", (await page.title()) === "异界围城：魔物之王 · Monster Sovereign");
+await page.click('[data-action="help"]');
+check("field manual opens", !!(await page.$(".manual")));
+await page.click('[data-action="close-help"]');
 await page.click('[data-action="new"]');
 await page.click('[data-action="next"]');
 await page.click('[data-action="next"]');

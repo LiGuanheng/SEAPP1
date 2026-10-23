@@ -192,6 +192,7 @@ export class Renderer {
     y: number,
     w: number,
     h: number,
+    flash = false,
   ) {
     const img = images.get(name);
     if (!img?.complete || !img.naturalWidth) return;
@@ -219,7 +220,22 @@ export class Renderer {
         );
       atlasFrames.set(key, frame);
     }
-    c.drawImage(frame, x - w / 2, y - h, w, h);
+    if (flash) {
+      const flashKey = key + ":flash";
+      let mask = atlasFrames.get(flashKey);
+      if (!mask) {
+        mask = document.createElement("canvas");
+        mask.width = frame.width;
+        mask.height = frame.height;
+        const mc = mask.getContext("2d")!;
+        mc.drawImage(frame, 0, 0);
+        mc.globalCompositeOperation = "source-in";
+        mc.fillStyle = "#ffe6be";
+        mc.fillRect(0, 0, mask.width, mask.height);
+        atlasFrames.set(flashKey, mask);
+      }
+      c.drawImage(mask, x - w / 2, y - h, w, h);
+    } else c.drawImage(frame, x - w / 2, y - h, w, h);
   }
   private material(
     c: CanvasRenderingContext2D,
@@ -793,15 +809,28 @@ export class Renderer {
       );
     // Independent wing beats add articulation to the original dragon silhouettes.
     if (u.flying && u.moving) {
+      c.save();
       c.globalAlpha *= 0.12;
       c.scale(1 + Math.sin(phase) * 0.12, 0.98);
       if (isCommander(u.kind)) this.drawAtlas(c, "hero-dragon", 0, 1, 1, 0, 6, size, size);
       else this.drawAtlas(c, "units", u.sprite, 4, 4, 0, 6, size, size);
+      c.restore();
     }
     if (u.hit > 0) {
-      c.globalCompositeOperation = "source-atop";
-      c.fillStyle = `rgba(255,224,178,${u.hit * 2})`;
-      c.fillRect(-size / 2, -size, size, size);
+      c.globalAlpha *= u.hit * 2;
+      const commander = isCommander(u.kind);
+      this.drawAtlas(
+        c,
+        commander ? "hero-" + u.kind : u.moving && Math.sin(phase) > 0 ? "units-move" : "units",
+        commander ? 0 : u.sprite,
+        commander ? 1 : 4,
+        commander ? 1 : 4,
+        0,
+        6,
+        size,
+        size,
+        true,
+      );
     }
     c.restore();
     if (dead) return;

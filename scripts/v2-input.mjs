@@ -1,9 +1,11 @@
 import puppeteer from "puppeteer-core";
 import { existsSync, mkdirSync, writeFileSync } from "node:fs";
-const executablePath = [
-  "C:/Program Files/Google/Chrome/Application/chrome.exe",
-  "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
-].find(existsSync);
+const executablePath =
+  process.env.CHROME_PATH ||
+  [
+    "C:/Program Files/Google/Chrome/Application/chrome.exe",
+    "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
+  ].find(existsSync);
 const browser = await puppeteer.launch({
   executablePath,
   headless: true,
@@ -84,6 +86,25 @@ check(
 );
 await page.click('[data-action="pause"]');
 await wait(2200);
+const bounds = await page.evaluate(() => {
+  const us = window.__SIEGE__.battle.units.filter((u) => u.side === 0 && u.hp > 0);
+  return {
+    x1: Math.min(...us.map((u) => u.x)) - 20,
+    y1: Math.min(...us.map((u) => u.y)) - 20,
+    x2: Math.max(...us.map((u) => u.x)) + 20,
+    y2: Math.max(...us.map((u) => u.y)) + 20,
+  };
+});
+const corner1 = await position(bounds.x1, bounds.y1),
+  corner2 = await position(bounds.x2, bounds.y2);
+await page.mouse.move(corner1.x, corner1.y);
+await page.mouse.down();
+await page.mouse.move(corner2.x, corner2.y, { steps: 12 });
+await page.mouse.up();
+check(
+  "real mouse box selection",
+  await page.evaluate(() => window.__SIEGE__.battle.selected.size > 0),
+);
 await page.keyboard.press("a");
 const move = await position(1000, 1920);
 await page.mouse.click(move.x, move.y, { button: "right" });
@@ -99,12 +120,34 @@ await page.keyboard.up("Control");
 await page.keyboard.press("1");
 check(
   "control group stored and recalled",
-  await page.evaluate(
-    () =>
-      window.__SIEGE__.battle.groups[0].size > 0 &&
-      window.__SIEGE__.battle.selected.size === window.__SIEGE__.battle.groups[0].size,
-  ),
+  await page.evaluate(() => {
+    const b = window.__SIEGE__.battle;
+    return (
+      b.groups[0].size > 0 &&
+      b.selected.size === [...b.groups[0]].filter((id) => b.byId.get(id)?.hp > 0).length
+    );
+  }),
 );
+const tower = await page.evaluate(() =>
+  window.__SIEGE__.battle.structures.find((s) => s.kind === "cannon" && s.x === 850),
+);
+const aim = await position(tower.x, tower.y - 70);
+await page.mouse.click(aim.x, aim.y, { button: "right" });
+check(
+  "right click focuses visible tower artwork",
+  await page.evaluate((id) => {
+    const b = window.__SIEGE__.battle;
+    return (
+      b.selected.size > 0 && [...b.selected].every((uid) => b.byId.get(uid).order?.target === id)
+    );
+  }, tower.id),
+);
+await page.click('[data-action="speed"]');
+check(
+  "2x button changes actual speed",
+  await page.evaluate(() => window.__SIEGE__.battle.speed === 2),
+);
+await page.click('[data-action="speed"]');
 await page.click('[data-action="charge"]');
 await page.click('[data-action="all-deploy"]');
 await page.mouse.click(good.x, good.y);

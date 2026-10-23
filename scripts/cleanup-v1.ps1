@@ -1,4 +1,5 @@
 $ErrorActionPreference = 'Stop'
+if(Test-Path -LiteralPath 'docs/archive/v1/SRS.md'){throw 'The one-time V1 migration has already finished; this audit script must not run twice.'}
 $workspaceRoot = (Resolve-Path -LiteralPath 'D:\Projects\SEAPP1').Path
 if ((Get-Location).Path -ne $workspaceRoot) { throw 'Run from the confirmed project workspace.' }
 function Confirm-WorkspacePath([string]$candidate) {

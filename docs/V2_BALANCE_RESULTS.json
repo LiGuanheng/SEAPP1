@@ -4,7 +4,7 @@
     "seed": 19,
     "time": 600,
     "remaining": 0,
-    "money": 109,
+    "money": 105,
     "active": 0,
     "queued": 0,
     "reserves": 0,
@@ -36,14 +36,14 @@
     ],
     "stats": {
       "deployed": 300,
-      "kills": 31,
+      "kills": 30,
       "lost": 300,
-      "income": 464,
+      "income": 460,
       "walls": 7,
       "skills": 3,
       "peak": 206
     },
-    "wallMs": 1431,
+    "wallMs": 1294,
     "heroes": [
       {
         "kind": "titan",
@@ -60,8 +60,8 @@
       {
         "kind": "forest",
         "hp": 0,
-        "x": 1433,
-        "y": 1378
+        "x": 1428,
+        "y": 1383
       }
     ]
   },
@@ -109,7 +109,7 @@
       "skills": 3,
       "peak": 204
     },
-    "wallMs": 457,
+    "wallMs": 412,
     "heroes": [
       {
         "kind": "titan",
@@ -175,7 +175,7 @@
       "skills": 3,
       "peak": 208
     },
-    "wallMs": 470,
+    "wallMs": 1444,
     "heroes": [
       {
         "kind": "titan",
@@ -241,7 +241,7 @@
       "skills": 3,
       "peak": 209
     },
-    "wallMs": 764,
+    "wallMs": 2402,
     "heroes": [
       {
         "kind": "dragon",
@@ -307,7 +307,7 @@
       "skills": 3,
       "peak": 209
     },
-    "wallMs": 2260,
+    "wallMs": 2287,
     "heroes": [
       {
         "kind": "dragon",
@@ -373,7 +373,7 @@
       "skills": 3,
       "peak": 209
     },
-    "wallMs": 2428,
+    "wallMs": 2400,
     "heroes": [
       {
         "kind": "dragon",
@@ -439,7 +439,7 @@
       "skills": 0,
       "peak": 176
     },
-    "wallMs": 11355,
+    "wallMs": 11567,
     "heroes": [
       {
         "kind": "emperor",
@@ -493,7 +493,7 @@
       "skills": 0,
       "peak": 214
     },
-    "wallMs": 11473,
+    "wallMs": 11747,
     "heroes": [
       {
         "kind": "emperor",
@@ -547,7 +547,7 @@
       "skills": 0,
       "peak": 176
     },
-    "wallMs": 11977,
+    "wallMs": 11407,
     "heroes": [
       {
         "kind": "emperor",

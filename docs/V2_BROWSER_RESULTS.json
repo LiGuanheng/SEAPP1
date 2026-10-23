@@ -1,8 +1,12 @@
 {
-  "date": "2026-10-23T22:11:02.171Z",
+  "date": "2026-10-23T22:59:02.149Z",
   "results": [
     {
       "name": "main menu",
+      "ok": true
+    },
+    {
+      "name": "field manual opens",
       "ok": true
     },
     {
@@ -13,12 +17,12 @@
       "name": "legion deployed",
       "ok": true,
       "evidence": {
-        "time": 11.9,
-        "remaining": 588.1,
+        "time": 11.63,
+        "remaining": 588.37,
         "money": 213,
         "active": 188,
-        "queued": 6,
-        "reserves": 6,
+        "queued": 15,
+        "reserves": 15,
         "crystalHp": 5600,
         "status": "battle",
         "outposts": [
@@ -46,9 +50,9 @@
           }
         ],
         "stats": {
-          "deployed": 278,
+          "deployed": 269,
           "kills": 8,
-          "lost": 90,
+          "lost": 81,
           "income": 8,
           "walls": 1,
           "skills": 0,

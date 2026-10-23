@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-23T22:25:34.752Z",
+  "date": "2026-10-23T22:59:09.486Z",
   "results": [
     {
       "name": "illegal click consumes nothing",
@@ -69,11 +69,23 @@
       "ok": true
     },
     {
+      "name": "real mouse box selection",
+      "ok": true
+    },
+    {
       "name": "right click creates real movement orders",
       "ok": true
     },
     {
       "name": "control group stored and recalled",
+      "ok": true
+    },
+    {
+      "name": "right click focuses visible tower artwork",
+      "ok": true
+    },
+    {
+      "name": "2x button changes actual speed",
       "ok": true
     },
     {

@@ -3,6 +3,10 @@ name: Build, Test and Deploy
 on:
   push:
     branches: [main]
+    paths-ignore:
+      - 'docs/**'
+      - 'art-source/**'
+      - 'README.md'
   workflow_dispatch:
 
 permissions:
@@ -33,6 +37,9 @@ jobs:
 
       - name: Unit & simulation tests
         run: npm run test
+
+      - name: Source formatting
+        run: npm run format:check
 
       - name: Type check & build
         run: npm run build

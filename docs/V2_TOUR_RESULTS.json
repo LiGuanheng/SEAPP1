@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-23T22:08:38.283Z",
+  "date": "2026-10-23T22:59:30.565Z",
   "note": "Screenshots are rendered by Chrome from actual simulation. Long battle segments use deterministic fast-forward through the same simulation; titan/dragon skills use keyboard and mouse.",
   "results": [
     {
@@ -10,10 +10,10 @@
       "name": "actual battle captured west post",
       "ok": true,
       "evidence": {
-        "time": 23.79,
-        "remaining": 576.21,
-        "money": 579,
-        "active": 170,
+        "time": 24.38,
+        "remaining": 575.62,
+        "money": 600,
+        "active": 155,
         "queued": 0,
         "reserves": 0,
         "crystalHp": 5600,
@@ -44,12 +44,12 @@
         ],
         "stats": {
           "deployed": 284,
-          "kills": 18,
-          "lost": 114,
-          "income": 374,
+          "kills": 17,
+          "lost": 129,
+          "income": 395,
           "walls": 3,
-          "skills": 3,
-          "peak": 180
+          "skills": 4,
+          "peak": 175
         }
       }
     },
@@ -61,10 +61,10 @@
       "name": "ground strategy actual battle wins",
       "ok": true,
       "evidence": {
-        "time": 55.94,
-        "remaining": 544.06,
-        "money": 88,
-        "active": 15,
+        "time": 44.6,
+        "remaining": 555.4,
+        "money": 6,
+        "active": 107,
         "queued": 0,
         "reserves": 0,
         "crystalHp": 0,
@@ -94,13 +94,13 @@
           }
         ],
         "stats": {
-          "deployed": 300,
-          "kills": 25,
-          "lost": 285,
-          "income": 443,
+          "deployed": 340,
+          "kills": 23,
+          "lost": 233,
+          "income": 441,
           "walls": 5,
-          "skills": 3,
-          "peak": 180
+          "skills": 4,
+          "peak": 175
         }
       }
     },

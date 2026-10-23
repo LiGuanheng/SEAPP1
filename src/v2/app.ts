@@ -49,6 +49,20 @@ const icon = (key: Kind) => {
 };
 const portrait = (c: Commander) =>
   `<div class="portrait" style="--col:${COMMANDERS[c].portrait % 3};--row:${Math.floor(COMMANDERS[c].portrait / 3)}"></div>`;
+const skillIcon = (kind: Kind, spec: Specialization) => {
+  const paths: Record<string, string> = {
+    dragon: "M2 10 8 3 7 9 12 6 10 13 17 8 13 17 8 14 4 17 5 12Z",
+    titan: "M3 2 12 2 16 6 12 10 9 7 4 16 2 15 7 6 3 6Z",
+    moon: "M12 2A8 8 0 1 0 17 14 8 8 0 0 1 12 2Z",
+    web: "M9 1V17M1 9H17M3 3 15 15M3 15 15 3M9 4 14 6 14 12 9 15 4 12 4 6Z",
+    forest: "M16 2C4 1 1 9 5 14 13 18 18 10 16 2ZM3 17 13 5M8 12 8 7M8 12 13 12",
+    emperor: "M9 2C7 6 2 10 3 13 5 19 15 18 16 13 17 9 12 6 9 2ZM5 7 4 3 8 5 9 2 11 5 15 3 14 7",
+    summon: "M3 16V6L9 2 15 6V16M6 16V8L9 6 12 8V16M1 17H17",
+    evolve: "M9 1 16 9 9 17 2 9ZM9 5 12 9 9 13 6 9Z",
+    element: "M9 1 11 6 17 8 12 11 11 17 8 12 2 13 5 8 3 3 8 5Z",
+  };
+  return `<svg class="skill-icon" viewBox="0 0 18 18" aria-hidden="true"><path d="${paths[kind] ?? paths[spec]}"/></svg>`;
+};
 function notice(s: string) {
   const n = $("#notice");
   if (!n) return;
@@ -74,6 +88,21 @@ function menu() {
   bindActions();
 }
 function bindActions() {
+  for (const c of COMMANDER_KEYS)
+    for (const el of document.querySelectorAll<HTMLElement>(`[data-key="${c}"]`))
+      if (el.dataset.action === "commander" || el.dataset.action === "skill")
+        el.title = `${COMMANDERS[c].description}\n冷却 ${COMMANDERS[c].cooldown}s · 施法距离 ${COMMANDERS[c].castRange}`;
+  for (const k of ARMY_KEYS) {
+    const d = ARMIES[k],
+      tip = `${d.name} · ${d.description}\n基础生命 ${d.hp} · 基础伤害 ${d.damage}/s · 速度 ${d.speed} · 射程 ${d.range}`;
+    for (const el of document.querySelectorAll<HTMLElement>(`[data-key="${k}"]`)) {
+      if (el.classList.contains("troop-deploy")) el.title = tip;
+      const row = el.closest<HTMLElement>(".army-row");
+      if (row) row.title = tip;
+    }
+  }
+  const kingSkill = $<HTMLElement>('[data-action="skill"][data-key="king"]');
+  if (kingSkill) kingSkill.title = SPECS[loadout.spec].description;
   app.onclick = (ev) => {
     const b = (ev.target as Element).closest<HTMLElement>("[data-action]");
     if (!b) return;
@@ -276,13 +305,13 @@ function startBattle(l: Loadout) {
   const heroCards = (["king", ...l.commanders] as Kind[])
     .map((k, i) => {
       const c = isCommander(k) ? COMMANDERS[k] : null;
-      return `<div class="hero-slot" data-hero="${k}"><button class="hero-deploy" data-action="deploy" data-key="${k}" draggable="true" data-drag="${k}" title="拖放英雄到合法区域">${isCommander(k) ? portrait(k) : icon("king")}<span>${c?.name ?? "魔物之王"}</span><small class="hero-state">待部署</small></button><button class="skill-button" data-action="skill" data-key="${k}"><kbd>${i === 0 ? "F" : ["Q", "W", "E", "R"][i - 1]}</kbd><span>${c?.skill ?? SPECS[l.spec].skill}</span><small class="skill-cd">未部署</small></button></div>`;
+      return `<div class="hero-slot" data-hero="${k}"><button class="hero-deploy" data-action="deploy" data-key="${k}" draggable="true" data-drag="${k}" title="拖放英雄到合法区域">${isCommander(k) ? portrait(k) : icon("king")}<span>${c?.name ?? "魔物之王"}</span><small class="hero-state">待部署</small></button><button class="skill-button" data-action="skill" data-key="${k}"><kbd>${skillIcon(k, l.spec)}<i>${i === 0 ? "F" : ["Q", "W", "E", "R"][i - 1]}</i></kbd><span>${c?.skill ?? SPECS[l.spec].skill}</span><small class="skill-cd">未部署</small></button></div>`;
     })
     .join("");
   const cards = ARMY_KEYS.filter((k) => unlocked(l, k))
     .map(
       (k) =>
-        `<div class="troop-card" data-troop="${k}"><button class="troop-deploy" data-action="deploy" data-key="${k}" draggable="true" data-drag="${k}" title="点击或拖到地图部署">${icon(k)}<span class="troop-name">${ARMIES[k].name}</span><b class="troop-stock">${l.inventory[k]}</b><small>${ARMIES[k].batch}只 / 批</small></button><button class="buy-button" data-action="buy" data-key="${k}">＋ ◈${batchPrice(l, k)}</button></div>`,
+        `<div class="troop-card" data-troop="${k}"><button class="troop-deploy" data-action="deploy" data-key="${k}" draggable="true" data-drag="${k}" title="点击或拖到地图部署">${icon(k)}<span class="troop-name">${ARMIES[k].name}</span><b class="troop-stock">${l.inventory[k]}</b><small>${ARMIES[k].batch}只 / 批</small></button><button class="buy-button" data-action="buy" data-key="${k}">＋ ◈${batchPrice(l, k)}<small class="affordable">可购${Math.floor(l.money / batchPrice(l, k))}批</small></button></div>`,
     )
     .join("");
   app.innerHTML = `<main class="battle-shell"><header class="battle-top"><button class="battle-brand" data-action="help">异界围城<span>THE LAST SIEGE</span></button><div class="objective"><div><span>摧毁中央日轮圣晶</span><b id="crystal-hp">100%</b></div><div class="objective-track"><i id="crystal-fill"></i></div></div><div class="clock-panel"><div class="clock-caption">距离净化降临 <span>${DIFFICULTIES[l.difficulty].name}</span></div><b id="clock">10:00</b><div class="charge-track"><i id="charge-fill"></i></div></div><div class="top-controls"><button data-action="sound">${sound.muted ? "音效 关" : "音效 开"}</button><button data-action="speed" id="speed">1×</button><button data-action="pause" id="pause">暂停 Ⅱ</button><button data-action="menu">主菜单</button></div></header><div class="battle-view" id="battle-view"><div class="battle-location"><span class="eyebrow">IMPERIAL CAPITAL</span><b>圣 曜 城</b><small>白金帝国 · 最后防线</small></div><aside class="map-panel"><canvas id="minimap" aria-label="点击小地图移动镜头"></canvas><div class="map-actions"><button data-action="overview">全景</button><button data-action="front">前线</button><button data-action="crystal">圣晶</button></div></aside><div class="battle-hint" id="mode-hint">拖放军团卡到城外召唤阵 · 框选军队 / 右键移动或集火</div><div id="notice" role="status"></div><div class="pause-indicator" id="pause-indicator">战斗暂停 <small>空格继续 · 暂停时可购买预备军</small></div></div><section class="battle-dock"><div class="resource-row"><div class="crystal-wallet">◈ <b id="battle-money">${money(battle.money)}</b><span>魔晶</span><small id="income">战利品 +0</small></div><div class="force-counter"><span>在场 <b id="active-count">0</b><small>/ 300</small></span><span>预备 <b id="reserve-count">0</b></span><span>选中 <b id="selected-count">0</b></span></div><div class="batch-control"><label>购买 <select id="buy-batch"><option value="1">1批</option><option value="3">3批</option><option value="Infinity">尽可能多</option></select></label><label>部署 <select id="deploy-batch"><option value="1">1批</option><option value="3">3批</option><option value="Infinity">全部库存</option></select></label></div><button class="small-gold" data-action="all-deploy">全部部署 ↗</button><button class="small-gold" data-action="charge">全军冲锋 ↑</button></div><div class="dock-main"><div class="troops-scroll">${cards}</div><div class="heroes-scroll">${heroCards}</div></div><div class="dock-footer"><span id="battle-message">据点需地面连通、无敌军争夺并占领8秒</span><div><button data-action="select-all">全选军队 A</button><button data-action="help">操作手册 ?</button><span id="fps"></span></div></div></section></main><div class="cinematic" id="intro-overlay"><div class="cinematic-copy"><span class="eyebrow">THE LAST SIEGE / 最后的总攻</span><h2>圣曜城的黎明</h2><p>日轮圣晶即将净化这片大地。<br>让群山开路，让风暴撕开天幕。<br>今日，异界的命运由你决定。</p><div class="march-portraits">${l.commanders.map((c) => `<div>${portrait(c)}<span>${COMMANDERS[c].name}</span></div>`).join("")}</div><button class="primary" data-action="skip-intro">开始总攻 / 跳过演出 →</button></div></div>`;
@@ -365,6 +394,8 @@ function updateHud() {
     el.classList.toggle("aiming", renderer.mode.type === "deploy" && renderer.mode.kind === k);
     el.querySelector<HTMLButtonElement>(".buy-button")!.disabled =
       b.money < batchPrice(b.loadout, k);
+    el.querySelector(".affordable")!.textContent =
+      `可购${Math.floor(b.money / batchPrice(b.loadout, k))}批`;
   }
   for (const k of ["king", ...b.loadout.commanders] as Kind[]) {
     const el = $(`[data-hero="${k}"]`);
@@ -406,6 +437,17 @@ function bindBattleInput() {
   const on = (target: EventTarget, event: string, fn: EventListener) =>
     target.addEventListener(event, fn, { signal });
   on(c, "contextmenu", (e) => e.preventDefault());
+  for (const tray of document.querySelectorAll<HTMLElement>(".troops-scroll,.heroes-scroll"))
+    tray.addEventListener(
+      "wheel",
+      (e) => {
+        if (tray.scrollWidth > tray.clientWidth) {
+          e.preventDefault();
+          tray.scrollLeft += Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+        }
+      },
+      { signal, passive: false },
+    );
   c.addEventListener(
     "wheel",
     (e) => {

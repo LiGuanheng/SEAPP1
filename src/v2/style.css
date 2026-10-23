@@ -1066,6 +1066,31 @@ em {
   background: #3f523a33;
   color: #d8c58d;
 }
+.affordable {
+  display: block;
+  font-size: 9px;
+  color: #94b19e;
+  margin-top: 2px;
+}
+.skill-icon {
+  display: block;
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+.skill-button kbd i {
+  font:
+    8px Georgia,
+    serif;
+  font-style: normal;
+  display: block;
+  line-height: 8px;
+}
 .heroes-scroll {
   display: flex;
   gap: 6px;

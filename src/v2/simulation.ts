@@ -163,7 +163,8 @@ export class Battle {
     return this.loadout.money;
   }
   get remaining() {
-    return Math.max(0, DIFFICULTIES[this.loadout.difficulty].seconds - this.time);
+    const remaining = DIFFICULTIES[this.loadout.difficulty].seconds - this.time;
+    return remaining < 1e-6 ? 0 : remaining;
   }
   get crystal() {
     return this.structures.find((s) => s.kind === "crystal")!;

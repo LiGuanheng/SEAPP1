@@ -49,6 +49,35 @@ describe("V2 ledger and loadout", () => {
   });
 });
 describe("V2 deployment, clock and result invariants", () => {
+  it("fixed-step timeout leaves exactly zero displayed time, without floating residue", () => {
+    const b = new Battle(createLoadout());
+    b.advance(600);
+    expect(b.status).toBe("defeat");
+    expect(b.remaining).toBe(0);
+  });
+  it("the deployed king dying does not end a surviving army", () => {
+    const l = createLoadout();
+    purchase(l, "goblin", 1);
+    const b = new Battle(l);
+    b.deploy("king", 850, 2070);
+    b.deploy("goblin", 850, 2070);
+    b.advance(1);
+    b.damage(b.getUnit("king")!, 99999);
+    b.checkResult();
+    expect(b.status).toBe("battle");
+    expect(b.active).toBeGreaterThan(0);
+    expect(b.skillInfo("king").available).toBe(false);
+    expect(b.deploy("king", 850, 2070)).toBe(false);
+  });
+  it("a real defender pays its reward only once", () => {
+    const b = new Battle(createLoadout());
+    const u = b.units.find((u) => u.kind === "soldier")!,
+      before = b.money;
+    b.damage(u, 99999);
+    b.damage(u, 99999);
+    expect(b.money).toBe(before + 1);
+    expect(b.stats.kills).toBe(1);
+  });
   it("fixed simulation gives identical results across render frame rates", () => {
     const l = preset("normal", "evolve"),
       a = new Battle(l, 42),
@@ -157,6 +186,22 @@ describe("V2 deployment, clock and result invariants", () => {
   });
 });
 describe("V2 six manual heroes and commands", () => {
+  it("evolution blessing buffs actual friendlies for ten seconds", () => {
+    const b = new Battle(createLoadout("normal", "evolve"));
+    b.spawn("king", 850, 2070);
+    const u = b.spawn("goblin", 850, 2070);
+    b.step(0.01);
+    expect(b.cast("king", 850, 2070)).toBe("");
+    expect(u.buff).toBe(10);
+    expect(b.readyAt.get("king")).toBeCloseTo(b.time + 65);
+  });
+  it("meteor has the explicit 35 damage cap against the crystal", () => {
+    const b = new Battle(createLoadout("normal", "element"));
+    b.spawn("king", 1600, 1100);
+    const hp = b.crystal.hp;
+    expect(b.cast("king", 1600, 1000)).toBe("");
+    expect(b.crystal.hp).toBe(hp - 35);
+  });
   function hero(k: Commander) {
     const l = createLoadout();
     recruit(l, k);
@@ -242,6 +287,30 @@ describe("V2 six manual heroes and commands", () => {
   });
 });
 describe("V2 siege and forward reinforcements", () => {
+  it("the east front also unlocks real paid reinforcement deployment", () => {
+    const l = createLoadout();
+    purchase(l, "goblin", 1);
+    const b = new Battle(l);
+    for (const u of b.units) u.hp = 0;
+    for (const s of b.structures) if (s.kind !== "crystal") b.damage(s, 99999);
+    b.spawn("goblin", 2300, 1360, 0, false, 1);
+    b.advance(9);
+    expect(b.outposts[1].captured).toBe(true);
+    expect(b.canDeploy(2300, 1360)).toBe(true);
+    expect(b.deploy("goblin", 2300, 1360)).toBe(true);
+  });
+  it("contested posts cannot gain progress or accept reinforcements", () => {
+    const b = new Battle(createLoadout());
+    for (const u of b.units) u.hp = 0;
+    for (const s of b.structures) if (s.kind !== "crystal") b.damage(s, 99999);
+    b.spawn("slime", 850, 1360, 0, false, -1);
+    const enemy = b.spawn("soldier", 860, 1360, 1);
+    enemy.root = 99;
+    b.advance(9);
+    expect(b.outposts[0].progress).toBe(0);
+    b.outposts[0].captured = true;
+    expect(b.canDeploy(850, 1360)).toBe(false);
+  });
   it("finite reserves spawn outside collision and physically march to a defense lane", () => {
     const b = new Battle(createLoadout());
     const firstId = Math.max(...b.units.map((u) => u.id));

@@ -1,9 +1,11 @@
 import puppeteer from "puppeteer-core";
 import { existsSync, writeFileSync, mkdirSync } from "node:fs";
-const executablePath = [
-  "C:/Program Files/Google/Chrome/Application/chrome.exe",
-  "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
-].find(existsSync);
+const executablePath =
+  process.env.CHROME_PATH ||
+  [
+    "C:/Program Files/Google/Chrome/Application/chrome.exe",
+    "C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe",
+  ].find(existsSync);
 const browser = await puppeteer.launch({
   executablePath,
   headless: true,
@@ -37,7 +39,14 @@ try {
     const p = await page.evaluate((x, y) => window.__SIEGE__.worldToScreen(x, y), x, y);
     await page.mouse.click(p.x, p.y);
   };
-  await init("breach");
+  await page.click('[data-action="new"]');
+  await page.click('[data-action="next"]');
+  await page.click('[data-action="next"]');
+  await page.click('[data-action="commander"][data-key="titan"]');
+  await page.click('[data-action="next"]');
+  await page.click('[data-action="preset"][data-key="breach"]');
+  await page.click('[data-action="launch"]');
+  await page.click('[data-action="skip-intro"]');
   await page.click('[data-action="deploy"][data-key="titan"]');
   await clickWorld(950, 1890);
   await page.evaluate(() => window.__SIEGE__.battle.advance(2));
@@ -66,14 +75,43 @@ try {
   let forward = false,
     reinforced = false,
     crystalShot = false;
-  for (let i = 0; i < 100; i++) {
+  for (let i = 0; i < 760; i++) {
     const snap = await page.evaluate(() => {
       const b = window.__SIEGE__.battle;
       if (b.status === "battle") {
         b.advance(0.8);
         for (const c of b.loadout.commanders) {
           const u = b.getUnit(c);
-          if (u && b.skillInfo(c).available && c !== "titan") b.cast(c, u.x, u.y);
+          if (u && b.skillInfo(c).available && c !== "titan") {
+            if (c === "forest") {
+              const wounded = b.units
+                .filter(
+                  (v) =>
+                    v.side === 0 &&
+                    v.hp > 0 &&
+                    v.hp < v.maxHp * 0.8 &&
+                    Math.hypot(v.x - u.x, v.y - u.y) < 430,
+                )
+                .sort((a, z) => z.maxHp - z.hp - (a.maxHp - a.hp))[0];
+              if (wounded) b.cast(c, wounded.x, wounded.y);
+            } else if (c === "moon") {
+              const wolves = b.units.filter(
+                (v) =>
+                  v.side === 0 &&
+                  v.hp > 0 &&
+                  v.kind === "wolf" &&
+                  Math.hypot(v.x - u.x, v.y - u.y) < 400,
+              );
+              if (wolves.length >= 3) b.cast(c, wolves[0].x, wolves[0].y);
+            } else b.cast(c, u.x, u.y);
+          }
+        }
+        const king = b.getUnit("king");
+        if (king && b.time > 10 && b.skillInfo("king").available) {
+          const leader = b.units
+            .filter((v) => v.side === 0 && v.hp > 0 && Math.hypot(v.x - king.x, v.y - king.y) < 430)
+            .sort((a, z) => a.y - z.y)[0];
+          if (leader) b.cast("king", leader.x, leader.y);
         }
       }
       return b.snapshot();
@@ -83,11 +121,17 @@ try {
       await page.click('[data-action="front"]');
       await page.screenshot({ path: `${dir}/10-army-battle.png` });
     }
-    if (!forward && snap.outposts[0].captured) {
+    if (!forward && snap.outposts[0].captured && !snap.outposts[0].contested) {
+      await page.click('[data-action="pause"]');
       forward = true;
       check("actual battle captured west post", true, snap);
       await page.screenshot({ path: `${dir}/11-forward-captured.png` });
-      const bought = await page.evaluate(() => window.__SIEGE__.battle.buy("golem", 1));
+      const cashBefore = await page.evaluate(() => window.__SIEGE__.battle.money);
+      await page.click('[data-action="buy"][data-key="golem"]');
+      const bought = await page.evaluate(
+        (m) => m - window.__SIEGE__.battle.money === 140,
+        cashBefore,
+      );
       if (bought) {
         await page.click('[data-action="deploy"][data-key="golem"]');
         await clickWorld(850, 1360);
@@ -95,17 +139,25 @@ try {
           const b = window.__SIEGE__.battle;
           return (
             b.loadout.inventory.golem === 0 &&
-            (b.queue.some((q) => q.kind === "golem" && q.y === 1360) ||
+            (b.queue.some((q) => q.kind === "golem" && Math.abs(q.y - 1360) < 1) ||
               b.units.some((u) => u.kind === "golem" && Math.abs(u.homeY - 1360) < 50))
           );
         });
         check("new paid reinforcements deployed at captured front", reinforced);
       }
+      await page.click('[data-action="pause"]');
     }
     if (forward && i % 6 === 0)
       await page.evaluate(() => {
         const b = window.__SIEGE__.battle;
-        if (b.buy("golem", 1)) b.deploy("golem", 850, 1360, Infinity);
+        for (const k of ["golem", "lizard", "goblin", "slime"]) if (b.buy(k, 1)) break;
+        const p = [
+          { x: 850, y: 1360 },
+          { x: 730, y: 1360 },
+          { x: 970, y: 1360 },
+        ].find((p) => b.canDeploy(p.x, p.y)) ?? { x: 850, y: 2070 };
+        for (const k of Object.keys(b.loadout.inventory))
+          if (b.loadout.inventory[k]) b.deploy(k, p.x, p.y, Infinity);
       });
     if (!crystalShot && snap.crystalHp < 4800 && snap.status === "battle") {
       crystalShot = true;
