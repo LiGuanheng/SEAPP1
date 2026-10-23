@@ -29,7 +29,7 @@
 ### 2.1 命令
 
 ```bash
-npm run test        # vitest run，32 个用例
+npm run test        # vitest run，33 个用例
 npm run build       # tsc --noEmit && vite build
 node scripts/smoke.mjs "https://liguanheng.github.io/SEAPP1/?nopause=1"
 node scripts/shot.mjs --url=... --out=... (截图工具)
@@ -39,14 +39,14 @@ node scripts/shot.mjs --url=... --out=... (截图工具)
 
 ```
 Test Files  4 passed (4)
-     Tests  32 passed (32)
-  Duration  1.39s
+     Tests  33 passed (33)
+  Duration  1.44s
 ```
 
 | 测试文件 | 用例数 | 覆盖内容 | 结果 |
 |---|---:|---|---|
 | `tests/economy.test.ts` | 8 | 开局基线、建造次日生效、资源不足拒绝、尸巢三级产量、王座统御、变异改造扣源、蛛行者解锁条件、招募上限 | 通过 |
-| `tests/campaign.test.ts` | 11 | 库存守恒（未出战+幸存+转化）、充能 16/13/10%、充能满失败、墙体缺口跨日、军营尽毁不补兵、能源站当日生效、据点次日激活、献祭预览不重复计算、只能发动一次、总兵力守恒 | 通过 |
+| `tests/campaign.test.ts` | 12 | 库存守恒（未出战+幸存+转化）、充能 16/13/10%、充能满失败、墙体缺口跨日、军营尽毁不补兵、能源站当日生效、据点次日激活、献祭预览不重复计算、只能发动一次、总兵力守恒 | 通过 |
 | `tests/save.test.ts` | 9 | 存档往返、坏档、字段归一化、版本不匹配、战斗回退议事厅、清档、读档不重复结算、状态不变量 | 通过 |
 | `tests/battle.balance.test.ts` | 4 | 第 1 天打不到灯塔、第 5 天"差一点"、终局大兵团胜利、重装/食尸鬼均可破墙 | 通过 |
 
@@ -159,6 +159,6 @@ npm run dev     # 打开 http://localhost:5173
 ## 8. 结论
 
 - P0 功能闭环（菜单 → 开场 → 议事厅 → 攻城 → 战报 → 次日 → 终局 → 结局）**已实际跑通**。
-- 32 个自动化用例 + 12 步线上冒烟**全部通过**。
+- 33 个自动化用例 + 12 步线上冒烟**全部通过**。
 - 画面为程序化原创像素素材 + AI 关键视觉，未使用几何占位或 emoji。
-- **未达标项**：真实设备 FPS 未测、无音频、无 3× 倍速/编队。已在"已知缺陷"中列出，不作虚假声明。
+- **未达标项**：真实设备 FPS 未测、无 3× 倍速/编队、人类不反攻前线。已在"已知缺陷"中列出，不作虚假声明。

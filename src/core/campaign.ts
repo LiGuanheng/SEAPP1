@@ -1,4 +1,4 @@
-import { DIFFICULTY, HUMAN_AI, TIMING } from '../config/balance';
+import { DIFFICULTY, ECONOMY, HUMAN_AI, TIMING } from '../config/balance';
 import { NODES } from '../config/mapData';
 import type { BattleResult, CampaignState, NodeId, SacrificePreview, UnitStack } from './types';
 import { emptyStack, powerStationsAlive, pushEvent } from './state';
@@ -19,6 +19,7 @@ export interface DayReport {
   chargeBefore: number;
   chargeAfter: number;
   chargeDelta: number;
+  essenceLoot: number;
   humanActions: string[];
   production: { zombies: number; corpses: number; notes: string[] };
   reason: string;
@@ -29,7 +30,7 @@ export function totalStack(s: UnitStack): number {
 }
 
 /** 战斗结果写回战役状态（幂等：只在结算时调用一次） */
-export function applyBattleResult(state: CampaignState, result: BattleResult): void {
+export function applyBattleResult(state: CampaignState, result: BattleResult): number {
   // 库存 = 未出战的部分 + 幸存返回 + 战中转化
   state.inventory = addStack(result.survivors, result.remaining);
   state.inventory.zombie += result.converted;
@@ -39,6 +40,16 @@ export function applyBattleResult(state: CampaignState, result: BattleResult): v
   state.stats.deployed += totalStack(result.deployed);
   state.stats.lost += totalStack(result.lost);
   state.stats.structuresDestroyed += result.structures.filter((s) => s.destroyed).length;
+
+  // 战利品：击杀与摧毁设施产出精华（有限、可追溯）
+  const structuresDown = result.structures.filter((s) => s.destroyed && (s.kind === 'facility' || s.kind === 'tower')).length;
+  const killLoot = Math.floor(result.kills / ECONOMY.essencePerKills);
+  const structureLoot = structuresDown * ECONOMY.essencePerStructure;
+  const essenceLoot = killLoot + structureLoot;
+  if (essenceLoot > 0) {
+    state.resources.essence += essenceLoot;
+    pushEvent(state, { type: 'loot', detail: `战利品：精华 +${essenceLoot}`, essence: essenceLoot });
+  }
 
   state.lighthouse.hp = Math.max(0, state.lighthouse.hp - result.lighthouseDamage);
 
@@ -75,6 +86,7 @@ export function applyBattleResult(state: CampaignState, result: BattleResult): v
     detail: `第 ${state.day} 天战损：${totalStack(result.lost)}`,
     count: totalStack(result.lost),
   });
+  return essenceLoot;
 }
 
 function addStack(a: UnitStack, b: UnitStack): UnitStack {
@@ -189,7 +201,7 @@ export interface DayAdvance {
 /** 战后完整结算：写回 → 人类发展 → 充能 → 生产 → 次日 */
 export function advanceDay(state: CampaignState, result: BattleResult): DayAdvance {
   const chargeBefore = state.lighthouse.charge;
-  applyBattleResult(state, result);
+  const essenceLoot = applyBattleResult(state, result);
   const humanActions = humanTurn(state);
   state.stats.daysPlayed = state.day;
 
@@ -245,6 +257,7 @@ export function advanceDay(state: CampaignState, result: BattleResult): DayAdvan
     chargeBefore,
     chargeAfter: state.lighthouse.charge,
     chargeDelta,
+    essenceLoot,
     humanActions,
     production,
     reason: lostReason,
@@ -323,6 +336,7 @@ export function makeFinalReport(state: CampaignState, result: BattleResult): Day
     chargeBefore: state.lighthouse.charge,
     chargeAfter: state.lighthouse.charge,
     chargeDelta: 0,
+    essenceLoot: 0,
     humanActions: [],
     production: { zombies: 0, corpses: 0, notes: [] },
     reason: result.outcome === 'victory' ? '灯塔在最后的总攻中崩塌。' : '最后一批亡灵倒在了城墙下，灯塔完成了净化。',

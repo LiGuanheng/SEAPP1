@@ -24,7 +24,7 @@ describe('经济与建造', () => {
   it('开局资源与库存符合基线', () => {
     expect(state.inventory.zombie).toBe(60);
     expect(state.resources.corpses).toBe(80);
-    expect(state.resources.essence).toBe(8);
+    expect(state.resources.essence).toBe(12);
     expect(state.buildings.length).toBe(1);
     expect(state.throneLevel).toBe(1);
     expect(commandCapacityOf(state)).toBe(180);

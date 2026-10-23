@@ -113,6 +113,28 @@ describe('战役日流程', () => {
   });
 });
 
+describe('精华经济可行性', () => {
+  it('6 场中等战果后能凑齐祭坛 + 王座 II + 巨汉', () => {
+    const state = createCampaign('normal', 11);
+    for (let i = 0; i < 6; i++) {
+      const before = state.resources.essence;
+      applyBattleResult(
+        state,
+        makeResult(state, {
+          kills: 24,
+          structures: [
+            { id: 'tw1', name: '机枪塔', kind: 'tower', destroyed: true },
+            { id: 'powerA', name: '能源站', kind: 'facility', destroyed: true },
+          ],
+        }),
+      );
+      // 每场至少产出 6（24 击杀）+ 6（2 设施）= 12 精华
+      expect(state.resources.essence - before).toBeGreaterThanOrEqual(12);
+    }
+    expect(state.resources.essence).toBeGreaterThanOrEqual(12 + 25 + 12);
+  });
+});
+
 describe('万骸归一', () => {
   it('预览不重复计算：库存 + 尸巢 + 尸骸兑换', () => {
     const state = createCampaign('normal', 7);

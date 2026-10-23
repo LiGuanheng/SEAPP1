@@ -7,7 +7,7 @@
 **🎮 在线游玩：https://liguanheng.github.io/SEAPP1/**
 
 [![Build & Deploy](https://github.com/LiGuanheng/SEAPP1/actions/workflows/deploy.yml/badge.svg)](https://github.com/LiGuanheng/SEAPP1/actions/workflows/deploy.yml)
-![tests](https://img.shields.io/badge/tests-32%20passed-brightgreen)
+![tests](https://img.shields.io/badge/tests-33%20passed-brightgreen)
 ![engine](https://img.shields.io/badge/engine-Phaser%203.90-8a2be2)
 
 ---
@@ -79,7 +79,7 @@ npm run dev        # http://localhost:5173
 构建与测试：
 
 ```bash
-npm run test       # Vitest：经济 / 战役 / 存档 / 战斗模拟（32 passed）
+npm run test       # Vitest：经济 / 战役 / 存档 / 战斗模拟（33 passed）
 npm run build      # tsc --noEmit && vite build → dist/
 npm run preview    # 预览生产构建
 node scripts/smoke.mjs "https://liguanheng.github.io/SEAPP1/?nopause=1"   # 端到端冒烟
@@ -118,7 +118,7 @@ src/
   ui/         DOM 界面（菜单/议事厅/HUD/战报/结局）
   audio.ts    Web Audio 程序化音效
 docs/         课程文档与截图
-tests/        Vitest 测试（32 个用例）
+tests/        Vitest 测试（33 个用例）
 scripts/      截图与端到端冒烟工具
 ```
 

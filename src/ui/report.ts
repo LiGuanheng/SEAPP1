@@ -38,6 +38,7 @@ export function showReport(root: HTMLElement, state: CampaignState, report: DayR
       ['城墙缺口', `${report.breaches} 段`, report.breaches ? 'good' : undefined],
       ['占领据点', report.captured.length ? report.captured.map((c) => (c === 'west' ? '西侧哨站' : c === 'east' ? '东侧补给站' : '城门前哨')).join('、') : '无', report.captured.length ? 'good' : undefined],
       ['灯塔受损', `${fmt(report.lighthouseDamage)}`, report.lighthouseDamage > 0 ? 'good' : undefined],
+      ['战利品精华', `+${report.essenceLoot}`, report.essenceLoot > 0 ? 'good' : undefined],
     ]),
     block('灯塔', [
       ['战前充能', `${Math.round(report.chargeBefore)}%`],

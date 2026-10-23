@@ -204,13 +204,15 @@ export const CONVERT = {
 
 export const ECONOMY = {
   startCorpses: 80,
-  startEssence: 8,
+  startEssence: 12,
   startInventory: { zombie: 60, runner: 0, brute: 0, spider: 0, boss: 0 },
   throneCorpsesPerDay: 20,
   inventoryCap: 999,
   recruitBatch: 10,
   recruitCost: 30,
   bossEssence: 25,
+  essencePerKills: 4,
+  essencePerStructure: 3,
   bossRestDays: 1,
 };
 

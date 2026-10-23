@@ -110,9 +110,9 @@ export const TOWERS: TowerDef[] = [
 ];
 
 export const NODES: NodeDef[] = [
-  { id: 'west', name: '西侧哨站', x: 30, y: 68, radius: 5, guards: 4, reward: { corpses: 40, essence: 3 } },
-  { id: 'east', name: '东侧补给站', x: 128, y: 68, radius: 5, guards: 4, reward: { corpses: 40, essence: 3 } },
-  { id: 'center', name: '城门前哨', x: 80, y: 90, radius: 5, guards: 3, reward: { corpses: 30, essence: 2 } },
+  { id: 'west', name: '西侧哨站', x: 30, y: 68, radius: 5, guards: 4, reward: { corpses: 40, essence: 4 } },
+  { id: 'east', name: '东侧补给站', x: 128, y: 68, radius: 5, guards: 4, reward: { corpses: 40, essence: 4 } },
+  { id: 'center', name: '城门前哨', x: 80, y: 90, radius: 5, guards: 3, reward: { corpses: 30, essence: 3 } },
 ];
 
 export const SLOTS: SlotDef[] = [
