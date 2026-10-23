@@ -1,0 +1,560 @@
+[
+  {
+    "strategy": "breach",
+    "seed": 19,
+    "time": 53.7,
+    "remaining": 546.3,
+    "money": 92,
+    "active": 29,
+    "queued": 0,
+    "reserves": 0,
+    "crystalHp": 0,
+    "status": "victory",
+    "outposts": [
+      {
+        "name": "西境哨所",
+        "x": 850,
+        "y": 1360,
+        "w": 360,
+        "h": 230,
+        "progress": 8,
+        "captured": true,
+        "contested": false,
+        "connected": true
+      },
+      {
+        "name": "东境哨所",
+        "x": 2300,
+        "y": 1360,
+        "w": 330,
+        "h": 230,
+        "progress": 0,
+        "captured": false,
+        "contested": true,
+        "connected": true
+      }
+    ],
+    "stats": {
+      "deployed": 300,
+      "kills": 29,
+      "lost": 271,
+      "income": 447,
+      "walls": 5,
+      "skills": 3,
+      "peak": 207
+    },
+    "wallMs": 252,
+    "heroes": [
+      {
+        "kind": "titan",
+        "hp": 1716,
+        "x": 1615,
+        "y": 1059
+      },
+      {
+        "kind": "moon",
+        "hp": 0,
+        "x": 1446,
+        "y": 1157
+      },
+      {
+        "kind": "forest",
+        "hp": 1500,
+        "x": 1438,
+        "y": 1161
+      }
+    ]
+  },
+  {
+    "strategy": "breach",
+    "seed": 42,
+    "time": 69.55,
+    "remaining": 530.45,
+    "money": 93,
+    "active": 5,
+    "queued": 0,
+    "reserves": 0,
+    "crystalHp": 0,
+    "status": "victory",
+    "outposts": [
+      {
+        "name": "西境哨所",
+        "x": 850,
+        "y": 1360,
+        "w": 360,
+        "h": 230,
+        "progress": 8,
+        "captured": true,
+        "contested": false,
+        "connected": true
+      },
+      {
+        "name": "东境哨所",
+        "x": 2300,
+        "y": 1360,
+        "w": 330,
+        "h": 230,
+        "progress": 0,
+        "captured": false,
+        "contested": true,
+        "connected": true
+      }
+    ],
+    "stats": {
+      "deployed": 300,
+      "kills": 30,
+      "lost": 295,
+      "income": 448,
+      "walls": 6,
+      "skills": 3,
+      "peak": 200
+    },
+    "wallMs": 267,
+    "heroes": [
+      {
+        "kind": "titan",
+        "hp": 0,
+        "x": 1545,
+        "y": 1076
+      },
+      {
+        "kind": "moon",
+        "hp": 0,
+        "x": 1457,
+        "y": 1150
+      },
+      {
+        "kind": "forest",
+        "hp": 0,
+        "x": 1502,
+        "y": 1336
+      }
+    ]
+  },
+  {
+    "strategy": "breach",
+    "seed": 20261024,
+    "time": 43.75,
+    "remaining": 556.25,
+    "money": 86,
+    "active": 66,
+    "queued": 0,
+    "reserves": 0,
+    "crystalHp": 0,
+    "status": "victory",
+    "outposts": [
+      {
+        "name": "西境哨所",
+        "x": 850,
+        "y": 1360,
+        "w": 360,
+        "h": 230,
+        "progress": 8,
+        "captured": true,
+        "contested": false,
+        "connected": true
+      },
+      {
+        "name": "东境哨所",
+        "x": 2300,
+        "y": 1360,
+        "w": 330,
+        "h": 230,
+        "progress": 0,
+        "captured": false,
+        "contested": true,
+        "connected": true
+      }
+    ],
+    "stats": {
+      "deployed": 300,
+      "kills": 23,
+      "lost": 234,
+      "income": 441,
+      "walls": 4,
+      "skills": 3,
+      "peak": 215
+    },
+    "wallMs": 177,
+    "heroes": [
+      {
+        "kind": "titan",
+        "hp": 2338,
+        "x": 1536,
+        "y": 1070
+      },
+      {
+        "kind": "moon",
+        "hp": 0,
+        "x": 1434,
+        "y": 1026
+      },
+      {
+        "kind": "forest",
+        "hp": 1500,
+        "x": 1422,
+        "y": 1143
+      }
+    ]
+  },
+  {
+    "strategy": "sky",
+    "seed": 19,
+    "time": 39.05,
+    "remaining": 560.95,
+    "money": 32,
+    "active": 49,
+    "queued": 0,
+    "reserves": 0,
+    "crystalHp": 0,
+    "status": "victory",
+    "outposts": [
+      {
+        "name": "西境哨所",
+        "x": 850,
+        "y": 1360,
+        "w": 360,
+        "h": 230,
+        "progress": 0,
+        "captured": false,
+        "contested": true,
+        "connected": true
+      },
+      {
+        "name": "东境哨所",
+        "x": 2300,
+        "y": 1360,
+        "w": 330,
+        "h": 230,
+        "progress": 8,
+        "captured": true,
+        "contested": false,
+        "connected": true
+      }
+    ],
+    "stats": {
+      "deployed": 218,
+      "kills": 29,
+      "lost": 169,
+      "income": 472,
+      "walls": 5,
+      "skills": 3,
+      "peak": 209
+    },
+    "wallMs": 222,
+    "heroes": [
+      {
+        "kind": "dragon",
+        "hp": 1412,
+        "x": 1755,
+        "y": 1148
+      },
+      {
+        "kind": "web",
+        "hp": 1238,
+        "x": 1780,
+        "y": 997
+      },
+      {
+        "kind": "forest",
+        "hp": 1498,
+        "x": 1795,
+        "y": 996
+      }
+    ]
+  },
+  {
+    "strategy": "sky",
+    "seed": 42,
+    "time": 38.35,
+    "remaining": 561.65,
+    "money": 32,
+    "active": 74,
+    "queued": 0,
+    "reserves": 0,
+    "crystalHp": 0,
+    "status": "victory",
+    "outposts": [
+      {
+        "name": "西境哨所",
+        "x": 850,
+        "y": 1360,
+        "w": 360,
+        "h": 230,
+        "progress": 0,
+        "captured": false,
+        "contested": true,
+        "connected": true
+      },
+      {
+        "name": "东境哨所",
+        "x": 2300,
+        "y": 1360,
+        "w": 330,
+        "h": 230,
+        "progress": 8,
+        "captured": true,
+        "contested": false,
+        "connected": true
+      }
+    ],
+    "stats": {
+      "deployed": 218,
+      "kills": 29,
+      "lost": 144,
+      "income": 472,
+      "walls": 4,
+      "skills": 3,
+      "peak": 209
+    },
+    "wallMs": 199,
+    "heroes": [
+      {
+        "kind": "dragon",
+        "hp": 1226,
+        "x": 1745,
+        "y": 1115
+      },
+      {
+        "kind": "web",
+        "hp": 1150,
+        "x": 1757,
+        "y": 1014
+      },
+      {
+        "kind": "forest",
+        "hp": 1468,
+        "x": 1811,
+        "y": 1031
+      }
+    ]
+  },
+  {
+    "strategy": "sky",
+    "seed": 20261024,
+    "time": 42.45,
+    "remaining": 557.55,
+    "money": 36,
+    "active": 63,
+    "queued": 0,
+    "reserves": 0,
+    "crystalHp": 0,
+    "status": "victory",
+    "outposts": [
+      {
+        "name": "西境哨所",
+        "x": 850,
+        "y": 1360,
+        "w": 360,
+        "h": 230,
+        "progress": 0,
+        "captured": false,
+        "contested": true,
+        "connected": true
+      },
+      {
+        "name": "东境哨所",
+        "x": 2300,
+        "y": 1360,
+        "w": 330,
+        "h": 230,
+        "progress": 8,
+        "captured": true,
+        "contested": false,
+        "connected": true
+      }
+    ],
+    "stats": {
+      "deployed": 218,
+      "kills": 33,
+      "lost": 155,
+      "income": 476,
+      "walls": 4,
+      "skills": 3,
+      "peak": 209
+    },
+    "wallMs": 228,
+    "heroes": [
+      {
+        "kind": "dragon",
+        "hp": 0,
+        "x": 1751,
+        "y": 1420
+      },
+      {
+        "kind": "web",
+        "hp": 1220,
+        "x": 1775,
+        "y": 1028
+      },
+      {
+        "kind": "forest",
+        "hp": 1465,
+        "x": 1798,
+        "y": 1039
+      }
+    ]
+  },
+  {
+    "strategy": "slime",
+    "seed": 19,
+    "time": 600,
+    "remaining": 0,
+    "money": 113,
+    "active": 0,
+    "queued": 0,
+    "reserves": 0,
+    "crystalHp": 5600,
+    "status": "defeat",
+    "outposts": [
+      {
+        "name": "西境哨所",
+        "x": 850,
+        "y": 1360,
+        "w": 360,
+        "h": 230,
+        "progress": 0,
+        "captured": false,
+        "contested": true,
+        "connected": true
+      },
+      {
+        "name": "东境哨所",
+        "x": 2300,
+        "y": 1360,
+        "w": 330,
+        "h": 230,
+        "progress": 0,
+        "captured": false,
+        "contested": true,
+        "connected": true
+      }
+    ],
+    "stats": {
+      "deployed": 1522,
+      "kills": 8,
+      "lost": 1522,
+      "income": 57,
+      "walls": 2,
+      "skills": 0,
+      "peak": 192
+    },
+    "wallMs": 909,
+    "heroes": [
+      {
+        "kind": "emperor",
+        "hp": 0,
+        "x": 1481,
+        "y": 1754
+      }
+    ]
+  },
+  {
+    "strategy": "slime",
+    "seed": 42,
+    "time": 600,
+    "remaining": 0,
+    "money": 122,
+    "active": 0,
+    "queued": 0,
+    "reserves": 0,
+    "crystalHp": 5600,
+    "status": "defeat",
+    "outposts": [
+      {
+        "name": "西境哨所",
+        "x": 850,
+        "y": 1360,
+        "w": 360,
+        "h": 230,
+        "progress": 0,
+        "captured": false,
+        "contested": true,
+        "connected": true
+      },
+      {
+        "name": "东境哨所",
+        "x": 2300,
+        "y": 1360,
+        "w": 330,
+        "h": 230,
+        "progress": 0,
+        "captured": false,
+        "contested": true,
+        "connected": true
+      }
+    ],
+    "stats": {
+      "deployed": 1522,
+      "kills": 17,
+      "lost": 1522,
+      "income": 66,
+      "walls": 2,
+      "skills": 0,
+      "peak": 220
+    },
+    "wallMs": 2587,
+    "heroes": [
+      {
+        "kind": "emperor",
+        "hp": 0,
+        "x": 1521,
+        "y": 1729
+      }
+    ]
+  },
+  {
+    "strategy": "slime",
+    "seed": 20261024,
+    "time": 600,
+    "remaining": 0,
+    "money": 84,
+    "active": 0,
+    "queued": 0,
+    "reserves": 0,
+    "crystalHp": 5600,
+    "status": "defeat",
+    "outposts": [
+      {
+        "name": "西境哨所",
+        "x": 850,
+        "y": 1360,
+        "w": 360,
+        "h": 230,
+        "progress": 0,
+        "captured": false,
+        "contested": true,
+        "connected": true
+      },
+      {
+        "name": "东境哨所",
+        "x": 2300,
+        "y": 1360,
+        "w": 330,
+        "h": 230,
+        "progress": 0,
+        "captured": false,
+        "contested": true,
+        "connected": true
+      }
+    ],
+    "stats": {
+      "deployed": 1522,
+      "kills": 7,
+      "lost": 1522,
+      "income": 28,
+      "walls": 1,
+      "skills": 0,
+      "peak": 195
+    },
+    "wallMs": 4915,
+    "heroes": [
+      {
+        "kind": "emperor",
+        "hp": 0,
+        "x": 1459,
+        "y": 1743
+      }
+    ]
+  }
+]

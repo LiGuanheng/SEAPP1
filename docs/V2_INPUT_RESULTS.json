@@ -1,0 +1,86 @@
+{
+  "date": "2026-10-23T21:56:06.864Z",
+  "results": [
+    {
+      "name": "illegal click consumes nothing",
+      "ok": true,
+      "evidence": {
+        "stock": 100,
+        "money": 205
+      }
+    },
+    {
+      "name": "click deploy three batches from stock",
+      "ok": true
+    },
+    {
+      "name": "native HTML5 drag deploy",
+      "ok": true,
+      "evidence": {
+        "time": 0.06,
+        "remaining": 599.94,
+        "money": 205,
+        "active": 0,
+        "queued": 100,
+        "reserves": 284,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "西境哨所",
+            "x": 850,
+            "y": 1360,
+            "w": 360,
+            "h": 230,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": false
+          },
+          {
+            "name": "东境哨所",
+            "x": 2300,
+            "y": 1360,
+            "w": 330,
+            "h": 230,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": false
+          }
+        ],
+        "stats": {
+          "deployed": 0,
+          "kills": 0,
+          "lost": 0,
+          "income": 0,
+          "walls": 0,
+          "skills": 0,
+          "peak": 0
+        }
+      }
+    },
+    {
+      "name": "native illegal drag keeps inventory",
+      "ok": true
+    },
+    {
+      "name": "pause freezes actual simulation",
+      "ok": true
+    },
+    {
+      "name": "right click creates real movement orders",
+      "ok": true
+    },
+    {
+      "name": "control group stored and recalled",
+      "ok": true
+    },
+    {
+      "name": "no browser errors",
+      "ok": true,
+      "evidence": []
+    }
+  ],
+  "errors": []
+}
