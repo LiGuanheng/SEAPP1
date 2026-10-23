@@ -1,0 +1,70 @@
+{
+  "date": "2026-10-23T21:46:16.553Z",
+  "results": [
+    {
+      "name": "main menu",
+      "ok": true
+    },
+    {
+      "name": "battle starts",
+      "ok": true
+    },
+    {
+      "name": "legion deployed",
+      "ok": true,
+      "evidence": {
+        "time": 11.35,
+        "remaining": 588.65,
+        "money": 213,
+        "active": 272,
+        "queued": 8,
+        "reserves": 8,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "西境哨所",
+            "x": 850,
+            "y": 1360,
+            "w": 360,
+            "h": 230,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "东境哨所",
+            "x": 2300,
+            "y": 1360,
+            "w": 330,
+            "h": 230,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 276,
+          "kills": 8,
+          "lost": 4,
+          "income": 8,
+          "walls": 1,
+          "skills": 0,
+          "peak": 272
+        }
+      }
+    },
+    {
+      "name": "720p HUD visible",
+      "ok": true
+    },
+    {
+      "name": "no uncaught browser exceptions",
+      "ok": true,
+      "evidence": []
+    }
+  ],
+  "errors": []
+}
