@@ -1,0 +1,190 @@
+{
+  "seed": 20261024,
+  "note": "Supplementary easy/hard fixed-seed playability samples using normal purchases, healing and blessing. The sky army approaches from west. No HP/wallet overrides.",
+  "results": [
+    {
+      "difficulty": "easy",
+      "strategy": "breach",
+      "approach": "west",
+      "time": 46.28,
+      "remaining": 673.72,
+      "money": 29,
+      "active": 42,
+      "queued": 0,
+      "reserves": 0,
+      "crystalHp": 0,
+      "status": "victory",
+      "outposts": [
+        {
+          "name": "西境哨所",
+          "x": 850,
+          "y": 1360,
+          "w": 360,
+          "h": 230,
+          "progress": 8,
+          "captured": true,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "东境哨所",
+          "x": 2300,
+          "y": 1360,
+          "w": 330,
+          "h": 230,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        }
+      ],
+      "stats": {
+        "deployed": 328,
+        "kills": 22,
+        "lost": 286,
+        "income": 449,
+        "walls": 7,
+        "skills": 4,
+        "peak": 219
+      }
+    },
+    {
+      "difficulty": "easy",
+      "strategy": "sky",
+      "approach": "west",
+      "time": 32.22,
+      "remaining": 687.78,
+      "money": 6,
+      "active": 142,
+      "queued": 0,
+      "reserves": 0,
+      "crystalHp": 0,
+      "status": "victory",
+      "outposts": [
+        {
+          "name": "西境哨所",
+          "x": 850,
+          "y": 1360,
+          "w": 360,
+          "h": 230,
+          "progress": 8,
+          "captured": true,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "东境哨所",
+          "x": 2300,
+          "y": 1360,
+          "w": 330,
+          "h": 230,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        }
+      ],
+      "stats": {
+        "deployed": 288,
+        "kills": 21,
+        "lost": 146,
+        "income": 436,
+        "walls": 5,
+        "skills": 4,
+        "peak": 214
+      }
+    },
+    {
+      "difficulty": "hard",
+      "strategy": "breach",
+      "approach": "west",
+      "time": 54.37,
+      "remaining": 425.63,
+      "money": 69,
+      "active": 16,
+      "queued": 0,
+      "reserves": 0,
+      "crystalHp": 0,
+      "status": "victory",
+      "outposts": [
+        {
+          "name": "西境哨所",
+          "x": 850,
+          "y": 1360,
+          "w": 360,
+          "h": 230,
+          "progress": 8,
+          "captured": true,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "东境哨所",
+          "x": 2300,
+          "y": 1360,
+          "w": 330,
+          "h": 230,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        }
+      ],
+      "stats": {
+        "deployed": 252,
+        "kills": 28,
+        "lost": 236,
+        "income": 449,
+        "walls": 5,
+        "skills": 4,
+        "peak": 191
+      }
+    },
+    {
+      "difficulty": "hard",
+      "strategy": "sky",
+      "approach": "west",
+      "time": 45.93,
+      "remaining": 434.07,
+      "money": 9,
+      "active": 10,
+      "queued": 0,
+      "reserves": 0,
+      "crystalHp": 0,
+      "status": "victory",
+      "outposts": [
+        {
+          "name": "西境哨所",
+          "x": 850,
+          "y": 1360,
+          "w": 360,
+          "h": 230,
+          "progress": 8,
+          "captured": true,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "东境哨所",
+          "x": 2300,
+          "y": 1360,
+          "w": 330,
+          "h": 230,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        }
+      ],
+      "stats": {
+        "deployed": 294,
+        "kills": 28,
+        "lost": 284,
+        "income": 449,
+        "walls": 6,
+        "skills": 4,
+        "peak": 195
+      }
+    }
+  ]
+}

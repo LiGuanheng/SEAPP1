@@ -14,7 +14,9 @@
 | 专精与其他统帅 | `V2_ACCEPTANCE_RESULTS.json` | 全六统帅与三个魔王主动技能、自然力竭；无HP/钱包覆盖 |
 | 同屏与重开 | `V2_PERFORMANCE_RESULTS.json` | 300固定同屏及追加军团进攻采样；真实帧间隔、环境和生命周期 |
 | 策略 | `V2_BALANCE_RESULTS.json` | 同预算三种策略×三个固定种子，保留败局；不是总体胜率 |
-| 线上 | `V2_RELEASE_RESULTS.json` | 最终公开URL、Actions和构建指纹；发布后记录 |
+| 线上 | `V2_RELEASE_RESULTS.json` | 已实际通过公开整备与部署、17文件SHA-256及4256fab清洁发布提交；截图20 |
+
+补充简单/困难四场模型通关见V2_DIFFICULTY_RESULTS与evidence/difficulty-probe.ts。它们与九个普通样本分开统计，不伪造总体通过率。发布Actions为40038867248，success。
 
 截图位于screenshots/v2，均由浏览器直接保存。美术原图是生成资源，和浏览器截图明确分开。长战斗段使用真实Battle.advance推进同一模拟；键鼠施放、购买、部署和目标条件没有被跳过为“直接胜利”。
 

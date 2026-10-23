@@ -1,0 +1,160 @@
+{
+  "date": "2026-10-23T23:22:04.165Z",
+  "url": "https://liguanheng.github.io/SEAPP1/",
+  "httpStatus": 200,
+  "title": "异界围城：魔物之王 · Monster Sovereign",
+  "expectedCommit": "4256fab3a0caa9bf054c680f887f58f7c9c0df92",
+  "deployedCommit": "4256fab3a0caa9bf054c680f887f58f7c9c0df92",
+  "version": "2.0.0",
+  "cleanBuild": true,
+  "commanderCards": 6,
+  "fileChecks": [
+    {
+      "path": "art/city.webp",
+      "status": 200,
+      "match": true,
+      "bytes": 733430
+    },
+    {
+      "path": "art/cover.webp",
+      "status": 200,
+      "match": true,
+      "bytes": 441748
+    },
+    {
+      "path": "art/grove.webp",
+      "status": 200,
+      "match": true,
+      "bytes": 883626
+    },
+    {
+      "path": "art/hero-dragon.webp",
+      "status": 200,
+      "match": true,
+      "bytes": 722096
+    },
+    {
+      "path": "art/hero-emperor.webp",
+      "status": 200,
+      "match": true,
+      "bytes": 638818
+    },
+    {
+      "path": "art/hero-forest.webp",
+      "status": 200,
+      "match": true,
+      "bytes": 677054
+    },
+    {
+      "path": "art/hero-moon.webp",
+      "status": 200,
+      "match": true,
+      "bytes": 481918
+    },
+    {
+      "path": "art/hero-titan.webp",
+      "status": 200,
+      "match": true,
+      "bytes": 569040
+    },
+    {
+      "path": "art/hero-web.webp",
+      "status": 200,
+      "match": true,
+      "bytes": 548272
+    },
+    {
+      "path": "art/materials.webp",
+      "status": 200,
+      "match": true,
+      "bytes": 711936
+    },
+    {
+      "path": "art/portraits.webp",
+      "status": 200,
+      "match": true,
+      "bytes": 690402
+    },
+    {
+      "path": "art/structures.webp",
+      "status": 200,
+      "match": true,
+      "bytes": 600448
+    },
+    {
+      "path": "art/units-move.webp",
+      "status": 200,
+      "match": true,
+      "bytes": 864554
+    },
+    {
+      "path": "art/units.webp",
+      "status": 200,
+      "match": true,
+      "bytes": 918618
+    },
+    {
+      "path": "assets/index-Bb3WQK46.css",
+      "status": 200,
+      "match": true,
+      "bytes": 22230
+    },
+    {
+      "path": "assets/index-RmMsnN8T.js",
+      "status": 200,
+      "match": true,
+      "bytes": 77703
+    },
+    {
+      "path": "index.html",
+      "status": 200,
+      "match": true,
+      "bytes": 1069
+    }
+  ],
+  "battle": {
+    "time": 1.17,
+    "remaining": 598.83,
+    "money": 205,
+    "active": 33,
+    "queued": 251,
+    "reserves": 251,
+    "crystalHp": 5600,
+    "status": "battle",
+    "outposts": [
+      {
+        "name": "西境哨所",
+        "x": 850,
+        "y": 1360,
+        "w": 360,
+        "h": 230,
+        "progress": 0,
+        "captured": false,
+        "contested": true,
+        "connected": false
+      },
+      {
+        "name": "东境哨所",
+        "x": 2300,
+        "y": 1360,
+        "w": 330,
+        "h": 230,
+        "progress": 0,
+        "captured": false,
+        "contested": true,
+        "connected": false
+      }
+    ],
+    "stats": {
+      "deployed": 33,
+      "kills": 0,
+      "lost": 0,
+      "income": 0,
+      "walls": 0,
+      "skills": 0,
+      "peak": 33
+    }
+  },
+  "errors": [],
+  "pass": true
+}
