@@ -1,13 +1,17 @@
-import { APP_VERSION, GAME_SUBTITLE, GAME_TITLE, SAVE_KEY } from '../config/version';
-import { clear, el } from './dom';
+import { APP_VERSION, GAME_SUBTITLE, GAME_TITLE } from '../config/version';
+import { clear, el, fmt } from './dom';
 import { settings, setSettings } from './settings';
 import { showIntro } from './intro';
 import { GameHost } from '../game/host';
 import { createCampaign } from '../core/state';
 import { BattleSim } from '../battle/sim';
-import type { CampaignState } from '../core/types';
+import { makeBattleResult } from '../battle/result';
+import { advanceDay, executeSacrifice, makeFinalReport } from '../core/campaign';
+import { clearSave, hasSave, loadGame, saveGame } from '../core/save';
+import { CouncilScreen } from './council';
+import { showEnding, showReport, type EndingInfo } from './report';
+import type { BattleResult, CampaignState } from '../core/types';
 import { BattleHUD, stackLine } from './hud';
-import { UNITS } from '../config/balance';
 
 export type ScreenName = 'menu' | 'intro' | 'council' | 'battle' | 'report' | 'ending';
 
@@ -33,6 +37,9 @@ export class Shell {
   private state: CampaignState | null = null;
   private sim: BattleSim | null = null;
   private hud: BattleHUD | null = null;
+  private council: CouncilScreen | null = null;
+  private battleFinal = false;
+  private battleEnded = false;
 
   constructor() {
     this.root = document.getElementById('ui-root') as HTMLElement;
@@ -44,16 +51,14 @@ export class Shell {
   }
 
   hasSave(): boolean {
-    try {
-      return !!localStorage.getItem(SAVE_KEY);
-    } catch {
-      return false;
-    }
+    return hasSave();
   }
 
   clearScreen(): void {
     this.hud?.destroy();
     this.hud = null;
+    this.council?.destroy();
+    this.council = null;
     this.gameHost.destroy();
     this.sim = null;
     clear(this.host);
@@ -64,7 +69,7 @@ export class Shell {
   }
 
   mount(node: HTMLElement): void {
-    this.clearScreen();
+    clear(this.host);
     this.host.append(node);
   }
 
@@ -111,7 +116,7 @@ export class Shell {
 
   confirm(title: string, text: string, okText: string, onOk: () => void, danger = false): void {
     const body = el('div', { text });
-    const actions = [
+    const back = this.modal(title, body, [
       el('button', { class: 'btn btn-sm', text: '取消', on: { click: () => back.remove() } }),
       el('button', {
         class: `btn btn-sm ${danger ? 'btn-danger' : 'btn-primary'}`,
@@ -123,13 +128,14 @@ export class Shell {
           },
         },
       }),
-    ];
-    const back = this.modal(title, body, actions);
+    ]);
   }
+
+  /* ---------------- 主菜单 ---------------- */
 
   showMenu(): void {
     this.current = 'menu';
-    const hasSave = this.hasSave();
+    const saved = this.hasSave();
     const screen = el('div', { class: 'screen menu-screen vignette' });
 
     const left = el('div', { class: 'menu-left' }, [
@@ -148,25 +154,13 @@ export class Shell {
         el('button', {
           class: 'btn',
           html: '<span>继续战役</span><small>CONTINUE</small>',
-          attrs: hasSave ? {} : { disabled: 'true' },
-          title: hasSave ? '读取本地存档' : '暂无存档',
+          attrs: saved ? {} : { disabled: 'true' },
+          title: saved ? '读取本地存档' : '暂无存档',
           on: { click: () => this.onContinue() },
         }),
-        el('button', {
-          class: 'btn',
-          html: '<span>操作说明</span><small>CONTROLS</small>',
-          on: { click: () => this.showHelp() },
-        }),
-        el('button', {
-          class: 'btn',
-          html: '<span>设置</span><small>SETTINGS</small>',
-          on: { click: () => this.showSettings() },
-        }),
-        el('button', {
-          class: 'btn',
-          html: '<span>制作信息</span><small>CREDITS</small>',
-          on: { click: () => this.showCredits() },
-        }),
+        el('button', { class: 'btn', html: '<span>操作说明</span><small>CONTROLS</small>', on: { click: () => this.showHelp() } }),
+        el('button', { class: 'btn', html: '<span>设置</span><small>SETTINGS</small>', on: { click: () => this.showSettings() } }),
+        el('button', { class: 'btn', html: '<span>制作信息</span><small>CREDITS</small>', on: { click: () => this.showCredits() } }),
       ]),
     ]);
 
@@ -186,21 +180,72 @@ export class Shell {
 
   protected onStart(): void {
     this.state = createCampaign('normal');
-    this.showIntro(() => void this.startBattle(false));
+    this.showIntro(() => void this.enterCouncil());
   }
 
-  protected showIntro(onDone: () => void): void {
-    showIntro(this.hostLayer(), onDone);
+  protected onContinue(): void {
+    const res = loadGame();
+    if (!res.ok || !res.state) {
+      this.toast(res.reason ?? '读档失败', 'bad');
+      return;
+    }
+    this.state = res.state;
+    this.toast(`已读取第 ${res.state.day} 天存档`, 'gold');
+    void this.enterCouncil();
   }
 
-  private hostLayer(): HTMLElement {
-    return this.root;
+  private showIntro(onDone: () => void): void {
+    showIntro(this.root, onDone);
   }
 
-  /** 进入攻城战：真实模拟 + HUD + 胜负判定 */
+  /* ---------------- 议事厅 ---------------- */
+
+  async enterCouncil(): Promise<void> {
+    const state = this.state;
+    if (!state) return;
+    this.current = 'council';
+    this.clearScreen();
+    state.phase = 'council';
+    saveGame(state);
+
+    const scene = await this.gameHost.mount(
+      state,
+      {
+        onLog: (text: string, kind?: 'good' | 'bad' | 'gold') =>
+          this.toast(text, kind === 'bad' ? 'bad' : kind === 'gold' ? 'gold' : 'info', 1800),
+        onSlotClick: (slotId: string) => this.council?.selectSlot(slotId),
+      },
+      'council',
+    );
+
+    this.council = new CouncilScreen(this.root, state, {
+      onMarch: () => void this.startBattle(false),
+      onFinal: () => void this.startFinal(),
+      onMenu: () => {
+        saveGame(state);
+        this.clearScreen();
+        this.showMenu();
+        this.toast('已保存当前战役', 'gold');
+      },
+      onChanged: () => {
+        saveGame(state);
+        scene.refreshUndead();
+      },
+      onToast: (text: string, kind?: 'info' | 'bad' | 'gold') => this.toast(text, kind ?? 'info', 2000),
+    });
+    this.onEscape(() => {
+      /* 议事厅 ESC 不退出，避免误触 */
+    });
+  }
+
+  /* ---------------- 战斗 ---------------- */
+
   async startBattle(final: boolean): Promise<void> {
     const state = this.state;
     if (!state) return;
+    this.battleFinal = final;
+    this.battleEnded = false;
+    this.current = 'battle';
     this.clearScreen();
     const sim = new BattleSim({ state, final, seed: state.seed + state.day * 31, lowQuality: settings.quality === 'low' });
     this.sim = sim;
@@ -210,65 +255,141 @@ export class Shell {
       {
         onLog: (text: string, kind?: 'good' | 'bad' | 'gold') => this.hud?.log(text, kind ?? 'info'),
         onDeploy: (ok: boolean, message: string, count: number) => {
-          if (!ok) this.toast(message || '无法在此部署', 'bad', 1600);
+          if (!ok) this.toast(message || '无法在此部署', 'bad', 1500);
           else if (count > 0) this.hud?.log(`投放 ${count} 个单位`, 'good');
         },
         onSelection: (ids: number[], info: string) => this.hud?.updateSelection(ids, info),
         onStats: (s: { fps: number; units: number; time: number; commandUsed: number; commandCap: number; alive: number }) =>
           this.hud?.updateStats(s),
-        onBattleEnd: () => this.finishBattle(final),
+        onBattleEnd: () => this.finishBattle(),
       },
       'battle',
       sim,
     );
 
     this.hud = new BattleHUD(this.root, state, scene, {
-      onRetreat: () => {
-        sim.retreat();
-      },
+      onRetreat: () => sim.retreat(),
       onExit: () => {
         this.clearScreen();
         this.showMenu();
       },
-      onRestart: () => {
-        void this.startBattle(final);
-      },
+      onRestart: () => void this.startBattle(final),
     });
     this.hud.log(final ? '万骸归一 · 最终总攻开始' : `第 ${state.day} 天攻城开始`, 'gold');
+    if (state.territories.some((t) => t.owner === 'undead' && t.activeForDeploy)) {
+      this.hud.log('前线已就绪：可从更靠前的区域投放部队', 'good');
+    }
     this.onEscape(() => {
       if (scene.deployType) scene.setDeployType(null);
     });
   }
 
-  private finishBattle(final: boolean): void {
-    const sim = this.sim;
+  private async startFinal(): Promise<void> {
     const state = this.state;
-    if (!sim || !state || !this.hud) return;
-    const victory = sim.outcome === 'victory';
-    const survivors = sim.survivors();
-    const lostTotal = Object.values(sim.lostTotal).reduce((a, b) => a + b, 0);
-    const lines = [
-      { k: '战斗结果', v: victory ? '灯塔被摧毁' : sim.outcome === 'retreat' ? '主动撤退' : final ? '总攻失败' : '时间耗尽', tone: (victory ? 'good' : 'bad') as 'good' | 'bad' },
-      { k: '击杀守军', v: String(sim.kills), tone: 'good' as const },
-      { k: '转化亡灵', v: String(sim.converted) },
-      { k: '阵亡', v: String(lostTotal), tone: 'bad' as const },
-      { k: '幸存返回', v: stackLine(survivors) || '无' },
-      { k: '灯塔受损', v: `${Math.round(sim.lighthouseDamage)} / ${state.lighthouse.maxHp}` },
-      { k: '摧毁设施', v: sim.destroyedStructures().map((s) => s.name).join('、') || '无' },
-      { k: '占领据点', v: sim.captured.length ? sim.captured.map((c) => (c === 'west' ? '西侧哨站' : c === 'east' ? '东侧补给站' : '城门前哨')).join('、') : '无' },
-    ];
-    const note = victory
-      ? '灯塔的光柱正在崩塌，曙光城的防线出现了无法修补的裂缝。'
-      : final
-        ? '最后一批亡灵倒在了城墙下。灯塔完成净化，黑蚀退去。'
-        : '攻势被挡下。城墙留下了伤痕，而人类的预算又转入了新的防御。';
-    this.hud.showResult({ ok: victory, title: victory ? '灯塔陨落' : final ? '万骸散尽' : '攻势受挫', lines, note });
-    void UNITS;
+    if (!state) return;
+    const res = executeSacrifice(state);
+    if (!res.ok) {
+      this.toast(res.message, 'bad');
+      return;
+    }
+    saveGame(state);
+    await this.startBattle(true);
   }
 
-  protected onContinue(): void {
-    this.toast('待接入：读档（M3 里程碑）', 'bad');
+  private finishBattle(): void {
+    const sim = this.sim;
+    const state = this.state;
+    if (!sim || !state || this.battleEnded) return;
+    this.battleEnded = true;
+    const result = makeBattleResult(sim, state, this.battleFinal);
+    const victory = result.outcome === 'victory';
+    this.hud?.showResult({
+      ok: victory,
+      title: victory ? '灯塔陨落' : this.battleFinal ? '万骸散尽' : '攻势受挫',
+      lines: [
+        {
+          k: '战斗结果',
+          v: victory ? '灯塔被摧毁' : result.outcome === 'retreat' ? '主动撤退' : this.battleFinal ? '总攻失败' : '时间耗尽',
+          tone: victory ? 'good' : 'bad',
+        },
+        { k: '击杀守军', v: String(result.kills), tone: 'good' },
+        { k: '阵亡', v: String(Object.values(result.lost).reduce((a, b) => a + b, 0)), tone: 'bad' },
+        { k: '幸存返回', v: stackLine(result.survivors) || '无' },
+        { k: '灯塔受损', v: `${fmt(result.lighthouseDamage)}` },
+      ],
+      note: victory ? '光柱断裂，曙光城陷入黑暗。' : '这一仗结束了，战役还在继续。',
+    });
+    window.setTimeout(() => this.afterBattle(result), 1200);
   }
+
+  private afterBattle(result: BattleResult): void {
+    const state = this.state;
+    if (!state) return;
+    const victory = result.outcome === 'victory';
+    this.clearScreen();
+
+    if (this.battleFinal) {
+      state.phase = victory ? 'won' : 'lost';
+      saveGame(state);
+      const report = makeFinalReport(state, result);
+      showReport(this.root, state, report, () => this.showEndingScreen(victory));
+      return;
+    }
+
+    if (victory) {
+      state.lighthouse.hp = 0;
+      state.phase = 'won';
+      const report = makeFinalReport(state, result);
+      saveGame(state);
+      showReport(this.root, state, report, () => this.showEndingScreen(true));
+      return;
+    }
+
+    const advance = advanceDay(state, result);
+    saveGame(state);
+    showReport(this.root, state, advance.report, () => {
+      if (state.phase === 'won') this.showEndingScreen(true);
+      else if (state.phase === 'lost') this.showEndingScreen(false);
+      else void this.enterCouncil();
+    });
+  }
+
+  private showEndingScreen(victory: boolean): void {
+    const state = this.state;
+    if (!state) return;
+    this.clearScreen();
+    const info: EndingInfo = {
+      victory,
+      kicker: victory ? 'THE LIGHT IS DEVOURED' : 'THE PURIFICATION',
+      title: victory ? '灯塔熄灭' : '曙光长明',
+      text: victory
+        ? `第 ${state.day} 天，中央灯塔的结构在尸潮下断裂。金色的光柱熄灭，黑蚀像潮水一样漫过曙光城的屋顶。亡骸君主走上城墙，看见的只有跪伏的死者与再无人点燃的黎明。`
+        : '灯塔完成了最后一次充能。白金色的光穿过城墙、穿过街道、穿过每一具仍在行走的尸体。你听见自己的军团在光里碎裂——然后，是长久的安静。',
+      stats: [
+        { k: '坚持天数', v: `${state.day}` },
+        { k: '累计击杀', v: fmt(state.kills) },
+        { k: '累计阵亡', v: fmt(state.stats.lost) },
+        { k: '摧毁设施', v: `${state.stats.structuresDestroyed}` },
+        { k: '灯塔剩余', v: `${Math.max(0, Math.round(state.lighthouse.hp))}` },
+      ],
+    };
+    showEnding(
+      this.root,
+      info,
+      () => {
+        this.clearScreen();
+        this.state = createCampaign('normal');
+        void this.enterCouncil();
+      },
+      () => {
+        this.clearScreen();
+        this.showMenu();
+      },
+    );
+    if (victory) clearSave();
+  }
+
+  /* ---------------- 帮助 / 设置 / 制作 ---------------- */
 
   showHelp(): void {
     const body = el('div', {}, [
@@ -288,12 +409,13 @@ export class Shell {
           <div><kbd>滚轮</kbd></div><div>缩放镜头</div>
           <div><kbd>空格</kbd></div><div>镜头回到主军</div>
           <div><kbd>P</kbd></div><div>暂停 / 继续</div>
-          <div><kbd>Q</kbd> <kbd>W</kbd> <kbd>E</kbd></div><div>君主技能（M3 后逐步开放）</div>
           <div><kbd>F</kbd></div><div>终局：全军冲锋</div>
         `,
       }),
       el('h4', { text: '胜负' }),
       el('div', { text: '灯塔生命值归零立即胜利；日终充能达到 100%、超过最大天数或终局失败即失败。' }),
+      el('h4', { text: '存档' }),
+      el('div', { text: '议事厅与战报确认时自动保存到浏览器本地。战斗中刷新会回到战前的议事厅。' }),
     ]);
     const back = this.modal('操作说明', body, [
       el('button', { class: 'btn btn-sm btn-primary', text: '知道了', on: { click: () => back.remove() } }),
@@ -330,11 +452,12 @@ export class Shell {
       el('div', { style: { display: 'flex', gap: '8px' } }, [muteBtn]),
       el('h4', { text: '性能' }),
       el('div', { style: { display: 'flex', gap: '8px' } }, [qBtn]),
-      el('div', { style: { 'margin-top': '10px', 'font-size': '11.5px', color: '#63706b' }, text: '低画质会关闭部分粒子与光晕，并降低同屏特效密度。' }),
+      el('div', {
+        style: { marginTop: '10px', fontSize: '11.5px', color: '#63706b' },
+        text: '低画质会降低同屏活动单位上限并减少粒子，适合集成显卡。',
+      }),
     ]);
-    const back = this.modal('设置', body, [
-      el('button', { class: 'btn btn-sm', text: '关闭', on: { click: () => back.remove() } }),
-    ]);
+    const back = this.modal('设置', body, [el('button', { class: 'btn btn-sm', text: '关闭', on: { click: () => back.remove() } })]);
     void back;
   }
 
@@ -345,13 +468,13 @@ export class Shell {
       el('h4', { text: '技术' }),
       el('div', { text: 'Phaser 3 · TypeScript · Vite · Vitest · GitHub Actions / Pages' }),
       el('h4', { text: '美术与音频' }),
-      el('div', { text: '战场像素素材、地形、建筑、特效均由项目内程序化绘制（原创）。界面与图标为原创 SVG/CSS。关键视觉由 AI 图像模型生成后人工筛选，详见 docs/ASSET_LICENSES.md。' }),
+      el('div', {
+        text: '战场像素素材、地形、建筑、特效均由项目内程序化绘制（原创）。界面与图标为原创 SVG/CSS。关键视觉由 AI 图像模型生成后人工筛选，详见 docs/ASSET_LICENSES.md。',
+      }),
       el('h4', { text: '声明' }),
       el('div', { text: '本作角色、城邦与剧情均为原创，不含任何《Overlord》或其他商业 IP 的角色、名称与素材。' }),
     ]);
-    const back = this.modal('制作信息', body, [
-      el('button', { class: 'btn btn-sm', text: '关闭', on: { click: () => back.remove() } }),
-    ]);
+    const back = this.modal('制作信息', body, [el('button', { class: 'btn btn-sm', text: '关闭', on: { click: () => back.remove() } })]);
     void back;
   }
 }

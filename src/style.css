@@ -513,7 +513,7 @@ body {
   display: grid;
   grid-template-rows: auto 1fr auto;
   gap: 0;
-  background: radial-gradient(100% 80% at 50% 40%, #101817 0%, #070a0a 100%);
+  background: transparent;
   pointer-events: none;
 }
 .council-screen > * {

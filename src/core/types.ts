@@ -157,6 +157,8 @@ export interface BattleResult {
   lost: UnitStack;
   /** 返回库存的幸存者 */
   survivors: UnitStack;
+  /** 从未出战的库存（战斗结束时仍留在预备队） */
+  remaining: UnitStack;
   kills: number;
   converted: number;
   structures: { id: string; name: string; kind: string; destroyed: boolean }[];

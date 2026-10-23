@@ -79,9 +79,9 @@ export class WorldScene extends Phaser.Scene {
 
     const cam = this.cameras.main;
     cam.setBounds(0, 0, MAP_W * TILE_SIZE, MAP_H * TILE_SIZE);
-    cam.setZoom(this.mode === 'battle' ? 0.92 : 0.6);
+    cam.setZoom(this.mode === 'battle' ? 0.92 : 0.42);
     cam.setBackgroundColor('#070a09');
-    const start = this.mode === 'battle' ? { x: 80 * 32, y: 99 * 32 } : { x: 80 * 32, y: 66 * 32 };
+    const start = this.mode === 'battle' ? { x: 80 * 32, y: 99 * 32 } : { x: 80 * 32, y: 78 * 32 };
     cam.centerOn(start.x, start.y);
 
     if (this.game.renderer.type === Phaser.WEBGL) {
@@ -217,15 +217,19 @@ export class WorldScene extends Phaser.Scene {
     }
   }
 
+  private undeadSprites: Phaser.GameObjects.Image[] = [];
+
   /** 亡灵建筑：王座、尸巢、变异池、祭坛 */
   private buildUndead(): void {
+    for (const s of this.undeadSprites) s.destroy();
+    this.undeadSprites = [];
     const tx = THRONE.x * TILE_SIZE;
     const ty = (THRONE.y + 1) * TILE_SIZE;
-    this.add.image(tx, ty, 'facility:throne').setOrigin(0.5, 1).setDepth(ty);
-    this.add.image(tx - 70, ty - 6, 'decor:soulfire:0').setOrigin(0.5, 1).setDepth(ty - 6);
-    this.add.image(tx + 70, ty - 6, 'decor:soulfire:0').setOrigin(0.5, 1).setDepth(ty - 6);
+    this.undeadSprites.push(this.add.image(tx, ty, 'facility:throne').setOrigin(0.5, 1).setDepth(ty));
+    this.undeadSprites.push(this.add.image(tx - 70, ty - 6, 'decor:soulfire:0').setOrigin(0.5, 1).setDepth(ty - 6));
+    this.undeadSprites.push(this.add.image(tx + 70, ty - 6, 'decor:soulfire:0').setOrigin(0.5, 1).setDepth(ty - 6));
     for (const b of this.state.buildings) {
-      if (b.destroyed) continue;
+      if (b.destroyed || b.level < 1) continue;
       const key =
         b.kind === 'brood'
           ? `facility:brood${Math.min(3, Math.max(1, b.level))}`
@@ -234,8 +238,13 @@ export class WorldScene extends Phaser.Scene {
             : 'facility:altar';
       const x = b.x * TILE_SIZE;
       const y = (b.y + 1) * TILE_SIZE;
-      this.add.image(x, y, key).setOrigin(0.5, 1).setDepth(y);
+      this.undeadSprites.push(this.add.image(x, y, key).setOrigin(0.5, 1).setDepth(y));
     }
+  }
+
+  /** 议事厅建造后刷新亡灵建筑外观 */
+  refreshUndead(): void {
+    this.buildUndead();
   }
 
   private buildDecor(): void {
@@ -423,9 +432,7 @@ export class WorldScene extends Phaser.Scene {
     if (this.deployType) this.drawGhost(p.worldX, p.worldY);
   }
 
-  debugPts = 0;
   private onPointerDown(p: Phaser.Input.Pointer): void {
-    this.debugPts++;
     if (p.rightButtonDown()) {
       if (this.deployType) {
         this.setDeployType(null);
