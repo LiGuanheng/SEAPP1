@@ -111,6 +111,19 @@
 ## M5｜测试与部署
 
 - **时间**：2026-10-24
-- **实际完成**：待填
-- **测试**：待填
+- **实际完成**：
+  - 测试：`tests/economy.test.ts`(8) / `campaign.test.ts`(11) / `save.test.ts`(9) / `battle.balance.test.ts`(4)，共 **32 用例全部通过**。
+  - E2E：`scripts/smoke.mjs` 走完「菜单 → 开场 → 议事厅 → 建造 → 攻城 → 投放 → 框选 → 推进 → 撤退 → 战报 → 次日 → 存档」，对**线上地址**执行 **12/12 通过**，无 console 错误。
+  - 音频：新增 `src/audio.ts`，用 Web Audio 合成破墙/炮击/部署/占领/胜负音效，受设置静音开关控制，无外部音频文件。
+  - CI：`.github/workflows/deploy.yml`（npm ci → test → build → configure-pages → upload → deploy）。
+  - 部署：通过已有 GitHub 授权以 API 启用 Pages（`build_type=workflow`），首次 run 因 Pages 未启用失败 → 启用后重跑成功，线上 **HTTP 200**。
+  - 文档：TEST_REPORT / USER_MANUAL / TRACEABILITY（全部状态回填）/ README（截图 + 线上链接）/ AI_COLLABORATION / BALANCE_NOTES。
+  - 截图：`live-menu / m1-intro / m1-siege / m2-siege / m3-council / m4-sacrifice / m4-final-assault / m4-victory / m4-defeat / smoke-1..7`。
+- **测试命令与结果**：
+  - `npm run test` → 4 files / 32 tests passed / 1.36s。
+  - `npm run build` → 成功，`index.js 1.36 MB (gzip 386 KB)`。
+  - `node scripts/smoke.mjs "https://liguanheng.github.io/SEAPP1/?nopause=1"` → 12/12 PASS。
+  - 性能：347 单位、1800 tick 逻辑耗时 362ms（0.201 ms/tick），逻辑层非瓶颈；**真机渲染 FPS 未测**（见 TEST_REPORT §5.3）。
+- **已知缺陷**：见 `docs/TEST_REPORT.md §6`（聚团、无 3×/编队、人类不反攻、真机 FPS 待测、移动端不适配）。
 - **commit**：`test: verify campaign and deploy web build`
+- **验收状态**：AI 实施完成并已上线；**等待学生亲测试玩、复核 GitHub 提交与课程要求**。

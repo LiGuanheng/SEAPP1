@@ -12,6 +12,7 @@ import { CouncilScreen } from './council';
 import { showEnding, showReport, type EndingInfo } from './report';
 import type { BattleResult, CampaignState } from '../core/types';
 import { BattleHUD, stackLine } from './hud';
+import { sfx } from '../audio';
 
 export type ScreenName = 'menu' | 'intro' | 'council' | 'battle' | 'report' | 'ending';
 
@@ -179,6 +180,8 @@ export class Shell {
   }
 
   protected onStart(): void {
+    sfx.resume();
+    sfx.play('click');
     this.state = createCampaign('normal');
     this.showIntro(() => void this.enterCouncil());
   }
@@ -366,6 +369,7 @@ export class Shell {
   private showEndingScreen(victory: boolean): void {
     const state = this.state;
     if (!state) return;
+    sfx.play(victory ? 'victory' : 'defeat');
     this.clearScreen();
     const info: EndingInfo = {
       victory,

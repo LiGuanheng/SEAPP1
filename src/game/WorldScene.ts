@@ -5,6 +5,7 @@ import type { CampaignState, NodeId, UnitType } from '../core/types';
 import { BattleSim, type SimEvent } from '../battle/sim';
 import { tileIndex } from '../art/tiles';
 import { animKey, registerAllTextures } from './textures';
+import { sfx } from '../audio';
 
 export interface SceneHooks {
   onLog?: (text: string, kind?: 'good' | 'bad' | 'gold') => void;
@@ -625,6 +626,7 @@ export class WorldScene extends Phaser.Scene {
     const res = this.sim.deploy(this.deployType, wx, wy);
     this.hooks.onDeploy?.(res.ok, res.message ?? '', res.count);
     if (res.ok) {
+      sfx.play('deploy');
       this.pulseMarker(wx, wy, 0x7dffb0);
       this.hooks.onLog?.(`投放 ${UNITS[this.deployType].name} ×${res.count}`, 'good');
       if (this.firstDeploy) {
@@ -715,6 +717,7 @@ export class WorldScene extends Phaser.Scene {
         break;
       }
       case 'shot': {
+        if (e.kind === 'holy') sfx.play('holy');
         const color = e.kind === 'cannon' ? 0xffb054 : e.kind === 'holy' ? 0xfff3c4 : 0xffd27a;
         if (e.kind === 'mg') {
           // 短促曳光：从炮口射出的一小段光，避免整张图出现白色细线
@@ -739,6 +742,7 @@ export class WorldScene extends Phaser.Scene {
         break;
       }
       case 'blast': {
+        sfx.play('cannon');
         for (let i = 0; i < 3; i++) {
           const s = this.add.image(e.x, e.y, `fx:blast:${i}`).setDepth(e.y + 40).setBlendMode(Phaser.BlendModes.ADD);
           s.setScale(0.5 + i * 0.4);
@@ -753,6 +757,7 @@ export class WorldScene extends Phaser.Scene {
         break;
       }
       case 'wallBreak': {
+        sfx.play('wall');
         this.cameras.main.shake(260, 0.008);
         for (let i = 0; i < 10; i++) {
           const d = this.add.image(e.x + Phaser.Math.Between(-40, 40), e.y + Phaser.Math.Between(-16, 16), 'fx:debris').setDepth(e.y + 40);
@@ -775,6 +780,7 @@ export class WorldScene extends Phaser.Scene {
         break;
       }
       case 'capture': {
+        sfx.play('capture');
         this.hooks.onLog?.(`占领 ${e.name}！明日可从该方向出兵`, 'good');
         this.pulseMarker(e.node === 'center' ? 80 * 32 : e.node === 'west' ? 30 * 32 : 128 * 32, e.node === 'center' ? 90 * 32 : 68 * 32, 0x7dffb0);
         break;
