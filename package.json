@@ -1,0 +1,24 @@
+{
+  "name": "zombie-siege-ash-sovereign",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "《丧尸围城：亡骸君主》— 暗黑奇幻像素风攻城策略游戏（软件工程课程项目）",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "sim": "tsx scripts/simulate.ts"
+  },
+  "dependencies": {
+    "phaser": "^3.90.0"
+  },
+  "devDependencies": {
+    "puppeteer-core": "^24.43.1",
+    "typescript": "^5.9.3",
+    "vite": "^7.1.12",
+    "vitest": "^5.0.5"
+  }
+}
