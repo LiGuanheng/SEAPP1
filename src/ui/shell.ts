@@ -1,6 +1,10 @@
 import { APP_VERSION, GAME_SUBTITLE, GAME_TITLE, SAVE_KEY } from '../config/version';
 import { clear, el } from './dom';
 import { settings, setSettings } from './settings';
+import { showIntro } from './intro';
+import { GameHost } from '../game/host';
+import { createCampaign } from '../core/state';
+import { BattleSim } from '../battle/sim';
 
 export type ScreenName = 'menu' | 'intro' | 'council' | 'battle' | 'report' | 'ending';
 
@@ -22,6 +26,8 @@ export class Shell {
   private toastWrap: HTMLDivElement;
   current: ScreenName = 'menu';
   private escHandler: ((ev: KeyboardEvent) => void) | null = null;
+  private gameHost = new GameHost();
+  private demoSim: BattleSim | null = null;
 
   constructor() {
     this.root = document.getElementById('ui-root') as HTMLElement;
@@ -170,7 +176,49 @@ export class Shell {
   }
 
   protected onStart(): void {
-    this.toast('待接入：战役流程（M1/M3 里程碑）', 'bad');
+    this.showIntro(() => void this.startDemoBattle());
+  }
+
+  protected showIntro(onDone: () => void): void {
+    showIntro(this.hostLayer(), onDone);
+  }
+
+  private hostLayer(): HTMLElement {
+    return this.root;
+  }
+
+  /** M1 视觉样板：在地图上自动投放一支尸潮，验证地图/单位/塔防/特效/镜头 */
+  async startDemoBattle(): Promise<void> {
+    const state = createCampaign('normal');
+    const sim = new BattleSim({ state, final: false, seed: state.seed, lowQuality: settings.quality === 'low' });
+    sim.deploy('zombie', 80 * 32, 106 * 32);
+    sim.deploy('zombie', 76 * 32, 104 * 32);
+    sim.deploy('zombie', 84 * 32, 105 * 32);
+    this.demoSim = sim;
+
+    const screen = el('div', { class: 'screen', style: { pointerEvents: 'none' } });
+    const badge = el('div', { class: 'demo-badge', html: '<b>视觉样板</b> · 尸潮自动推进 · WASD 平移 / 滚轮缩放' });
+    screen.append(badge);
+    this.mount(screen);
+
+    await this.gameHost.mount(
+      state,
+      {
+        onLog: (text: string, kind?: 'good' | 'bad' | 'gold') =>
+          this.toast(text, kind === 'bad' ? 'bad' : kind === 'gold' ? 'gold' : 'info', 1800),
+        onStats: (s: { fps: number; units: number; time: number; alive: number }) => {
+          badge.innerHTML = `<b>视觉样板</b> · 剩余 ${Math.ceil(s.time)}s · 在场 ${s.alive} · FPS ${s.fps}`;
+        },
+        onBattleEnd: () => {
+          this.toast('战斗结束（样板）', 'gold');
+        },
+      },
+      'battle',
+      sim,
+    );
+    this.onEscape(() => {
+      this.demoSim?.retreat();
+    });
   }
 
   protected onContinue(): void {

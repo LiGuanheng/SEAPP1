@@ -28,6 +28,7 @@ const out = resolve(args.out || 'docs/screenshots/shot.png');
 const wait = Number(args.wait || 900);
 const clicks = args.click ? String(args.click).split('|') : [];
 const evals = args.eval ? String(args.eval).split('|') : [];
+const speed = Number(args.speed || 1);
 const width = Number(args.width || 1440);
 const height = Number(args.height || 900);
 
@@ -42,7 +43,15 @@ if (!executablePath) {
 const browser = await puppeteer.launch({
   executablePath,
   headless: 'new',
-  args: ['--no-sandbox', '--disable-gpu', '--hide-scrollbars', '--mute-audio'],
+  args: [
+    '--no-sandbox',
+    '--hide-scrollbars',
+    '--mute-audio',
+    '--disable-background-timer-throttling',
+    '--disable-backgrounding-occluded-windows',
+    '--disable-renderer-backgrounding',
+    '--disable-features=CalculateNativeWinOcclusion,TranslateUI',
+  ],
   defaultViewport: { width, height, deviceScaleFactor: 1 },
 });
 
@@ -55,25 +64,67 @@ page.on('pageerror', (err) => errors.push(`PAGEERROR: ${err.message}`));
 page.on('requestfailed', (req) => errors.push(`REQFAIL: ${req.url()} ${req.failure()?.errorText}`));
 
 await page.goto(url, { waitUntil: 'networkidle2', timeout: 45000 });
-await new Promise((r) => setTimeout(r, wait));
+
+// 保持渲染帧活跃：无头模式下单纯等待会被浏览器降频，导致 Phaser 看起来“卡住”
+async function waitAlive(ms) {
+  const end = Date.now() + ms;
+  let tick = 0;
+  while (Date.now() < end) {
+    await page.evaluate(() => new Promise((r) => requestAnimationFrame(() => r(0))));
+    // 轻微移动鼠标，避免无头浏览器把页面当作被遮挡而停止合成
+    await page.mouse.move(640 + (tick % 7) * 6, 400 + (tick % 5) * 5).catch(() => {});
+    tick++;
+    await new Promise((r) => setTimeout(r, 100));
+  }
+}
+await waitAlive(wait);
 
 for (const sel of clicks) {
   const target = sel.startsWith('text=') ? `::-p-text(${sel.slice(5)})` : sel;
   await page.waitForSelector(target, { timeout: 15000 });
   await page.click(target);
-  await new Promise((r) => setTimeout(r, 700));
+  await waitAlive(700);
 }
+
+const advance = Number(args.advance || 0);
+if (advance > 0) {
+  await page.evaluate((sec) => {
+    const g = window.__SEAPP1__;
+    if (g?.scene?.advanceFor) g.scene.advanceFor(sec);
+  }, advance);
+  await new Promise((r) => setTimeout(r, 1200));
+}
+
+if (speed !== 1) {
+  await page.evaluate((sp) => {
+    const g = window.__SEAPP1__;
+    if (g?.scene?.setSpeed) g.scene.setSpeed(sp);
+  }, speed);
+}
+
+await page.bringToFront();
+await page.evaluate(() => window.focus());
 
 for (const code of evals) {
   await page.evaluate(code);
-  await new Promise((r) => setTimeout(r, 700));
+  await waitAlive(700);
 }
 
+await page.mouse.move(width / 2, height / 2);
+await new Promise((r) => setTimeout(r, 120));
 await page.screenshot({ path: out });
 const title = await page.title();
 const dims = await page.evaluate(() => {
   const c = document.querySelector('canvas');
-  return { canvas: c ? `${c.width}x${c.height}` : 'none', body: `${document.body.clientWidth}x${document.body.clientHeight}` };
+  const g = window.__SEAPP1__;
+  return {
+    canvas: c ? `${c.width}x${c.height}` : 'none',
+    body: `${document.body.clientWidth}x${document.body.clientHeight}`,
+    inFocus: g?.game?.loop?.inFocus,
+    simElapsed: g?.scene?.sim ? +g.scene.sim.elapsed.toFixed(1) : undefined,
+    simUnits: g?.scene?.sim?.units?.length,
+    badge: document.querySelector('.demo-badge')?.textContent,
+  };
 });
 console.log(JSON.stringify({ url, out, title, dims, errors }, null, 2));
 await browser.close();
