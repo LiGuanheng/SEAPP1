@@ -64,7 +64,7 @@
 - **Phaser 3.90**：战场渲染、Tilemap、相机、动画
 - **TypeScript 5.9**（strict）：战役逻辑与渲染分离，可在 Node 中直接测试
 - **Vite 7**：开发与构建（生产 `base=/SEAPP1/`）
-- **Vitest 3**：32 个单元 / 模拟测试
+- **Vitest 5**：34 个单元 / 模拟测试（含同 seed 可复现性回归）
 - **GitHub Actions + Pages**：CI 与静态部署（已上线）
 
 ## 本地运行
@@ -105,6 +105,7 @@ node scripts/smoke.mjs "https://liguanheng.github.io/SEAPP1/?nopause=1"   # 端�
 | [docs/ASSET_LICENSES.md](docs/ASSET_LICENSES.md) | 素材来源与许可 |
 | [docs/USER_MANUAL.md](docs/USER_MANUAL.md) | 玩家手册与 FAQ |
 | [docs/BALANCE_NOTES.md](docs/BALANCE_NOTES.md) | 数值与调参记录 |
+| [docs/HANDOFF.md](docs/HANDOFF.md) | **交接报告**：测试手册（给测试方）+ 优化清单（给 Codex） |
 
 ## 项目结构
 
@@ -118,7 +119,7 @@ src/
   ui/         DOM 界面（菜单/议事厅/HUD/战报/结局）
   audio.ts    Web Audio 程序化音效
 docs/         课程文档与截图
-tests/        Vitest 测试（33 个用例）
+tests/        Vitest 测试（34 个用例）
 scripts/      截图与端到端冒烟工具
 ```
 

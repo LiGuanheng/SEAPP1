@@ -67,4 +67,13 @@ describe('战斗平衡', () => {
     console.log('DAY5', r);
     expect(r.wallsDown.length).toBeGreaterThan(0);
   });
+  it('同一 seed 的模拟必须完全可复现（防止非确定性导致平衡测试飘）', () => {
+    // 回归：曾经用 Math.random() 初始化 retarget 计时器，导致同 seed 两次结果不同。
+    const a = run(false, { zombie: 80, brute: 4 }, 2, 120);
+    const b = run(false, { zombie: 80, brute: 4 }, 2, 120);
+    expect(a.lighthouse).toBe(b.lighthouse);
+    expect(a.kills).toBe(b.kills);
+    expect(a.elapsed).toBe(b.elapsed);
+    expect(JSON.stringify(a.destroyed)).toBe(JSON.stringify(b.destroyed));
+  });
 });

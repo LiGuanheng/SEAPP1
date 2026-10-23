@@ -505,7 +505,8 @@ export class BattleSim {
       homeX: p.homeX,
       homeY: p.homeY,
       leash: p.leash,
-      retarget: Math.random() * COMBAT.retargetInterval,
+      // 必须使用战斗内种子随机数：用 Math.random 会让同 seed 的模拟不可复现（平衡测试会随机失败）
+      retarget: this.rng() * COMBAT.retargetInterval,
       stuckT: 0,
       lastX: p.x,
       lastY: p.y,
@@ -612,8 +613,8 @@ export class BattleSim {
     }
   }
 
-  /** 选一个合法且未被占据的投放点（用于全军冲锋自动投兵） */
-  private pickDeployPoint(): { x: number; y: number } | null {
+  /** 选一个合法且未被占据的投放点（供全军冲锋与命令行模拟器使用） */
+  pickDeploySpot(): { x: number; y: number } | null {
     const zones = [ZONES.throne, ...this.state.territories.filter((t) => t.owner === 'undead' && t.activeForDeploy).map((t) => ZONES[t.id])];
     for (let attempt = 0; attempt < 30; attempt++) {
       const z = zones[Math.floor(this.rng() * zones.length)];
@@ -635,7 +636,7 @@ export class BattleSim {
     for (const t of order) {
       let guard = 0;
       while (this.reserve[t] > 0 && guard++ < 60) {
-        const p = this.pickDeployPoint();
+        const p = this.pickDeploySpot();
         if (!p) break;
         const r = this.deploy(t, p.x, p.y);
         if (!r.ok || r.count === 0) break;

@@ -23,7 +23,7 @@
   - 键位 `W` 冲突（镜头 vs 技能）改为 `Q/E/R` 技能，已标注待验收（D-15）。
 - **产出**：
   - 6 个真实里程碑提交（M0 `7c7f1f8` → M5），全部推送到 `origin/main`；未使用 `--force`、未改写历史、未伪造作者。
-  - 32 个自动化测试、1 套端到端冒烟脚本、GitHub Actions 构建 + Pages 部署。
+  - 34 个自动化测试、1 套端到端冒烟脚本、1 个命令行战斗模拟器、GitHub Actions 构建 + Pages 部署。
   - 线上地址 https://liguanheng.github.io/SEAPP1/ （实测 HTTP 200 并可开始新局）。
 - **AI 在本轮中自行做过的判断（已记录在 DECISIONS/DEV_LOG）**：
   - 战斗采用流场寻路而非逐单位 A*（性能与"尸潮"手感）。

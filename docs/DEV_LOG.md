@@ -64,7 +64,7 @@
   - `npx vitest run tests/battle.balance.test.ts` → 4/4 通过：
     - 第 1 天 60 食尸鬼：灯塔 12000/12000 未损，验证"开局不能直接通关"；
     - 终局 222 食尸鬼 + 24 重装 + 巨汉：119 秒胜利；
-    - 第 5 天规模 150+8：把灯塔打到 11434/12000 但时间耗尽（"差一点"）；
+    - 第 5 天规模 150+8（王座 II）：打通 6 段墙但灯塔 **12000/12000 未受损**，时间耗尽（中期兵力打不到灯塔，已列入待调）；
     - 重装与食尸鬼均能破墙（效率差由 siege 倍率体现）。
   - 无头浏览器交互：点卡片 → 点地图投放 30 → 框选 → 快进 100 秒 → 城门被打穿（5200→0），4 段墙倒塌，占领城门前哨。
   - 胜利流程实测：262 食尸鬼 + 30 重装 + 巨汉 → 灯塔 0 → 战报面板弹出，统计正确。
@@ -127,3 +127,21 @@
 - **已知缺陷**：见 `docs/TEST_REPORT.md §6`（聚团、无 3×/编队、人类不反攻、真机 FPS 待测、移动端不适配）。
 - **commit**：`test: verify campaign and deploy web build`
 - **验收状态**：AI 实施完成并已上线；**等待学生亲测试玩、复核 GitHub 提交与课程要求**。
+
+## 交接准备（v1.0.0 交付后）
+
+- **时间**：2026-10-24
+- **背景**：为「交给测试方做黑盒验收 + 交给 Codex 做优化」补齐工程入口与文档。
+- **实际完成**：
+  - 新增 `scripts/simulate.ts` + `npm run sim`：headless 命令行战斗模拟器，支持 `--final / --day / --army / --throne / --seed / --stagger / --scatter / --json`。此前 `package.json` 指向不存在的脚本（坏入口），已修复。
+  - **修复非确定性缺陷**：`BattleSim.spawnUnit` 用 `Math.random()` 初始化 `retarget` 计时器，导致同一 seed 多次运行结果不同（实测灯塔血量 10661 / 10848 / 12000 三次不一致）。改为 `this.rng()`，并新增回归用例「同一 seed 的模拟必须完全可复现」。
+  - 因确定性修复，重新测得真实基线：第 5 天规模（150 食尸鬼 + 8 重装，王座 II）**灯塔 12000/12000 完全未受损**（原文档记录的 11434 是随机数导致的假数据），已更正 `BALANCE_NOTES.md`、本文件与 `TEST_REPORT.md`。
+  - 新增 `docs/HANDOFF.md`：给测试方的 10 条快速验收 + A/B/C/D/E 五组深度矩阵 + 缺陷模板 + 已知脆弱点；给 Codex 的架构地图、不许破坏的契约、P0/P1/P2 待办（含文件定位与验收标准）、数值改动流程、提交规范、常见坑。
+  - 统一测试数量口径为 **34**（原文档中 32/33 混用）。
+- **测试命令与结果**：
+  - `npm run test` → 4 files / **34 tests passed**。
+  - `npm run build` → 成功，`index.js 1363 KB (gzip 387 KB)`。
+  - `npm run sim -- --final` → victory 95~118s（随 `--army` 不同）。
+  - 确定性：同一 seed 连跑 3 次，`lh` 恒为 12000。
+- **已知缺陷**：见 `docs/TEST_REPORT.md §6` 与 `docs/HANDOFF.md §4.3`（聚团、中期打不到灯塔、真机 FPS 未测等）。
+- **commit**：`chore: add headless simulator and handoff report`

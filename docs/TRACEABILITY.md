@@ -45,7 +45,7 @@
 |---|---|---|---|
 | NFR-01 可用性 | 1366×768 可操作 | 1440×900 / 1366×768 人工检查 | ✅ |
 | NFR-02 性能 | 100 单位稳定 | 逻辑 0.2ms/tick（347 单位）；渲染 FPS 待真机复验 | 🟡 |
-| NFR-03 正确性 | 无负资源、日结算不重复 | 32 个单元测试 + 不变量校验 | ✅ |
+| NFR-03 正确性 | 无负资源、日结算不重复、同 seed 可复现 | 34 个测试 + 不变量校验 + 确定性回归用例 | ✅ |
 | NFR-04 可维护性 | 数值集中、逻辑与渲染分离 | `config/balance.ts`；`core/`、`battle/` 不依赖 Phaser | ✅ |
 | NFR-05 可复现 | lockfile + 固定种子 | `package-lock.json`；`createCampaign(seed)` | ✅ |
 | NFR-06 数据可靠性 | schemaVersion + 坏档恢复 | `save.test.ts` | ✅ |

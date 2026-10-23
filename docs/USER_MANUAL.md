@@ -160,7 +160,7 @@ A：浏览器要求先点击页面才允许播放音频；点击「开始新战�
 ```bash
 npm ci
 npm run dev      # 本地开发
-npm run test     # 32 个单元/模拟测试
+npm run test     # 34 个单元/模拟测试
 npm run build    # 生产构建（base=/SEAPP1/）
 node scripts/smoke.mjs "https://liguanheng.github.io/SEAPP1/?nopause=1"
 ```
