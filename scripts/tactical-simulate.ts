@@ -260,7 +260,7 @@ for (const [difficulty, mode, front] of cases) {
         ordered.clear();
         for (const id of scouts.keys()) ordered.add(id);
       }
-      if (phase === 2 && artillery.hp === 0 && b.stats.lootSites >= 6) {
+      if (phase === 2 && artillery.hp === 0 && (b.stats.lootSites >= 6 || b.time > 120)) {
         phase = 3;
         ordered.clear();
         for (const id of scouts.keys()) ordered.add(id);
@@ -384,12 +384,12 @@ for (const [difficulty, mode, front] of cases) {
 }
 writeFileSync(
   process.argv.includes("--sweep")
-    ? `docs/v3.1/DIRECT_${process.env.SIEGE_SEED ?? 20261024}.json`
+    ? `docs/v3.2/DIRECT_${process.env.SIEGE_SEED ?? 20261024}.json`
     : process.argv.includes("--sky")
-      ? "docs/v3.1/SKY_RESULTS.json"
+      ? "docs/v3.2/SKY_RESULTS.json"
       : process.argv.includes("--probe")
-        ? "docs/v3.1/TACTICAL_PROBE.json"
-        : "docs/v3.1/TACTICAL_RESULTS.json",
+        ? "docs/v3.2/TACTICAL_PROBE.json"
+        : "docs/v3.2/TACTICAL_RESULTS.json",
   JSON.stringify(
     { date: new Date().toISOString(), seed: Number(process.env.SIEGE_SEED ?? 20261024), results },
     null,

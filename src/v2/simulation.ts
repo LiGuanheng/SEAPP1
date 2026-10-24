@@ -638,7 +638,9 @@ export class Battle {
   private progressRoute(u: Unit) {
     if (u.side !== 0) return;
     if (u.order?.type === "attack" && !this.byId.get(u.order.target)?.hp) {
+      const threat = u.threat;
       this.halt([u.id]);
+      u.threat = threat;
       return;
     }
     if (u.order?.type !== "move") return;
@@ -649,6 +651,9 @@ export class Battle {
     const last = u.route.index === u.route.points.length - 1;
     if (distance(u, u.order) > (last ? 20 : 38)) return;
     if (last) {
+      // Combat already has its own staggered thinking clock. Do not rescan the whole
+      // neighborhood every frame while firing from the destination.
+      if ((this.byId.get(u.target)?.hp ?? 0) > 0) return;
       this.chooseTarget(u);
       if ((this.byId.get(u.target)?.hp ?? 0) > 0) return;
       this.halt([u.id]);
@@ -1450,7 +1455,9 @@ export class Battle {
         u.target = threat?.id ?? t.id;
         return;
       }
+      const alarm = u.threat;
       this.halt([u.id]);
+      u.threat = alarm;
     }
     if (threat) {
       u.target = threat.id;
@@ -1523,7 +1530,7 @@ export class Battle {
       if (distance(u, u.order) <= 18) return;
       tx = u.order.x;
       ty = u.order.y;
-      flow = true;
+      flow = !this.nav.clear(u, u.order, u.id);
     } else if (target) {
       if (u.side === 0 && u.order?.type === "hold" && !this.threatTarget(u)) return;
       tx = target.x;
@@ -1533,13 +1540,8 @@ export class Battle {
       if (distance(u, u.order) < 18) return;
       tx = u.order.x;
       ty = u.order.y;
-      flow = !this.nav.clear(u, u.order, u.id) || distance(u, u.order) > 120;
-      if (
-        u.order.anchorX !== undefined &&
-        u.order.anchorY !== undefined &&
-        distance(u, { x: u.order.anchorX, y: u.order.anchorY }) > 240 &&
-        distance(u, u.order) > 240
-      ) {
+      flow = !this.nav.clear(u, u.order, u.id);
+      if (flow && u.order.anchorX !== undefined && u.order.anchorY !== undefined) {
         tx = u.order.anchorX;
         ty = u.order.anchorY;
         flow = true;

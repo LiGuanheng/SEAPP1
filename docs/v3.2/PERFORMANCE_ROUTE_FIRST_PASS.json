@@ -1,0 +1,61 @@
+{
+  "date": "2026-10-24T08:40:05.087Z",
+  "url": "http://127.0.0.1:4186/SEAPP1/",
+  "machine": {
+    "platform": "win32",
+    "logicalCores": 32,
+    "totalRamGiB": 31.71471405029297
+  },
+  "errors": [],
+  "pass": false,
+  "selected": 300,
+  "stable": {
+    "seconds": 10.001499999988079,
+    "frames": 782,
+    "averageFps": 78.18827175932931,
+    "p95FrameMs": 22.200000000000728,
+    "longFramesOver50ms": 1,
+    "minFriendly": 300,
+    "maxFriendly": 300,
+    "queuedStart": 7,
+    "queuedEnd": 7,
+    "deployed": 0,
+    "lost": 0,
+    "kills": 0
+  },
+  "jsHeapMiB": 8.865684509277344,
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+  "directional": {
+    "seconds": 11.04979999999702,
+    "frames": 144,
+    "averageFps": 13.031910079823964,
+    "p95FrameMs": 283.3999999999978,
+    "longFramesOver50ms": 16,
+    "minFriendly": 300,
+    "maxFriendly": 300,
+    "queuedStart": 7,
+    "queuedEnd": 7,
+    "deployed": 0,
+    "lost": 0,
+    "kills": 0
+  },
+  "attackWarmupSimulationSeconds": 5.9999999999996625,
+  "attack": {
+    "seconds": 10.009999999994033,
+    "frames": 786,
+    "averageFps": 78.52147852152532,
+    "p95FrameMs": 22.30000000000291,
+    "longFramesOver50ms": 6,
+    "minFriendly": 103,
+    "maxFriendly": 262,
+    "queuedStart": 0,
+    "queuedEnd": 0,
+    "deployed": 109,
+    "lost": 238,
+    "kills": 12
+  },
+  "lifecycle": {
+    "canvases": 0,
+    "retiredStopped": true
+  }
+}

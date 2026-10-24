@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-24T08:32:24.558Z",
+  "date": "2026-10-24T08:48:15.752Z",
   "url": "http://127.0.0.1:4186/SEAPP1/",
   "checks": [
     {
@@ -55,8 +55,8 @@
       "name": "directional route autonomously damages an off-line civilian building",
       "ok": true,
       "evidence": {
-        "time": 24.9333333333332,
-        "civilHp": 486.6000000000004,
+        "time": 24.46666666666656,
+        "civilHp": 735.2000000000003,
         "maxHp": 800
       }
     },
@@ -76,16 +76,16 @@
   ],
   "errors": [],
   "assault": {
-    "time": 24.9333333333332,
-    "civilHp": 486.6000000000004,
+    "time": 24.46666666666656,
+    "civilHp": 735.2000000000003,
     "maxHp": 800,
     "threats": 0,
-    "attackingCivil": 198,
+    "attackingCivil": 197,
     "snapshot": {
-      "time": 24.93,
-      "remaining": 875.07,
+      "time": 24.47,
+      "remaining": 875.53,
       "money": 614,
-      "active": 205,
+      "active": 207,
       "queued": 0,
       "reserves": 0,
       "crystalHp": 5600,
@@ -110,7 +110,7 @@
           "y": 1800,
           "w": 260,
           "h": 220,
-          "progress": 0,
+          "progress": 1.0666666666666667,
           "captured": false,
           "contested": false,
           "connected": true
@@ -143,7 +143,7 @@
       "stats": {
         "deployed": 210,
         "kills": 15,
-        "lost": 5,
+        "lost": 3,
         "income": 514,
         "walls": 6,
         "skills": 0,
@@ -172,14 +172,14 @@
     },
     "trace": [
       {
-        "time": 4.516666666666656,
+        "time": 4.816666666666655,
         "civilHp": 800,
         "maxHp": 800,
         "threats": 0,
         "attackingCivil": 0,
         "snapshot": {
-          "time": 4.52,
-          "remaining": 895.48,
+          "time": 4.82,
+          "remaining": 895.18,
           "money": 550,
           "active": 210,
           "queued": 0,
@@ -268,14 +268,14 @@
         }
       },
       {
-        "time": 5.149999999999987,
+        "time": 5.449999999999986,
         "civilHp": 800,
         "maxHp": 800,
         "threats": 0,
         "attackingCivil": 0,
         "snapshot": {
-          "time": 5.15,
-          "remaining": 894.85,
+          "time": 5.45,
+          "remaining": 894.55,
           "money": 550,
           "active": 210,
           "queued": 0,
@@ -364,14 +364,14 @@
         }
       },
       {
-        "time": 5.799999999999985,
+        "time": 6.083333333333317,
         "civilHp": 800,
         "maxHp": 800,
         "threats": 0,
         "attackingCivil": 0,
         "snapshot": {
-          "time": 5.8,
-          "remaining": 894.2,
+          "time": 6.08,
+          "remaining": 893.92,
           "money": 550,
           "active": 210,
           "queued": 0,
@@ -460,14 +460,14 @@
         }
       },
       {
-        "time": 6.433333333333316,
+        "time": 6.733333333333315,
         "civilHp": 800,
         "maxHp": 800,
-        "threats": 201,
+        "threats": 202,
         "attackingCivil": 0,
         "snapshot": {
-          "time": 6.43,
-          "remaining": 893.57,
+          "time": 6.73,
+          "remaining": 893.27,
           "money": 550,
           "active": 210,
           "queued": 0,
@@ -556,14 +556,14 @@
         }
       },
       {
-        "time": 7.066666666666647,
+        "time": 7.383333333333312,
         "civilHp": 800,
         "maxHp": 800,
-        "threats": 201,
+        "threats": 202,
         "attackingCivil": 0,
         "snapshot": {
-          "time": 7.07,
-          "remaining": 892.93,
+          "time": 7.38,
+          "remaining": 892.62,
           "money": 550,
           "active": 210,
           "queued": 0,
@@ -652,14 +652,14 @@
         }
       },
       {
-        "time": 7.716666666666645,
+        "time": 7.999999999999977,
         "civilHp": 800,
         "maxHp": 800,
-        "threats": 201,
+        "threats": 202,
         "attackingCivil": 0,
         "snapshot": {
-          "time": 7.72,
-          "remaining": 892.28,
+          "time": 8,
+          "remaining": 892,
           "money": 550,
           "active": 210,
           "queued": 0,
@@ -748,14 +748,14 @@
         }
       },
       {
-        "time": 8.349999999999994,
+        "time": 8.65000000000001,
         "civilHp": 800,
         "maxHp": 800,
-        "threats": 201,
+        "threats": 202,
         "attackingCivil": 0,
         "snapshot": {
-          "time": 8.35,
-          "remaining": 891.65,
+          "time": 8.65,
+          "remaining": 891.35,
           "money": 550,
           "active": 210,
           "queued": 0,
@@ -844,14 +844,14 @@
         }
       },
       {
-        "time": 8.98333333333336,
+        "time": 9.283333333333374,
         "civilHp": 800,
         "maxHp": 800,
-        "threats": 200,
+        "threats": 201,
         "attackingCivil": 0,
         "snapshot": {
-          "time": 8.98,
-          "remaining": 891.02,
+          "time": 9.28,
+          "remaining": 890.72,
           "money": 550,
           "active": 209,
           "queued": 0,
@@ -940,110 +940,14 @@
         }
       },
       {
-        "time": 9.616666666666724,
+        "time": 9.916666666666739,
         "civilHp": 800,
         "maxHp": 800,
-        "threats": 200,
+        "threats": 201,
         "attackingCivil": 0,
         "snapshot": {
-          "time": 9.62,
-          "remaining": 890.38,
-          "money": 550,
-          "active": 209,
-          "queued": 0,
-          "reserves": 0,
-          "crystalHp": 5600,
-          "status": "battle",
-          "outposts": [
-            {
-              "name": "南境前线",
-              "front": "south",
-              "x": 2000,
-              "y": 2770,
-              "w": 260,
-              "h": 220,
-              "progress": 0,
-              "captured": false,
-              "contested": true,
-              "connected": false
-            },
-            {
-              "name": "西境前线",
-              "front": "west",
-              "x": 950,
-              "y": 1800,
-              "w": 260,
-              "h": 220,
-              "progress": 0,
-              "captured": false,
-              "contested": false,
-              "connected": false
-            },
-            {
-              "name": "东境前线",
-              "front": "east",
-              "x": 3050,
-              "y": 1800,
-              "w": 260,
-              "h": 220,
-              "progress": 0,
-              "captured": false,
-              "contested": false,
-              "connected": false
-            },
-            {
-              "name": "北境前线",
-              "front": "north",
-              "x": 2000,
-              "y": 820,
-              "w": 260,
-              "h": 220,
-              "progress": 0,
-              "captured": false,
-              "contested": true,
-              "connected": false
-            }
-          ],
-          "stats": {
-            "deployed": 210,
-            "kills": 0,
-            "lost": 1,
-            "income": 450,
-            "walls": 0,
-            "skills": 0,
-            "peak": 210,
-            "resourceIncome": 450,
-            "spells": 0,
-            "lootSites": 1,
-            "reliefTransfers": 0,
-            "guardianBursts": 0,
-            "towerShots": {
-              "field": 0,
-              "outer": 3,
-              "inner": 0,
-              "core": 0
-            },
-            "destroyed": {
-              "field": 1,
-              "outer": 0,
-              "inner": 0,
-              "core": 0
-            }
-          },
-          "mana": 100,
-          "firstCoreHit": null,
-          "reservesDispatched": 0
-        }
-      },
-      {
-        "time": 10.250000000000089,
-        "civilHp": 800,
-        "maxHp": 800,
-        "threats": 200,
-        "attackingCivil": 0,
-        "snapshot": {
-          "time": 10.25,
-          "remaining": 889.75,
+          "time": 9.92,
+          "remaining": 890.08,
           "money": 550,
           "active": 209,
           "queued": 0,
@@ -1132,16 +1036,208 @@
         }
       },
       {
-        "time": 10.850000000000119,
+        "time": 10.550000000000104,
         "civilHp": 800,
         "maxHp": 800,
-        "threats": 87,
+        "threats": 201,
         "attackingCivil": 0,
         "snapshot": {
-          "time": 10.85,
-          "remaining": 889.15,
+          "time": 10.55,
+          "remaining": 889.45,
+          "money": 550,
+          "active": 209,
+          "queued": 0,
+          "reserves": 0,
+          "crystalHp": 5600,
+          "status": "battle",
+          "outposts": [
+            {
+              "name": "南境前线",
+              "front": "south",
+              "x": 2000,
+              "y": 2770,
+              "w": 260,
+              "h": 220,
+              "progress": 0,
+              "captured": false,
+              "contested": true,
+              "connected": false
+            },
+            {
+              "name": "西境前线",
+              "front": "west",
+              "x": 950,
+              "y": 1800,
+              "w": 260,
+              "h": 220,
+              "progress": 0,
+              "captured": false,
+              "contested": false,
+              "connected": false
+            },
+            {
+              "name": "东境前线",
+              "front": "east",
+              "x": 3050,
+              "y": 1800,
+              "w": 260,
+              "h": 220,
+              "progress": 0,
+              "captured": false,
+              "contested": false,
+              "connected": false
+            },
+            {
+              "name": "北境前线",
+              "front": "north",
+              "x": 2000,
+              "y": 820,
+              "w": 260,
+              "h": 220,
+              "progress": 0,
+              "captured": false,
+              "contested": true,
+              "connected": false
+            }
+          ],
+          "stats": {
+            "deployed": 210,
+            "kills": 0,
+            "lost": 1,
+            "income": 450,
+            "walls": 0,
+            "skills": 0,
+            "peak": 210,
+            "resourceIncome": 450,
+            "spells": 0,
+            "lootSites": 1,
+            "reliefTransfers": 0,
+            "guardianBursts": 0,
+            "towerShots": {
+              "field": 0,
+              "outer": 4,
+              "inner": 0,
+              "core": 0
+            },
+            "destroyed": {
+              "field": 1,
+              "outer": 0,
+              "inner": 0,
+              "core": 0
+            }
+          },
+          "mana": 100,
+          "firstCoreHit": null,
+          "reservesDispatched": 0
+        }
+      },
+      {
+        "time": 11.166666666666801,
+        "civilHp": 800,
+        "maxHp": 800,
+        "threats": 201,
+        "attackingCivil": 0,
+        "snapshot": {
+          "time": 11.17,
+          "remaining": 888.83,
+          "money": 552,
+          "active": 209,
+          "queued": 0,
+          "reserves": 0,
+          "crystalHp": 5600,
+          "status": "battle",
+          "outposts": [
+            {
+              "name": "南境前线",
+              "front": "south",
+              "x": 2000,
+              "y": 2770,
+              "w": 260,
+              "h": 220,
+              "progress": 0,
+              "captured": false,
+              "contested": true,
+              "connected": false
+            },
+            {
+              "name": "西境前线",
+              "front": "west",
+              "x": 950,
+              "y": 1800,
+              "w": 260,
+              "h": 220,
+              "progress": 0,
+              "captured": false,
+              "contested": false,
+              "connected": false
+            },
+            {
+              "name": "东境前线",
+              "front": "east",
+              "x": 3050,
+              "y": 1800,
+              "w": 260,
+              "h": 220,
+              "progress": 0,
+              "captured": false,
+              "contested": false,
+              "connected": false
+            },
+            {
+              "name": "北境前线",
+              "front": "north",
+              "x": 2000,
+              "y": 820,
+              "w": 260,
+              "h": 220,
+              "progress": 0,
+              "captured": false,
+              "contested": true,
+              "connected": false
+            }
+          ],
+          "stats": {
+            "deployed": 210,
+            "kills": 2,
+            "lost": 1,
+            "income": 452,
+            "walls": 0,
+            "skills": 0,
+            "peak": 210,
+            "resourceIncome": 450,
+            "spells": 0,
+            "lootSites": 1,
+            "reliefTransfers": 0,
+            "guardianBursts": 0,
+            "towerShots": {
+              "field": 0,
+              "outer": 4,
+              "inner": 0,
+              "core": 0
+            },
+            "destroyed": {
+              "field": 1,
+              "outer": 0,
+              "inner": 0,
+              "core": 0
+            }
+          },
+          "mana": 100,
+          "firstCoreHit": null,
+          "reservesDispatched": 0
+        }
+      },
+      {
+        "time": 11.783333333333498,
+        "civilHp": 800,
+        "maxHp": 800,
+        "threats": 202,
+        "attackingCivil": 0,
+        "snapshot": {
+          "time": 11.78,
+          "remaining": 888.22,
           "money": 553,
-          "active": 208,
+          "active": 209,
           "queued": 0,
           "reserves": 0,
           "crystalHp": 5600,
@@ -1199,7 +1295,7 @@
           "stats": {
             "deployed": 210,
             "kills": 3,
-            "lost": 2,
+            "lost": 1,
             "income": 453,
             "walls": 0,
             "skills": 0,
@@ -1211,7 +1307,7 @@
             "guardianBursts": 0,
             "towerShots": {
               "field": 0,
-              "outer": 4,
+              "outer": 5,
               "inner": 0,
               "core": 0
             },
@@ -1228,16 +1324,16 @@
         }
       },
       {
-        "time": 11.500000000000151,
+        "time": 12.416666666666863,
         "civilHp": 800,
         "maxHp": 800,
-        "threats": 199,
+        "threats": 113,
         "attackingCivil": 0,
         "snapshot": {
-          "time": 11.5,
-          "remaining": 888.5,
-          "money": 554,
-          "active": 208,
+          "time": 12.42,
+          "remaining": 887.58,
+          "money": 558,
+          "active": 207,
           "queued": 0,
           "reserves": 0,
           "crystalHp": 5600,
@@ -1294,9 +1390,9 @@
           ],
           "stats": {
             "deployed": 210,
-            "kills": 4,
-            "lost": 2,
-            "income": 454,
+            "kills": 5,
+            "lost": 3,
+            "income": 458,
             "walls": 0,
             "skills": 0,
             "peak": 210,
@@ -1320,19 +1416,19 @@
           },
           "mana": 100,
           "firstCoreHit": null,
-          "reservesDispatched": 0
+          "reservesDispatched": 1
         }
       },
       {
-        "time": 12.116666666666848,
+        "time": 13.066666666666896,
         "civilHp": 800,
         "maxHp": 800,
-        "threats": 116,
+        "threats": 198,
         "attackingCivil": 0,
         "snapshot": {
-          "time": 12.12,
-          "remaining": 887.88,
-          "money": 556,
+          "time": 13.07,
+          "remaining": 886.93,
+          "money": 559,
           "active": 207,
           "queued": 0,
           "reserves": 0,
@@ -1392,7 +1488,7 @@
             "deployed": 210,
             "kills": 6,
             "lost": 3,
-            "income": 456,
+            "income": 459,
             "walls": 0,
             "skills": 0,
             "peak": 210,
@@ -1403,7 +1499,7 @@
             "guardianBursts": 0,
             "towerShots": {
               "field": 0,
-              "outer": 5,
+              "outer": 6,
               "inner": 0,
               "core": 0
             },
@@ -1420,15 +1516,15 @@
         }
       },
       {
-        "time": 12.76666666666688,
+        "time": 13.666666666666925,
         "civilHp": 800,
         "maxHp": 800,
-        "threats": 182,
+        "threats": 180,
         "attackingCivil": 0,
         "snapshot": {
-          "time": 12.77,
-          "remaining": 887.23,
-          "money": 558,
+          "time": 13.67,
+          "remaining": 886.33,
+          "money": 560,
           "active": 207,
           "queued": 0,
           "reserves": 0,
@@ -1445,7 +1541,7 @@
               "progress": 0,
               "captured": false,
               "contested": true,
-              "connected": false
+              "connected": true
             },
             {
               "name": "西境前线",
@@ -1457,7 +1553,7 @@
               "progress": 0,
               "captured": false,
               "contested": false,
-              "connected": false
+              "connected": true
             },
             {
               "name": "东境前线",
@@ -1469,7 +1565,7 @@
               "progress": 0,
               "captured": false,
               "contested": false,
-              "connected": false
+              "connected": true
             },
             {
               "name": "北境前线",
@@ -1481,15 +1577,15 @@
               "progress": 0,
               "captured": false,
               "contested": true,
-              "connected": false
+              "connected": true
             }
           ],
           "stats": {
             "deployed": 210,
-            "kills": 8,
+            "kills": 7,
             "lost": 3,
-            "income": 458,
-            "walls": 0,
+            "income": 460,
+            "walls": 1,
             "skills": 0,
             "peak": 210,
             "resourceIncome": 450,
@@ -1505,7 +1601,7 @@
             },
             "destroyed": {
               "field": 1,
-              "outer": 0,
+              "outer": 1,
               "inner": 0,
               "core": 0
             }
@@ -1516,16 +1612,16 @@
         }
       },
       {
-        "time": 13.400000000000245,
+        "time": 14.30000000000029,
         "civilHp": 800,
         "maxHp": 800,
-        "threats": 197,
+        "threats": 173,
         "attackingCivil": 0,
         "snapshot": {
-          "time": 13.4,
-          "remaining": 886.6,
+          "time": 14.3,
+          "remaining": 885.7,
           "money": 563,
-          "active": 206,
+          "active": 207,
           "queued": 0,
           "reserves": 0,
           "crystalHp": 5600,
@@ -1541,7 +1637,7 @@
               "progress": 0,
               "captured": false,
               "contested": true,
-              "connected": false
+              "connected": true
             },
             {
               "name": "西境前线",
@@ -1553,7 +1649,7 @@
               "progress": 0,
               "captured": false,
               "contested": false,
-              "connected": false
+              "connected": true
             },
             {
               "name": "东境前线",
@@ -1565,7 +1661,7 @@
               "progress": 0,
               "captured": false,
               "contested": false,
-              "connected": false
+              "connected": true
             },
             {
               "name": "北境前线",
@@ -1577,110 +1673,14 @@
               "progress": 0,
               "captured": false,
               "contested": true,
-              "connected": false
+              "connected": true
             }
           ],
           "stats": {
             "deployed": 210,
             "kills": 10,
-            "lost": 4,
+            "lost": 3,
             "income": 463,
-            "walls": 0,
-            "skills": 0,
-            "peak": 210,
-            "resourceIncome": 450,
-            "spells": 0,
-            "lootSites": 1,
-            "reliefTransfers": 0,
-            "guardianBursts": 0,
-            "towerShots": {
-              "field": 0,
-              "outer": 6,
-              "inner": 0,
-              "core": 0
-            },
-            "destroyed": {
-              "field": 1,
-              "outer": 0,
-              "inner": 0,
-              "core": 0
-            }
-          },
-          "mana": 100,
-          "firstCoreHit": null,
-          "reservesDispatched": 1
-        }
-      },
-      {
-        "time": 14.03333333333361,
-        "civilHp": 800,
-        "maxHp": 800,
-        "threats": 176,
-        "attackingCivil": 0,
-        "snapshot": {
-          "time": 14.03,
-          "remaining": 885.97,
-          "money": 565,
-          "active": 206,
-          "queued": 0,
-          "reserves": 0,
-          "crystalHp": 5600,
-          "status": "battle",
-          "outposts": [
-            {
-              "name": "南境前线",
-              "front": "south",
-              "x": 2000,
-              "y": 2770,
-              "w": 260,
-              "h": 220,
-              "progress": 0,
-              "captured": false,
-              "contested": true,
-              "connected": true
-            },
-            {
-              "name": "西境前线",
-              "front": "west",
-              "x": 950,
-              "y": 1800,
-              "w": 260,
-              "h": 220,
-              "progress": 0,
-              "captured": false,
-              "contested": false,
-              "connected": true
-            },
-            {
-              "name": "东境前线",
-              "front": "east",
-              "x": 3050,
-              "y": 1800,
-              "w": 260,
-              "h": 220,
-              "progress": 0,
-              "captured": false,
-              "contested": false,
-              "connected": true
-            },
-            {
-              "name": "北境前线",
-              "front": "north",
-              "x": 2000,
-              "y": 820,
-              "w": 260,
-              "h": 220,
-              "progress": 0,
-              "captured": false,
-              "contested": true,
-              "connected": true
-            }
-          ],
-          "stats": {
-            "deployed": 210,
-            "kills": 12,
-            "lost": 4,
-            "income": 465,
             "walls": 1,
             "skills": 0,
             "peak": 210,
@@ -1708,16 +1708,112 @@
         }
       },
       {
-        "time": 14.733333333333645,
+        "time": 14.950000000000323,
         "civilHp": 800,
         "maxHp": 800,
-        "threats": 193,
+        "threats": 191,
         "attackingCivil": 0,
         "snapshot": {
-          "time": 14.73,
-          "remaining": 885.27,
+          "time": 14.95,
+          "remaining": 885.05,
+          "money": 564,
+          "active": 207,
+          "queued": 0,
+          "reserves": 0,
+          "crystalHp": 5600,
+          "status": "battle",
+          "outposts": [
+            {
+              "name": "南境前线",
+              "front": "south",
+              "x": 2000,
+              "y": 2770,
+              "w": 260,
+              "h": 220,
+              "progress": 0,
+              "captured": false,
+              "contested": true,
+              "connected": true
+            },
+            {
+              "name": "西境前线",
+              "front": "west",
+              "x": 950,
+              "y": 1800,
+              "w": 260,
+              "h": 220,
+              "progress": 0,
+              "captured": false,
+              "contested": false,
+              "connected": true
+            },
+            {
+              "name": "东境前线",
+              "front": "east",
+              "x": 3050,
+              "y": 1800,
+              "w": 260,
+              "h": 220,
+              "progress": 0,
+              "captured": false,
+              "contested": false,
+              "connected": true
+            },
+            {
+              "name": "北境前线",
+              "front": "north",
+              "x": 2000,
+              "y": 820,
+              "w": 260,
+              "h": 220,
+              "progress": 0,
+              "captured": false,
+              "contested": true,
+              "connected": true
+            }
+          ],
+          "stats": {
+            "deployed": 210,
+            "kills": 11,
+            "lost": 3,
+            "income": 464,
+            "walls": 1,
+            "skills": 0,
+            "peak": 210,
+            "resourceIncome": 450,
+            "spells": 0,
+            "lootSites": 1,
+            "reliefTransfers": 0,
+            "guardianBursts": 0,
+            "towerShots": {
+              "field": 0,
+              "outer": 7,
+              "inner": 0,
+              "core": 0
+            },
+            "destroyed": {
+              "field": 1,
+              "outer": 1,
+              "inner": 0,
+              "core": 0
+            }
+          },
+          "mana": 100,
+          "firstCoreHit": null,
+          "reservesDispatched": 1
+        }
+      },
+      {
+        "time": 15.550000000000352,
+        "civilHp": 800,
+        "maxHp": 800,
+        "threats": 65,
+        "attackingCivil": 0,
+        "snapshot": {
+          "time": 15.55,
+          "remaining": 884.45,
           "money": 565,
-          "active": 206,
+          "active": 207,
           "queued": 0,
           "reserves": 0,
           "crystalHp": 5600,
@@ -1775,7 +1871,7 @@
           "stats": {
             "deployed": 210,
             "kills": 12,
-            "lost": 4,
+            "lost": 3,
             "income": 465,
             "walls": 2,
             "skills": 0,
@@ -1787,7 +1883,7 @@
             "guardianBursts": 0,
             "towerShots": {
               "field": 0,
-              "outer": 7,
+              "outer": 8,
               "inner": 0,
               "core": 0
             },
@@ -1804,16 +1900,16 @@
         }
       },
       {
-        "time": 15.36666666666701,
+        "time": 16.216666666667027,
         "civilHp": 800,
         "maxHp": 800,
-        "threats": 142,
+        "threats": 200,
         "attackingCivil": 0,
         "snapshot": {
-          "time": 15.37,
-          "remaining": 884.63,
+          "time": 16.22,
+          "remaining": 883.78,
           "money": 605,
-          "active": 206,
+          "active": 207,
           "queued": 0,
           "reserves": 0,
           "crystalHp": 5600,
@@ -1871,7 +1967,7 @@
           "stats": {
             "deployed": 210,
             "kills": 12,
-            "lost": 4,
+            "lost": 3,
             "income": 505,
             "walls": 3,
             "skills": 0,
@@ -1900,16 +1996,16 @@
         }
       },
       {
-        "time": 16.01666666666704,
+        "time": 16.86666666666699,
         "civilHp": 800,
         "maxHp": 800,
-        "threats": 0,
+        "threats": 168,
         "attackingCivil": 0,
         "snapshot": {
-          "time": 16.02,
-          "remaining": 883.98,
-          "money": 610,
-          "active": 206,
+          "time": 16.87,
+          "remaining": 883.13,
+          "money": 609,
+          "active": 207,
           "queued": 0,
           "reserves": 0,
           "crystalHp": 5600,
@@ -1966,10 +2062,10 @@
           ],
           "stats": {
             "deployed": 210,
-            "kills": 14,
-            "lost": 4,
-            "income": 510,
-            "walls": 3,
+            "kills": 13,
+            "lost": 3,
+            "income": 509,
+            "walls": 4,
             "skills": 0,
             "peak": 210,
             "resourceIncome": 450,
@@ -1985,7 +2081,7 @@
             },
             "destroyed": {
               "field": 1,
-              "outer": 4,
+              "outer": 5,
               "inner": 0,
               "core": 0
             }
@@ -1996,16 +2092,112 @@
         }
       },
       {
-        "time": 16.63333333333367,
+        "time": 17.466666666666956,
         "civilHp": 800,
         "maxHp": 800,
-        "threats": 0,
+        "threats": 15,
         "attackingCivil": 0,
         "snapshot": {
-          "time": 16.63,
-          "remaining": 883.37,
+          "time": 17.47,
+          "remaining": 882.53,
+          "money": 609,
+          "active": 207,
+          "queued": 0,
+          "reserves": 0,
+          "crystalHp": 5600,
+          "status": "battle",
+          "outposts": [
+            {
+              "name": "南境前线",
+              "front": "south",
+              "x": 2000,
+              "y": 2770,
+              "w": 260,
+              "h": 220,
+              "progress": 0,
+              "captured": false,
+              "contested": true,
+              "connected": true
+            },
+            {
+              "name": "西境前线",
+              "front": "west",
+              "x": 950,
+              "y": 1800,
+              "w": 260,
+              "h": 220,
+              "progress": 0,
+              "captured": false,
+              "contested": false,
+              "connected": true
+            },
+            {
+              "name": "东境前线",
+              "front": "east",
+              "x": 3050,
+              "y": 1800,
+              "w": 260,
+              "h": 220,
+              "progress": 0,
+              "captured": false,
+              "contested": false,
+              "connected": true
+            },
+            {
+              "name": "北境前线",
+              "front": "north",
+              "x": 2000,
+              "y": 820,
+              "w": 260,
+              "h": 220,
+              "progress": 0,
+              "captured": false,
+              "contested": true,
+              "connected": true
+            }
+          ],
+          "stats": {
+            "deployed": 210,
+            "kills": 13,
+            "lost": 3,
+            "income": 509,
+            "walls": 5,
+            "skills": 0,
+            "peak": 210,
+            "resourceIncome": 450,
+            "spells": 0,
+            "lootSites": 1,
+            "reliefTransfers": 0,
+            "guardianBursts": 0,
+            "towerShots": {
+              "field": 0,
+              "outer": 8,
+              "inner": 0,
+              "core": 0
+            },
+            "destroyed": {
+              "field": 1,
+              "outer": 6,
+              "inner": 0,
+              "core": 0
+            }
+          },
+          "mana": 100,
+          "firstCoreHit": null,
+          "reservesDispatched": 1
+        }
+      },
+      {
+        "time": 18.11666666666692,
+        "civilHp": 800,
+        "maxHp": 800,
+        "threats": 15,
+        "attackingCivil": 0,
+        "snapshot": {
+          "time": 18.12,
+          "remaining": 881.88,
           "money": 610,
-          "active": 206,
+          "active": 207,
           "queued": 0,
           "reserves": 0,
           "crystalHp": 5600,
@@ -2063,7 +2255,7 @@
           "stats": {
             "deployed": 210,
             "kills": 14,
-            "lost": 4,
+            "lost": 3,
             "income": 510,
             "walls": 5,
             "skills": 0,
@@ -2092,112 +2284,16 @@
         }
       },
       {
-        "time": 17.266666666666968,
-        "civilHp": 800,
-        "maxHp": 800,
-        "threats": 0,
-        "attackingCivil": 0,
-        "snapshot": {
-          "time": 17.27,
-          "remaining": 882.73,
-          "money": 610,
-          "active": 206,
-          "queued": 0,
-          "reserves": 0,
-          "crystalHp": 5600,
-          "status": "battle",
-          "outposts": [
-            {
-              "name": "南境前线",
-              "front": "south",
-              "x": 2000,
-              "y": 2770,
-              "w": 260,
-              "h": 220,
-              "progress": 0,
-              "captured": false,
-              "contested": true,
-              "connected": true
-            },
-            {
-              "name": "西境前线",
-              "front": "west",
-              "x": 950,
-              "y": 1800,
-              "w": 260,
-              "h": 220,
-              "progress": 0,
-              "captured": false,
-              "contested": false,
-              "connected": true
-            },
-            {
-              "name": "东境前线",
-              "front": "east",
-              "x": 3050,
-              "y": 1800,
-              "w": 260,
-              "h": 220,
-              "progress": 0,
-              "captured": false,
-              "contested": false,
-              "connected": true
-            },
-            {
-              "name": "北境前线",
-              "front": "north",
-              "x": 2000,
-              "y": 820,
-              "w": 260,
-              "h": 220,
-              "progress": 0,
-              "captured": false,
-              "contested": true,
-              "connected": true
-            }
-          ],
-          "stats": {
-            "deployed": 210,
-            "kills": 14,
-            "lost": 4,
-            "income": 510,
-            "walls": 5,
-            "skills": 0,
-            "peak": 210,
-            "resourceIncome": 450,
-            "spells": 0,
-            "lootSites": 1,
-            "reliefTransfers": 0,
-            "guardianBursts": 0,
-            "towerShots": {
-              "field": 0,
-              "outer": 8,
-              "inner": 0,
-              "core": 0
-            },
-            "destroyed": {
-              "field": 1,
-              "outer": 6,
-              "inner": 0,
-              "core": 0
-            }
-          },
-          "mana": 100,
-          "firstCoreHit": null,
-          "reservesDispatched": 1
-        }
-      },
-      {
-        "time": 17.8833333333336,
+        "time": 18.716666666666885,
         "civilHp": 800,
         "maxHp": 800,
         "threats": 0,
         "attackingCivil": 1,
         "snapshot": {
-          "time": 17.88,
-          "remaining": 882.12,
+          "time": 18.72,
+          "remaining": 881.28,
           "money": 610,
-          "active": 206,
+          "active": 207,
           "queued": 0,
           "reserves": 0,
           "crystalHp": 5600,
@@ -2255,7 +2351,7 @@
           "stats": {
             "deployed": 210,
             "kills": 14,
-            "lost": 4,
+            "lost": 3,
             "income": 510,
             "walls": 5,
             "skills": 0,
@@ -2284,16 +2380,16 @@
         }
       },
       {
-        "time": 18.533333333333562,
+        "time": 19.350000000000183,
         "civilHp": 800,
         "maxHp": 800,
         "threats": 0,
-        "attackingCivil": 0,
+        "attackingCivil": 2,
         "snapshot": {
-          "time": 18.53,
-          "remaining": 881.47,
+          "time": 19.35,
+          "remaining": 880.65,
           "money": 610,
-          "active": 206,
+          "active": 207,
           "queued": 0,
           "reserves": 0,
           "crystalHp": 5600,
@@ -2351,7 +2447,7 @@
           "stats": {
             "deployed": 210,
             "kills": 14,
-            "lost": 4,
+            "lost": 3,
             "income": 510,
             "walls": 5,
             "skills": 0,
@@ -2380,16 +2476,16 @@
         }
       },
       {
-        "time": 19.16666666666686,
+        "time": 20.000000000000146,
         "civilHp": 800,
         "maxHp": 800,
         "threats": 0,
-        "attackingCivil": 0,
+        "attackingCivil": 1,
         "snapshot": {
-          "time": 19.17,
-          "remaining": 880.83,
+          "time": 20,
+          "remaining": 880,
           "money": 610,
-          "active": 206,
+          "active": 207,
           "queued": 0,
           "reserves": 0,
           "crystalHp": 5600,
@@ -2447,7 +2543,7 @@
           "stats": {
             "deployed": 210,
             "kills": 14,
-            "lost": 4,
+            "lost": 3,
             "income": 510,
             "walls": 5,
             "skills": 0,
@@ -2476,16 +2572,16 @@
         }
       },
       {
-        "time": 19.816666666666823,
+        "time": 20.633333333333443,
         "civilHp": 800,
         "maxHp": 800,
-        "threats": 75,
+        "threats": 122,
         "attackingCivil": 0,
         "snapshot": {
-          "time": 19.82,
-          "remaining": 880.18,
+          "time": 20.63,
+          "remaining": 879.37,
           "money": 610,
-          "active": 205,
+          "active": 207,
           "queued": 0,
           "reserves": 0,
           "crystalHp": 5600,
@@ -2510,7 +2606,7 @@
               "y": 1800,
               "w": 260,
               "h": 220,
-              "progress": 0,
+              "progress": 0.26666666666666666,
               "captured": false,
               "contested": false,
               "connected": true
@@ -2543,7 +2639,7 @@
           "stats": {
             "deployed": 210,
             "kills": 14,
-            "lost": 5,
+            "lost": 3,
             "income": 510,
             "walls": 5,
             "skills": 0,
@@ -2572,16 +2668,16 @@
         }
       },
       {
-        "time": 20.466666666666786,
+        "time": 21.250000000000075,
         "civilHp": 800,
         "maxHp": 800,
-        "threats": 62,
-        "attackingCivil": 0,
+        "threats": 115,
+        "attackingCivil": 3,
         "snapshot": {
-          "time": 20.47,
-          "remaining": 879.53,
+          "time": 21.25,
+          "remaining": 878.75,
           "money": 614,
-          "active": 205,
+          "active": 207,
           "queued": 0,
           "reserves": 0,
           "crystalHp": 5600,
@@ -2606,7 +2702,7 @@
               "y": 1800,
               "w": 260,
               "h": 220,
-              "progress": 0,
+              "progress": 0.8,
               "captured": false,
               "contested": false,
               "connected": true
@@ -2639,103 +2735,7 @@
           "stats": {
             "deployed": 210,
             "kills": 15,
-            "lost": 5,
-            "income": 514,
-            "walls": 5,
-            "skills": 0,
-            "peak": 210,
-            "resourceIncome": 450,
-            "spells": 0,
-            "lootSites": 1,
-            "reliefTransfers": 0,
-            "guardianBursts": 0,
-            "towerShots": {
-              "field": 0,
-              "outer": 8,
-              "inner": 0,
-              "core": 0
-            },
-            "destroyed": {
-              "field": 1,
-              "outer": 7,
-              "inner": 0,
-              "core": 0
-            }
-          },
-          "mana": 100,
-          "firstCoreHit": null,
-          "reservesDispatched": 1
-        }
-      },
-      {
-        "time": 21.100000000000083,
-        "civilHp": 800,
-        "maxHp": 800,
-        "threats": 0,
-        "attackingCivil": 9,
-        "snapshot": {
-          "time": 21.1,
-          "remaining": 878.9,
-          "money": 614,
-          "active": 205,
-          "queued": 0,
-          "reserves": 0,
-          "crystalHp": 5600,
-          "status": "battle",
-          "outposts": [
-            {
-              "name": "南境前线",
-              "front": "south",
-              "x": 2000,
-              "y": 2770,
-              "w": 260,
-              "h": 220,
-              "progress": 0,
-              "captured": false,
-              "contested": true,
-              "connected": true
-            },
-            {
-              "name": "西境前线",
-              "front": "west",
-              "x": 950,
-              "y": 1800,
-              "w": 260,
-              "h": 220,
-              "progress": 0,
-              "captured": false,
-              "contested": false,
-              "connected": true
-            },
-            {
-              "name": "东境前线",
-              "front": "east",
-              "x": 3050,
-              "y": 1800,
-              "w": 260,
-              "h": 220,
-              "progress": 0,
-              "captured": false,
-              "contested": false,
-              "connected": true
-            },
-            {
-              "name": "北境前线",
-              "front": "north",
-              "x": 2000,
-              "y": 820,
-              "w": 260,
-              "h": 220,
-              "progress": 0,
-              "captured": false,
-              "contested": true,
-              "connected": true
-            }
-          ],
-          "stats": {
-            "deployed": 210,
-            "kills": 15,
-            "lost": 5,
+            "lost": 3,
             "income": 514,
             "walls": 6,
             "skills": 0,
@@ -2764,16 +2764,16 @@
         }
       },
       {
-        "time": 21.73333333333338,
+        "time": 21.900000000000038,
         "civilHp": 800,
         "maxHp": 800,
         "threats": 0,
-        "attackingCivil": 7,
+        "attackingCivil": 22,
         "snapshot": {
-          "time": 21.73,
-          "remaining": 878.27,
+          "time": 21.9,
+          "remaining": 878.1,
           "money": 614,
-          "active": 205,
+          "active": 207,
           "queued": 0,
           "reserves": 0,
           "crystalHp": 5600,
@@ -2798,7 +2798,7 @@
               "y": 1800,
               "w": 260,
               "h": 220,
-              "progress": 0,
+              "progress": 1.0666666666666667,
               "captured": false,
               "contested": false,
               "connected": true
@@ -2831,7 +2831,7 @@
           "stats": {
             "deployed": 210,
             "kills": 15,
-            "lost": 5,
+            "lost": 3,
             "income": 514,
             "walls": 6,
             "skills": 0,
@@ -2860,16 +2860,16 @@
         }
       },
       {
-        "time": 22.366666666666678,
+        "time": 22.55,
         "civilHp": 800,
         "maxHp": 800,
         "threats": 0,
-        "attackingCivil": 128,
+        "attackingCivil": 21,
         "snapshot": {
-          "time": 22.37,
-          "remaining": 877.63,
+          "time": 22.55,
+          "remaining": 877.45,
           "money": 614,
-          "active": 205,
+          "active": 207,
           "queued": 0,
           "reserves": 0,
           "crystalHp": 5600,
@@ -2894,7 +2894,7 @@
               "y": 1800,
               "w": 260,
               "h": 220,
-              "progress": 0,
+              "progress": 1.0666666666666667,
               "captured": false,
               "contested": false,
               "connected": true
@@ -2927,7 +2927,7 @@
           "stats": {
             "deployed": 210,
             "kills": 15,
-            "lost": 5,
+            "lost": 3,
             "income": 514,
             "walls": 6,
             "skills": 0,
@@ -2945,7 +2945,7 @@
             },
             "destroyed": {
               "field": 1,
-              "outer": 9,
+              "outer": 8,
               "inner": 0,
               "core": 0
             }
@@ -2956,16 +2956,16 @@
         }
       },
       {
-        "time": 23.01666666666664,
+        "time": 23.199999999999964,
         "civilHp": 800,
         "maxHp": 800,
         "threats": 0,
-        "attackingCivil": 194,
+        "attackingCivil": 111,
         "snapshot": {
-          "time": 23.02,
-          "remaining": 876.98,
+          "time": 23.2,
+          "remaining": 876.8,
           "money": 614,
-          "active": 205,
+          "active": 207,
           "queued": 0,
           "reserves": 0,
           "crystalHp": 5600,
@@ -2990,7 +2990,7 @@
               "y": 1800,
               "w": 260,
               "h": 220,
-              "progress": 0,
+              "progress": 1.0666666666666667,
               "captured": false,
               "contested": false,
               "connected": true
@@ -3023,7 +3023,7 @@
           "stats": {
             "deployed": 210,
             "kills": 15,
-            "lost": 5,
+            "lost": 3,
             "income": 514,
             "walls": 6,
             "skills": 0,
@@ -3052,16 +3052,16 @@
         }
       },
       {
-        "time": 23.666666666666604,
+        "time": 23.83333333333326,
         "civilHp": 800,
         "maxHp": 800,
         "threats": 0,
-        "attackingCivil": 198,
+        "attackingCivil": 191,
         "snapshot": {
-          "time": 23.67,
-          "remaining": 876.33,
+          "time": 23.83,
+          "remaining": 876.17,
           "money": 614,
-          "active": 205,
+          "active": 207,
           "queued": 0,
           "reserves": 0,
           "crystalHp": 5600,
@@ -3086,7 +3086,7 @@
               "y": 1800,
               "w": 260,
               "h": 220,
-              "progress": 0,
+              "progress": 1.0666666666666667,
               "captured": false,
               "contested": false,
               "connected": true
@@ -3119,7 +3119,7 @@
           "stats": {
             "deployed": 210,
             "kills": 15,
-            "lost": 5,
+            "lost": 3,
             "income": 514,
             "walls": 6,
             "skills": 0,
@@ -3148,16 +3148,16 @@
         }
       },
       {
-        "time": 24.2999999999999,
-        "civilHp": 800,
+        "time": 24.46666666666656,
+        "civilHp": 735.2000000000003,
         "maxHp": 800,
         "threats": 0,
-        "attackingCivil": 198,
+        "attackingCivil": 197,
         "snapshot": {
-          "time": 24.3,
-          "remaining": 875.7,
+          "time": 24.47,
+          "remaining": 875.53,
           "money": 614,
-          "active": 205,
+          "active": 207,
           "queued": 0,
           "reserves": 0,
           "crystalHp": 5600,
@@ -3182,7 +3182,7 @@
               "y": 1800,
               "w": 260,
               "h": 220,
-              "progress": 0,
+              "progress": 1.0666666666666667,
               "captured": false,
               "contested": false,
               "connected": true
@@ -3215,103 +3215,7 @@
           "stats": {
             "deployed": 210,
             "kills": 15,
-            "lost": 5,
-            "income": 514,
-            "walls": 6,
-            "skills": 0,
-            "peak": 210,
-            "resourceIncome": 450,
-            "spells": 0,
-            "lootSites": 1,
-            "reliefTransfers": 4,
-            "guardianBursts": 0,
-            "towerShots": {
-              "field": 0,
-              "outer": 8,
-              "inner": 0,
-              "core": 0
-            },
-            "destroyed": {
-              "field": 1,
-              "outer": 9,
-              "inner": 0,
-              "core": 0
-            }
-          },
-          "mana": 100,
-          "firstCoreHit": null,
-          "reservesDispatched": 2
-        }
-      },
-      {
-        "time": 24.9333333333332,
-        "civilHp": 486.6000000000004,
-        "maxHp": 800,
-        "threats": 0,
-        "attackingCivil": 198,
-        "snapshot": {
-          "time": 24.93,
-          "remaining": 875.07,
-          "money": 614,
-          "active": 205,
-          "queued": 0,
-          "reserves": 0,
-          "crystalHp": 5600,
-          "status": "battle",
-          "outposts": [
-            {
-              "name": "南境前线",
-              "front": "south",
-              "x": 2000,
-              "y": 2770,
-              "w": 260,
-              "h": 220,
-              "progress": 0,
-              "captured": false,
-              "contested": true,
-              "connected": true
-            },
-            {
-              "name": "西境前线",
-              "front": "west",
-              "x": 950,
-              "y": 1800,
-              "w": 260,
-              "h": 220,
-              "progress": 0,
-              "captured": false,
-              "contested": false,
-              "connected": true
-            },
-            {
-              "name": "东境前线",
-              "front": "east",
-              "x": 3050,
-              "y": 1800,
-              "w": 260,
-              "h": 220,
-              "progress": 0,
-              "captured": false,
-              "contested": false,
-              "connected": true
-            },
-            {
-              "name": "北境前线",
-              "front": "north",
-              "x": 2000,
-              "y": 820,
-              "w": 260,
-              "h": 220,
-              "progress": 0,
-              "captured": false,
-              "contested": true,
-              "connected": true
-            }
-          ],
-          "stats": {
-            "deployed": 210,
-            "kills": 15,
-            "lost": 5,
+            "lost": 3,
             "income": 514,
             "walls": 6,
             "skills": 0,

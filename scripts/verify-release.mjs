@@ -66,7 +66,7 @@ try {
   await page.click('[data-action="rally-all"]');
   await new Promise((r) => setTimeout(r, 1400));
   const battle = await page.evaluate(() => window.__SIEGE__.battle.snapshot());
-  await page.screenshot({ path: "docs/screenshots/v3.1/20-live-pages.png" });
+  await page.screenshot({ path: "docs/screenshots/v3.2/20-live-pages.png" });
   const result = {
     date: new Date().toISOString(),
     url,
@@ -84,14 +84,14 @@ try {
       response.status() === 200 &&
       title === "异界围城：魔物之王 · Monster Sovereign" &&
       commanderCards === 6 &&
-      remote.version.startsWith("3.1.") &&
+      remote.version.startsWith("3.2.") &&
       remote.dirtyWorkingTree === false &&
       fileChecks.every((f) => f.status === 200 && f.match) &&
       (!expectedCommit || remote.sourceCommit === expectedCommit) &&
       battle.stats.deployed > 0 &&
       errors.length === 0,
   };
-  writeFileSync("docs/v3.1/RELEASE_RESULTS.json", JSON.stringify(result, null, 2));
+  writeFileSync("docs/v3.2/RELEASE_RESULTS.json", JSON.stringify(result, null, 2));
   console.log(JSON.stringify(result, null, 2));
   if (!result.pass) process.exitCode = 1;
 } finally {

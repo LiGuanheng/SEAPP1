@@ -1,3 +1,11 @@
+# V3.2 当前测试
+
+本轮100项模型测试，真实交互与战役/性能结果见[v3.2/REPORT.md](v3.2/REPORT.md)。增加自主清场、真实受袭和塔弹来源、队友反击/归位、精确批数及显式连投。旧路径测试曾无意依赖附近不攻击的资源和部署点不反击，现为纯路点/队列测试隔离敌军及无关建筑；完整战役保持真实地图、资金和伤害。
+
+当前npm run test:e2e运行smart-orders-browser、smart-campaign-browser、smart-performance；npm run sim结果写v3.2，verify-release核对3.2版本与所有发布文件。旧3.1/3.0报告留存为历史，不能冒充当前结果。
+
+---
+
 # V3.1 测试报告
 
 当前汇总见[v3.1/REPORT.md](v3.1/REPORT.md)，原始数据与本次截图均单独保存。

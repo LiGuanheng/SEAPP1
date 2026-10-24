@@ -1,4 +1,4 @@
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { Battle } from "../src/v2/simulation";
 import { createLoadout, purchase } from "../src/v2/economy";
 import { DeploymentStream } from "../src/v2/deployment";
@@ -7,6 +7,7 @@ const field = () => {
   const b = new Battle(createLoadout());
   b.units.forEach((u) => (u.hp = 0));
   for (const s of b.structures) if (s.kind !== "crystal") b.damage(s, s.hp);
+  b.advance(0.02);
   return b;
 };
 // Isolated fixtures use real structure stats/IDs, with only position and remaining health arranged.
@@ -16,6 +17,7 @@ const site = (b: Battle, kind: Kind, x: number, y: number) => {
   s.y = y;
   s.hp = 80;
   s.cooldown = 0;
+  b.nav.rebuild(b.structures.filter((s) => s.hp > 0));
   return s;
 };
 const run = (b: Battle, t: number) => {
@@ -23,6 +25,28 @@ const run = (b: Battle, t: number) => {
   b.events.length = 0;
 };
 describe("3.2 directional assault and self defense", () => {
+  it("a clear 300-unit route steers directly rather than building a flow field for each formation slot", () => {
+    const b = field(),
+      ids = [];
+    for (let i = 0; i < 300; i++)
+      ids.push(b.spawn("goblin", 900 + (i % 20) * 6, 3300 + Math.floor(i / 20) * 6).id);
+    const spy = vi.spyOn(b.nav, "direction");
+    b.followRoute(ids, [{ x: 1700, y: 3400 }]);
+    run(b, 0.5);
+    expect(spy).not.toHaveBeenCalled();
+    expect(b.byId.get(ids[0])!.x).toBeGreaterThan(900);
+  });
+  it("a blocked group route shares its waypoint instead of individual formation path destinations", () => {
+    const b = field();
+    site(b, "wall", 1280, 3400).hp = 800;
+    const ids = Array.from({ length: 80 }, (_, i) => b.spawn("goblin", 950, 3300 + i * 2).id),
+      spy = vi.spyOn(b.nav, "direction");
+    b.followRoute(ids, [{ x: 1700, y: 3400 }]);
+    run(b, 0.1);
+    const destinations = new Set(spy.mock.calls.map((a) => `${a[2]},${a[3]}`));
+    expect(spy).toHaveBeenCalled();
+    expect(destinations.size).toBe(1);
+  });
   it("clears civilian and resource buildings well beside the drawn line, then resumes and stops", () => {
     const b = field(),
       civil = site(b, "cityblock", 1100, 3140),
@@ -98,7 +122,7 @@ describe("3.2 directional assault and self defense", () => {
     const b = field(),
       s = site(b, "cityblock", 1090, 3350),
       u = b.spawn("golem", 950, 3400),
-      e = b.spawn("archer", 1150, 3400, 1);
+      e = b.spawn("archer", 1150, 3520, 1);
     e.root = 100;
     b.command([u.id], { type: "attack", target: s.id });
     b.damage(u, 1, e);
@@ -107,6 +131,19 @@ describe("3.2 directional assault and self defense", () => {
     run(b, 35);
     expect(e.hp).toBe(0);
     expect(s.hp).toBe(0);
+  });
+  it("finishing a focus does not forget an ongoing local attack", () => {
+    const b = field(),
+      s = site(b, "cityblock", 1090, 3350),
+      u = b.spawn("golem", 950, 3400),
+      e = b.spawn("archer", 1150, 3520, 1);
+    e.root = 100;
+    b.command([u.id], { type: "attack", target: s.id });
+    b.damage(u, 1, e);
+    b.damage(s, s.hp);
+    run(b, 0.02);
+    expect(u.threat?.id).toBe(e.id);
+    expect(u.target).toBe(e.id);
   });
   it("dead attackers are forgotten without losing the remaining assault route", () => {
     const b = field(),

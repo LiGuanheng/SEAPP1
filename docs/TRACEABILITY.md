@@ -1,4 +1,4 @@
-# V3.1 需求追溯与验收矩阵
+# V3.2 需求追溯与验收矩阵
 
 2026-10-24。以下V3表为3.0历史证据；当前增量与回归见本页V3.1表及v3.1/REPORT。V2旧矩阵原样归档archive/v2，旧测试未冒充V3测试。模型测试为tests/v3.test.ts，真实结果位于v3目录；浏览器操作脚本从当前生产构建启动。
 
@@ -36,3 +36,12 @@
 | V31-FR05 | reward/preset/capture/buy | 一次性奖励/合法预算模型；真实掠夺购兵/前线继续投放 |
 | V31-FR06 | tactical-simulate/tactical-browser | 两种普通阵容胜例、困难直推/掠夺比较；真实通关/超时/重开 |
 | 性能与发布回归 | tactical-performance/verify-release | 当前报告与生产19文件指纹；旧3.0记录不冒充3.1 |
+
+## V3.2 当前增量证据
+
+| 需求 | 代码 | 当前实测 |
+|---|---|---|
+| V32-FR01 | chooseTarget/progressRoute | smart-assault侧向城区/资源、终点处理；SMART_ORDERS_BROWSER真实未指定民居攻击 |
+| V32-FR02 | damage/projectiles/threatTarget/move | 实际箭手/塔弹触发、邻队支援、反击归位、路线/集火恢复及局部边界 |
+| V32-FR03 | DeploymentStream/app | 实际长按1.2秒只下20、3批60、原生拖放20、Shift不全下、勾选连下/松开停止 |
+| V32-FR04 | smart-*.mjs | v3.2独立JSON、截图、生产战役/性能与公开发布哈希核验 |
