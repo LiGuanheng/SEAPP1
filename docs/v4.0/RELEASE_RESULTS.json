@@ -1,0 +1,239 @@
+{
+  "date": "2026-10-24T15:36:04.638Z",
+  "url": "https://liguanheng.github.io/SEAPP1/",
+  "httpStatus": 200,
+  "title": "异界围城：魔物之王 · Monster Sovereign",
+  "expectedCommit": "5a8e2bab2f509e059a2feaac30a8f4c423110889",
+  "deployedCommit": "5a8e2bab2f509e059a2feaac30a8f4c423110889",
+  "version": "4.0.0",
+  "cleanBuild": true,
+  "commanderCards": 6,
+  "commandButtons": [
+    "assault",
+    "loot",
+    "rally",
+    "sweep"
+  ],
+  "automaticLabel": "自动指挥 开",
+  "fileChecks": [
+    {
+      "path": "art/city.webp",
+      "status": 200,
+      "match": true,
+      "bytes": 733400
+    },
+    {
+      "path": "art/cover.webp",
+      "status": 200,
+      "match": true,
+      "bytes": 441748
+    },
+    {
+      "path": "art/grove.webp",
+      "status": 200,
+      "match": true,
+      "bytes": 883684
+    },
+    {
+      "path": "art/hero-dragon.webp",
+      "status": 200,
+      "match": true,
+      "bytes": 722114
+    },
+    {
+      "path": "art/hero-emperor.webp",
+      "status": 200,
+      "match": true,
+      "bytes": 638576
+    },
+    {
+      "path": "art/hero-forest.webp",
+      "status": 200,
+      "match": true,
+      "bytes": 677018
+    },
+    {
+      "path": "art/hero-moon.webp",
+      "status": 200,
+      "match": true,
+      "bytes": 481752
+    },
+    {
+      "path": "art/hero-titan.webp",
+      "status": 200,
+      "match": true,
+      "bytes": 569118
+    },
+    {
+      "path": "art/hero-web.webp",
+      "status": 200,
+      "match": true,
+      "bytes": 548262
+    },
+    {
+      "path": "art/materials.webp",
+      "status": 200,
+      "match": true,
+      "bytes": 711936
+    },
+    {
+      "path": "art/portraits.webp",
+      "status": 200,
+      "match": true,
+      "bytes": 690402
+    },
+    {
+      "path": "art/structures.webp",
+      "status": 200,
+      "match": true,
+      "bytes": 600486
+    },
+    {
+      "path": "art/units-move.webp",
+      "status": 200,
+      "match": true,
+      "bytes": 864696
+    },
+    {
+      "path": "art/units.webp",
+      "status": 200,
+      "match": true,
+      "bytes": 918648
+    },
+    {
+      "path": "art/v3-city.webp",
+      "status": 200,
+      "match": true,
+      "bytes": 838192
+    },
+    {
+      "path": "art/v3-units.webp",
+      "status": 200,
+      "match": true,
+      "bytes": 633344
+    },
+    {
+      "path": "assets/index-BwDMAh_O.js",
+      "status": 200,
+      "match": true,
+      "bytes": 134910
+    },
+    {
+      "path": "assets/index-CK9JnytU.css",
+      "status": 200,
+      "match": true,
+      "bytes": 27755
+    },
+    {
+      "path": "index.html",
+      "status": 200,
+      "match": true,
+      "bytes": 1069
+    }
+  ],
+  "battle": {
+    "time": 1.83,
+    "remaining": 898.17,
+    "money": 100,
+    "active": 163,
+    "queued": 47,
+    "reserves": 47,
+    "crystalHp": 5600,
+    "status": "battle",
+    "outposts": [
+      {
+        "name": "南境前线",
+        "front": "south",
+        "x": 2000,
+        "y": 2770,
+        "w": 260,
+        "h": 220,
+        "progress": 0,
+        "captured": false,
+        "contested": true,
+        "connected": false
+      },
+      {
+        "name": "西境前线",
+        "front": "west",
+        "x": 950,
+        "y": 1800,
+        "w": 260,
+        "h": 220,
+        "progress": 0,
+        "captured": false,
+        "contested": false,
+        "connected": false
+      },
+      {
+        "name": "东境前线",
+        "front": "east",
+        "x": 3050,
+        "y": 1800,
+        "w": 260,
+        "h": 220,
+        "progress": 0,
+        "captured": false,
+        "contested": false,
+        "connected": false
+      },
+      {
+        "name": "北境前线",
+        "front": "north",
+        "x": 2000,
+        "y": 820,
+        "w": 260,
+        "h": 220,
+        "progress": 0,
+        "captured": false,
+        "contested": true,
+        "connected": false
+      }
+    ],
+    "stats": {
+      "deployed": 163,
+      "kills": 0,
+      "lost": 0,
+      "income": 0,
+      "walls": 0,
+      "skills": 0,
+      "peak": 163,
+      "resourceIncome": 0,
+      "spells": 0,
+      "lootSites": 0,
+      "reliefTransfers": 0,
+      "guardianBursts": 0,
+      "towerShots": {
+        "field": 0,
+        "outer": 1,
+        "inner": 0,
+        "core": 0
+      },
+      "destroyed": {
+        "field": 0,
+        "outer": 0,
+        "inner": 0,
+        "core": 0
+      }
+    },
+    "mana": 100,
+    "firstCoreHit": null,
+    "reservesDispatched": 0,
+    "automation": {
+      "enabled": true,
+      "command": "sweep",
+      "automatic": 163,
+      "manual": 0,
+      "muster": null,
+      "advice": "自动分路推进 · 主动技能仍由你掌控",
+      "metrics": {
+        "updates": 2,
+        "assignments": 164,
+        "fieldBuilds": 1,
+        "componentBuilds": 1
+      }
+    }
+  },
+  "errors": [],
+  "pass": true
+}

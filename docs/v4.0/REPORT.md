@@ -73,14 +73,17 @@ win32、32逻辑核心、31.7GiB RAM、Headless Chrome155、1920×1080。依次�
 ![自动军团内城决战](../screenshots/v4.0/07-auto-final-assault.png)
 ![自然胜利](../screenshots/v4.0/08-victory.png)
 
-[全部12张本地实际截图](../screenshots/v4.0)。截图中HUD计数来自拍摄时刻；单张FPS读数不替代上方10秒采样。
+[全部13张实际截图（含线上）](../screenshots/v4.0)。截图中HUD计数来自拍摄时刻；单张FPS读数不替代上方10秒采样。
 
 ## Git与部署
 
 - 基线96598c8，保留全部已有历史。
 - 阶段一a6168be：默认自动军团、角色、指挥所有权/作用域、四军团命令、导航与首批真实交互。
-- 阶段二：真实少操作通关、300自动性能、空地集结与缺口修复、课程资料和报告（本报告所在源代码提交）。
-- 发布状态待完成公开部署后追加精确源SHA、Actions及逐文件验证，未把本地运行当作线上发布成功。
+- 阶段二5a8e2ba：真实少操作通关、300自动性能、空地集结与缺口修复、课程资料和报告。正常快进合入main并推送。
+- [GitHub Actions 40107610398](https://github.com/LiGuanheng/SEAPP1/actions/runs/40107610398)构建和Pages部署实际success。
+- 正式游戏源提交：5a8e2bab2f509e059a2feaac30a8f4c423110889；线上版本4.0.0，cleanBuild=true。
+- Chrome于2026-10-24T15:36:04.638Z实际打开公开URL，HTTP200、6张统帅卡、4个军团命令、默认自动扫荡；真实部署163只且全部进入自动作战。全部19个远端文件HTTP200并与本地SHA-256一致，无浏览器错误。证据：[RELEASE_RESULTS](RELEASE_RESULTS.json)、[线上截图](../screenshots/v4.0/20-live-pages.png)。
+- 最后发布证据仅更新docs，不改变游戏代码；工作流按既有paths-ignore不重复部署。最终文档提交SHA可以晚于游戏源SHA。
 
 复现（预览服务在一个终端常驻，浏览器测试在另一个终端运行）：
 
