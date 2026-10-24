@@ -617,6 +617,7 @@ export class Battle {
     }
     u.runDistance = 0;
     if (isStructure(t) && (t.kind === "wall" || t.kind === "gate")) damage *= u.wallBonus ?? 1;
+    if (isStructure(t) && u.flying) damage *= 0.55;
     if (isStructure(t) && t.resource && u.kind === "raider") damage *= 3;
     if (["knight", "paladin"].includes(u.kind) && ["wolf", "rider"].includes(t.kind)) damage *= 1.5;
     u.cooldown = u.period * (u.frenzy > 0 ? 0.75 : 1);
@@ -662,9 +663,15 @@ export class Battle {
     exclude = 0,
     source?: Unit,
     originId = 0,
+    airOnly = false,
   ) {
     for (const t of this.spatial.near(x, y, r))
-      if (t.side !== side && t.id !== exclude && this.nav.clear({ x, y }, t, originId, t.id))
+      if (
+        (!airOnly || t.flying) &&
+        t.side !== side &&
+        t.id !== exclude &&
+        this.nav.clear({ x, y }, t, originId, t.id)
+      )
         this.damage(t, d, source);
   }
   skillInfo(kind: Kind) {
@@ -813,6 +820,7 @@ export class Battle {
     };
   }
   canCastSpell(x: number, y: number) {
+    const target = this.nav.obstacleAt(x, y);
     return (
       x >= 0 &&
       y >= 0 &&
@@ -823,7 +831,7 @@ export class Battle {
           u.side === 0 &&
           u.hp > 0 &&
           distance(u, { x, y }) <= 360 &&
-          this.nav.clear(u, { x, y }, u.id),
+          this.nav.clear(u, { x, y }, u.id, target),
       )
     );
   }
@@ -988,7 +996,17 @@ export class Battle {
         caster = source && !isStructure(source) ? source : undefined;
       const clear = this.nav.clear({ x: p.fromX, y: p.fromY }, p, p.source, p.target);
       if (p.splash && clear) {
-        this.splash(p.x, p.y, p.splash, p.damage, p.side, 0, caster, p.target);
+        this.splash(
+          p.x,
+          p.y,
+          p.splash,
+          p.damage,
+          p.side,
+          0,
+          caster,
+          p.target,
+          p.kind === "antiAir",
+        );
         if (t && isStructure(t) && t.hp > 0 && distance(t, p) < p.splash + 40)
           this.damage(t, p.damage, caster);
       } else if (!p.splash && clear && t && t.hp > 0) this.damage(t, p.damage, caster);
@@ -1052,9 +1070,13 @@ export class Battle {
       }
       const target = this.byId.get(u.target);
       if (target && target.hp > 0) {
-        const rad = isStructure(target) ? Math.min(target.w, target.h) / 2 : target.size * 0.28;
-        const d = distance(u, target);
-        if (d <= u.range + rad && this.nav.clear(u, target, u.id, target.id)) {
+        const d = isStructure(target)
+          ? Math.hypot(
+              Math.max(0, Math.abs(u.x - target.x) - target.w / 2),
+              Math.max(0, Math.abs(u.y - target.y) - target.h / 2),
+            )
+          : distance(u, target) - target.size * 0.28;
+        if (d <= u.range && this.nav.clear(u, target, u.id, target.id)) {
           if (u.cooldown <= 0) {
             if (u.kind === "elf") {
               u.castTime = 0.65;
@@ -1102,7 +1124,7 @@ export class Battle {
       if (
         u.side === 1 &&
         distance(v, { x: u.homeX, y: u.homeY }) > u.guardRadius &&
-        distance(v, u) > 140
+        !u.rally?.length
       )
         continue;
       if (!this.nav.clear(u, v, u.id, v.id)) continue;
@@ -1119,7 +1141,13 @@ export class Battle {
       for (const s of this.structures) {
         if (s.hp <= 0 || ["wall", "gate", "cityblock"].includes(s.kind)) continue;
         const d = distance(u, s);
-        const score = d * (u.kind === "raider" && s.resource ? 0.25 : 0.9);
+        const score =
+          d *
+          (u.kind === "raider" && s.resource
+            ? 0.25
+            : u.flying && s.kind === "antiAir"
+              ? 0.45
+              : 0.9);
         if (
           d < (u.kind === "raider" && s.resource ? 700 : 320) &&
           score < best &&
@@ -1262,13 +1290,18 @@ export class Battle {
         s.kind === "cannon"
           ? 88
           : s.kind === "antiAir"
-            ? 72
+            ? s.district === "core"
+              ? 110
+              : s.district === "inner"
+                ? 100
+                : 90
             : s.kind === "holy"
               ? 62
               : s.kind === "crystal"
                 ? 28
                 : 16;
-      const splash = s.kind === "cannon" ? 110 : s.kind === "crystal" ? 75 : 0;
+      const splash =
+        s.kind === "cannon" ? 110 : s.kind === "antiAir" ? 65 : s.kind === "crystal" ? 75 : 0;
       s.cooldown =
         s.kind === "cannon" ? 4.4 : s.kind === "holy" ? 2.3 : s.kind === "crystal" ? 3 : 1.35;
       s.attackFlash = 0.3;

@@ -394,3 +394,99 @@ describe("V3 results and lifecycle invariants", () => {
     expect(districtAt(2000, 1800)).toBe("core");
   });
 });
+
+describe("V3 route and commander regressions", () => {
+  it.each(FRONT_KEYS)("%s ground army really crosses three broken rings", (front) => {
+    const b = fresh();
+    b.units.forEach((u) => (u.hp = 0));
+    for (const s of b.structures)
+      if (!["wall", "gate", "crystal"].includes(s.kind)) b.damage(s, s.hp);
+    const p = FRONTS[front];
+    for (let i = 0; i < 4; i++) b.spawn("golem", p.x + i * 12, p.y);
+    let entered = false;
+    for (let n = 0; n < 180 && !entered; n++) {
+      run(b, 1);
+      entered = b.units.some((u) => u.side === 0 && u.hp > 0 && districtAt(u.x, u.y) === "core");
+    }
+    expect(entered).toBe(true);
+    expect(b.stats.walls).toBeGreaterThanOrEqual(3);
+  });
+  it("meteor can target an occluding resource itself, but not a building beyond a wall", () => {
+    const b = fresh(),
+      s = b.structures.find((s) => s.kind === "supply" && s.district === "field")!;
+    b.spawn("golem", s.x - 120, s.y);
+    run(b, 0.02);
+    expect(b.canCastSpell(s.x, s.y)).toBe(true);
+    expect(b.castSpell("meteor", s.x, s.y)).toBe("");
+    run(b, 1);
+    expect(s.hp).toBeLessThan(s.maxHp);
+  });
+  it("ordinary guard returns home after a target leaves its defense radius", () => {
+    const b = fresh();
+    b.units.forEach((u) => (u.hp = 0));
+    const e = b.spawn("soldier", 1000, 3350, 1),
+      u = b.spawn("golem", 1100, 3350);
+    e.guardRadius = 180;
+    run(b, 1);
+    b.command([u.id], { type: "move", x: 1500, y: 3350 });
+    run(b, 8);
+    expect(Math.hypot(e.x - e.homeX, e.y - e.homeY)).toBeLessThan(100);
+  });
+  it("dragon breath, titan breach, wolf buff, web root, forest heal and slime copies remain manual", () => {
+    const b = fresh();
+    b.units.forEach((u) => (u.hp = 0));
+    const dragon = b.spawn("dragon", 1800, 3350),
+      enemy = b.spawn("knight", 2000, 3350, 1);
+    enemy.root = 9;
+    run(b, 0.02);
+    const hp = enemy.hp;
+    expect(b.cast("dragon", 2050, 3350)).toBe("");
+    expect(enemy.hp).toBe(hp - 170);
+    const moon = b.spawn("moon", 1400, 3350),
+      wolf = b.spawn("wolf", 1450, 3350);
+    run(b, 0.02);
+    b.cast("moon", moon.x, moon.y);
+    expect(wolf.hunt).toBe(9);
+    const web = b.spawn("web", 2100, 3350);
+    run(b, 0.02);
+    b.cast("web", enemy.x, enemy.y);
+    expect(enemy.root).toBe(5);
+    const forest = b.spawn("forest", 1400, 3320),
+      golem = b.spawn("golem", 1430, 3320);
+    golem.hp = 100;
+    run(b, 0.02);
+    b.cast("forest", forest.x, forest.y);
+    expect(golem.hp).toBeGreaterThan(200);
+    const emperor = b.spawn("emperor", 2600, 3350);
+    for (let i = 0; i < 30; i++) b.spawn("slime", 2600 + i, 3350);
+    run(b, 0.02);
+    b.cast("emperor", emperor.x, emperor.y);
+    expect(b.queue.filter((q) => q.small).reduce((n, q) => n + q.count, 0)).toBe(25);
+    const titan = b.spawn("titan", 2200, 3150),
+      wall = b.structures.find(
+        (s) =>
+          s.kind === "wall" && s.district === "outer" && Math.abs(s.x - 2200) < 60 && s.y === 3050,
+      )!;
+    run(b, 0.02);
+    const before = wall.hp;
+    expect(b.cast("titan", wall.x, wall.y)).toBe("");
+    expect(wall.hp).toBe(Math.max(0, before - 750));
+    expect(dragon.hp).toBeGreaterThan(0);
+    expect(web.hp).toBeGreaterThan(0);
+    expect(titan.hp).toBeGreaterThan(0);
+  });
+  it.each(["summon", "evolve", "element"] as const)(
+    "%s specialization F is retained beside common spells",
+    (spec) => {
+      const b = new Battle(createLoadout("normal", spec)),
+        u = b.spawn("king", 2000, 3370),
+        ally = b.spawn("goblin", 2040, 3370);
+      run(b, 0.02);
+      expect(b.cast("king", u.x, u.y)).toBe("");
+      if (spec === "summon") expect(b.queued).toBe(30);
+      if (spec === "evolve") expect(ally.buff).toBe(10);
+      expect(b.stats.skills).toBe(1);
+      expect(b.stats.spells).toBe(0);
+    },
+  );
+});

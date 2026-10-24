@@ -50,7 +50,10 @@ try {
       packedBytes: statSync(target).size,
     });
   }
-  writeFileSync("docs/V2_ART_MANIFEST.json", JSON.stringify(manifest, null, 2));
+  const output = JSON.parse(readFileSync("package.json", "utf8")).version.startsWith("3.")
+    ? "docs/v3/ART_MANIFEST.json"
+    : "docs/V2_ART_MANIFEST.json";
+  writeFileSync(output, JSON.stringify(manifest, null, 2));
   console.log(
     JSON.stringify({
       assets: manifest.length,

@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-24T05:47:40.183Z",
+  "date": "2026-10-24T05:50:47.288Z",
   "method": "legal budget; actual purchase/deploy; same Battle.advance fixed 60Hz; no hp/money/result overrides",
   "results": [
     {
@@ -7,10 +7,10 @@
       "strategy": "breach",
       "front": "west",
       "seed": 20261024,
-      "time": 54.03,
-      "remaining": 1025.97,
-      "money": 58,
-      "active": 81,
+      "time": 55.65,
+      "remaining": 1024.35,
+      "money": 22,
+      "active": 89,
       "queued": 0,
       "reserves": 0,
       "crystalHp": 0,
@@ -66,11 +66,11 @@
         }
       ],
       "stats": {
-        "deployed": 322,
-        "kills": 25,
-        "lost": 241,
-        "income": 1313,
-        "walls": 8,
+        "deployed": 328,
+        "kills": 30,
+        "lost": 239,
+        "income": 1407,
+        "walls": 9,
         "skills": 4,
         "peak": 300,
         "resourceIncome": 730,
@@ -78,43 +78,43 @@
         "towerShots": {
           "field": 0,
           "outer": 8,
-          "inner": 13,
-          "core": 6
+          "inner": 3,
+          "core": 11
         },
         "destroyed": {
           "field": 2,
           "outer": 7,
-          "inner": 4,
-          "core": 4
+          "inner": 5,
+          "core": 6
         }
       },
-      "mana": 12.76,
+      "mana": 15.67,
       "firstCoreHit": {
-        "time": 49.13333333333183,
-        "x": 1896.8972298601773,
-        "y": 1817.3215169105201,
-        "walls": 8
+        "time": 49.11666666666516,
+        "x": 1925.8117480502165,
+        "y": 1875.3519296806685,
+        "walls": 6
       },
       "reservesDispatched": 2,
-      "wallMs": 1388,
+      "wallMs": 1403,
       "heroes": [
         {
           "kind": "titan",
-          "hp": 2583,
-          "x": 1908,
-          "y": 1853
+          "hp": 2600,
+          "x": 1902,
+          "y": 1785
         },
         {
           "kind": "moon",
-          "hp": 541,
-          "x": 1924,
-          "y": 1861
+          "hp": 564,
+          "x": 1908,
+          "y": 1830
         },
         {
           "kind": "forest",
-          "hp": 1500,
-          "x": 1769,
-          "y": 1864
+          "hp": 1456,
+          "x": 1768,
+          "y": 1856
         }
       ],
       "remainingStructures": [
@@ -192,6 +192,12 @@
         },
         {
           "kind": "antiAir",
+          "x": 2040,
+          "y": 2860,
+          "hp": 720
+        },
+        {
+          "kind": "antiAir",
           "x": 3250,
           "y": 1530,
           "hp": 720
@@ -221,12 +227,6 @@
           "hp": 900
         },
         {
-          "kind": "cannon",
-          "x": 1450,
-          "y": 2250,
-          "hp": 167
-        },
-        {
           "kind": "holy",
           "x": 2520,
           "y": 2320,
@@ -242,7 +242,7 @@
           "kind": "holy",
           "x": 1400,
           "y": 1320,
-          "hp": 577
+          "hp": 720
         },
         {
           "kind": "antiAir",
@@ -254,6 +254,12 @@
           "kind": "antiAir",
           "x": 2600,
           "y": 2030,
+          "hp": 720
+        },
+        {
+          "kind": "antiAir",
+          "x": 1910,
+          "y": 2310,
           "hp": 720
         },
         {
@@ -395,10 +401,10 @@
       "strategy": "breach",
       "front": "west",
       "seed": 20261024,
-      "time": 56.65,
-      "remaining": 843.35,
-      "money": 1,
-      "active": 76,
+      "time": 60.03,
+      "remaining": 839.97,
+      "money": 76,
+      "active": 81,
       "queued": 0,
       "reserves": 0,
       "crystalHp": 0,
@@ -454,11 +460,11 @@
         }
       ],
       "stats": {
-        "deployed": 312,
-        "kills": 38,
-        "lost": 236,
-        "income": 1381,
-        "walls": 8,
+        "deployed": 318,
+        "kills": 42,
+        "lost": 237,
+        "income": 1431,
+        "walls": 9,
         "skills": 4,
         "peak": 295,
         "resourceIncome": 730,
@@ -466,43 +472,43 @@
         "towerShots": {
           "field": 0,
           "outer": 6,
-          "inner": 15,
-          "core": 7
+          "inner": 4,
+          "core": 9
         },
         "destroyed": {
           "field": 2,
-          "outer": 7,
+          "outer": 8,
           "inner": 5,
-          "core": 4
+          "core": 5
         }
       },
-      "mana": 17.47,
+      "mana": 23.56,
       "firstCoreHit": {
-        "time": 50.54999999999841,
-        "x": 1896.5666637204524,
-        "y": 1819.3074153906007,
+        "time": 49.43333333333181,
+        "x": 1916.3325688274083,
+        "y": 1863.87933862855,
         "walls": 8
       },
       "reservesDispatched": 2,
-      "wallMs": 1165,
+      "wallMs": 1218,
       "heroes": [
         {
           "kind": "titan",
-          "hp": 2572,
-          "x": 1900,
-          "y": 1835
+          "hp": 2600,
+          "x": 1901,
+          "y": 1763
         },
         {
           "kind": "moon",
           "hp": 0,
-          "x": 1802,
-          "y": 1919
+          "x": 1804,
+          "y": 1920
         },
         {
           "kind": "forest",
-          "hp": 1500,
-          "x": 1767,
-          "y": 1852
+          "hp": 1468,
+          "x": 1800,
+          "y": 1877
         }
       ],
       "remainingStructures": [
@@ -580,6 +586,12 @@
         },
         {
           "kind": "antiAir",
+          "x": 2040,
+          "y": 2860,
+          "hp": 720
+        },
+        {
+          "kind": "antiAir",
           "x": 3250,
           "y": 1530,
           "hp": 720
@@ -624,7 +636,7 @@
           "kind": "holy",
           "x": 1400,
           "y": 1320,
-          "hp": 181
+          "hp": 720
         },
         {
           "kind": "antiAir",
@@ -636,6 +648,12 @@
           "kind": "antiAir",
           "x": 2600,
           "y": 2030,
+          "hp": 720
+        },
+        {
+          "kind": "antiAir",
+          "x": 1910,
+          "y": 2310,
           "hp": 720
         },
         {
@@ -777,10 +795,10 @@
       "strategy": "breach",
       "front": "north",
       "seed": 20261024,
-      "time": 90.28,
-      "remaining": 809.72,
-      "money": 89,
-      "active": 42,
+      "time": 114.7,
+      "remaining": 785.3,
+      "money": 88,
+      "active": 18,
       "queued": 0,
       "reserves": 0,
       "crystalHp": 0,
@@ -836,55 +854,55 @@
         }
       ],
       "stats": {
-        "deployed": 334,
-        "kills": 49,
-        "lost": 292,
-        "income": 1374,
-        "walls": 10,
-        "skills": 7,
+        "deployed": 332,
+        "kills": 52,
+        "lost": 314,
+        "income": 1383,
+        "walls": 11,
+        "skills": 8,
         "peak": 276,
         "resourceIncome": 510,
-        "spells": 7,
+        "spells": 9,
         "towerShots": {
           "field": 0,
           "outer": 9,
-          "inner": 11,
-          "core": 10
+          "inner": 12,
+          "core": 16
         },
         "destroyed": {
           "field": 1,
-          "outer": 6,
+          "outer": 7,
           "inner": 9,
-          "core": 6
+          "core": 7
         }
       },
-      "mana": 33.01,
+      "mana": 16.96,
       "firstCoreHit": {
-        "time": 69.31666666666402,
-        "x": 1779.7174053187273,
-        "y": 1682.7982787465676,
+        "time": 79.98333333333008,
+        "x": 1774.9379203706094,
+        "y": 1693.5957674468445,
         "walls": 8
       },
       "reservesDispatched": 3,
-      "wallMs": 1473,
+      "wallMs": 1514,
       "heroes": [
         {
           "kind": "titan",
           "hp": 0,
-          "x": 2591,
-          "y": 1647
+          "x": 2627,
+          "y": 1717
         },
         {
           "kind": "moon",
           "hp": 0,
-          "x": 1866,
-          "y": 1894
+          "x": 1418,
+          "y": 1722
         },
         {
           "kind": "forest",
-          "hp": 1370,
-          "x": 1825,
-          "y": 1709
+          "hp": 1500,
+          "x": 1841,
+          "y": 1714
         }
       ],
       "remainingStructures": [
@@ -967,6 +985,12 @@
           "hp": 720
         },
         {
+          "kind": "antiAir",
+          "x": 2040,
+          "y": 2860,
+          "hp": 720
+        },
+        {
           "kind": "arrow",
           "x": 710,
           "y": 1730,
@@ -1015,6 +1039,12 @@
           "hp": 720
         },
         {
+          "kind": "antiAir",
+          "x": 1910,
+          "y": 2310,
+          "hp": 720
+        },
+        {
           "kind": "holy",
           "x": 2230,
           "y": 1920,
@@ -1025,6 +1055,12 @@
           "x": 2220,
           "y": 1590,
           "hp": 720
+        },
+        {
+          "kind": "antiAir",
+          "x": 1830,
+          "y": 1980,
+          "hp": 229
         },
         {
           "kind": "barracks",
@@ -1084,13 +1120,7 @@
           "kind": "cityblock",
           "x": 1674.9359332346464,
           "y": 871.4281619386157,
-          "hp": 13
-        },
-        {
-          "kind": "cityblock",
-          "x": 2212.0066880929703,
-          "y": 896.6847874932164,
-          "hp": 420
+          "hp": 45
         },
         {
           "kind": "cityblock",
@@ -1147,10 +1177,10 @@
       "strategy": "breach",
       "front": "west",
       "seed": 20261024,
-      "time": 96.03,
-      "remaining": 743.97,
-      "money": 14,
-      "active": 33,
+      "time": 101.67,
+      "remaining": 738.33,
+      "money": 27,
+      "active": 24,
       "queued": 0,
       "reserves": 0,
       "crystalHp": 0,
@@ -1206,10 +1236,10 @@
         }
       ],
       "stats": {
-        "deployed": 286,
-        "kills": 49,
-        "lost": 253,
-        "income": 1614,
+        "deployed": 278,
+        "kills": 51,
+        "lost": 254,
+        "income": 1662,
         "walls": 8,
         "skills": 7,
         "peak": 234,
@@ -1219,42 +1249,42 @@
           "field": 0,
           "outer": 10,
           "inner": 7,
-          "core": 17
+          "core": 19
         },
         "destroyed": {
           "field": 2,
           "outer": 8,
-          "inner": 6,
+          "inner": 7,
           "core": 5
         }
       },
-      "mana": 8.36,
+      "mana": 18.5,
       "firstCoreHit": {
-        "time": 74.56666666666372,
-        "x": 1920.4542598030255,
-        "y": 1868.8851159764401,
+        "time": 77.23333333333024,
+        "x": 1805.4002822014565,
+        "y": 1939.1642841330854,
         "walls": 8
       },
       "reservesDispatched": 4,
-      "wallMs": 1068,
+      "wallMs": 1162,
       "heroes": [
         {
           "kind": "titan",
-          "hp": 1306,
-          "x": 1926,
-          "y": 1874
+          "hp": 0,
+          "x": 1963,
+          "y": 1882
         },
         {
           "kind": "moon",
           "hp": 0,
-          "x": 1313,
-          "y": 1767
+          "x": 1307,
+          "y": 1784
         },
         {
           "kind": "forest",
           "hp": 1500,
-          "x": 1810,
-          "y": 1900
+          "x": 1827,
+          "y": 1924
         }
       ],
       "remainingStructures": [
@@ -1332,6 +1362,12 @@
         },
         {
           "kind": "antiAir",
+          "x": 2040,
+          "y": 2860,
+          "hp": 720
+        },
+        {
+          "kind": "antiAir",
           "x": 3250,
           "y": 1530,
           "hp": 720
@@ -1382,6 +1418,12 @@
           "kind": "antiAir",
           "x": 2600,
           "y": 2030,
+          "hp": 720
+        },
+        {
+          "kind": "antiAir",
+          "x": 1910,
+          "y": 2310,
           "hp": 720
         },
         {
@@ -1511,10 +1553,10 @@
       "strategy": "sky",
       "front": "south",
       "seed": 20261024,
-      "time": 38.58,
-      "remaining": 861.42,
-      "money": 115,
-      "active": 115,
+      "time": 73.13,
+      "remaining": 826.87,
+      "money": 8,
+      "active": 35,
       "queued": 0,
       "reserves": 0,
       "crystalHp": 0,
@@ -1570,55 +1612,55 @@
         }
       ],
       "stats": {
-        "deployed": 236,
-        "kills": 41,
-        "lost": 121,
-        "income": 1270,
-        "walls": 3,
-        "skills": 4,
-        "peak": 219,
+        "deployed": 254,
+        "kills": 51,
+        "lost": 219,
+        "income": 1568,
+        "walls": 7,
+        "skills": 5,
+        "peak": 216,
         "resourceIncome": 790,
-        "spells": 4,
+        "spells": 7,
         "towerShots": {
           "field": 0,
-          "outer": 11,
-          "inner": 2,
-          "core": 18
+          "outer": 8,
+          "inner": 9,
+          "core": 27
         },
         "destroyed": {
           "field": 2,
-          "outer": 4,
-          "inner": 4,
-          "core": 2
+          "outer": 5,
+          "inner": 7,
+          "core": 7
         }
       },
-      "mana": 49.95,
+      "mana": 22.14,
       "firstCoreHit": {
-        "time": 22.250000000000018,
-        "x": 2024.0154394302544,
-        "y": 1988.334067738961,
-        "walls": 1
+        "time": 48.44999999999853,
+        "x": 1969.4679046231001,
+        "y": 1978.6915281800968,
+        "walls": 5
       },
       "reservesDispatched": 3,
-      "wallMs": 843,
+      "wallMs": 1061,
       "heroes": [
         {
           "kind": "dragon",
-          "hp": 1347,
-          "x": 1873,
-          "y": 1989
+          "hp": 0,
+          "x": 1975,
+          "y": 2023
         },
         {
           "kind": "web",
-          "hp": 1250,
-          "x": 2527,
-          "y": 1997
+          "hp": 1181,
+          "x": 2155,
+          "y": 1806
         },
         {
           "kind": "forest",
-          "hp": 1498,
-          "x": 2564,
-          "y": 2035
+          "hp": 1500,
+          "x": 2221,
+          "y": 1765
         }
       ],
       "remainingStructures": [
@@ -1680,7 +1722,7 @@
           "kind": "arrow",
           "x": 2460,
           "y": 2970,
-          "hp": 675
+          "hp": 720
         },
         {
           "kind": "arrow",
@@ -1734,7 +1776,7 @@
           "kind": "cannon",
           "x": 2600,
           "y": 1530,
-          "hp": 900
+          "hp": 522
         },
         {
           "kind": "holy",
@@ -1755,21 +1797,9 @@
           "hp": 720
         },
         {
-          "kind": "antiAir",
-          "x": 2220,
-          "y": 1590,
-          "hp": 720
-        },
-        {
           "kind": "barracks",
           "x": 1450,
           "y": 2010,
-          "hp": 1250
-        },
-        {
-          "kind": "barracks",
-          "x": 2530,
-          "y": 1770,
           "hp": 1250
         },
         {
@@ -1878,7 +1908,7 @@
           "kind": "cityblock",
           "x": 2888.2176757890957,
           "y": 2412.347111238022,
-          "hp": 393
+          "hp": 366
         },
         {
           "kind": "cityblock",
@@ -1901,7 +1931,7 @@
       "seed": 20261024,
       "time": 900,
       "remaining": 0,
-      "money": 122,
+      "money": 162,
       "active": 0,
       "queued": 0,
       "reserves": 0,
@@ -1915,7 +1945,7 @@
           "y": 2770,
           "w": 260,
           "h": 220,
-          "progress": 0.8,
+          "progress": 0,
           "captured": false,
           "contested": true,
           "connected": true
@@ -1961,7 +1991,7 @@
         "deployed": 1642,
         "kills": 18,
         "lost": 1642,
-        "income": 70,
+        "income": 110,
         "walls": 1,
         "skills": 0,
         "peak": 300,
@@ -1969,13 +1999,13 @@
         "spells": 0,
         "towerShots": {
           "field": 0,
-          "outer": 28,
+          "outer": 30,
           "inner": 0,
           "core": 0
         },
         "destroyed": {
           "field": 0,
-          "outer": 2,
+          "outer": 3,
           "inner": 0,
           "core": 0
         }
@@ -1983,13 +2013,13 @@
       "mana": 100,
       "firstCoreHit": null,
       "reservesDispatched": 2,
-      "wallMs": 4832,
+      "wallMs": 5041,
       "heroes": [
         {
           "kind": "emperor",
           "hp": 0,
-          "x": 1996,
-          "y": 2903
+          "x": 2020,
+          "y": 2835
         }
       ],
       "remainingStructures": [
@@ -2069,7 +2099,7 @@
           "kind": "cannon",
           "x": 2210,
           "y": 2850,
-          "hp": 900
+          "hp": 375
         },
         {
           "kind": "arrow",
@@ -2156,6 +2186,12 @@
           "hp": 720
         },
         {
+          "kind": "antiAir",
+          "x": 1910,
+          "y": 2310,
+          "hp": 720
+        },
+        {
           "kind": "holy",
           "x": 1800,
           "y": 1740,
@@ -2171,6 +2207,12 @@
           "kind": "antiAir",
           "x": 2220,
           "y": 1590,
+          "hp": 720
+        },
+        {
+          "kind": "antiAir",
+          "x": 1830,
+          "y": 1980,
           "hp": 720
         },
         {

@@ -157,7 +157,7 @@ export const ARMIES: Record<Army, ArmyData> = {
     flying: true,
     splash: 42,
     color: "#64c2ee",
-    description: "越墙空袭 · 畏惧防空",
+    description: "越墙压制 · 对建筑55%伤害 · 畏惧防空齐射",
     commander: "dragon",
   },
   golem: {

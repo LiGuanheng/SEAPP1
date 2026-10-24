@@ -230,6 +230,7 @@ export function createStructures(difficulty: Difficulty): Structure[] {
     ["arrow", 1830, 2960, "outer"],
     ["cannon", 2210, 2850, "outer"],
     ["arrow", 2460, 2970, "outer"],
+    ["antiAir", 2040, 2860, "outer"],
     ["arrow", 710, 1730, "outer"],
     ["arrow", 760, 2400, "outer"],
     ["antiAir", 3250, 1530, "outer"],
@@ -243,9 +244,11 @@ export function createStructures(difficulty: Difficulty): Structure[] {
     ["holy", 1400, 1320, "inner"],
     ["antiAir", 1770, 1250, "inner"],
     ["antiAir", 2600, 2030, "inner"],
+    ["antiAir", 1910, 2310, "inner"],
     ["holy", 1800, 1740, "core"],
     ["holy", 2230, 1920, "core"],
     ["antiAir", 2220, 1590, "core"],
+    ["antiAir", 1830, 1980, "core"],
   ] as [Kind, number, number, District][])
     add(kind, x, y, kind === "cannon" ? 90 : 60, 70, kind === "cannon" ? 900 : 720, d);
   if (difficulty === "hard") {
