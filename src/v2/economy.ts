@@ -87,18 +87,22 @@ export function preset(
     strategy === "breach"
       ? [
           ["golem", 4],
-          ["goblin", 5],
-          ["wolf", 3],
-          ["lizard", 3],
+          ["elf", 3],
           ["treant", 2],
+          ["lizard", 2],
+          ["raider", 2],
+          ["goblin", 3],
+          ["wolf", 2],
           ["slime", 2],
         ]
       : strategy === "sky"
         ? [
             ["wyvern", 5],
-            ["goblin", 5],
-            ["lizard", 4],
-            ["spider", 3],
+            ["elf", 2],
+            ["raider", 2],
+            ["goblin", 4],
+            ["lizard", 3],
+            ["spider", 2],
             ["treant", 2],
             ["slime", 1],
           ]

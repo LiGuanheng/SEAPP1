@@ -6,16 +6,27 @@ import {
   ENEMIES,
   KING,
   SPECS,
+  SPELLS,
   WORLD,
   isArmy,
   isCommander,
   type Army,
   type Kind,
   type Stats,
+  type Spell,
 } from "./data";
 import { batchPrice, purchase, unlocked, type Loadout } from "./economy";
 import { Navigation, type Point } from "./navigation";
-import { createStructures, OUTPOSTS, type Structure } from "./world";
+import {
+  createStructures,
+  OUTPOSTS,
+  FRONTS,
+  FRONT_KEYS,
+  frontAt,
+  districtAt,
+  type Front,
+  type Structure,
+} from "./world";
 export type Order =
   | { type: "move"; x: number; y: number; anchorX?: number; anchorY?: number }
   | { type: "attack"; target: number };
@@ -49,6 +60,13 @@ export interface Unit extends Stats {
   small: boolean;
   splitDone: boolean;
   deadAt: number;
+  front: Front;
+  guardRadius: number;
+  reserve: boolean;
+  frenzy: number;
+  ward: number;
+  castTime: number;
+  castTarget: number;
 }
 export interface Event {
   type: string;
@@ -62,6 +80,7 @@ export interface Event {
   angle?: number;
   text?: string;
   target?: number;
+  spell?: Spell;
 }
 interface Queue {
   kind: Kind;
@@ -80,6 +99,16 @@ interface Projectile {
   splash: number;
   time: number;
   kind: Kind;
+  fromX: number;
+  fromY: number;
+  source: number;
+}
+export interface SpellZone {
+  spell: Spell;
+  x: number;
+  y: number;
+  radius: number;
+  remaining: number;
 }
 type Target = Unit | Structure;
 const distance = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.y - b.y);
@@ -123,11 +152,27 @@ export class Battle {
     walls: 0,
     skills: 0,
     peak: 0,
+    resourceIncome: 0,
+    spells: 0,
+    towerShots: { field: 0, outer: 0, inner: 0, core: 0 },
+    destroyed: { field: 0, outer: 0, inner: 0, core: 0 },
   };
   readonly heroInventory = new Set<Kind>();
   readonly readyAt = new Map<Kind, number>();
   readonly uses = new Map<Kind, number>();
   readonly byId = new Map<number, Target>();
+  readonly spellReadyAt = new Map<Spell, number>();
+  readonly zones: SpellZone[] = [];
+  readonly reserveTeams: {
+    ids: number[];
+    dispatched: boolean;
+    front?: Front;
+    dispatchedAt?: number;
+  }[] = [];
+  firstCoreHit: { time: number; x: number; y: number; walls: number } | null = null;
+  mana = 100;
+  readonly maxMana = 100;
+  private responseClock = 0;
   private spatial = new Spatial();
   private nextId = 1000;
   private rngState: number;
@@ -189,28 +234,72 @@ export class Battle {
   }
   private createDefenders() {
     const density = DIFFICULTIES[this.loadout.difficulty].density;
-    const positions: [[number, number], Kind, number][] = [
-      [[850, 1570], "soldier", 9],
-      [[850, 1420], "archer", 7],
-      [[1570, 1630], "knight", 8],
-      [[1600, 1490], "mage", 5],
-      [[2320, 1570], "soldier", 9],
-      [[2350, 1420], "archer", 8],
-      [[1300, 1250], "paladin", 5],
-      [[1900, 1240], "paladin", 5],
-      [[1510, 900], "mage", 4],
-      [[1710, 1030], "archer", 6],
-    ];
-    for (const [[x, y], kind, n] of positions)
-      for (let i = 0; i < Math.round(n * density); i++)
-        this.spawn(kind, x + (this.random() - 0.5) * 180, y + (this.random() - 0.5) * 100, 1);
-    this.spawn("captain", 1600, 1130, 1);
+    for (const f of FRONT_KEYS) {
+      const p = FRONTS[f],
+        dx = Math.sign(2000 - p.gateX),
+        dy = Math.sign(1800 - p.gateY);
+      for (let i = 0; i < Math.round(11 * density); i++) {
+        const kind: Kind = i < 5 ? "soldier" : i < 9 ? "archer" : f === "north" ? "mage" : "knight";
+        this.spawn(
+          kind,
+          p.gateX + dx * 135 + (this.random() - 0.5) * 140,
+          p.gateY + dy * 135 + (this.random() - 0.5) * 140,
+          1,
+        );
+      }
+      for (let i = 0; i < 3; i++)
+        this.spawn(
+          i === 0 ? "archer" : "soldier",
+          p.gateX - dx * 140 + (i - 1) * 32,
+          p.gateY - dy * 140,
+          1,
+        );
+    }
+    for (const [x, y] of [
+      [1360, 1800],
+      [2610, 1800],
+      [2000, 1250],
+      [2000, 2350],
+    ])
+      for (let i = 0; i < Math.round(7 * density); i++)
+        this.spawn(
+          i < 3 ? "paladin" : i < 5 ? "mage" : "archer",
+          x + (this.random() - 0.5) * 130,
+          y + (this.random() - 0.5) * 110,
+          1,
+        );
+    for (let i = 0; i < Math.round(7 * density); i++)
+      this.spawn(
+        i % 3 === 0 ? "mage" : "paladin",
+        1850 + (i % 3) * 120,
+        1720 + Math.floor(i / 3) * 100,
+        1,
+      );
+    this.spawn("captain", 2000, 1900, 1);
+    const teamCount =
+      this.loadout.difficulty === "easy" ? 2 : this.loadout.difficulty === "hard" ? 4 : 3;
+    const camps = this.structures.filter((s) => s.kind === "barracks");
+    for (let i = 0; i < teamCount; i++) {
+      const ids: number[] = [],
+        camp = camps[i];
+      for (let j = 0; j < (this.loadout.difficulty === "hard" ? 7 : 6); j++) {
+        const u = this.spawn(
+          j % 3 === 0 ? "mage" : j % 2 === 0 ? "soldier" : "knight",
+          camp.x - 85 + (j % 3) * 32,
+          camp.y + 95 + Math.floor(j / 3) * 32,
+          1,
+        );
+        u.reserve = true;
+        ids.push(u.id);
+      }
+      this.reserveTeams.push({ ids, dispatched: false });
+    }
     this.spatial.rebuild(this.units);
   }
   private refreshNav() {
     this.nav.rebuild(this.structures.filter((s) => s.hp > 0));
     this.navDirty = false;
-    for (const p of this.outposts) p.connected = this.nav.connected({ x: p.x, y: 2070 }, p);
+    for (const p of this.outposts) p.connected = this.nav.connected(FRONTS[p.front], p);
   }
   spawn(kind: Kind, x: number, y: number, side: 0 | 1 = 0, small = false, lane = 0): Unit {
     const base: Stats = isArmy(kind)
@@ -258,6 +347,13 @@ export class Battle {
       small,
       splitDone: small,
       deadAt: 0,
+      front: frontAt(x, y),
+      guardRadius: districtAt(x, y) === "core" ? 250 : districtAt(x, y) === "field" ? 220 : 330,
+      reserve: false,
+      frenzy: 0,
+      ward: 0,
+      castTime: 0,
+      castTarget: 0,
     };
     this.units.push(u);
     this.byId.set(u.id, u);
@@ -275,9 +371,11 @@ export class Battle {
     )
       return false;
     if (
-      y >= 1870 &&
-      y <= 2270 &&
-      ((x >= 550 && x <= 1120) || (x >= 1270 && x <= 1910) || (x >= 2100 && x <= 2660))
+      FRONT_KEYS.some(
+        (f) =>
+          Math.abs(x - FRONTS[f].x) <= FRONTS[f].w / 2 &&
+          Math.abs(y - FRONTS[f].y) <= FRONTS[f].h / 2,
+      )
     )
       return true;
     return this.outposts.some(
@@ -292,6 +390,7 @@ export class Battle {
   }
   deploy(kind: Kind, x: number, y: number, batches: number = 1): boolean {
     if (this.status !== "battle" || !this.canDeploy(x, y)) return false;
+    if ((batches !== Infinity && !Number.isFinite(batches)) || batches <= 0) return false;
     let count = 0;
     if (isArmy(kind)) {
       if (!unlocked(this.loadout, kind)) return false;
@@ -346,14 +445,14 @@ export class Battle {
           u.order.x = Math.max(
             40,
             Math.min(
-              3160,
+              WORLD.width - 40,
               order.type === "move" ? order.x + ((index % columns) - (columns - 1) / 2) * 22 : 0,
             ),
           );
           u.order.y = Math.max(
             40,
             Math.min(
-              2360,
+              WORLD.height - 40,
               order.type === "move"
                 ? order.y + (Math.floor(index / columns) - (rows - 1) / 2) * 22
                 : 0,
@@ -422,15 +521,35 @@ export class Battle {
   }
   damage(target: Target, amount: number, source?: Unit) {
     if (target.hp <= 0) return;
+    if (target.kind === "crystal" && !this.firstCoreHit)
+      this.firstCoreHit = {
+        time: this.time,
+        x: source?.x ?? target.x,
+        y: source?.y ?? target.y,
+        walls: this.stats.walls,
+      };
+    if (!isStructure(target) && target.side === 0 && target.ward > 0) amount *= 0.6;
     target.hp -= amount;
     if (!isStructure(target)) target.hit = 0.16;
     if (target.hp > 0) return;
     target.hp = 0;
     if (isStructure(target)) {
       if (!target.paid) {
-        this.reward(target.reward);
+        const bonus = target.resource && source?.kind === "raider" ? 90 : 0;
+        this.reward(target.reward + bonus);
+        if (target.resource) {
+          this.stats.resourceIncome += target.reward + bonus;
+          this.events.push({
+            type: "loot",
+            x: target.x,
+            y: target.y,
+            text: `${bonus ? "掠夺成功" : "夺取物资"} +${target.reward + bonus}`,
+            radius: 80,
+          });
+        }
         target.paid = true;
       }
+      this.stats.destroyed[target.district]++;
       this.navDirty = true;
       if (target.kind === "wall" || target.kind === "gate") {
         this.stats.walls++;
@@ -479,7 +598,13 @@ export class Battle {
     if (source?.kind === "spider" && !isStructure(target) && target.hp > 0) target.poison = 3;
   }
   private hit(u: Unit, t: Target) {
-    let damage = u.damage * u.period * (u.buff > 0 ? 1.2 : 1) * (u.hunt > 0 ? 1.15 : 1);
+    if (!this.nav.clear(u, t, u.id, t.id)) return;
+    let damage =
+      u.damage *
+      u.period *
+      (u.buff > 0 ? 1.2 : 1) *
+      (u.hunt > 0 ? 1.15 : 1) *
+      (u.frenzy > 0 ? 1.1 : 1);
     if ((u.kind === "rider" || u.kind === "moon") && u.runDistance >= 80) {
       damage *= 1.4;
       this.events.push({
@@ -492,8 +617,9 @@ export class Battle {
     }
     u.runDistance = 0;
     if (isStructure(t) && (t.kind === "wall" || t.kind === "gate")) damage *= u.wallBonus ?? 1;
+    if (isStructure(t) && t.resource && u.kind === "raider") damage *= 3;
     if (["knight", "paladin"].includes(u.kind) && ["wolf", "rider"].includes(t.kind)) damage *= 1.5;
-    u.cooldown = u.period;
+    u.cooldown = u.period * (u.frenzy > 0 ? 0.75 : 1);
     u.attack = 0.26;
     this.events.push({
       type: u.range > 80 ? "shot" : "hit",
@@ -514,19 +640,32 @@ export class Battle {
         side: u.side,
         damage,
         splash: u.splash ?? 0,
-        time: 0.25,
+        time: u.kind === "elf" ? 0.4 : 0.25,
         kind: u.kind,
+        fromX: u.x,
+        fromY: u.y,
+        source: u.id,
       });
     else {
       this.damage(t, damage, u);
-      if (u.splash) this.splash(t.x, t.y, u.splash, damage * 0.65, u.side, t.id);
+      if (u.splash) this.splash(t.x, t.y, u.splash, damage * 0.65, u.side, t.id, u, t.id);
       if (u.kind === "spider" && !isStructure(t)) t.poison = 3;
     }
   }
   private projectiles: Projectile[] = [];
-  private splash(x: number, y: number, r: number, d: number, side: number, exclude = 0) {
+  private splash(
+    x: number,
+    y: number,
+    r: number,
+    d: number,
+    side: number,
+    exclude = 0,
+    source?: Unit,
+    originId = 0,
+  ) {
     for (const t of this.spatial.near(x, y, r))
-      if (t.side !== side && t.id !== exclude) this.damage(t, d);
+      if (t.side !== side && t.id !== exclude && this.nav.clear({ x, y }, t, originId, t.id))
+        this.damage(t, d, source);
   }
   skillInfo(kind: Kind) {
     const u = this.getUnit(kind);
@@ -549,7 +688,13 @@ export class Battle {
     const hero = info.unit;
     const c = isCommander(kind) ? COMMANDERS[kind] : null;
     const r = c?.radius ?? 180;
-    if (x < 0 || y < 0 || x > 3200 || y > 2400 || distance(hero, { x, y }) > (c?.castRange ?? 460))
+    if (
+      x < 0 ||
+      y < 0 ||
+      x > WORLD.width ||
+      y > WORLD.height ||
+      distance(hero, { x, y }) > (c?.castRange ?? 460)
+    )
       return "超出施法距离";
     if (kind === "king" && this.loadout.spec === "summon" && !this.canDeploy(x, y))
       return "异界召唤需要合法部署区";
@@ -562,6 +707,7 @@ export class Battle {
         )
         .sort((a, b) => distance(a, { x, y }) - distance(b, { x, y }))[0];
       if (!wall) return "请指定一段城墙或城门";
+      if (!this.nav.clear(hero, wall, hero.id, wall.id)) return "城墙被其他建筑遮挡";
     }
     if (
       kind === "emperor" &&
@@ -590,13 +736,19 @@ export class Battle {
       text: c?.skill ?? SPECS[this.loadout.spec].skill,
     });
     if (kind === "titan") {
-      this.damage(wall!, 750);
+      this.damage(wall!, 750, hero);
       for (const u of this.spatial.near(x, y, 145)) if (u.side === 1) u.root = 2;
     } else if (kind === "dragon") {
       for (const t of [...this.structures, ...this.units.filter((u) => u.side === 1)]) {
         const a = Math.atan2(t.y - hero.y, t.x - hero.x);
         const delta = Math.atan2(Math.sin(a - angle), Math.cos(a - angle));
-        if (t.hp > 0 && distance(t, hero) <= r && Math.abs(delta) <= 0.65) this.damage(t, 170);
+        if (
+          t.hp > 0 &&
+          distance(t, hero) <= r &&
+          Math.abs(delta) <= 0.65 &&
+          this.nav.clear(hero, t, hero.id, t.id)
+        )
+          this.damage(t, 170, hero);
       }
     } else if (kind === "king" && this.loadout.spec === "summon")
       this.queue.push({
@@ -609,7 +761,13 @@ export class Battle {
       });
     else if (kind === "king" && this.loadout.spec === "element") {
       for (const t of [...this.structures, ...this.units.filter((u) => u.side === 1)])
-        if (t.hp > 0 && distance(t, { x, y }) <= r) this.damage(t, t.kind === "crystal" ? 35 : 140);
+        if (
+          t.hp > 0 &&
+          distance(t, { x, y }) <= r &&
+          this.nav.clear(hero, t, hero.id, t.id) &&
+          this.nav.clear({ x, y }, t, 0, t.id)
+        )
+          this.damage(t, t.kind === "crystal" ? 35 : 140, hero);
     } else if (kind === "emperor") {
       for (const u of this.units
         .filter(
@@ -641,6 +799,143 @@ export class Battle {
     this.checkResult();
     return "";
   }
+  spellInfo(spell: Spell) {
+    const data = SPELLS[spell],
+      cooldown = Math.max(0, (this.spellReadyAt.get(spell) ?? 0) - this.time);
+    return {
+      cooldown,
+      available:
+        !!data &&
+        this.mana >= data.cost &&
+        cooldown === 0 &&
+        !this.paused &&
+        this.status === "battle",
+    };
+  }
+  canCastSpell(x: number, y: number) {
+    return (
+      x >= 0 &&
+      y >= 0 &&
+      x <= WORLD.width &&
+      y <= WORLD.height &&
+      this.units.some(
+        (u) =>
+          u.side === 0 &&
+          u.hp > 0 &&
+          distance(u, { x, y }) <= 360 &&
+          this.nav.clear(u, { x, y }, u.id),
+      )
+    );
+  }
+  castSpell(spell: Spell, x: number, y: number): string {
+    const d = SPELLS[spell];
+    if (!d || this.status !== "battle") return "当前无法施法";
+    if (this.paused) return "请先恢复战斗";
+    if (this.mana < d.cost) return `魔力不足 · 需要${d.cost}`;
+    if (this.spellInfo(spell).cooldown > 0) return "法术尚未冷却";
+    if (!this.canCastSpell(x, y)) return "需要360距离内友军提供无遮挡视野";
+    this.mana -= d.cost;
+    this.spellReadyAt.set(spell, this.time + d.cooldown);
+    this.stats.spells++;
+    this.zones.push({ spell, x, y, radius: d.radius, remaining: d.duration });
+    this.events.push({ type: "spell", spell, x, y, radius: d.radius, text: d.name });
+    return "";
+  }
+  private updateSpells(dt: number) {
+    this.mana = Math.min(this.maxMana, this.mana + dt * 1.8);
+    for (const z of this.zones) {
+      z.remaining -= dt;
+      if (z.spell === "meteor") {
+        if (z.remaining > 0) continue;
+        for (const t of [...this.structures, ...this.spatial.near(z.x, z.y, z.radius)]) {
+          if (
+            t.hp <= 0 ||
+            (!isStructure(t) && t.side !== 1) ||
+            distance(t, z) > z.radius ||
+            !this.nav.clear(z, t, 0, t.id)
+          )
+            continue;
+          this.damage(t, t.kind === "crystal" ? 45 : isStructure(t) ? 120 : 180);
+        }
+        this.events.push({
+          type: "impact",
+          kind: "mage",
+          spell: "meteor",
+          x: z.x,
+          y: z.y,
+          radius: z.radius,
+        });
+      } else
+        for (const u of this.spatial.near(z.x, z.y, z.radius)) {
+          if (u.side !== 0 || !this.nav.clear(z, u, 0, u.id)) continue;
+          if (z.spell === "heal") u.hp = Math.min(u.maxHp, u.hp + u.maxHp * 0.05 * dt);
+          if (z.spell === "rage") u.frenzy = 0.12;
+          if (z.spell === "barrier") u.ward = 0.12;
+        }
+    }
+    for (let i = this.zones.length - 1; i >= 0; i--)
+      if (this.zones[i].remaining <= 0) this.zones.splice(i, 1);
+  }
+  private directReserves(dt: number) {
+    this.responseClock += dt;
+    if (this.responseClock < DIFFICULTIES[this.loadout.difficulty].response) return;
+    this.responseClock = 0;
+    const threats = FRONT_KEYS.map((front) => ({
+      front,
+      score: this.units
+        .filter(
+          (u) =>
+            u.side === 0 &&
+            u.hp > 0 &&
+            frontAt(u.x, u.y) === front &&
+            distance(u, { x: FRONTS[front].gateX, y: FRONTS[front].gateY }) < 950,
+        )
+        .reduce((sum, u) => sum + Math.min(5, u.maxHp / 120), 0),
+    })).sort((a, b) => b.score - a.score);
+    const threat = threats.find(
+      (t) =>
+        t.score >= 7 &&
+        this.reserveTeams.filter(
+          (r) =>
+            r.dispatched &&
+            r.front === t.front &&
+            r.ids.some((id) => (this.byId.get(id)?.hp ?? 0) > 0),
+        ).length < 2,
+    );
+    const team = this.reserveTeams.find(
+      (t) => !t.dispatched && t.ids.some((id) => (this.byId.get(id)?.hp ?? 0) > 0),
+    );
+    if (!threat || !team) return;
+    team.dispatched = true;
+    team.front = threat.front;
+    team.dispatchedAt = this.time;
+    this.reinforcementWave++;
+    const p = this.outposts.find((p) => p.front === threat.front)!;
+    const innerGate = this.structures.find(
+      (s) => s.kind === "gate" && s.district === "inner" && s.front === threat.front,
+    )!;
+    for (const [i, id] of team.ids.entries()) {
+      const u = this.byId.get(id) as Unit;
+      if (!u || u.hp <= 0) continue;
+      u.reserve = false;
+      u.front = threat.front;
+      u.homeX = p.x + ((i % 3) - 1) * 32;
+      u.homeY = p.y + Math.floor(i / 3) * 32;
+      u.guardRadius = 420;
+      u.rally = [
+        { x: innerGate.x, y: innerGate.y },
+        { x: u.homeX, y: u.homeY },
+      ];
+      u.target = 0;
+      u.think = 0;
+    }
+    this.events.push({
+      type: "reinforce",
+      x: innerGate.x,
+      y: innerGate.y,
+      text: `${FRONTS[threat.front].name.slice(0, 2)}承压 · 内城预备队沿道路增援`,
+    });
+  }
   advance(realSeconds: number) {
     if (this.paused || this.status !== "battle") return;
     this.accumulator += Math.max(0, realSeconds * this.speed);
@@ -653,8 +948,15 @@ export class Battle {
     if (this.paused || this.status !== "battle") return;
     this.time += dt;
     this.spawnClock += dt;
-    while (this.spawnClock >= 0.035 && this.queue.length && this.active < WORLD.cap) {
-      this.spawnClock -= 0.035;
+    let spawned = 0;
+    while (
+      this.spawnClock >= 0.01 &&
+      this.queue.length &&
+      this.active < WORLD.cap &&
+      spawned < 12
+    ) {
+      this.spawnClock -= 0.01;
+      spawned++;
       const q = this.queue[0];
       let x = q.x + (this.random() - 0.5) * 92,
         y = q.y + (this.random() - 0.5) * 72;
@@ -672,6 +974,7 @@ export class Battle {
     }
     this.spawnClock = Math.min(this.spawnClock, 0.1);
     this.spatial.rebuild(this.units);
+    this.updateSpells(dt);
     for (const p of this.projectiles) {
       const tracked = this.byId.get(p.target);
       if (!p.splash && tracked && tracked.hp > 0) {
@@ -681,11 +984,14 @@ export class Battle {
       p.time -= dt;
       if (p.time > 0) continue;
       const t = this.byId.get(p.target);
-      if (p.splash) {
-        this.splash(p.x, p.y, p.splash, p.damage, p.side);
+      const source = this.byId.get(p.source),
+        caster = source && !isStructure(source) ? source : undefined;
+      const clear = this.nav.clear({ x: p.fromX, y: p.fromY }, p, p.source, p.target);
+      if (p.splash && clear) {
+        this.splash(p.x, p.y, p.splash, p.damage, p.side, 0, caster, p.target);
         if (t && isStructure(t) && t.hp > 0 && distance(t, p) < p.splash + 40)
-          this.damage(t, p.damage);
-      } else if (t && t.hp > 0) this.damage(t, p.damage);
+          this.damage(t, p.damage, caster);
+      } else if (!p.splash && clear && t && t.hp > 0) this.damage(t, p.damage, caster);
       this.events.push({
         type: "impact",
         x: p.x,
@@ -703,6 +1009,8 @@ export class Battle {
       u.attack = Math.max(0, u.attack - dt);
       u.buff = Math.max(0, u.buff - dt);
       u.hunt = Math.max(0, u.hunt - dt);
+      u.frenzy = Math.max(0, u.frenzy - dt);
+      u.ward = Math.max(0, u.ward - dt);
       u.moving = false;
       if (u.poison > 0) {
         u.poison -= dt;
@@ -711,6 +1019,20 @@ export class Battle {
       }
       if (u.root > 0) {
         u.root -= dt;
+        continue;
+      }
+      if (u.castTime > 0) {
+        u.castTime -= dt;
+        const target = this.byId.get(u.castTarget);
+        if (
+          !target ||
+          target.hp <= 0 ||
+          distance(u, target) > u.range + 40 ||
+          !this.nav.clear(u, target, u.id, target.id)
+        ) {
+          u.castTime = 0;
+          u.cooldown = 0.4;
+        } else if (u.castTime <= 0) this.hit(u, target);
         continue;
       }
       if (u.kind === "treant" || u.kind === "forest") {
@@ -732,8 +1054,14 @@ export class Battle {
       if (target && target.hp > 0) {
         const rad = isStructure(target) ? Math.min(target.w, target.h) / 2 : target.size * 0.28;
         const d = distance(u, target);
-        if (d <= u.range + rad) {
-          if (u.cooldown <= 0) this.hit(u, target);
+        if (d <= u.range + rad && this.nav.clear(u, target, u.id, target.id)) {
+          if (u.cooldown <= 0) {
+            if (u.kind === "elf") {
+              u.castTime = 0.65;
+              u.castTarget = target.id;
+              this.events.push({ type: "chant", x: u.x, y: u.y, kind: u.kind, radius: 35 });
+            } else this.hit(u, target);
+          }
           continue;
         }
       }
@@ -747,46 +1075,7 @@ export class Battle {
       this.captureClock = 0;
       this.capture(elapsed);
     }
-    if (
-      this.time >
-        45 * (this.reinforcementWave + 1) + DIFFICULTIES[this.loadout.difficulty].response &&
-      this.reinforcementWave < 3
-    ) {
-      this.reinforcementWave++;
-      for (const b of this.structures
-        .filter((s) => s.kind === "barracks" && s.hp > 0)
-        .slice(0, 1)) {
-        const threat = this.units
-          .filter((u) => u.side === 0 && u.hp > 0)
-          .sort((a, b) => distance(a, WORLD.crystal) - distance(b, WORLD.crystal))[0];
-        const laneX = threat ? (threat.x < 1200 ? 960 : threat.x > 2000 ? 2440 : 1480) : 1480;
-        for (
-          let i = 0;
-          i < 4 + Math.round(DIFFICULTIES[this.loadout.difficulty].density * 3);
-          i++
-        ) {
-          const reserve = this.spawn(
-            i % 3 === 0 ? "knight" : "soldier",
-            b.x + ((i % 3) - 1) * 26,
-            b.y + 95 + Math.floor(i / 3) * 26,
-            1,
-          );
-          reserve.homeX = laneX + ((i % 3) - 1) * 24;
-          reserve.homeY = 1620 + (Math.floor(i / 3) - 1) * 20;
-          reserve.rally = [
-            { x: reserve.x, y: 1450 },
-            { x: reserve.homeX, y: 1450 },
-            { x: reserve.homeX, y: reserve.homeY },
-          ];
-        }
-        this.events.push({
-          type: "reinforce",
-          x: b.x,
-          y: b.y,
-          text: "帝国预备队抵达",
-        });
-      }
-    }
+    this.directReserves(dt);
     this.stats.peak = Math.max(this.stats.peak, this.active);
     this.checkResult();
   }
@@ -810,10 +1099,17 @@ export class Battle {
     let best = Infinity;
     for (const v of nearby) {
       if (v.side === u.side || (v.flying && u.range < 80)) continue;
-      if (u.side === 1 && distance(v, { x: u.homeX, y: u.homeY }) > 360) continue;
+      if (
+        u.side === 1 &&
+        distance(v, { x: u.homeX, y: u.homeY }) > u.guardRadius &&
+        distance(v, u) > 140
+      )
+        continue;
+      if (!this.nav.clear(u, v, u.id, v.id)) continue;
       let score = distance(u, v);
       if (["wolf", "rider", "moon"].includes(u.kind) && ["archer", "mage"].includes(v.kind))
         score *= 0.55;
+      if (u.kind === "raider" && distance(u, v) < 150) score *= 0.3;
       if (score < best) {
         best = score;
         target = v;
@@ -821,11 +1117,16 @@ export class Battle {
     }
     if (u.side === 0)
       for (const s of this.structures) {
-        if (s.hp <= 0 || ["wall", "gate"].includes(s.kind)) continue;
+        if (s.hp <= 0 || ["wall", "gate", "cityblock"].includes(s.kind)) continue;
         const d = distance(u, s);
-        if (d < 320 && d * 0.9 < best) {
+        const score = d * (u.kind === "raider" && s.resource ? 0.25 : 0.9);
+        if (
+          d < (u.kind === "raider" && s.resource ? 700 : 320) &&
+          score < best &&
+          this.nav.clear(u, s, u.id, s.id)
+        ) {
           target = s;
-          best = d * 0.9;
+          best = score;
         }
       }
     u.target = target?.id ?? 0;
@@ -849,6 +1150,7 @@ export class Battle {
     } else if (target) {
       tx = target.x;
       ty = target.y;
+      flow = !this.nav.clear(u, target, u.id, target.id);
     } else if (u.side === 1) {
       tx = u.rally?.[0]?.x ?? u.homeX;
       ty = u.rally?.[0]?.y ?? u.homeY;
@@ -856,15 +1158,16 @@ export class Battle {
         u.rally?.shift();
         return;
       }
+      flow = true;
     } else {
-      const p = u.lane < 0 ? this.outposts[0] : u.lane > 0 ? this.outposts[1] : undefined;
+      const p = this.outposts.find((p) => p.front === u.front);
       if (p && !p.captured && !u.flying) {
         if (distance(u, p) < 60) return;
         tx = p.x;
         ty = p.y;
       } else {
-        tx = 1600;
-        ty = 1000;
+        tx = WORLD.crystal.x;
+        ty = WORLD.crystal.y;
       }
       flow = true;
     }
@@ -874,15 +1177,20 @@ export class Battle {
     dx /= len;
     dy /= len;
     if (!u.flying && flow) {
-      const direction = this.nav.direction(u.x, u.y, tx, ty);
+      const direction = this.nav.direction(u.x, u.y, tx, ty, u.side === 1);
       dx = direction.x;
       dy = direction.y;
     }
-    const stride = u.speed * dt * (u.hunt > 0 ? 1.35 : 1);
+    const stride = u.speed * dt * (u.hunt > 0 ? 1.35 : 1) * (u.frenzy > 0 ? 1.2 : 1);
     let nx = u.x + dx * stride,
       ny = u.y + dy * stride;
     if (!u.flying) {
-      const blocker = this.nav.obstacleAt(nx, ny, u.kind === "spider" || u.kind === "web");
+      const blocker = this.nav.obstacleAt(
+        nx,
+        ny,
+        u.kind === "spider" || u.kind === "web",
+        u.side === 1,
+      );
       if (blocker) {
         const wall = this.byId.get(blocker);
         if (wall && u.side === 0) {
@@ -903,9 +1211,12 @@ export class Battle {
         }
       }
     }
-    if (u.flying || !this.nav.obstacleAt(nx, ny, u.kind === "spider" || u.kind === "web")) {
-      u.x = Math.max(40, Math.min(3160, nx));
-      u.y = Math.max(40, Math.min(2360, ny));
+    if (
+      u.flying ||
+      !this.nav.obstacleAt(nx, ny, u.kind === "spider" || u.kind === "web", u.side === 1)
+    ) {
+      u.x = Math.max(40, Math.min(WORLD.width - 40, nx));
+      u.y = Math.max(40, Math.min(WORLD.height - 40, ny));
       u.moving = true;
       u.runDistance = Math.min(150, u.runDistance + stride);
       u.facing = dx >= 0 ? 1 : -1;
@@ -925,6 +1236,8 @@ export class Battle {
         .filter(
           (u) =>
             u.side === 0 &&
+            (s.district === "field" || districtAt(u.x, u.y) === s.district) &&
+            this.nav.clear(s, u, s.id, u.id) &&
             (s.kind !== "antiAir" || u.flying) &&
             (s.kind !== "cannon" || !u.flying),
         );
@@ -959,6 +1272,7 @@ export class Battle {
       s.cooldown =
         s.kind === "cannon" ? 4.4 : s.kind === "holy" ? 2.3 : s.kind === "crystal" ? 3 : 1.35;
       s.attackFlash = 0.3;
+      this.stats.towerShots[s.district]++;
       this.events.push({
         type: "shot",
         x: s.x,
@@ -979,6 +1293,9 @@ export class Battle {
         splash,
         time: s.kind === "cannon" ? 0.95 : 0.3,
         kind: s.kind,
+        fromX: s.x,
+        fromY: s.y,
+        source: s.id,
       });
     }
   }
@@ -1023,8 +1340,8 @@ export class Battle {
     if (this.status !== "battle")
       this.events.push({
         type: this.status,
-        x: 1600,
-        y: 1000,
+        x: WORLD.crystal.x,
+        y: WORLD.crystal.y,
         radius: 700,
         text: this.reason,
       });
@@ -1044,6 +1361,9 @@ export class Battle {
       status: this.status,
       outposts: this.outposts.map((p) => ({ ...p })),
       stats: { ...this.stats },
+      mana: +this.mana.toFixed(2),
+      firstCoreHit: this.firstCoreHit,
+      reservesDispatched: this.reinforcementWave,
     };
   }
 }

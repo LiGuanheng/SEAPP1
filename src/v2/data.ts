@@ -8,7 +8,9 @@ export type Army =
   | "rider"
   | "spider"
   | "treant"
-  | "split";
+  | "split"
+  | "raider"
+  | "elf";
 export type Commander = "dragon" | "titan" | "moon" | "web" | "forest" | "emperor";
 export type Specialization = "summon" | "evolve" | "element";
 export type Difficulty = "easy" | "normal" | "hard";
@@ -29,7 +31,12 @@ export type Kind =
   | "antiAir"
   | "holy"
   | "barracks"
-  | "crystal";
+  | "crystal"
+  | "warehouse"
+  | "supply"
+  | "mine"
+  | "transport"
+  | "cityblock";
 export interface Stats {
   name: string;
   hp: number;
@@ -51,6 +58,35 @@ export interface ArmyData extends Stats {
   commander?: Commander;
 }
 export const ARMIES: Record<Army, ArmyData> = {
+  raider: {
+    name: "哥布林掠夺者",
+    batch: 12,
+    price: 110,
+    hp: 72,
+    damage: 7,
+    speed: 118,
+    range: 30,
+    period: 1,
+    size: 35,
+    sprite: 16,
+    color: "#bba174",
+    description: "优先近处资源 · 掠夺伤害×3 · 额外战利品",
+  },
+  elf: {
+    name: "流亡精灵法师",
+    batch: 6,
+    price: 150,
+    hp: 62,
+    damage: 17,
+    speed: 72,
+    range: 235,
+    period: 2.4,
+    size: 40,
+    sprite: 17,
+    splash: 78,
+    color: "#edab72",
+    description: "0.65秒咏唱 · 范围焰爆 · 怕骑士近身",
+  },
   slime: {
     name: "史莱姆",
     batch: 40,
@@ -362,7 +398,7 @@ export const SPECS: Record<
   summon: {
     name: "召唤魔王",
     title: "万军自虚空而来",
-    description: "四种通用兵价格 −15%。异界召唤：合法区域召唤30只史莱姆，每场2次。",
+    description: "通用兵价格 −15%。异界召唤：合法区域召唤30只史莱姆，每场2次。",
     skill: "异界召唤",
     cooldown: 15,
   },
@@ -377,7 +413,7 @@ export const SPECS: Record<
     name: "元素魔王",
     title: "群星为我而陨落",
     description: "远程与法术伤害 +10%。陨星术：范围140伤害，对圣晶仅35。",
-    skill: "陨星术",
+    skill: "元素轰击",
     cooldown: 75,
   },
 };
@@ -394,12 +430,12 @@ export const DIFFICULTIES: Record<
   easy: {
     name: "简单",
     money: 3400,
-    seconds: 720,
+    seconds: 1080,
     density: 0.75,
     response: 18,
   },
-  normal: { name: "普通", money: 2800, seconds: 600, density: 1, response: 12 },
-  hard: { name: "困难", money: 2500, seconds: 480, density: 1.2, response: 8 },
+  normal: { name: "普通", money: 3000, seconds: 900, density: 1, response: 12 },
+  hard: { name: "困难", money: 2800, seconds: 840, density: 1.15, response: 8 },
 };
 export const ENEMIES: Partial<Record<Kind, Stats>> = {
   soldier: {
@@ -483,10 +519,66 @@ export const KING: Stats = {
   color: "#8be2c1",
 };
 export const WORLD = {
-  width: 3200,
-  height: 2400,
-  crystal: { x: 1600, y: 1000 },
+  width: 4000,
+  height: 3600,
+  crystal: { x: 2000, y: 1800 },
   cap: 300,
 };
 export const isCommander = (k: Kind): k is Commander => k in COMMANDERS;
 export const isArmy = (k: Kind): k is Army => k in ARMIES;
+export type Spell = "rage" | "heal" | "barrier" | "meteor";
+export const SPELLS: Record<
+  Spell,
+  {
+    name: string;
+    key: string;
+    cost: number;
+    cooldown: number;
+    radius: number;
+    duration: number;
+    color: string;
+    description: string;
+  }
+> = {
+  rage: {
+    name: "狂暴术",
+    key: "Z",
+    cost: 25,
+    cooldown: 25,
+    radius: 170,
+    duration: 8,
+    color: "#ee9670",
+    description: "区域8秒：移速+20%、攻击间隔−25%、伤害+10%",
+  },
+  heal: {
+    name: "治疗术",
+    key: "X",
+    cost: 30,
+    cooldown: 32,
+    radius: 170,
+    duration: 6,
+    color: "#84dfb3",
+    description: "区域6秒：每秒恢复最大生命5%，无法复活",
+  },
+  barrier: {
+    name: "守护结界",
+    key: "C",
+    cost: 35,
+    cooldown: 38,
+    radius: 165,
+    duration: 7,
+    color: "#8acdec",
+    description: "区域7秒：友军受到伤害降低40%",
+  },
+  meteor: {
+    name: "陨星术",
+    key: "V",
+    cost: 55,
+    cooldown: 60,
+    radius: 155,
+    duration: 0.9,
+    color: "#ffbe7d",
+    description: "0.9秒后180范围伤害，对建筑120、圣晶45；墙体遮挡冲击",
+  },
+};
+export const SPELL_KEYS = Object.keys(SPELLS) as Spell[];

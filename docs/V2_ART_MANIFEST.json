@@ -4,7 +4,7 @@
     "width": 1774,
     "height": 887,
     "sourceBytes": 2716135,
-    "packedBytes": 733430
+    "packedBytes": 733400
   },
   {
     "name": "cover.webp",
@@ -18,49 +18,49 @@
     "width": 1254,
     "height": 1254,
     "sourceBytes": 3167275,
-    "packedBytes": 883626
+    "packedBytes": 883684
   },
   {
     "name": "hero-dragon.webp",
     "width": 1254,
     "height": 1254,
     "sourceBytes": 2453980,
-    "packedBytes": 722096
+    "packedBytes": 722114
   },
   {
     "name": "hero-emperor.webp",
     "width": 1254,
     "height": 1254,
     "sourceBytes": 2449442,
-    "packedBytes": 638818
+    "packedBytes": 638576
   },
   {
     "name": "hero-forest.webp",
     "width": 1254,
     "height": 1254,
     "sourceBytes": 2249585,
-    "packedBytes": 677054
+    "packedBytes": 677018
   },
   {
     "name": "hero-moon.webp",
     "width": 1254,
     "height": 1254,
     "sourceBytes": 1945461,
-    "packedBytes": 481918
+    "packedBytes": 481752
   },
   {
     "name": "hero-titan.webp",
     "width": 1254,
     "height": 1254,
     "sourceBytes": 2172411,
-    "packedBytes": 569040
+    "packedBytes": 569118
   },
   {
     "name": "hero-web.webp",
     "width": 1254,
     "height": 1254,
     "sourceBytes": 1952413,
-    "packedBytes": 548272
+    "packedBytes": 548262
   },
   {
     "name": "materials.webp",
@@ -81,20 +81,34 @@
     "width": 1536,
     "height": 1024,
     "sourceBytes": 2800111,
-    "packedBytes": 600448
+    "packedBytes": 600486
   },
   {
     "name": "units-move.webp",
     "width": 1278,
     "height": 1230,
     "sourceBytes": 2859151,
-    "packedBytes": 864554
+    "packedBytes": 864696
   },
   {
     "name": "units.webp",
     "width": 1278,
     "height": 1230,
     "sourceBytes": 2841327,
-    "packedBytes": 918618
+    "packedBytes": 918648
+  },
+  {
+    "name": "v3-city.webp",
+    "width": 1774,
+    "height": 887,
+    "sourceBytes": 3021397,
+    "packedBytes": 838192
+  },
+  {
+    "name": "v3-units.webp",
+    "width": 1254,
+    "height": 1254,
+    "sourceBytes": 2111539,
+    "packedBytes": 633344
   }
 ]

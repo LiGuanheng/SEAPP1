@@ -1665,3 +1665,166 @@ em {
     gap: 12px;
   }
 }
+/* V3: fast deployment and sovereign spells share the existing restrained HUD. */
+.unit-icon.new-unit-icon {
+  background-image: url("/art/v3-units.webp");
+  background-size: 200% 200%;
+  background-position: calc(var(--col) * 100%) calc(var(--row) * 100%);
+}
+.front-actions {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  margin-top: 5px;
+}
+.front-actions button {
+  font-size: 11px;
+  padding: 5px;
+  color: #d4c18c;
+}
+.resource-row {
+  gap: 12px;
+}
+.resource-row .crystal-wallet {
+  min-width: 175px;
+}
+.resource-row .small-gold {
+  font-size: 10px;
+  padding: 6px 8px;
+}
+.spell-row {
+  min-height: 57px;
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  border-bottom: 1px solid var(--line);
+}
+.mana-panel {
+  width: 230px;
+  flex-shrink: 0;
+  font-size: 10px;
+  color: #a3c4d6;
+}
+.mana-panel > span {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+.mana-panel > div {
+  height: 4px;
+  background: #0b252e;
+}
+.mana-panel i {
+  height: 100%;
+  display: block;
+  width: 100%;
+  background: linear-gradient(90deg, #427fa2, #91d4ee);
+}
+.mana-panel small {
+  font-size: 9px;
+  color: #829eaa;
+  display: block;
+  margin-top: 4px;
+}
+.spells {
+  display: flex;
+  gap: 8px;
+}
+.spell-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: linear-gradient(120deg, #233d40, #163039);
+  border-color: #6694a64a;
+  color: #a5bec6;
+  min-width: 132px;
+}
+.spell-button kbd {
+  font: 19px Georgia;
+  color: #bfdded;
+}
+.spell-button > span {
+  font-size: 11px;
+  text-align: left;
+}
+.spell-button small {
+  display: block;
+  font-size: 8px;
+  color: #8cb0bd;
+  margin-top: 3px;
+}
+.spell-button .spell-cd {
+  font-size: 9px;
+  font-weight: 400;
+  margin-left: auto;
+}
+.spell-button.ready {
+  border-color: #89baa58a;
+  color: #d3eadb;
+}
+.spell-button.aiming {
+  background: #3c5146;
+  border-color: #d9d19c;
+}
+.rally-label {
+  font-size: 10px;
+  color: #abbd9f;
+  margin-left: auto;
+  white-space: nowrap;
+}
+.quick-deploy {
+  display: block;
+  width: calc(100% - 8px);
+  margin: 2px 4px 3px;
+  padding: 3px;
+  font-size: 9px;
+  color: #d8d4a5;
+  background: #38534680;
+  border-color: #8ca77b40;
+}
+@media (max-width: 1400px) {
+  .resource-row {
+    gap: 7px;
+  }
+  .resource-row .crystal-wallet {
+    min-width: 150px;
+  }
+  .force-counter {
+    gap: 8px;
+  }
+  .spell-row {
+    gap: 12px;
+  }
+  .mana-panel {
+    width: 205px;
+  }
+  .spell-button {
+    min-width: 121px;
+    padding: 5px 7px;
+  }
+  .rally-label {
+    display: none;
+  }
+}
+@media (max-height: 800px) {
+  .spell-row {
+    min-height: 48px;
+  }
+  .troop-deploy .unit-icon {
+    height: 35px;
+  }
+  .dock-main {
+    min-height: 116px;
+    padding: 5px 0;
+  }
+  .battle-top {
+    height: 60px;
+  }
+  .spell-button {
+    padding: 4px 7px;
+  }
+  .battle-hint {
+    font-size: 10px;
+  }
+}

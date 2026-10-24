@@ -1,6 +1,6 @@
-import { COMMANDERS, isCommander, type Kind } from "./data";
+import { COMMANDERS, SPELLS, WORLD, isCommander, type Kind, type Spell } from "./data";
 import type { Battle, Event, Unit } from "./simulation";
-import type { Structure } from "./world";
+import { FRONTS, FRONT_KEYS, RESOURCE_NAMES, type Structure } from "./world";
 export const artUrl = (s: string) => `${import.meta.env.BASE_URL}art/${s}.webp`;
 const images = new Map<string, HTMLImageElement>();
 const atlasFrames = new Map<string, HTMLCanvasElement>();
@@ -21,6 +21,8 @@ export async function loadArt() {
       "grove",
       "city",
       "materials",
+      "v3-units",
+      "v3-city",
     ].map(
       (k) =>
         new Promise<void>((resolve) => {
@@ -54,7 +56,7 @@ export class Renderer {
   private last = 0;
   private fx: (Event & { age: number; life: number })[] = [];
   private resizeObserver: ResizeObserver;
-  camera = { x: 1600, y: 1390, zoom: 0.4 };
+  camera = { x: 2000, y: 1800, zoom: 0.4 };
   width = 0;
   height = 0;
   fps = 60;
@@ -62,11 +64,17 @@ export class Renderer {
   private frameTime = 0;
   private miniClock = 0;
   private shake = 0;
-  pointer = { x: 1600, y: 2070 };
-  mode: { type: "none" } | { type: "deploy"; kind: Kind | "all" } | { type: "skill"; kind: Kind } =
-    { type: "none" };
+  pointer = { x: 2000, y: 3370 };
+  mode:
+    | { type: "none" }
+    | { type: "deploy"; kind: Kind | "all" }
+    | { type: "skill"; kind: Kind }
+    | { type: "spell"; kind: Spell }
+    | { type: "rally" } = { type: "none" };
+  rally: { x: number; y: number } | null = null;
   selection: { x: number; y: number; tx: number; ty: number } | null = null;
   onFrame: () => void = () => {};
+  onInputFrame: (now: number) => void = () => {};
   onEvent: (e: Event) => void = () => {};
   constructor(
     readonly battle: Battle,
@@ -96,12 +104,13 @@ export class Renderer {
     this.canvas.style.height = `${rect.height}px`;
   }
   overview(full = true) {
-    this.camera.x = 1600;
-    this.camera.y = full ? 1190 : 1460;
+    this.camera.x = 2000;
+    this.camera.y = full ? 1800 : 2940;
     this.camera.zoom = full
-      ? Math.min(this.width / 3000, this.height / 2100)
-      : Math.max(this.width / 3200, this.height / 1800);
+      ? Math.min(this.width / 4200, this.height / 3800)
+      : Math.min(this.width / 3400, this.height / 1500);
   }
+
   screenToWorld(x: number, y: number) {
     const r = this.canvas.getBoundingClientRect();
     return {
@@ -118,7 +127,7 @@ export class Renderer {
   }
   zoomAt(delta: number, x: number, y: number) {
     const before = this.screenToWorld(x, y);
-    this.camera.zoom = Math.max(0.22, Math.min(1.45, this.camera.zoom * (delta > 0 ? 0.88 : 1.12)));
+    this.camera.zoom = Math.max(0.14, Math.min(1.45, this.camera.zoom * (delta > 0 ? 0.88 : 1.12)));
     const after = this.screenToWorld(x, y);
     this.camera.x += before.x - after.x;
     this.camera.y += before.y - after.y;
@@ -128,6 +137,7 @@ export class Renderer {
     const loop = (now: number) => {
       const delta = Math.min(0.1, (now - this.last) / 1000);
       this.last = now;
+      this.onInputFrame(now);
       this.battle.advance(delta);
       this.frames++;
       this.frameTime += delta;
@@ -263,209 +273,175 @@ export class Renderer {
   }
   private makeGround() {
     const a = document.createElement("canvas");
-    a.width = 3200;
-    a.height = 2400;
+    a.width = WORLD.width;
+    a.height = WORLD.height;
     const c = a.getContext("2d")!;
     let seed = 42;
     const rng = () => {
       seed = (Math.imul(seed, 1664525) + 1013904223) >>> 0;
       return seed / 4294967296;
     };
-    const grad = c.createLinearGradient(0, 0, 0, 2400);
-    grad.addColorStop(0, "#41534c");
-    grad.addColorStop(0.75, "#596452");
-    grad.addColorStop(1, "#343e36");
-    c.fillStyle = grad;
-    c.fillRect(0, 0, 3200, 2400);
-    c.fillStyle = this.material(c, 1, 550);
-    c.globalAlpha = 0.6;
-    c.fillRect(0, 0, 3200, 2400);
+    c.fillStyle = this.material(c, 1, 500);
+    c.fillRect(0, 0, WORLD.width, WORLD.height);
+    c.fillStyle = "rgba(22,43,37,.32)";
+    c.fillRect(0, 0, WORLD.width, WORLD.height);
+    c.fillStyle = "#29484a";
+    c.fillRect(535, 485, 2930, 2630);
+    c.fillStyle = "#89917c";
+    c.fillRect(575, 525, 2850, 2550);
+    c.fillStyle = this.material(c, 0, 280);
+    c.fillRect(625, 575, 2750, 2450);
+    c.fillStyle = "rgba(64,85,72,.34)";
+    c.fillRect(625, 575, 2750, 2450);
+    c.fillStyle = "#87917e";
+    c.fillRect(1200, 1100, 1600, 1400);
+    c.fillStyle = this.material(c, 0, 230);
+    c.globalAlpha = 0.4;
+    c.fillRect(1225, 1125, 1550, 1350);
     c.globalAlpha = 1;
-    for (let i = 0; i < 26000; i++) {
-      const x = rng() * 3200,
-        y = rng() * 2400;
-      c.fillStyle = rng() > 0.5 ? "rgba(204,195,140,.065)" : "rgba(8,25,23,.09)";
-      c.fillRect(x, y, 2 + rng() * 13, 1 + rng() * 6);
-    }
-    // Ring moat and raised limestone precinct.
-    c.fillStyle = "#243f41";
-    c.fillRect(420, 235, 2360, 1540);
-    c.fillStyle = "#566e69";
-    c.fillRect(450, 255, 2300, 1500);
-    c.fillStyle = "#8a9380";
-    c.fillRect(500, 300, 2200, 1400);
-    c.fillStyle = "#737e70";
-    c.fillRect(530, 330, 2140, 1340);
-    for (let i = 0; i < 18000; i++) {
-      const x = 530 + rng() * 2140,
-        y = 330 + rng() * 1340;
-      c.fillStyle = rng() > 0.5 ? "rgba(224,222,185,.12)" : "rgba(30,42,40,.10)";
-      c.fillRect(x, y, 4 + rng() * 22, 2 + rng() * 8);
-    }
-    c.fillStyle = this.material(c, 0, 240);
-    c.globalAlpha = 0.3;
-    c.fillRect(530, 330, 2140, 1340);
-    c.globalAlpha = 1;
-    c.fillStyle = "rgba(81,99,89,.19)";
-    c.fillRect(530, 330, 2140, 1340);
-    const road = (pts: number[][], width: number) => {
+    const road = (pts: number[][], width = 95) => {
       c.beginPath();
       pts.forEach(([x, y], i) => (i ? c.lineTo(x, y) : c.moveTo(x, y)));
       c.lineJoin = "round";
-      c.strokeStyle = "#59695f";
-      c.lineWidth = width + 12;
+      c.strokeStyle = "#596b60";
+      c.lineWidth = width + 16;
       c.stroke();
-      c.strokeStyle = this.material(c, 0, 160);
+      c.strokeStyle = this.material(c, 0, 180);
       c.lineWidth = width;
       c.stroke();
-      c.strokeStyle = "rgba(226,216,175,.28)";
-      c.lineWidth = width - 8;
+      c.strokeStyle = "rgba(222,210,165,.25)";
+      c.lineWidth = width - 12;
       c.stroke();
     };
     road(
       [
-        [1600, 2310],
-        [1600, 390],
+        [2000, 3520],
+        [2000, 2770],
+        [2200, 2670],
+        [2200, 2360],
+        [2000, 2240],
+        [2000, 1800],
       ],
-      125,
+      130,
     );
     road(
       [
-        [850, 2280],
-        [850, 1120],
-        [1250, 1000],
-        [1950, 1000],
-        [2300, 1120],
-        [2300, 2280],
+        [80, 1900],
+        [950, 1900],
+        [1060, 1600],
+        [1440, 1600],
+        [1520, 1800],
+        [2000, 1800],
       ],
-      110,
+      105,
     );
     road(
       [
-        [540, 1430],
-        [2650, 1430],
+        [3920, 1700],
+        [3020, 1700],
+        [2920, 1950],
+        [2530, 1950],
+        [2470, 1800],
+        [2000, 1800],
       ],
-      90,
+      100,
     );
     road(
       [
-        [550, 1200],
-        [2680, 1200],
+        [2200, 80],
+        [2200, 820],
+        [1800, 980],
+        [1800, 1270],
+        [2000, 1380],
+        [2000, 1800],
       ],
-      60,
+      100,
     );
     road(
       [
-        [600, 600],
-        [2600, 600],
+        [900, 850],
+        [3080, 850],
+        [3080, 2770],
+        [950, 2770],
+        [950, 850],
       ],
       85,
     );
     road(
       [
-        [650, 780],
-        [2590, 780],
+        [1430, 1280],
+        [2570, 1280],
+        [2570, 2320],
+        [1430, 2320],
+        [1430, 1280],
       ],
-      55,
+      85,
     );
-    road(
-      [
-        [650, 440],
-        [2600, 440],
-      ],
-      48,
-    );
-    // Cathedral plaza, engraved circular stonework, radial paths.
-    c.fillStyle = "#a9ad96";
+    c.fillStyle = "#b2b39a";
     c.beginPath();
-    c.ellipse(1600, 1010, 340, 270, 0, 0, Math.PI * 2);
+    c.ellipse(2000, 1800, 315, 290, 0, 0, 7);
     c.fill();
-    for (let r = 100; r <= 325; r += 44) {
-      c.strokeStyle = r % 3 ? "#c5bd99" : "#687a72";
+    for (let r = 85; r <= 300; r += 42) {
+      c.strokeStyle = r % 2 ? "#cec29c" : "#798c7d";
       c.lineWidth = 4;
       c.beginPath();
-      c.ellipse(1600, 1010, r, r * 0.8, 0, 0, Math.PI * 2);
+      c.ellipse(2000, 1800, r, r * 0.92, 0, 0, 7);
       c.stroke();
     }
-    for (let i = 0; i < 16; i++) {
-      const angle = (i * Math.PI) / 8;
-      c.strokeStyle = "#7d8a7a";
-      c.lineWidth = 3;
+    for (let i = 0; i < 20; i++) {
+      const t = (i * Math.PI) / 10;
+      c.strokeStyle = "#879781";
+      c.lineWidth = 2;
       c.beginPath();
-      c.moveTo(1600 + Math.cos(angle) * 100, 1010 + Math.sin(angle) * 80);
-      c.lineTo(1600 + Math.cos(angle) * 330, 1010 + Math.sin(angle) * 264);
+      c.moveTo(2000 + Math.cos(t) * 80, 1800 + Math.sin(t) * 73);
+      c.lineTo(2000 + Math.cos(t) * 300, 1800 + Math.sin(t) * 276);
       c.stroke();
     }
-    const house = (x: number, y: number, w: number, h: number, royal = false) => {
-      c.fillStyle = "rgba(13,26,25,.18)";
-      c.beginPath();
-      c.ellipse(x + 12, y + 4, w * 0.58, 19, 0, 0, 7);
-      c.fill();
-      this.drawAtlas(
-        c,
-        "city",
-        royal ? 3 : Math.round(x + y) % 2 ? 1 : 2,
-        4,
-        2,
-        x,
-        y + 12,
-        w * 1.32,
-        h * 1.75,
-      );
-    };
-    // Distinct residential, military, and cathedral quarters, clear approach streets.
-    for (let row = 0; row < 3; row++)
-      for (let col = 0; col < 12; col++) {
-        const x = 660 + col * 170,
-          y = 510 + row * 175;
-        if (Math.abs(x - 1600) < 160) continue;
-        house(x + (rng() - 0.5) * 28, y, 95 + rng() * 25, 60 + rng() * 20, col % 4 === 0);
-      }
-    for (const side of [0, 1])
-      for (let row = 0; row < 3; row++)
-        for (let col = 0; col < 3; col++) {
-          const x = (side ? 2160 : 630) + col * 140,
-            y = 940 + row * 140;
-          if ((x > 760 && x < 980) || (x > 2220 && x < 2410)) continue;
-          house(x, y, 80 + rng() * 22, 58 + rng() * 20, row === 0);
-        }
-    this.drawAtlas(c, "city", 0, 4, 2, 1600, 680, 420, 350);
-    this.drawAtlas(c, "city", 3, 4, 2, 1050, 620, 245, 210);
-    this.drawAtlas(c, "city", 3, 4, 2, 2150, 620, 245, 210);
+    for (let i = 0; i < 520; i++) {
+      const x = rng() * 4000,
+        y = rng() * 3600;
+      if (x > 480 && x < 3520 && y > 450 && y < 3160) continue;
+      if (
+        FRONT_KEYS.some(
+          (f) =>
+            Math.abs(x - FRONTS[f].x) < FRONTS[f].w / 2 + 70 &&
+            Math.abs(y - FRONTS[f].y) < FRONTS[f].h / 2 + 60,
+        )
+      )
+        continue;
+      if (this.battle.structures.some((b) => Math.hypot(x - b.x, y - b.y) < 170)) continue;
+      const size = 80 + rng() * 100;
+      this.drawAtlas(c, "grove", 0, 1, 1, x, y, size, size);
+    }
     for (const [x, y] of [
-      [1040, 1050],
-      [2150, 990],
-      [1060, 1210],
-      [2160, 1280],
-    ])
-      this.drawAtlas(c, "city", 6, 4, 2, x, y, 150, 130);
-    // Exterior woods, rocks, wheat and marching encampments.
-    for (let i = 0; i < 340; i++) {
-      const x = rng() * 3200,
-        y = rng() * 2400;
-      if (x > 380 && x < 2820 && y > 180 && y < 2320) continue;
-      const treeSize = 90 + rng() * 75;
-      this.drawAtlas(c, "grove", 0, 1, 1, x, y, treeSize, treeSize);
-    }
-    for (let lane = 0; lane < 3; lane++) {
-      const x = [850, 1600, 2380][lane];
-      for (let j = 0; j < 6; j++) {
-        const xx = x - 180 + j * 70;
-        c.fillStyle = "#283c36";
-        polygon(
+      [760, 690],
+      [3240, 710],
+      [770, 2910],
+      [3200, 2900],
+    ]) {
+      c.fillStyle = "#687b68";
+      c.beginPath();
+      c.ellipse(x, y, 75, 45, 0, 0, 7);
+      c.fill();
+      for (let j = 0; j < 7; j++)
+        this.drawAtlas(
           c,
-          [
-            [xx - 20, 2310],
-            [xx, 2280],
-            [xx + 22, 2310],
-          ],
-          "#687667",
-          "#b2a379",
+          "city",
+          6,
+          4,
+          2,
+          x + Math.sin(j * 2.4) * 60,
+          y + Math.cos(j * 2.4) * 36,
+          36,
+          45,
         );
-        c.fillStyle = "#223d34";
-        c.fillRect(xx - 5, 2297, 10, 14);
-      }
     }
+    for (const [label, x, y] of [
+      ["帝国外城 · 市集与军需", 2000, 900],
+      ["帝国内城 · 骑士团与魔法学院", 2000, 2440],
+      ["中央核心 · 日轮圣殿", 2000, 1540],
+    ] as [string, number, number][])
+      this.text(c, label, x, y, 24, "#ded6b2");
     return a;
   }
   render(t: number) {
@@ -533,16 +509,43 @@ export class Renderer {
     c.fillRect(0, 0, this.width, this.height);
   }
   private drawZones(c: CanvasRenderingContext2D, t: number) {
-    for (const [i, x] of [850, 1600, 2380].entries()) {
-      const active = this.mode.type === "deploy";
-      c.fillStyle = active ? "rgba(94,218,173,.12)" : "rgba(70,154,125,.04)";
-      c.strokeStyle = active ? "#80d5b0" : "#789484";
-      c.lineWidth = 2;
+    for (const f of FRONT_KEYS) {
+      const p = FRONTS[f],
+        active = this.mode.type === "deploy" || this.mode.type === "rally";
+      c.fillStyle = active ? "rgba(94,218,173,.15)" : "rgba(70,154,125,.06)";
+      c.strokeStyle = active ? "#9ce9c0" : "#8aa48b";
+      c.lineWidth = 3;
       c.setLineDash([14, 12]);
-      c.strokeRect(x - 260, 1870, 520, 400);
-      c.fillRect(x - 260, 1870, 520, 400);
+      c.strokeRect(p.x - p.w / 2, p.y - p.h / 2, p.w, p.h);
+      c.fillRect(p.x - p.w / 2, p.y - p.h / 2, p.w, p.h);
       c.setLineDash([]);
-      this.text(c, ["西境召唤阵", "正门召唤阵", "东境召唤阵"][i], x, 2220, 22, "#c0cbb2");
+      this.text(c, p.name + "集结区", p.x, p.y + 20, 25, "#d3d8b7");
+    }
+    if (this.rally) {
+      this.flag(c, this.rally.x, this.rally.y, t, true);
+      this.text(c, "快速集结点", this.rally.x, this.rally.y + 25, 22, "#a9ecc4");
+    }
+    for (const z of this.battle.zones) {
+      c.save();
+      c.strokeStyle = SPELLS[z.spell].color;
+      c.fillStyle = SPELLS[z.spell].color;
+      c.globalAlpha = 0.11;
+      c.beginPath();
+      c.arc(z.x, z.y, z.radius, 0, 7);
+      c.fill();
+      c.globalAlpha = 0.6;
+      c.lineWidth = 3;
+      c.setLineDash(z.spell === "barrier" ? [16, 5] : []);
+      c.stroke();
+      c.restore();
+      this.text(
+        c,
+        SPELLS[z.spell].name + " " + Math.ceil(z.remaining) + "s",
+        z.x,
+        z.y - z.radius - 10,
+        18,
+        SPELLS[z.spell].color,
+      );
     }
     for (const p of this.battle.outposts) {
       c.fillStyle = p.captured ? "rgba(75,192,154,.13)" : "rgba(164,143,94,.10)";
@@ -607,7 +610,7 @@ export class Renderer {
   }
   private drawStructure(c: CanvasRenderingContext2D, s: Structure, t: number) {
     if (s.kind === "wall" || s.kind === "gate") {
-      const tall = s.kind === "gate" ? 68 : 47,
+      const tall = s.kind === "gate" ? 82 : s.district === "inner" ? 70 : 55,
         x = s.x - s.w / 2,
         y = s.y - s.h / 2;
       c.fillStyle = "rgba(10,24,24,.27)";
@@ -664,9 +667,40 @@ export class Renderer {
         c.stroke();
       }
       if (s.id % 5 === 0) this.flag(c, s.x, s.y - tall, t);
-      if (s.y === 1700 && [550, 1150, 2050, 2650].includes(s.x))
-        this.drawAtlas(c, "city", 4, 4, 2, s.x, s.y + 14, 140, 180);
-      if (s.y === 1700 && s.x === 1550) this.drawAtlas(c, "city", 7, 4, 2, s.x, s.y + 18, 240, 250);
+      if (s.id % 13 === 0 && s.w > s.h) this.drawAtlas(c, "city", 4, 4, 2, s.x, s.y + 14, 140, 180);
+      if (s.kind === "gate" && s.w > s.h)
+        this.drawAtlas(c, "city", 7, 4, 2, s.x, s.y + 18, 210, 215);
+    } else if (s.resource || s.kind === "cityblock" || s.kind === "barracks") {
+      const index = s.resource
+        ? ["warehouse", "supply", "mine", "transport"].indexOf(s.kind)
+        : s.variant;
+      const small = s.kind === "cityblock" && s.w < 120;
+      const width = s.resource ? 195 : small ? 155 : s.variant === 8 ? 360 : 265;
+      c.fillStyle = "rgba(8,25,24,.25)";
+      c.beginPath();
+      c.ellipse(s.x + 8, s.y + 12, width * 0.4, 25, 0, 0, 7);
+      c.fill();
+      c.save();
+      if (s.variant >= 10 && s.id % 2 === 0) {
+        c.translate(s.x * 2, 0);
+        c.scale(-1, 1);
+      }
+      this.drawAtlas(
+        c,
+        s.variant >= 8 && !s.resource ? "city" : "v3-city",
+        s.variant === 8 ? 0 : s.variant >= 10 ? s.variant - 10 : index,
+        4,
+        2,
+        s.x,
+        s.y + 20,
+        width,
+        width * 0.82,
+      );
+      c.restore();
+      if (s.resource) {
+        this.text(c, RESOURCE_NAMES[s.kind]!, s.x, s.y + 40, 18, "#d7cba5");
+        this.text(c, `◈ ${s.reward} / 掠夺 +90`, s.x, s.y + 62, 15, "#8bd8bd");
+      }
     } else {
       const indices: Partial<Record<Kind, number>> = {
         arrow: 0,
@@ -676,10 +710,8 @@ export class Renderer {
         barracks: 4,
         crystal: 5,
       };
-      const width =
-        s.kind === "crystal" ? 290 : s.kind === "barracks" ? 220 : s.kind === "cannon" ? 175 : 152;
-      const height =
-        s.kind === "crystal" ? 310 : s.kind === "barracks" ? 180 : s.kind === "cannon" ? 155 : 220;
+      const width = s.kind === "crystal" ? 360 : s.kind === "cannon" ? 175 : 152;
+      const height = s.kind === "crystal" ? 395 : s.kind === "cannon" ? 155 : 220;
       c.fillStyle = "rgba(7,23,25,.22)";
       c.beginPath();
       c.ellipse(s.x + 12, s.y + 9, width * 0.42, 24, 0, 0, 7);
@@ -709,7 +741,7 @@ export class Renderer {
       if (s.attackFlash > 0 && s.kind === "cannon") c.translate(0, (5 * s.attackFlash) / 0.3);
       this.drawAtlas(c, "structures", indices[s.kind] ?? 0, 3, 2, s.x, s.y + 24, width, height);
       c.restore();
-      if (s.kind === "crystal") this.text(c, "日 轮 圣 晶", s.x, s.y - 290, 26, "#f5e1a5");
+      if (s.kind === "crystal") this.text(c, "日 轮 圣 晶", s.x, s.y - 380, 28, "#f5e1a5");
       if (s.attackFlash > 0 && s.kind !== "crystal") {
         c.save();
         c.globalCompositeOperation = "lighter";
@@ -781,8 +813,17 @@ export class Renderer {
       c.ellipse(u.x, u.y, size * 0.43, size * 0.17, 0, 0, 7);
       c.stroke();
     }
-    if (u.buff > 0 || u.hunt > 0) {
-      c.strokeStyle = u.buff > 0 ? "#b4e894" : "#bddafb";
+    if (u.buff > 0 || u.hunt > 0 || u.frenzy > 0 || u.ward > 0 || u.castTime > 0) {
+      c.strokeStyle =
+        u.ward > 0
+          ? "#8dcff7"
+          : u.frenzy > 0
+            ? "#ef9674"
+            : u.castTime > 0
+              ? "#ffb877"
+              : u.buff > 0
+                ? "#b4e894"
+                : "#bddafb";
       c.lineWidth = 3;
       c.beginPath();
       c.arc(u.x, u.y - 10, size * 0.6, t, t + 4);
@@ -795,6 +836,19 @@ export class Renderer {
       (u.kind === "slime" || u.kind === "split") && u.moving ? Math.sin(phase) * 0.1 : 0;
     c.scale(1 + squash, 1 - squash);
     if (isCommander(u.kind)) this.drawAtlas(c, "hero-" + u.kind, 0, 1, 1, 0, 6, size, size);
+    else if (u.kind === "raider" || u.kind === "elf")
+      this.drawAtlas(
+        c,
+        "v3-units",
+        (u.kind === "elf" ? 2 : 0) +
+          (u.attack > 0 || u.castTime > 0 || (u.moving && Math.sin(phase) > 0) ? 1 : 0),
+        2,
+        2,
+        0,
+        6,
+        size,
+        size,
+      );
     else
       this.drawAtlas(
         c,
@@ -821,10 +875,20 @@ export class Renderer {
       const commander = isCommander(u.kind);
       this.drawAtlas(
         c,
-        commander ? "hero-" + u.kind : u.moving && Math.sin(phase) > 0 ? "units-move" : "units",
-        commander ? 0 : u.sprite,
-        commander ? 1 : 4,
-        commander ? 1 : 4,
+        commander
+          ? "hero-" + u.kind
+          : u.sprite >= 16
+            ? "v3-units"
+            : u.moving && Math.sin(phase) > 0
+              ? "units-move"
+              : "units",
+        commander
+          ? 0
+          : u.sprite >= 16
+            ? (u.kind === "elf" ? 2 : 0) + (u.attack > 0 ? 1 : 0)
+            : u.sprite,
+        commander ? 1 : u.sprite >= 16 ? 2 : 4,
+        commander ? 1 : u.sprite >= 16 ? 2 : 4,
         0,
         6,
         size,
@@ -857,7 +921,51 @@ export class Renderer {
     const x = f.x,
       y = f.y,
       r = f.radius ?? 60;
-    if (f.type === "shot") {
+    if (f.type === "spell" || f.type === "chant" || f.type === "loot") {
+      if (f.type === "loot") {
+        this.text(c, f.text ?? "", x, y - 65 - p * 90, 24, "#f2d792");
+      } else if (f.spell === "meteor") {
+        const q = Math.min(1, p * 2.2),
+          mx = x - (1 - q) * 240,
+          my = y - (1 - q) * 650;
+        c.strokeStyle = "#ed9c62";
+        c.lineWidth = 18;
+        c.beginPath();
+        c.moveTo(mx - 50 * (1 - q), my - 140 * (1 - q));
+        c.lineTo(mx, my);
+        c.stroke();
+        const g = c.createRadialGradient(mx, my, 1, mx, my, 70);
+        g.addColorStop(0, "#fff4c8");
+        g.addColorStop(0.25, "#f4b16f");
+        g.addColorStop(1, "transparent");
+        c.fillStyle = g;
+        c.fillRect(mx - 70, my - 70, 140, 140);
+      } else {
+        const color = f.spell ? SPELLS[f.spell].color : "#f9ad71";
+        c.strokeStyle = color;
+        c.fillStyle = color;
+        c.lineWidth = 3;
+        for (let j = 0; j < 18; j++) {
+          const a = j * 2.399 + t * (f.spell === "rage" ? 2 : 0.4),
+            d = r * (0.2 + 0.7 * Math.abs(Math.sin(j * 7)));
+          const xx = x + Math.cos(a) * d,
+            yy = y + Math.sin(a) * d * 0.7 - p * (f.spell === "heal" ? 100 : 30);
+          if (f.spell === "barrier") {
+            c.beginPath();
+            for (let k = 0; k < 6; k++) {
+              const b = (k * Math.PI) / 3;
+              k ? c.lineTo(xx + Math.cos(b) * 13, yy + Math.sin(b) * 13) : c.moveTo(xx + 13, yy);
+            }
+            c.closePath();
+            c.stroke();
+          } else {
+            c.beginPath();
+            c.arc(xx, yy, 3 + 4 * (1 - p), 0, 7);
+            c.fill();
+          }
+        }
+      }
+    } else if (f.type === "shot") {
       const tracked = f.target && !f.radius ? this.battle.byId.get(f.target) : undefined;
       const tx = tracked?.x ?? f.tx ?? x,
         ty = tracked?.y ?? f.ty ?? y;
@@ -1068,6 +1176,33 @@ export class Renderer {
   private drawPointer(c: CanvasRenderingContext2D, t: number) {
     if (this.mode.type === "none") return;
     const { x, y } = this.pointer;
+    if (this.mode.type === "spell" || this.mode.type === "rally") {
+      const isSpell = this.mode.type === "spell",
+        legal = isSpell ? this.battle.canCastSpell(x, y) : this.battle.canDeploy(x, y);
+      const radius = this.mode.type === "spell" ? SPELLS[this.mode.kind].radius : 70;
+      c.fillStyle = legal ? "rgba(130,218,189,.15)" : "rgba(238,128,103,.18)";
+      c.strokeStyle = legal ? "#a5e8d2" : "#ed988a";
+      c.lineWidth = 2 / this.camera.zoom;
+      c.setLineDash([12, 8]);
+      c.beginPath();
+      c.arc(x, y, radius, 0, 7);
+      c.fill();
+      c.stroke();
+      c.setLineDash([]);
+      this.text(
+        c,
+        isSpell
+          ? "指定法术区域 · Esc取消"
+          : legal
+            ? "点击设为快速集结点"
+            : "集结点必须位于合法部署区",
+        x,
+        y - radius - 20,
+        22,
+        legal ? "#c2efd9" : "#edab9c",
+      );
+      return;
+    }
     const skill = this.mode.type === "skill";
     const kind = this.mode.kind;
     const legal = skill
@@ -1108,7 +1243,7 @@ export class Renderer {
     }
     this.text(
       c,
-      skill ? "左键施放 · Esc取消" : legal ? "松开部署 · 库存出征" : "此处不可部署",
+      skill ? "左键施放 · Esc取消" : legal ? "点击批量部署 · 长按持续出兵" : "此处不可部署",
       x,
       y - r - 20 + Math.sin(t * 3) * 2,
       22,
@@ -1120,8 +1255,8 @@ export class Renderer {
     this.mini.width = 200;
     this.mini.height = 150;
     c.drawImage(this.ground, 0, 0, 200, 150);
-    const sx = 200 / 3200,
-      sy = 150 / 2400;
+    const sx = 200 / WORLD.width,
+      sy = 150 / WORLD.height;
     for (const s of this.battle.structures)
       if (s.hp > 0) {
         c.fillStyle = s.kind === "crystal" ? "#fff0b5" : "#bfbda3";

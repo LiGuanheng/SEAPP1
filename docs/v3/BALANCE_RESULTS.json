@@ -1,0 +1,2317 @@
+{
+  "date": "2026-10-24T05:47:40.183Z",
+  "method": "legal budget; actual purchase/deploy; same Battle.advance fixed 60Hz; no hp/money/result overrides",
+  "results": [
+    {
+      "difficulty": "easy",
+      "strategy": "breach",
+      "front": "west",
+      "seed": 20261024,
+      "time": 54.03,
+      "remaining": 1025.97,
+      "money": 58,
+      "active": 81,
+      "queued": 0,
+      "reserves": 0,
+      "crystalHp": 0,
+      "status": "victory",
+      "outposts": [
+        {
+          "name": "南境前线",
+          "front": "south",
+          "x": 2000,
+          "y": 2770,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        },
+        {
+          "name": "西境前线",
+          "front": "west",
+          "x": 950,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 8,
+          "captured": true,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "东境前线",
+          "front": "east",
+          "x": 3050,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "北境前线",
+          "front": "north",
+          "x": 2000,
+          "y": 820,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        }
+      ],
+      "stats": {
+        "deployed": 322,
+        "kills": 25,
+        "lost": 241,
+        "income": 1313,
+        "walls": 8,
+        "skills": 4,
+        "peak": 300,
+        "resourceIncome": 730,
+        "spells": 6,
+        "towerShots": {
+          "field": 0,
+          "outer": 8,
+          "inner": 13,
+          "core": 6
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 7,
+          "inner": 4,
+          "core": 4
+        }
+      },
+      "mana": 12.76,
+      "firstCoreHit": {
+        "time": 49.13333333333183,
+        "x": 1896.8972298601773,
+        "y": 1817.3215169105201,
+        "walls": 8
+      },
+      "reservesDispatched": 2,
+      "wallMs": 1388,
+      "heroes": [
+        {
+          "kind": "titan",
+          "hp": 2583,
+          "x": 1908,
+          "y": 1853
+        },
+        {
+          "kind": "moon",
+          "hp": 541,
+          "x": 1924,
+          "y": 1861
+        },
+        {
+          "kind": "forest",
+          "hp": 1500,
+          "x": 1769,
+          "y": 1864
+        }
+      ],
+      "remainingStructures": [
+        {
+          "kind": "supply",
+          "x": 1500,
+          "y": 3230,
+          "hp": 660
+        },
+        {
+          "kind": "transport",
+          "x": 2580,
+          "y": 3200,
+          "hp": 400
+        },
+        {
+          "kind": "warehouse",
+          "x": 3550,
+          "y": 2200,
+          "hp": 660
+        },
+        {
+          "kind": "transport",
+          "x": 3550,
+          "y": 1050,
+          "hp": 400
+        },
+        {
+          "kind": "mine",
+          "x": 1400,
+          "y": 420,
+          "hp": 660
+        },
+        {
+          "kind": "supply",
+          "x": 2750,
+          "y": 400,
+          "hp": 660
+        },
+        {
+          "kind": "warehouse",
+          "x": 1540,
+          "y": 2760,
+          "hp": 660
+        },
+        {
+          "kind": "supply",
+          "x": 3080,
+          "y": 1270,
+          "hp": 660
+        },
+        {
+          "kind": "warehouse",
+          "x": 2500,
+          "y": 850,
+          "hp": 660
+        },
+        {
+          "kind": "arrow",
+          "x": 1830,
+          "y": 2960,
+          "hp": 720
+        },
+        {
+          "kind": "cannon",
+          "x": 2210,
+          "y": 2850,
+          "hp": 900
+        },
+        {
+          "kind": "arrow",
+          "x": 2460,
+          "y": 2970,
+          "hp": 720
+        },
+        {
+          "kind": "antiAir",
+          "x": 3250,
+          "y": 1530,
+          "hp": 720
+        },
+        {
+          "kind": "arrow",
+          "x": 3270,
+          "y": 1910,
+          "hp": 720
+        },
+        {
+          "kind": "arrow",
+          "x": 3210,
+          "y": 2300,
+          "hp": 720
+        },
+        {
+          "kind": "arrow",
+          "x": 2010,
+          "y": 650,
+          "hp": 720
+        },
+        {
+          "kind": "cannon",
+          "x": 2470,
+          "y": 720,
+          "hp": 900
+        },
+        {
+          "kind": "cannon",
+          "x": 1450,
+          "y": 2250,
+          "hp": 167
+        },
+        {
+          "kind": "holy",
+          "x": 2520,
+          "y": 2320,
+          "hp": 720
+        },
+        {
+          "kind": "cannon",
+          "x": 2600,
+          "y": 1530,
+          "hp": 900
+        },
+        {
+          "kind": "holy",
+          "x": 1400,
+          "y": 1320,
+          "hp": 577
+        },
+        {
+          "kind": "antiAir",
+          "x": 1770,
+          "y": 1250,
+          "hp": 720
+        },
+        {
+          "kind": "antiAir",
+          "x": 2600,
+          "y": 2030,
+          "hp": 720
+        },
+        {
+          "kind": "holy",
+          "x": 2230,
+          "y": 1920,
+          "hp": 720
+        },
+        {
+          "kind": "antiAir",
+          "x": 2220,
+          "y": 1590,
+          "hp": 720
+        },
+        {
+          "kind": "barracks",
+          "x": 2530,
+          "y": 1770,
+          "hp": 1250
+        },
+        {
+          "kind": "barracks",
+          "x": 2500,
+          "y": 1270,
+          "hp": 1250
+        },
+        {
+          "kind": "cityblock",
+          "x": 950,
+          "y": 1110,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 1000,
+          "y": 2710,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 2900,
+          "y": 2780,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 3030,
+          "y": 950,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 1430,
+          "y": 840,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 2700,
+          "y": 2820,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 853.823081447511,
+          "y": 918.999576092589,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 1100.0200808840525,
+          "y": 882.0461979282643,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 1674.9359332346464,
+          "y": 871.4281619386157,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 2212.0066880929703,
+          "y": 896.6847874932164,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 843.0916421217178,
+          "y": 1514.6257564737539,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 1107.1764109907765,
+          "y": 1482.3471112380219,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 2886.2653585283247,
+          "y": 1481.4265081969652,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 2854.7574952905484,
+          "y": 2138.9494553493705,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 1107.6661861645107,
+          "y": 2411.426508196965,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 2888.2176757890957,
+          "y": 2412.347111238022,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 3176.4768608276972,
+          "y": 2740.2637959678686,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 2000,
+          "y": 1330,
+          "hp": 900
+        }
+      ]
+    },
+    {
+      "difficulty": "normal",
+      "strategy": "breach",
+      "front": "west",
+      "seed": 20261024,
+      "time": 56.65,
+      "remaining": 843.35,
+      "money": 1,
+      "active": 76,
+      "queued": 0,
+      "reserves": 0,
+      "crystalHp": 0,
+      "status": "victory",
+      "outposts": [
+        {
+          "name": "南境前线",
+          "front": "south",
+          "x": 2000,
+          "y": 2770,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        },
+        {
+          "name": "西境前线",
+          "front": "west",
+          "x": 950,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 8,
+          "captured": true,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "东境前线",
+          "front": "east",
+          "x": 3050,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "北境前线",
+          "front": "north",
+          "x": 2000,
+          "y": 820,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        }
+      ],
+      "stats": {
+        "deployed": 312,
+        "kills": 38,
+        "lost": 236,
+        "income": 1381,
+        "walls": 8,
+        "skills": 4,
+        "peak": 295,
+        "resourceIncome": 730,
+        "spells": 6,
+        "towerShots": {
+          "field": 0,
+          "outer": 6,
+          "inner": 15,
+          "core": 7
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 7,
+          "inner": 5,
+          "core": 4
+        }
+      },
+      "mana": 17.47,
+      "firstCoreHit": {
+        "time": 50.54999999999841,
+        "x": 1896.5666637204524,
+        "y": 1819.3074153906007,
+        "walls": 8
+      },
+      "reservesDispatched": 2,
+      "wallMs": 1165,
+      "heroes": [
+        {
+          "kind": "titan",
+          "hp": 2572,
+          "x": 1900,
+          "y": 1835
+        },
+        {
+          "kind": "moon",
+          "hp": 0,
+          "x": 1802,
+          "y": 1919
+        },
+        {
+          "kind": "forest",
+          "hp": 1500,
+          "x": 1767,
+          "y": 1852
+        }
+      ],
+      "remainingStructures": [
+        {
+          "kind": "supply",
+          "x": 1500,
+          "y": 3230,
+          "hp": 660
+        },
+        {
+          "kind": "transport",
+          "x": 2580,
+          "y": 3200,
+          "hp": 400
+        },
+        {
+          "kind": "warehouse",
+          "x": 3550,
+          "y": 2200,
+          "hp": 660
+        },
+        {
+          "kind": "transport",
+          "x": 3550,
+          "y": 1050,
+          "hp": 400
+        },
+        {
+          "kind": "mine",
+          "x": 1400,
+          "y": 420,
+          "hp": 660
+        },
+        {
+          "kind": "supply",
+          "x": 2750,
+          "y": 400,
+          "hp": 660
+        },
+        {
+          "kind": "warehouse",
+          "x": 1540,
+          "y": 2760,
+          "hp": 660
+        },
+        {
+          "kind": "supply",
+          "x": 3080,
+          "y": 1270,
+          "hp": 660
+        },
+        {
+          "kind": "warehouse",
+          "x": 2500,
+          "y": 850,
+          "hp": 660
+        },
+        {
+          "kind": "arrow",
+          "x": 1830,
+          "y": 2960,
+          "hp": 720
+        },
+        {
+          "kind": "cannon",
+          "x": 2210,
+          "y": 2850,
+          "hp": 900
+        },
+        {
+          "kind": "arrow",
+          "x": 2460,
+          "y": 2970,
+          "hp": 720
+        },
+        {
+          "kind": "antiAir",
+          "x": 3250,
+          "y": 1530,
+          "hp": 720
+        },
+        {
+          "kind": "arrow",
+          "x": 3270,
+          "y": 1910,
+          "hp": 720
+        },
+        {
+          "kind": "arrow",
+          "x": 3210,
+          "y": 2300,
+          "hp": 720
+        },
+        {
+          "kind": "arrow",
+          "x": 2010,
+          "y": 650,
+          "hp": 720
+        },
+        {
+          "kind": "cannon",
+          "x": 2470,
+          "y": 720,
+          "hp": 900
+        },
+        {
+          "kind": "holy",
+          "x": 2520,
+          "y": 2320,
+          "hp": 720
+        },
+        {
+          "kind": "cannon",
+          "x": 2600,
+          "y": 1530,
+          "hp": 900
+        },
+        {
+          "kind": "holy",
+          "x": 1400,
+          "y": 1320,
+          "hp": 181
+        },
+        {
+          "kind": "antiAir",
+          "x": 1770,
+          "y": 1250,
+          "hp": 720
+        },
+        {
+          "kind": "antiAir",
+          "x": 2600,
+          "y": 2030,
+          "hp": 720
+        },
+        {
+          "kind": "holy",
+          "x": 2230,
+          "y": 1920,
+          "hp": 720
+        },
+        {
+          "kind": "antiAir",
+          "x": 2220,
+          "y": 1590,
+          "hp": 720
+        },
+        {
+          "kind": "barracks",
+          "x": 2530,
+          "y": 1770,
+          "hp": 1250
+        },
+        {
+          "kind": "barracks",
+          "x": 2500,
+          "y": 1270,
+          "hp": 1250
+        },
+        {
+          "kind": "cityblock",
+          "x": 950,
+          "y": 1110,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 1000,
+          "y": 2710,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 2900,
+          "y": 2780,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 3030,
+          "y": 950,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 1430,
+          "y": 840,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 2700,
+          "y": 2820,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 853.823081447511,
+          "y": 918.999576092589,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 1100.0200808840525,
+          "y": 882.0461979282643,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 1674.9359332346464,
+          "y": 871.4281619386157,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 2212.0066880929703,
+          "y": 896.6847874932164,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 843.0916421217178,
+          "y": 1514.6257564737539,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 1107.1764109907765,
+          "y": 1482.3471112380219,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 2886.2653585283247,
+          "y": 1481.4265081969652,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 2854.7574952905484,
+          "y": 2138.9494553493705,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 1107.6661861645107,
+          "y": 2411.426508196965,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 2888.2176757890957,
+          "y": 2412.347111238022,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 3176.4768608276972,
+          "y": 2740.2637959678686,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 2000,
+          "y": 1330,
+          "hp": 900
+        }
+      ]
+    },
+    {
+      "difficulty": "normal",
+      "strategy": "breach",
+      "front": "north",
+      "seed": 20261024,
+      "time": 90.28,
+      "remaining": 809.72,
+      "money": 89,
+      "active": 42,
+      "queued": 0,
+      "reserves": 0,
+      "crystalHp": 0,
+      "status": "victory",
+      "outposts": [
+        {
+          "name": "南境前线",
+          "front": "south",
+          "x": 2000,
+          "y": 2770,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        },
+        {
+          "name": "西境前线",
+          "front": "west",
+          "x": 950,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "东境前线",
+          "front": "east",
+          "x": 3050,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "北境前线",
+          "front": "north",
+          "x": 2000,
+          "y": 820,
+          "w": 260,
+          "h": 220,
+          "progress": 8,
+          "captured": true,
+          "contested": false,
+          "connected": true
+        }
+      ],
+      "stats": {
+        "deployed": 334,
+        "kills": 49,
+        "lost": 292,
+        "income": 1374,
+        "walls": 10,
+        "skills": 7,
+        "peak": 276,
+        "resourceIncome": 510,
+        "spells": 7,
+        "towerShots": {
+          "field": 0,
+          "outer": 9,
+          "inner": 11,
+          "core": 10
+        },
+        "destroyed": {
+          "field": 1,
+          "outer": 6,
+          "inner": 9,
+          "core": 6
+        }
+      },
+      "mana": 33.01,
+      "firstCoreHit": {
+        "time": 69.31666666666402,
+        "x": 1779.7174053187273,
+        "y": 1682.7982787465676,
+        "walls": 8
+      },
+      "reservesDispatched": 3,
+      "wallMs": 1473,
+      "heroes": [
+        {
+          "kind": "titan",
+          "hp": 0,
+          "x": 2591,
+          "y": 1647
+        },
+        {
+          "kind": "moon",
+          "hp": 0,
+          "x": 1866,
+          "y": 1894
+        },
+        {
+          "kind": "forest",
+          "hp": 1370,
+          "x": 1825,
+          "y": 1709
+        }
+      ],
+      "remainingStructures": [
+        {
+          "kind": "supply",
+          "x": 1500,
+          "y": 3230,
+          "hp": 660
+        },
+        {
+          "kind": "transport",
+          "x": 2580,
+          "y": 3200,
+          "hp": 400
+        },
+        {
+          "kind": "mine",
+          "x": 440,
+          "y": 2400,
+          "hp": 660
+        },
+        {
+          "kind": "supply",
+          "x": 410,
+          "y": 1200,
+          "hp": 660
+        },
+        {
+          "kind": "warehouse",
+          "x": 3550,
+          "y": 2200,
+          "hp": 660
+        },
+        {
+          "kind": "transport",
+          "x": 3550,
+          "y": 1050,
+          "hp": 400
+        },
+        {
+          "kind": "supply",
+          "x": 2750,
+          "y": 400,
+          "hp": 660
+        },
+        {
+          "kind": "warehouse",
+          "x": 1540,
+          "y": 2760,
+          "hp": 660
+        },
+        {
+          "kind": "mine",
+          "x": 880,
+          "y": 2250,
+          "hp": 660
+        },
+        {
+          "kind": "supply",
+          "x": 3080,
+          "y": 1270,
+          "hp": 660
+        },
+        {
+          "kind": "arrow",
+          "x": 1830,
+          "y": 2960,
+          "hp": 720
+        },
+        {
+          "kind": "cannon",
+          "x": 2210,
+          "y": 2850,
+          "hp": 900
+        },
+        {
+          "kind": "arrow",
+          "x": 2460,
+          "y": 2970,
+          "hp": 720
+        },
+        {
+          "kind": "arrow",
+          "x": 710,
+          "y": 1730,
+          "hp": 720
+        },
+        {
+          "kind": "arrow",
+          "x": 760,
+          "y": 2400,
+          "hp": 720
+        },
+        {
+          "kind": "antiAir",
+          "x": 3250,
+          "y": 1530,
+          "hp": 720
+        },
+        {
+          "kind": "arrow",
+          "x": 3270,
+          "y": 1910,
+          "hp": 720
+        },
+        {
+          "kind": "arrow",
+          "x": 3210,
+          "y": 2300,
+          "hp": 720
+        },
+        {
+          "kind": "cannon",
+          "x": 1450,
+          "y": 2250,
+          "hp": 900
+        },
+        {
+          "kind": "holy",
+          "x": 2520,
+          "y": 2320,
+          "hp": 720
+        },
+        {
+          "kind": "antiAir",
+          "x": 2600,
+          "y": 2030,
+          "hp": 720
+        },
+        {
+          "kind": "holy",
+          "x": 2230,
+          "y": 1920,
+          "hp": 720
+        },
+        {
+          "kind": "antiAir",
+          "x": 2220,
+          "y": 1590,
+          "hp": 720
+        },
+        {
+          "kind": "barracks",
+          "x": 2530,
+          "y": 1770,
+          "hp": 1250
+        },
+        {
+          "kind": "cityblock",
+          "x": 950,
+          "y": 1110,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 1000,
+          "y": 2710,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 2900,
+          "y": 2780,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 3030,
+          "y": 950,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 1430,
+          "y": 840,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 2700,
+          "y": 2820,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 853.823081447511,
+          "y": 918.999576092589,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 1100.0200808840525,
+          "y": 882.0461979282643,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 1674.9359332346464,
+          "y": 871.4281619386157,
+          "hp": 13
+        },
+        {
+          "kind": "cityblock",
+          "x": 2212.0066880929703,
+          "y": 896.6847874932164,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 843.0916421217178,
+          "y": 1514.6257564737539,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 1107.1764109907765,
+          "y": 1482.3471112380219,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 2886.2653585283247,
+          "y": 1481.4265081969652,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 2854.7574952905484,
+          "y": 2138.9494553493705,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 1107.6661861645107,
+          "y": 2411.426508196965,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 2888.2176757890957,
+          "y": 2412.347111238022,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 3176.4768608276972,
+          "y": 2740.2637959678686,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 2000,
+          "y": 1330,
+          "hp": 900
+        }
+      ]
+    },
+    {
+      "difficulty": "hard",
+      "strategy": "breach",
+      "front": "west",
+      "seed": 20261024,
+      "time": 96.03,
+      "remaining": 743.97,
+      "money": 14,
+      "active": 33,
+      "queued": 0,
+      "reserves": 0,
+      "crystalHp": 0,
+      "status": "victory",
+      "outposts": [
+        {
+          "name": "南境前线",
+          "front": "south",
+          "x": 2000,
+          "y": 2770,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        },
+        {
+          "name": "西境前线",
+          "front": "west",
+          "x": 950,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 8,
+          "captured": true,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "东境前线",
+          "front": "east",
+          "x": 3050,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "北境前线",
+          "front": "north",
+          "x": 2000,
+          "y": 820,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        }
+      ],
+      "stats": {
+        "deployed": 286,
+        "kills": 49,
+        "lost": 253,
+        "income": 1614,
+        "walls": 8,
+        "skills": 7,
+        "peak": 234,
+        "resourceIncome": 820,
+        "spells": 8,
+        "towerShots": {
+          "field": 0,
+          "outer": 10,
+          "inner": 7,
+          "core": 17
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 8,
+          "inner": 6,
+          "core": 5
+        }
+      },
+      "mana": 8.36,
+      "firstCoreHit": {
+        "time": 74.56666666666372,
+        "x": 1920.4542598030255,
+        "y": 1868.8851159764401,
+        "walls": 8
+      },
+      "reservesDispatched": 4,
+      "wallMs": 1068,
+      "heroes": [
+        {
+          "kind": "titan",
+          "hp": 1306,
+          "x": 1926,
+          "y": 1874
+        },
+        {
+          "kind": "moon",
+          "hp": 0,
+          "x": 1313,
+          "y": 1767
+        },
+        {
+          "kind": "forest",
+          "hp": 1500,
+          "x": 1810,
+          "y": 1900
+        }
+      ],
+      "remainingStructures": [
+        {
+          "kind": "supply",
+          "x": 1500,
+          "y": 3230,
+          "hp": 660
+        },
+        {
+          "kind": "transport",
+          "x": 2580,
+          "y": 3200,
+          "hp": 400
+        },
+        {
+          "kind": "warehouse",
+          "x": 3550,
+          "y": 2200,
+          "hp": 660
+        },
+        {
+          "kind": "transport",
+          "x": 3550,
+          "y": 1050,
+          "hp": 400
+        },
+        {
+          "kind": "mine",
+          "x": 1400,
+          "y": 420,
+          "hp": 660
+        },
+        {
+          "kind": "supply",
+          "x": 2750,
+          "y": 400,
+          "hp": 660
+        },
+        {
+          "kind": "warehouse",
+          "x": 1540,
+          "y": 2760,
+          "hp": 660
+        },
+        {
+          "kind": "supply",
+          "x": 3080,
+          "y": 1270,
+          "hp": 660
+        },
+        {
+          "kind": "warehouse",
+          "x": 2500,
+          "y": 850,
+          "hp": 660
+        },
+        {
+          "kind": "arrow",
+          "x": 1830,
+          "y": 2960,
+          "hp": 720
+        },
+        {
+          "kind": "cannon",
+          "x": 2210,
+          "y": 2850,
+          "hp": 900
+        },
+        {
+          "kind": "arrow",
+          "x": 2460,
+          "y": 2970,
+          "hp": 720
+        },
+        {
+          "kind": "antiAir",
+          "x": 3250,
+          "y": 1530,
+          "hp": 720
+        },
+        {
+          "kind": "arrow",
+          "x": 3270,
+          "y": 1910,
+          "hp": 720
+        },
+        {
+          "kind": "arrow",
+          "x": 3210,
+          "y": 2300,
+          "hp": 720
+        },
+        {
+          "kind": "arrow",
+          "x": 2010,
+          "y": 650,
+          "hp": 720
+        },
+        {
+          "kind": "cannon",
+          "x": 2470,
+          "y": 720,
+          "hp": 900
+        },
+        {
+          "kind": "holy",
+          "x": 2520,
+          "y": 2320,
+          "hp": 720
+        },
+        {
+          "kind": "cannon",
+          "x": 2600,
+          "y": 1530,
+          "hp": 900
+        },
+        {
+          "kind": "antiAir",
+          "x": 1770,
+          "y": 1250,
+          "hp": 720
+        },
+        {
+          "kind": "antiAir",
+          "x": 2600,
+          "y": 2030,
+          "hp": 720
+        },
+        {
+          "kind": "holy",
+          "x": 2230,
+          "y": 1920,
+          "hp": 720
+        },
+        {
+          "kind": "antiAir",
+          "x": 2220,
+          "y": 1590,
+          "hp": 720
+        },
+        {
+          "kind": "barracks",
+          "x": 2530,
+          "y": 1770,
+          "hp": 1250
+        },
+        {
+          "kind": "barracks",
+          "x": 2500,
+          "y": 1270,
+          "hp": 1250
+        },
+        {
+          "kind": "cityblock",
+          "x": 950,
+          "y": 1110,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 1000,
+          "y": 2710,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 2900,
+          "y": 2780,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 3030,
+          "y": 950,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 1430,
+          "y": 840,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 2700,
+          "y": 2820,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 853.823081447511,
+          "y": 918.999576092589,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 1100.0200808840525,
+          "y": 882.0461979282643,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 1674.9359332346464,
+          "y": 871.4281619386157,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 2212.0066880929703,
+          "y": 896.6847874932164,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 2886.2653585283247,
+          "y": 1481.4265081969652,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 2854.7574952905484,
+          "y": 2138.9494553493705,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 1107.6661861645107,
+          "y": 2411.426508196965,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 2888.2176757890957,
+          "y": 2412.347111238022,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 3176.4768608276972,
+          "y": 2740.2637959678686,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 2000,
+          "y": 1330,
+          "hp": 900
+        }
+      ]
+    },
+    {
+      "difficulty": "normal",
+      "strategy": "sky",
+      "front": "south",
+      "seed": 20261024,
+      "time": 38.58,
+      "remaining": 861.42,
+      "money": 115,
+      "active": 115,
+      "queued": 0,
+      "reserves": 0,
+      "crystalHp": 0,
+      "status": "victory",
+      "outposts": [
+        {
+          "name": "南境前线",
+          "front": "south",
+          "x": 2000,
+          "y": 2770,
+          "w": 260,
+          "h": 220,
+          "progress": 8,
+          "captured": true,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "西境前线",
+          "front": "west",
+          "x": 950,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "东境前线",
+          "front": "east",
+          "x": 3050,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "北境前线",
+          "front": "north",
+          "x": 2000,
+          "y": 820,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        }
+      ],
+      "stats": {
+        "deployed": 236,
+        "kills": 41,
+        "lost": 121,
+        "income": 1270,
+        "walls": 3,
+        "skills": 4,
+        "peak": 219,
+        "resourceIncome": 790,
+        "spells": 4,
+        "towerShots": {
+          "field": 0,
+          "outer": 11,
+          "inner": 2,
+          "core": 18
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 4,
+          "inner": 4,
+          "core": 2
+        }
+      },
+      "mana": 49.95,
+      "firstCoreHit": {
+        "time": 22.250000000000018,
+        "x": 2024.0154394302544,
+        "y": 1988.334067738961,
+        "walls": 1
+      },
+      "reservesDispatched": 3,
+      "wallMs": 843,
+      "heroes": [
+        {
+          "kind": "dragon",
+          "hp": 1347,
+          "x": 1873,
+          "y": 1989
+        },
+        {
+          "kind": "web",
+          "hp": 1250,
+          "x": 2527,
+          "y": 1997
+        },
+        {
+          "kind": "forest",
+          "hp": 1498,
+          "x": 2564,
+          "y": 2035
+        }
+      ],
+      "remainingStructures": [
+        {
+          "kind": "mine",
+          "x": 440,
+          "y": 2400,
+          "hp": 660
+        },
+        {
+          "kind": "supply",
+          "x": 410,
+          "y": 1200,
+          "hp": 660
+        },
+        {
+          "kind": "warehouse",
+          "x": 3550,
+          "y": 2200,
+          "hp": 660
+        },
+        {
+          "kind": "transport",
+          "x": 3550,
+          "y": 1050,
+          "hp": 400
+        },
+        {
+          "kind": "mine",
+          "x": 1400,
+          "y": 420,
+          "hp": 660
+        },
+        {
+          "kind": "supply",
+          "x": 2750,
+          "y": 400,
+          "hp": 660
+        },
+        {
+          "kind": "mine",
+          "x": 880,
+          "y": 2250,
+          "hp": 660
+        },
+        {
+          "kind": "supply",
+          "x": 3080,
+          "y": 1270,
+          "hp": 660
+        },
+        {
+          "kind": "warehouse",
+          "x": 2500,
+          "y": 850,
+          "hp": 660
+        },
+        {
+          "kind": "arrow",
+          "x": 2460,
+          "y": 2970,
+          "hp": 675
+        },
+        {
+          "kind": "arrow",
+          "x": 710,
+          "y": 1730,
+          "hp": 720
+        },
+        {
+          "kind": "arrow",
+          "x": 760,
+          "y": 2400,
+          "hp": 720
+        },
+        {
+          "kind": "antiAir",
+          "x": 3250,
+          "y": 1530,
+          "hp": 720
+        },
+        {
+          "kind": "arrow",
+          "x": 3270,
+          "y": 1910,
+          "hp": 720
+        },
+        {
+          "kind": "arrow",
+          "x": 3210,
+          "y": 2300,
+          "hp": 720
+        },
+        {
+          "kind": "arrow",
+          "x": 2010,
+          "y": 650,
+          "hp": 720
+        },
+        {
+          "kind": "cannon",
+          "x": 2470,
+          "y": 720,
+          "hp": 900
+        },
+        {
+          "kind": "cannon",
+          "x": 1450,
+          "y": 2250,
+          "hp": 900
+        },
+        {
+          "kind": "cannon",
+          "x": 2600,
+          "y": 1530,
+          "hp": 900
+        },
+        {
+          "kind": "holy",
+          "x": 1400,
+          "y": 1320,
+          "hp": 720
+        },
+        {
+          "kind": "antiAir",
+          "x": 1770,
+          "y": 1250,
+          "hp": 720
+        },
+        {
+          "kind": "holy",
+          "x": 1800,
+          "y": 1740,
+          "hp": 720
+        },
+        {
+          "kind": "antiAir",
+          "x": 2220,
+          "y": 1590,
+          "hp": 720
+        },
+        {
+          "kind": "barracks",
+          "x": 1450,
+          "y": 2010,
+          "hp": 1250
+        },
+        {
+          "kind": "barracks",
+          "x": 2530,
+          "y": 1770,
+          "hp": 1250
+        },
+        {
+          "kind": "barracks",
+          "x": 1510,
+          "y": 1600,
+          "hp": 1250
+        },
+        {
+          "kind": "barracks",
+          "x": 2500,
+          "y": 1270,
+          "hp": 1250
+        },
+        {
+          "kind": "cityblock",
+          "x": 950,
+          "y": 1110,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 1000,
+          "y": 2710,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 2900,
+          "y": 2780,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 3030,
+          "y": 950,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 1430,
+          "y": 840,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 2700,
+          "y": 2820,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 853.823081447511,
+          "y": 918.999576092589,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 1100.0200808840525,
+          "y": 882.0461979282643,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 1674.9359332346464,
+          "y": 871.4281619386157,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 2212.0066880929703,
+          "y": 896.6847874932164,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 843.0916421217178,
+          "y": 1514.6257564737539,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 1107.1764109907765,
+          "y": 1482.3471112380219,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 2886.2653585283247,
+          "y": 1481.4265081969652,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 2854.7574952905484,
+          "y": 2138.9494553493705,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 1107.6661861645107,
+          "y": 2411.426508196965,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 2888.2176757890957,
+          "y": 2412.347111238022,
+          "hp": 393
+        },
+        {
+          "kind": "cityblock",
+          "x": 3176.4768608276972,
+          "y": 2740.2637959678686,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 2000,
+          "y": 1330,
+          "hp": 900
+        }
+      ]
+    },
+    {
+      "difficulty": "normal",
+      "strategy": "slime",
+      "front": "south",
+      "seed": 20261024,
+      "time": 900,
+      "remaining": 0,
+      "money": 122,
+      "active": 0,
+      "queued": 0,
+      "reserves": 0,
+      "crystalHp": 5600,
+      "status": "defeat",
+      "outposts": [
+        {
+          "name": "南境前线",
+          "front": "south",
+          "x": 2000,
+          "y": 2770,
+          "w": 260,
+          "h": 220,
+          "progress": 0.8,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        },
+        {
+          "name": "西境前线",
+          "front": "west",
+          "x": 950,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "东境前线",
+          "front": "east",
+          "x": 3050,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "北境前线",
+          "front": "north",
+          "x": 2000,
+          "y": 820,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        }
+      ],
+      "stats": {
+        "deployed": 1642,
+        "kills": 18,
+        "lost": 1642,
+        "income": 70,
+        "walls": 1,
+        "skills": 0,
+        "peak": 300,
+        "resourceIncome": 0,
+        "spells": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 28,
+          "inner": 0,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 0,
+          "outer": 2,
+          "inner": 0,
+          "core": 0
+        }
+      },
+      "mana": 100,
+      "firstCoreHit": null,
+      "reservesDispatched": 2,
+      "wallMs": 4832,
+      "heroes": [
+        {
+          "kind": "emperor",
+          "hp": 0,
+          "x": 1996,
+          "y": 2903
+        }
+      ],
+      "remainingStructures": [
+        {
+          "kind": "supply",
+          "x": 1500,
+          "y": 3230,
+          "hp": 660
+        },
+        {
+          "kind": "transport",
+          "x": 2580,
+          "y": 3200,
+          "hp": 400
+        },
+        {
+          "kind": "mine",
+          "x": 440,
+          "y": 2400,
+          "hp": 660
+        },
+        {
+          "kind": "supply",
+          "x": 410,
+          "y": 1200,
+          "hp": 660
+        },
+        {
+          "kind": "warehouse",
+          "x": 3550,
+          "y": 2200,
+          "hp": 660
+        },
+        {
+          "kind": "transport",
+          "x": 3550,
+          "y": 1050,
+          "hp": 400
+        },
+        {
+          "kind": "mine",
+          "x": 1400,
+          "y": 420,
+          "hp": 660
+        },
+        {
+          "kind": "supply",
+          "x": 2750,
+          "y": 400,
+          "hp": 660
+        },
+        {
+          "kind": "warehouse",
+          "x": 1540,
+          "y": 2760,
+          "hp": 660
+        },
+        {
+          "kind": "mine",
+          "x": 880,
+          "y": 2250,
+          "hp": 660
+        },
+        {
+          "kind": "supply",
+          "x": 3080,
+          "y": 1270,
+          "hp": 660
+        },
+        {
+          "kind": "warehouse",
+          "x": 2500,
+          "y": 850,
+          "hp": 660
+        },
+        {
+          "kind": "cannon",
+          "x": 2210,
+          "y": 2850,
+          "hp": 900
+        },
+        {
+          "kind": "arrow",
+          "x": 2460,
+          "y": 2970,
+          "hp": 720
+        },
+        {
+          "kind": "arrow",
+          "x": 710,
+          "y": 1730,
+          "hp": 720
+        },
+        {
+          "kind": "arrow",
+          "x": 760,
+          "y": 2400,
+          "hp": 720
+        },
+        {
+          "kind": "antiAir",
+          "x": 3250,
+          "y": 1530,
+          "hp": 720
+        },
+        {
+          "kind": "arrow",
+          "x": 3270,
+          "y": 1910,
+          "hp": 720
+        },
+        {
+          "kind": "arrow",
+          "x": 3210,
+          "y": 2300,
+          "hp": 720
+        },
+        {
+          "kind": "arrow",
+          "x": 2010,
+          "y": 650,
+          "hp": 720
+        },
+        {
+          "kind": "cannon",
+          "x": 2470,
+          "y": 720,
+          "hp": 900
+        },
+        {
+          "kind": "cannon",
+          "x": 1450,
+          "y": 2250,
+          "hp": 900
+        },
+        {
+          "kind": "holy",
+          "x": 2520,
+          "y": 2320,
+          "hp": 720
+        },
+        {
+          "kind": "cannon",
+          "x": 2600,
+          "y": 1530,
+          "hp": 900
+        },
+        {
+          "kind": "holy",
+          "x": 1400,
+          "y": 1320,
+          "hp": 720
+        },
+        {
+          "kind": "antiAir",
+          "x": 1770,
+          "y": 1250,
+          "hp": 720
+        },
+        {
+          "kind": "antiAir",
+          "x": 2600,
+          "y": 2030,
+          "hp": 720
+        },
+        {
+          "kind": "holy",
+          "x": 1800,
+          "y": 1740,
+          "hp": 720
+        },
+        {
+          "kind": "holy",
+          "x": 2230,
+          "y": 1920,
+          "hp": 720
+        },
+        {
+          "kind": "antiAir",
+          "x": 2220,
+          "y": 1590,
+          "hp": 720
+        },
+        {
+          "kind": "barracks",
+          "x": 1450,
+          "y": 2010,
+          "hp": 1250
+        },
+        {
+          "kind": "barracks",
+          "x": 2530,
+          "y": 1770,
+          "hp": 1250
+        },
+        {
+          "kind": "barracks",
+          "x": 1510,
+          "y": 1600,
+          "hp": 1250
+        },
+        {
+          "kind": "barracks",
+          "x": 2500,
+          "y": 1270,
+          "hp": 1250
+        },
+        {
+          "kind": "cityblock",
+          "x": 950,
+          "y": 1110,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 1000,
+          "y": 2710,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 2900,
+          "y": 2780,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 3030,
+          "y": 950,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 1430,
+          "y": 840,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 2700,
+          "y": 2820,
+          "hp": 800
+        },
+        {
+          "kind": "cityblock",
+          "x": 853.823081447511,
+          "y": 918.999576092589,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 1100.0200808840525,
+          "y": 882.0461979282643,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 1674.9359332346464,
+          "y": 871.4281619386157,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 2212.0066880929703,
+          "y": 896.6847874932164,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 843.0916421217178,
+          "y": 1514.6257564737539,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 1107.1764109907765,
+          "y": 1482.3471112380219,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 2886.2653585283247,
+          "y": 1481.4265081969652,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 2854.7574952905484,
+          "y": 2138.9494553493705,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 1107.6661861645107,
+          "y": 2411.426508196965,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 2888.2176757890957,
+          "y": 2412.347111238022,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 3176.4768608276972,
+          "y": 2740.2637959678686,
+          "hp": 420
+        },
+        {
+          "kind": "cityblock",
+          "x": 2000,
+          "y": 1330,
+          "hp": 900
+        },
+        {
+          "kind": "crystal",
+          "x": 2000,
+          "y": 1800,
+          "hp": 5600
+        }
+      ]
+    }
+  ]
+}

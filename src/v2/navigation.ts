@@ -1,3 +1,4 @@
+import { WORLD } from "./data";
 export interface Point {
   x: number;
   y: number;
@@ -11,8 +12,8 @@ export interface Obstacle extends Point {
   kind: string;
 }
 const CELL = 40,
-  W = 80,
-  H = 60;
+  W = Math.ceil(WORLD.width / CELL),
+  H = Math.ceil(WORLD.height / CELL);
 /** Shared weighted Dijkstra fields. Walls remain physical solids; their weighted cells
  * tell attackers which segment to siege. Destruction invalidates all fields. */
 export class Navigation {
@@ -23,11 +24,13 @@ export class Navigation {
   readonly solids = new Int32Array(W * H);
   private fields = new Map<string, Float32Array>();
   private obstacles: Obstacle[] = [];
+  private buckets = new Map<number, Obstacle[]>();
   rebuild(obstacles: Obstacle[]) {
     this.obstacles = obstacles.filter((o) => o.hp > 0);
     this.costs.fill(1);
     this.solids.fill(0);
     this.fields.clear();
+    this.buckets.clear();
     for (const o of this.obstacles) {
       for (
         let y = Math.max(0, Math.floor((o.y - o.h / 2) / CELL));
@@ -41,6 +44,9 @@ export class Navigation {
         ) {
           const i = y * W + x;
           this.solids[i] = o.id;
+          const bucket = this.buckets.get(i);
+          if (bucket) bucket.push(o);
+          else this.buckets.set(i, [o]);
           this.costs[i] = o.kind === "wall" || o.kind === "gate" ? (o.weak ? 5 : 18) : 12;
         }
     }
@@ -51,16 +57,50 @@ export class Navigation {
       Math.max(0, Math.min(W - 1, Math.floor(x / CELL)))
     );
   }
-  obstacleAt(x: number, y: number, climber = false): number {
-    for (const o of this.obstacles) {
-      if (climber && o.weak) continue;
+  obstacleAt(x: number, y: number, climber = false, defender = false): number {
+    for (const o of this.buckets.get(this.index(x, y)) ?? []) {
+      if ((climber && o.weak) || (defender && o.kind === "gate")) continue;
       if (Math.abs(x - o.x) < o.w / 2 + 4 && Math.abs(y - o.y) < o.h / 2 + 4) return o.id;
     }
     return 0;
   }
-  field(x: number, y: number) {
+  /** Actual segment/rectangle occlusion, not a distance-only combat approximation. */
+  clear(a: Point, b: Point, excludeA = 0, excludeB = 0): boolean {
+    const dx = b.x - a.x,
+      dy = b.y - a.y;
+    const steps = Math.max(1, Math.ceil(Math.max(Math.abs(dx), Math.abs(dy)) / 20));
+    const checked = new Set<number>();
+    for (let n = 0; n <= steps; n++) {
+      const i = this.index(a.x + (dx * n) / steps, a.y + (dy * n) / steps);
+      for (const o of this.buckets.get(i) ?? []) {
+        if (o.id === excludeA || o.id === excludeB || checked.has(o.id)) continue;
+        checked.add(o.id);
+        let lo = 0,
+          hi = 1;
+        for (const [start, d, min, max] of [
+          [a.x, dx, o.x - o.w / 2, o.x + o.w / 2],
+          [a.y, dy, o.y - o.h / 2, o.y + o.h / 2],
+        ]) {
+          if (Math.abs(d) < 1e-9) {
+            if (start < min || start > max) {
+              lo = 2;
+              break;
+            }
+          } else {
+            const t1 = (min - start) / d,
+              t2 = (max - start) / d;
+            lo = Math.max(lo, Math.min(t1, t2));
+            hi = Math.min(hi, Math.max(t1, t2));
+          }
+        }
+        if (lo <= hi && hi > 0.001 && lo < 0.999) return false;
+      }
+    }
+    return true;
+  }
+  field(x: number, y: number, defender = false) {
     const target = this.index(x, y),
-      key = String(target);
+      key = `${target}:${defender}`;
     let f = this.fields.get(key);
     if (f) return f;
     f = new Float32Array(W * H).fill(Infinity);
@@ -113,7 +153,12 @@ export class Navigation {
           ny = cy + dy;
         if (nx < 0 || ny < 0 || nx >= W || ny >= H) continue;
         const ni = ny * W + nx,
-          nd = d + this.costs[ni] * (dx && dy ? 1.414 : 1);
+          cost = defender
+            ? this.buckets.get(ni)?.some((o) => o.kind !== "gate")
+              ? 1000
+              : 1
+            : this.costs[ni],
+          nd = d + cost * (dx && dy ? 1.414 : 1);
         if (nd < f[ni] - 0.0001) {
           f[ni] = nd;
           push(ni, nd);
@@ -124,8 +169,8 @@ export class Navigation {
     if (this.fields.size > 48) this.fields.delete(this.fields.keys().next().value!);
     return f;
   }
-  direction(x: number, y: number, tx: number, ty: number): Point {
-    const f = this.field(tx, ty),
+  direction(x: number, y: number, tx: number, ty: number, defender = false): Point {
+    const f = this.field(tx, ty, defender),
       i = this.index(x, y),
       cx = i % W,
       cy = Math.floor(i / W);
