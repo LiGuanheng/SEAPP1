@@ -30,6 +30,7 @@ import {
 } from "./economy";
 import { Battle } from "./simulation";
 import { DeploymentStream } from "./deployment";
+import { PRIORITIES, routePoints, type Priority } from "./orders";
 import { FRONTS, FRONT_KEYS, type Front } from "./world";
 import { Renderer, artUrl, loadArt } from "./render";
 import { sound } from "./sound";
@@ -43,6 +44,8 @@ let abort: AbortController | null = null;
 let wizard = 0;
 let buyBatch = 1;
 let deployBatch = 3;
+let armyMode: "stock" | "field" = "stock";
+let selectedMarkup = "";
 let noticeTimer = 0;
 let resultTimer = 0;
 let introTimer = 0;
@@ -98,10 +101,10 @@ function clearBattle() {
   clearTimeout(resultTimer);
 }
 const footer =
-  '<div class="edition"><span>原创世界 · 单场实时攻城</span><span>MONSTER SOVEREIGN / V3</span></div>';
+  '<div class="edition"><span>原创世界 · 单场实时攻城</span><span>MONSTER SOVEREIGN / V3.1</span></div>';
 function menu() {
   clearBattle();
-  app.innerHTML = `<main class="menu" style="--cover:url('${artUrl("cover")}')"><div class="menu-shade"></div><div class="brand-mark">M / S</div><div class="menu-content"><div class="eyebrow"><span class="gold-line"></span> THE LAST SIEGE</div><p class="over-title">异 界 围 城</p><h1>魔物之王</h1><p class="latin-title">MONSTER SOVEREIGN</p><div class="title-rule"></div><p class="menu-story">圣曜城的钟声，即将宣告世界的终结。<br>集结你的魔物联军，向帝国最后的光发起总攻。</p><button class="primary menu-start" data-action="new">开启最后总攻 <span>↗</span></button><button class="text-button" data-action="help">战场手册 <span>FIELD MANUAL</span></button></div><div class="menu-quote"><span>01 / 圣曜城</span><p>当群山苏醒，天空将不再属于帝国。</p></div>${footer}<div id="notice" role="status"></div></main>`;
+  app.innerHTML = `<main class="menu" style="--cover:url('${artUrl("cover")}')"><div class="menu-shade"></div><div class="brand-mark">M / S</div><div class="menu-content"><div class="eyebrow"><span class="gold-line"></span> THE LAST SIEGE</div><p class="over-title">异 界 围 城</p><h1>魔物之王</h1><p class="latin-title">MONSTER SOVEREIGN</p><div class="title-rule"></div><p class="menu-story">圣曜城的钟声，即将宣告世界的终结。<br>掠夺外城物资，集结援军，向帝国圣晶发起决战。</p><button class="primary menu-start" data-action="new">开启最后总攻 <span>↗</span></button><button class="text-button" data-action="help">战场手册 <span>FIELD MANUAL</span></button></div><div class="menu-quote"><span>01 / 圣曜城</span><p>当群山苏醒，天空将不再属于帝国。</p></div>${footer}<div id="notice" role="status"></div></main>`;
   bindActions();
 }
 function bindActions() {
@@ -210,12 +213,16 @@ function bindActions() {
     } else if (a === "overview") renderer?.overview();
     else if (a === "front") {
       if (renderer) renderer.focus(renderer.rally?.x ?? 2000, renderer.rally?.y ?? 2940, 0.65);
+    } else if (a === "guardian") {
+      const u = battle?.units.find((u) => u.side === 1 && u.kind === "captain" && u.hp > 0);
+      if (u) renderer?.focus(u.x, u.y, 0.85);
     } else if (a === "crystal") {
       if (renderer) renderer.focus(2000, 1840, 0.72);
     } else if (a === "charge") {
       battle?.charge();
-      notice("全军继续向圣晶推进 · 保留指定集火");
+      notice("明确命令：全军自动进攻 · 新下兵仍原地待命");
     } else if (a === "select-all") {
+      setArmyMode("field");
       battle!.selected = new Set(
         battle!.units.filter((u) => u.side === 0 && u.hp > 0).map((u) => u.id),
       );
@@ -226,7 +233,20 @@ function bindActions() {
     } else if (a === "buy") {
       if (!battle!.buy(b.dataset.key as Army, buyBatch)) notice("魔晶不足或兵种未解锁");
       updateHud();
+    } else if (a === "army-mode") setArmyMode(b.dataset.key as "stock" | "field");
+    else if (a === "select-kind") selectType(b.dataset.key as Kind, (ev as MouseEvent).shiftKey);
+    else if (a === "halt") {
+      battle?.halt(battle.selected);
+      notice("所选部队原地待命 · 仅攻击射程内目标");
+      updateHud();
     } else if (a === "deploy") {
+      if (
+        armyMode === "field" ||
+        (!isArmy(b.dataset.key as Kind) && battle?.getUnit(b.dataset.key as Kind))
+      ) {
+        selectType(b.dataset.key as Kind, (ev as MouseEvent).shiftKey);
+        return;
+      }
       if ((ev as MouseEvent).shiftKey && renderer?.rally) {
         const p = renderer.rally;
         battle!.deploy(b.dataset.key as Kind, p.x, p.y, Infinity);
@@ -310,11 +330,30 @@ function showWizard() {
       },
     ).join(
       "",
-    )}</section><aside class="briefing"><div class="eyebrow">IMPERIAL INTELLIGENCE</div><h3>圣曜城 · 防御情报</h3><div class="tactical-map"><div class="intel-crystal">✧<span>中央日轮圣晶</span></div><div class="intel-inner"></div><span class="intel-west">西境薄墙 / 资源矿场</span><span class="intel-east">东境防空 / 弓手</span><div class="intel-wall"></div><span class="intel-gate">四面城门 · 三重防线</span><div class="intel-arrows">↑　　↑　　↑</div></div><p>东南西北均可出兵。西线薄墙利于破壁，东线防空密集，北线资源与法师并存，南线重炮守主门。先掠夺资源，再打通前线；内城与核心还有各自防御。</p><div class="loadout-summary"><span>${DIFFICULTIES[loadout.difficulty].name} / ${SPECS[loadout.spec].name}</span><b>${loadout.commanders.map((c) => COMMANDERS[c].name).join(" · ") || "请先选择统帅"}</b><span>军团 ${ARMY_KEYS.reduce((s, k) => s + loadout.inventory[k], 0)} 只 + ${loadout.commanders.length + 1} 名英雄</span></div></aside></div>`;
+    )}</section><aside class="briefing"><div class="eyebrow">IMPERIAL INTELLIGENCE</div><h3>圣曜城 · 防御情报</h3><div class="tactical-map"><div class="intel-crystal">✧<span>中央日轮圣晶</span></div><div class="intel-inner"></div><span class="intel-west">西境薄墙 / 资源矿场</span><span class="intel-east">东境防空 / 弓手</span><div class="intel-wall"></div><span class="intel-gate">四面城门 · 三重防线</span><div class="intel-arrows">↑　　↑　　↑</div></div><p>东南西北均可出兵。西线薄墙利于破壁，东线防空密集，北线资源与法师并存，南线重炮守主门。先派掠夺者沿城外分路夺取物资，再用收入购买攻城援军。拆掉外城火力、占领前线，然后推进内城。中央日轮守护骑士拥有护盾和范围震荡；单路全军硬冲风险极高。</p><div class="loadout-summary"><span>${DIFFICULTIES[loadout.difficulty].name} / ${SPECS[loadout.spec].name}</span><b>${loadout.commanders.map((c) => COMMANDERS[c].name).join(" · ") || "请先选择统帅"}</b><span>军团 ${ARMY_KEYS.reduce((s, k) => s + loadout.inventory[k], 0)} 只 + ${loadout.commanders.length + 1} 名英雄</span></div></aside></div>`;
   app.innerHTML = `<main class="preparation" style="--cover:url('${artUrl("cover")}')"><header class="prep-header"><button class="back" data-action="prev">← 返回</button><div class="small-brand">异界围城 <span>魔物之王</span></div><div class="wallet">◈ <b>${money(loadout.money)}</b><span>可用魔晶</span></div></header><nav class="steps">${steps}</nav><section class="prep-heading"><div><span class="eyebrow">WAR COUNCIL / 0${wizard + 1}</span><h2>${["选择你的决战", "决定魔王的力量", "召集异界的王者", "铸成你的魔物联军"][wizard]}</h2><p>${["圣晶即将完成充能。选择挑战，然后为最后一战做好准备。", "你的专精会改变军团的价格、血脉或元素之力。", "不同的统帅，带来不同的破城方式。请挑选一至四位。", "购买进入库存；部署不再扣费。未花完的魔晶可在战中继续补兵。"][wizard]}</p></div>${wizard === 2 ? `<div class="selection-count">${loadout.commanders.length}<span>/ 4 位统帅</span></div>` : ""}</section><div class="prep-content">${content}</div><footer class="prep-footer"><span>${wizard === 3 ? "战中可自由购兵 · 可保留预备队 · 仅摧毁中央圣晶即可获胜" : "单场决战 · 无需经营 · 所有英雄均可手动指挥"}</span><button class="primary" data-action="${wizard === 3 ? "launch" : "next"}">${wizard === 3 ? "向圣曜城进军" : "继续"} <span>→</span></button></footer><div id="notice" role="status"></div></main>`;
   bindActions();
 }
+function setArmyMode(mode: "stock" | "field") {
+  armyMode = mode;
+  if (renderer) {
+    renderer.mode = { type: "none" };
+    renderer.routeDraft = null;
+  }
+  updateHud();
+}
+function selectType(kind: Kind, append = false) {
+  if (!battle) return;
+  if (!battle.units.some((u) => u.side === 0 && u.hp > 0 && u.kind === kind)) {
+    notice("此兵种尚未出战 · 切换库存部署即可下兵");
+    return;
+  }
+  setArmyMode("field");
+  battle.selectKind(kind, append);
+  updateHud();
+}
 function aimDeploy(kind: Kind) {
+  armyMode = "stock";
   if (!renderer || !battle) return;
   if (isArmy(kind) ? battle.loadout.inventory[kind] <= 0 : !battle.heroInventory.has(kind)) {
     notice("没有库存：请先购买，已出场英雄不可重复部署");
@@ -369,6 +408,8 @@ function startBattle(l: Loadout) {
   battle.paused = true;
   buyBatch = 1;
   deployBatch = 3;
+  armyMode = "stock";
+  selectedMarkup = "";
   const heroCards = (["king", ...l.commanders] as Kind[])
     .map((k, i) => {
       const c = isCommander(k) ? COMMANDERS[k] : null;
@@ -378,10 +419,16 @@ function startBattle(l: Loadout) {
   const cards = ARMY_KEYS.filter((k) => unlocked(l, k))
     .map(
       (k) =>
-        `<div class="troop-card" data-troop="${k}"><button class="troop-deploy" data-action="deploy" data-key="${k}" draggable="true" data-drag="${k}" title="点击或拖到地图部署">${icon(k)}<span class="troop-name">${ARMIES[k].name}</span><b class="troop-stock">${l.inventory[k]}</b><small>${ARMIES[k].batch}只 / 批</small></button><button class="quick-deploy" data-action="quick-deploy" data-key="${k}" title="一键投往集结点；Shift投全部库存">快速出兵 ↗</button><button class="buy-button" data-action="buy" data-key="${k}">＋ ◈${batchPrice(l, k)}<small class="affordable">可购${Math.floor(l.money / batchPrice(l, k))}批</small></button></div>`,
+        `<div class="troop-card" data-troop="${k}"><button class="troop-deploy" data-action="deploy" data-key="${k}" draggable="true" data-drag="${k}" title="点击或拖到地图部署">${icon(k)}<span class="troop-name">${ARMIES[k].name}</span><b class="troop-stock">${l.inventory[k]}</b><small class="troop-info">${ARMIES[k].batch}只 / 批</small></button><button class="quick-deploy" data-action="quick-deploy" data-key="${k}" title="一键投往集结点；Shift投全部库存">快速出兵 ↗</button><button class="buy-button" data-action="buy" data-key="${k}">＋ ◈${batchPrice(l, k)}<small class="affordable">可购${Math.floor(l.money / batchPrice(l, k))}批</small></button></div>`,
     )
     .join("");
-  app.innerHTML = `<main class="battle-shell"><header class="battle-top"><button class="battle-brand" data-action="help">异界围城<span>THE LAST SIEGE</span></button><div class="objective"><div><span>摧毁中央日轮圣晶</span><b id="crystal-hp">100%</b></div><div class="objective-track"><i id="crystal-fill"></i></div></div><div class="clock-panel"><div class="clock-caption">距离净化降临 <span>${DIFFICULTIES[l.difficulty].name}</span></div><b id="clock">10:00</b><div class="charge-track"><i id="charge-fill"></i></div></div><div class="top-controls"><button data-action="sound">${sound.muted ? "音效 关" : "音效 开"}</button><button data-action="speed" id="speed">1×</button><button data-action="pause" id="pause">暂停 Ⅱ</button><button data-action="menu">主菜单</button></div></header><div class="battle-view" id="battle-view"><div class="battle-location"><span class="eyebrow">IMPERIAL CAPITAL</span><b>圣 曜 城</b><small>白金帝国 · 最后防线</small></div><aside class="map-panel"><canvas id="minimap" aria-label="点击小地图移动镜头"></canvas><div class="map-actions"><button data-action="overview">全景</button><button data-action="front">集结</button><button data-action="crystal">圣晶</button></div><div class="front-actions">${FRONT_KEYS.map((f) => `<button data-action="direction" data-key="${f}">${FRONTS[f].name.slice(0, 1)}</button>`).join("")}</div></aside><div class="battle-hint" id="mode-hint">拖放军团卡到城外召唤阵 · 框选军队 / 右键移动或集火</div><div id="notice" role="status"></div><div class="pause-indicator" id="pause-indicator">战斗暂停 <small>空格继续 · 暂停时可购买预备军</small></div></div><section class="battle-dock"><div class="resource-row"><div class="crystal-wallet">◈ <b id="battle-money">${money(battle.money)}</b><span>魔晶</span><small id="income">战利品 +0</small></div><div class="force-counter"><span>在场 <b id="active-count">0</b><small>/ 300</small></span><span>预备 <b id="reserve-count">0</b></span><span>选中 <b id="selected-count">0</b></span></div><div class="batch-control"><label>购买 <select id="buy-batch"><option value="1">1批</option><option value="3">3批</option><option value="Infinity">尽可能多</option></select></label><label>部署 <select id="deploy-batch"><option value="1">1批</option><option value="3" selected>3批</option><option value="5">5批</option><option value="10">10批</option><option value="Infinity">全部库存</option></select></label></div><button class="small-gold" data-action="rally">设置集结点 ⚑</button><button class="small-gold" data-action="rally-all">一键全军 ↗</button><button class="small-gold" data-action="all-deploy">指定点全军</button><button class="small-gold" data-action="charge">全军冲锋 ↑</button></div><div class="spell-row"><div class="mana-panel"><span>魔王法力 <b id="mana-value">100 / 100</b></span><div><i id="mana-fill"></i></div><small>每秒 +1.8 · 友军360距离提供施法视野</small></div><div class="spells">${SPELL_KEYS.map((k) => `<button class="spell-button" data-action="spell" data-key="${k}" data-spell="${k}" draggable="true" data-drag-spell="${k}" title="${SPELLS[k].description}"><kbd>${spellIcon(k)}</kbd><span>${SPELLS[k].name}<small>${SPELLS[k].cost}魔力</small></span><b class="spell-cd">就绪</b></button>`).join("")}</div><span class="rally-label" id="rally-label">集结：南境</span></div><div class="dock-main"><div class="troops-scroll">${cards}</div><div class="heroes-scroll">${heroCards}</div></div><div class="dock-footer"><span id="battle-message">据点需地面连通、无敌军争夺并占领8秒</span><div><button data-action="select-all">全选军队 A</button><button data-action="help">操作手册 ?</button><span id="fps"></span></div></div></section></main><div class="cinematic" id="intro-overlay"><div class="cinematic-copy"><span class="eyebrow">THE LAST SIEGE / 最后的总攻</span><h2>圣曜城的黎明</h2><p>日轮圣晶即将净化这片大地。<br>让群山开路，让风暴撕开天幕。<br>今日，异界的命运由你决定。</p><div class="march-portraits">${l.commanders.map((c) => `<div>${portrait(c)}<span>${COMMANDERS[c].name}</span></div>`).join("")}</div><button class="primary" data-action="skip-intro">开始总攻 / 跳过演出 →</button></div></div>`;
+  app.innerHTML = `<main class="battle-shell"><header class="battle-top"><button class="battle-brand" data-action="help">异界围城<span>THE LAST SIEGE</span></button><div class="objective"><div><span>摧毁中央日轮圣晶</span><b id="crystal-hp">100%</b></div><div class="objective-track"><i id="crystal-fill"></i></div><button class="guardian-status" id="guardian-status" data-action="guardian" title="日轮守护骑士：圣辉震荡与阶段护盾，驻守中央核心">日轮守护骑士</button></div><div class="clock-panel"><div class="clock-caption">距离净化降临 <span>${DIFFICULTIES[l.difficulty].name}</span></div><b id="clock">10:00</b><div class="charge-track"><i id="charge-fill"></i></div></div><div class="top-controls"><button data-action="sound">${sound.muted ? "音效 关" : "音效 开"}</button><button data-action="speed" id="speed">1×</button><button data-action="pause" id="pause">暂停 Ⅱ</button><button data-action="menu">主菜单</button></div></header><div class="battle-view" id="battle-view"><div class="battle-location"><span class="eyebrow">IMPERIAL CAPITAL</span><b>圣 曜 城</b><small id="campaign-phase">外城掠夺资源 → 内城进攻决战</small></div><aside class="map-panel"><canvas id="minimap" aria-label="点击小地图移动镜头"></canvas><div class="map-actions"><button data-action="overview">全景</button><button data-action="front">集结</button><button data-action="crystal">圣晶</button></div><div class="front-actions">${FRONT_KEYS.map((f) => `<button data-action="direction" data-key="${f}">${FRONTS[f].name.slice(0, 1)}</button>`).join("")}</div></aside><div class="battle-hint" id="mode-hint">拖放军团卡到城外召唤阵 · 框选军队 / 右键画路线 / 单击集火</div><div id="notice" role="status"></div><div class="pause-indicator" id="pause-indicator">战斗暂停 <small>空格继续 · 暂停时可购买预备军</small></div></div><section class="battle-dock"><div class="resource-row"><div class="crystal-wallet">◈ <b id="battle-money">${money(battle.money)}</b><span>魔晶</span><small id="income">战利品 +0</small></div><div class="force-counter"><span>在场 <b id="active-count">0</b><small>/ 300</small></span><span>预备 <b id="reserve-count">0</b></span><span>选中 <b id="selected-count">0</b></span></div><div class="batch-control"><label>购买 <select id="buy-batch"><option value="1">1批</option><option value="3">3批</option><option value="Infinity">尽可能多</option></select></label><label>部署 <select id="deploy-batch"><option value="1">1批</option><option value="3" selected>3批</option><option value="5">5批</option><option value="10">10批</option><option value="Infinity">全部库存</option></select></label></div><button class="small-gold" data-action="rally">设置集结点 ⚑</button><button class="small-gold" data-action="rally-all">一键全军 ↗</button><button class="small-gold" data-action="all-deploy">指定点全军</button><button class="small-gold" data-action="charge" title="明确命令当前军队与已排队军队自动攻城">全军自动进攻 ↑</button></div><div class="spell-row"><div class="mana-panel"><span>魔王法力 <b id="mana-value">100 / 100</b></span><div><i id="mana-fill"></i></div><small>每秒 +1.8 · 友军360距离提供施法视野</small></div><div class="spells">${SPELL_KEYS.map((k) => `<button class="spell-button" data-action="spell" data-key="${k}" data-spell="${k}" draggable="true" data-drag-spell="${k}" title="${SPELLS[k].description}"><kbd>${spellIcon(k)}</kbd><span>${SPELLS[k].name}<small>${SPELLS[k].cost}魔力</small></span><b class="spell-cd">就绪</b></button>`).join("")}</div><span class="rally-label" id="rally-label">集结：南境</span></div><div class="dock-main"><div class="troops-scroll">${cards}</div><div class="heroes-scroll">${heroCards}</div></div><div class="dock-footer command-footer"><div class="army-tabs"><button data-action="army-mode" data-key="stock" class="active">库存部署</button><button data-action="army-mode" data-key="field">战场选兵</button></div><div class="selection-summary"><span id="selection-label">部署后原地待命</span><div id="selection-types"></div></div><label class="priority-label">沿路优先 <select id="target-priority">${Object.entries(
+    PRIORITIES,
+  )
+    .map(([key, label]) => `<option value="${key}">${label}</option>`)
+    .join(
+      "",
+    )}<option value="mixed" disabled>混合优先级</option></select></label><button data-action="halt" id="halt-command">原地待命 S</button><span class="route-help" id="battle-message">右键拖画路线 · Shift+右键追加 · 到点停留</span><button data-action="select-all">全选 A</button><button data-action="help">?</button><span id="fps"></span></div></section></main><div class="cinematic" id="intro-overlay"><div class="cinematic-copy"><span class="eyebrow">THE LAST SIEGE / 最后的总攻</span><h2>圣曜城的黎明</h2><p>日轮圣晶即将净化这片大地。<br>让群山开路，让风暴撕开天幕。<br>今日，异界的命运由你决定。</p><div class="march-portraits">${l.commanders.map((c) => `<div>${portrait(c)}<span>${COMMANDERS[c].name}</span></div>`).join("")}</div><button class="primary" data-action="skip-intro">开始总攻 / 跳过演出 →</button></div></div>`;
   renderer = new Renderer(battle, $("#battle-view"), $("#minimap"));
   renderer.rally = { x: FRONTS.south.x, y: FRONTS.south.y };
   bindActions();
@@ -436,7 +483,43 @@ function updateHud() {
   $("#battle-money").textContent = money(b.money);
   $("#active-count").textContent = String(b.active);
   $("#reserve-count").textContent = String(b.reserves);
-  $("#selected-count").textContent = String(b.selected.size);
+  const members = b.members(b.selected),
+    fieldCounts = new Map<Kind, number>(),
+    selectedCounts = new Map<Kind, number>();
+  for (const u of b.units)
+    if (u.side === 0 && u.hp > 0) fieldCounts.set(u.kind, (fieldCounts.get(u.kind) ?? 0) + 1);
+  for (const u of members) selectedCounts.set(u.kind, (selectedCounts.get(u.kind) ?? 0) + 1);
+  $("#selected-count").textContent = String(members.length);
+  for (const el of document.querySelectorAll<HTMLElement>('[data-action="army-mode"]'))
+    el.classList.toggle("active", el.dataset.key === armyMode);
+  $("#halt-command").toggleAttribute("disabled", members.length === 0);
+  const travelling = members.filter((u) => u.order?.type === "move").length,
+    waiting = members.filter((u) => u.order?.type === "hold").length;
+  $("#selection-label").textContent = members.length
+    ? `已选${members.length} · 行进${travelling} / 待命${waiting}`
+    : armyMode === "field"
+      ? "框选部队，或点兵种选同类"
+      : "部署后原地待命 · Tab切换指挥";
+  const markup = [...selectedCounts]
+    .map(
+      ([k, n]) =>
+        `<button data-action="select-kind" data-key="${k}" title="点选全场同类，Shift追加">${isArmy(k) ? ARMIES[k].name : k === "king" ? "魔王" : isCommander(k) ? COMMANDERS[k].name : k} ×${n}</button>`,
+    )
+    .join("");
+  if (markup !== selectedMarkup) {
+    $("#selection-types").innerHTML = markup;
+    selectedMarkup = markup;
+  }
+  const priorities = new Set(members.map((u) => u.priority)),
+    priority = $<HTMLSelectElement>("#target-priority");
+  priority.disabled = !members.length;
+  priority.value = priorities.size === 1 ? [...priorities][0] : priorities.size ? "mixed" : "auto";
+  const guardian = b.units.find((u) => u.side === 1 && u.kind === "captain" && u.hp > 0);
+  $("#guardian-status").textContent = guardian
+    ? `日轮守护骑士 ${Math.ceil((guardian.hp / guardian.maxHp) * 100)}%${guardian.sacredShield > 0 ? " · 圣光护盾" : ""}`
+    : "守护骑士 已击破";
+  $("#campaign-phase").textContent =
+    `${b.crystal.hp < b.crystal.maxHp ? "中央核心决战" : b.units.some((u) => u.side === 0 && u.hp > 0 && u.x > 1200 && u.x < 2800 && u.y > 1100 && u.y < 2500) ? "内城进攻" : "外城资源掠夺"} · 已夺${b.stats.lootSites}处 / 物资+${b.stats.resourceIncome}`;
   $("#income").textContent = `战利品 +${b.stats.income}`;
   const time = Math.ceil(b.remaining);
   $("#clock").textContent = `${Math.floor(time / 60)
@@ -452,7 +535,9 @@ function updateHud() {
   $("#fps").textContent = `${Math.round(renderer.fps)} FPS`;
   $("#mode-hint").textContent =
     renderer.mode.type === "none"
-      ? "选卡点放 / 长按连续出兵 · 快速出兵投集结点 · Shift投全部 · 框选后右键指挥"
+      ? armyMode === "field"
+        ? "框选或点兵种选同类 · 右键拖画路线 / Shift追加 · 沿途交战，到点停留"
+        : "选卡点放 / 长按出兵 · 下兵原地待命 · Tab或战场选兵切换指挥"
       : renderer.mode.type === "deploy"
         ? "部署模式 · 点击批量 / 长按连续 · 绿色区域合法 · Esc取消"
         : renderer.mode.type === "rally"
@@ -480,7 +565,21 @@ function updateHud() {
   for (const k of ARMY_KEYS) {
     const el = $(`[data-troop="${k}"]`);
     if (!el) continue;
-    el.querySelector(".troop-stock")!.textContent = String(b.loadout.inventory[k]);
+    const count = fieldCounts.get(k) ?? 0,
+      picked = selectedCounts.get(k) ?? 0;
+    el.querySelector(".troop-stock")!.textContent = String(
+      armyMode === "field" ? count : b.loadout.inventory[k],
+    );
+    el.querySelector(".troop-info")!.textContent =
+      armyMode === "field"
+        ? `场上${count} · 已选${picked}`
+        : `${ARMIES[k].batch}只/批 · 场上${count}`;
+    const card = el.querySelector<HTMLButtonElement>(".troop-deploy")!;
+    card.draggable = armyMode === "stock";
+    card.disabled = armyMode === "field" && count === 0;
+    card.title = armyMode === "field" ? "点击选择全场同类 · Shift追加" : "点击或长按地图部署库存";
+    el.classList.toggle("field-mode", armyMode === "field");
+    el.classList.toggle("field-selected", picked > 0);
     el.querySelector(".quick-deploy")!.textContent =
       `出兵 ${Math.min(b.loadout.inventory[k], deployBatch * ARMIES[k].batch)} ↗`;
     el.classList.toggle("aiming", renderer.mode.type === "deploy" && renderer.mode.kind === k);
@@ -493,6 +592,9 @@ function updateHud() {
     const el = $(`[data-hero="${k}"]`);
     const info = b.skillInfo(k),
       queued = b.queue.some((q) => q.kind === k);
+    el.classList.toggle("field-selected", selectedCounts.has(k));
+    el.querySelector<HTMLButtonElement>(".hero-deploy")!.draggable =
+      armyMode === "stock" && !info.unit;
     el.querySelector(".hero-state")!.textContent = info.unit
       ? "已出战"
       : b.heroInventory.has(k)
@@ -529,10 +631,21 @@ function bindBattleInput() {
     button: number;
     cx: number;
     cy: number;
+    path: { x: number; y: number }[];
+    append: boolean;
+    dragged: boolean;
   } | null = null;
   const on = (target: EventTarget, event: string, fn: EventListener) =>
     target.addEventListener(event, fn, { signal });
   on(c, "contextmenu", (e) => e.preventDefault());
+  const cancelGesture = () => {
+    stream.end();
+    down = null;
+    r.routeDraft = null;
+    r.selection = null;
+  };
+  for (const event of ["blur", "pointercancel"]) on(window, event, cancelGesture);
+  on(document, "visibilitychange", cancelGesture);
   for (const event of ["blur", "pointerup", "pointercancel"]) on(window, event, () => stream.end());
   on(document, "visibilitychange", () => stream.end());
   on(c, "lostpointercapture", () => stream.end());
@@ -558,6 +671,7 @@ function bindBattleInput() {
   on(c, "pointerdown", ((e: PointerEvent) => {
     if ($("#intro-overlay")) return;
     const p = r.screenToWorld(e.clientX, e.clientY);
+    c.focus({ preventScroll: true });
     r.pointer = p;
     if (e.button === 2) {
       stream.end();
@@ -567,16 +681,24 @@ function bindBattleInput() {
         return;
       }
       e.preventDefault();
-      if (!b.selected.size) notice("先框选部队，或按A全选");
-      else {
-        const t = b.targetAt(p.x, p.y);
-        b.command(
-          b.selected,
-          t ? { type: "attack", target: t.id } : { type: "move", x: p.x, y: p.y },
-        );
-        b.events.push({ type: "deploy", x: p.x, y: p.y, radius: 35 });
-        notice(t ? "已下达集火命令" : "已下达移动命令");
+      if (!b.selected.size) {
+        notice("先框选部队，或切到战场选兵后点选兵种");
+        return;
       }
+      armyMode = "field";
+      down = {
+        x: e.clientX,
+        y: e.clientY,
+        wx: p.x,
+        wy: p.y,
+        button: 2,
+        cx: r.camera.x,
+        cy: r.camera.y,
+        path: [p],
+        append: e.shiftKey,
+        dragged: false,
+      };
+      c.setPointerCapture(e.pointerId);
       return;
     }
     if (e.button === 0 && r.mode.type !== "none") {
@@ -627,15 +749,26 @@ function bindBattleInput() {
       button: e.button,
       cx: r.camera.x,
       cy: r.camera.y,
+      path: [],
+      append: e.shiftKey,
+      dragged: false,
     };
     c.setPointerCapture(e.pointerId);
   }) as EventListener);
   on(c, "pointermove", ((e: PointerEvent) => {
     r.pointer = r.screenToWorld(e.clientX, e.clientY);
+    if (!down && r.mode.type === "none")
+      r.hoverTarget = b.targetAt(r.pointer.x, r.pointer.y)?.id ?? 0;
     if (!down) return;
     if (down.button === 1) {
       r.camera.x = down.cx - (e.clientX - down.x) / r.camera.zoom;
       r.camera.y = down.cy - (e.clientY - down.y) / r.camera.zoom;
+    } else if (down.button === 2) {
+      if (Math.hypot(e.clientX - down.x, e.clientY - down.y) > 7) down.dragged = true;
+      const last = down.path.at(-1)!;
+      if (Math.hypot(r.pointer.x - last.x, r.pointer.y - last.y) > 55 && down.path.length < 96)
+        down.path.push({ ...r.pointer });
+      if (down.dragged) r.routeDraft = [...down.path, { ...r.pointer }];
     } else if (down.button === 0 && r.mode.type === "none")
       r.selection = {
         x: down.wx,
@@ -646,15 +779,50 @@ function bindBattleInput() {
   }) as EventListener);
   on(c, "pointerup", ((e: PointerEvent) => {
     stream.end();
+    if (down?.button === 2) {
+      const p = r.screenToWorld(e.clientX, e.clientY),
+        append = down.append || e.shiftKey;
+      if (down.dragged) {
+        b.followRoute(b.selected, routePoints([...down.path, p]), append);
+        notice(
+          append ? "已追加行进轨迹 · 沿途交战，到点停留" : "已设置行进轨迹 · 沿途交战，到点停留",
+        );
+      } else {
+        const t = b.targetAt(p.x, p.y);
+        if (t && !append) {
+          b.command(b.selected, { type: "attack", target: t.id });
+          notice("指定集火 · 目标击破后原地待命");
+        } else {
+          b.followRoute(b.selected, [p], append);
+          notice(append ? "已追加路线点" : "向目标交战行进 · 到达后原地待命");
+        }
+      }
+      r.routeDraft = null;
+      down = null;
+      updateHud();
+      return;
+    }
     if (down?.button === 0) {
       const p = r.screenToWorld(e.clientX, e.clientY);
-      if (Math.hypot(e.clientX - down.x, e.clientY - down.y) < 5)
-        b.select(p.x - 30, p.y - 30, p.x + 30, p.y + 30, e.shiftKey);
-      else b.select(down.wx, down.wy, p.x, p.y, e.shiftKey);
+      setArmyMode("field");
+      if (Math.hypot(e.clientX - down.x, e.clientY - down.y) < 5) {
+        const u = b.friendlyAt(p.x, p.y);
+        if (!e.shiftKey) b.selected.clear();
+        if (u) {
+          if (e.shiftKey && b.selected.has(u.id)) b.selected.delete(u.id);
+          else b.selected.add(u.id);
+        }
+      } else b.select(down.wx, down.wy, p.x, p.y, e.shiftKey);
       r.selection = null;
       updateHud();
     }
     down = null;
+  }) as EventListener);
+  on(c, "dblclick", ((e: MouseEvent) => {
+    if (r.mode.type !== "none") return;
+    const p = r.screenToWorld(e.clientX, e.clientY),
+      u = b.friendlyAt(p.x, p.y);
+    if (u) selectType(u.kind, e.shiftKey);
   }) as EventListener);
   on(document, "keydown", ((e: KeyboardEvent) => {
     if ((e.target as HTMLElement).matches("select,input,textarea") || $("#help-modal")) return;
@@ -662,6 +830,7 @@ function bindBattleInput() {
       stream.end();
       r.mode = { type: "none" };
       r.selection = null;
+      r.routeDraft = null;
       down = null;
       updateHud();
       return;
@@ -676,7 +845,19 @@ function bindBattleInput() {
       b.paused = !b.paused;
       updateHud();
     }
-    if (e.key.toLowerCase() === "a") {
+    if (e.code === "Tab") {
+      e.preventDefault();
+      setArmyMode(armyMode === "stock" ? "field" : "stock");
+    }
+    if (e.key.toLowerCase() === "s" && !e.ctrlKey && !e.metaKey) {
+      e.preventDefault();
+      b.halt(b.selected);
+      notice("所选军队原地待命");
+      updateHud();
+    }
+    if (e.key.toLowerCase() === "a" && !e.ctrlKey && !e.metaKey) {
+      e.preventDefault();
+      setArmyMode("field");
       b.selected = new Set(b.units.filter((u) => u.hp > 0 && u.side === 0).map((u) => u.id));
       updateHud();
     }
@@ -695,6 +876,7 @@ function bindBattleInput() {
         b.groups[gi] = new Set(b.selected);
         notice(`编队${e.key}已保存`);
       } else {
+        setArmyMode("field");
         b.selected = new Set([...b.groups[gi]].filter((id) => (b.byId.get(id)?.hp ?? 0) > 0));
         updateHud();
       }
@@ -708,6 +890,10 @@ function bindBattleInput() {
   for (const el of document.querySelectorAll<HTMLElement>("[data-drag]")) {
     on(el, "dragstart", ((e: DragEvent) => {
       const k = el.dataset.drag as Kind;
+      if (armyMode === "field" || (!isArmy(k) && b.getUnit(k))) {
+        e.preventDefault();
+        return;
+      }
       e.dataTransfer!.setData("text/plain", k);
       e.dataTransfer!.effectAllowed = "copy";
       r.mode = { type: "deploy", kind: k };
@@ -768,6 +954,11 @@ function bindBattleInput() {
   on($("#buy-batch"), "change", (() => {
     buyBatch = Number($<HTMLSelectElement>("#buy-batch").value);
   }) as EventListener);
+  on($("#target-priority"), "change", (() => {
+    b.setPriority(b.selected, $<HTMLSelectElement>("#target-priority").value as Priority);
+    notice("已更新所选部队沿路目标优先级");
+    updateHud();
+  }) as EventListener);
   on($("#deploy-batch"), "change", (() => {
     deployBatch = Number($<HTMLSelectElement>("#deploy-batch").value);
   }) as EventListener);
@@ -792,7 +983,7 @@ function showHelp() {
   const div = document.createElement("div");
   div.id = "help-modal";
   div.className = "modal";
-  div.innerHTML = `<section class="manual"><button class="close" data-action="close-help">×</button><span class="eyebrow">FIELD MANUAL</span><h2>让每一支军团，抵达该去的战场。</h2><div class="manual-grid"><div><h3>01 / 部署与经济</h3><p>购买只扣一次魔晶，兵力进入库存。可从东南西北四面出兵。选卡后反复点地图，长按同一位置连续投放；1/3/5/10批或全部库存可调，默认3批。先设集结点，再点卡片下方出兵按钮；Shift一键投全部。拖放仍可用，300只以外的兵力保留在队列。</p><h3>02 / 指挥</h3><p>左键框选，右键移动或集火。A全选，Ctrl+1/2/3存编队，1/2/3选编队。全军冲锋恢复自动推进，同时保留你的集火目标。中键拖镜头，滚轮缩放，小地图定位。</p></div><div><h3>03 / 英雄与技能</h3><p>魔王F，统帅按招募顺序Q/W/E/R。先把英雄拖到合法区域，再按技能键，瞄准后左键确认。技能有距离和冷却；Esc取消。巨王必须指定可见墙段，龙息是扇形。通用魔王法术用Z/X/C/V或拖放图标：狂暴/治疗/守护/陨星，消耗随时间恢复的魔力，需要附近友军提供无遮挡视野。</p><h3>04 / 胜利之路</h3><p>摧毁中央日轮圣晶即可胜利。巨人破侧墙，狼骑猎杀射手，地面拆防空后飞龙进军。四个前线据点需打通地面、清除守军、站稳8秒，随后+200魔晶并可就地部署援军。掠夺者对资源设施伤害×3且击毁额外+90；精灵范围魔法必须保护好。</p></div></div><p class="manual-footer">空格暂停，暂停时计时和技能冷却停止；2×同时加快战斗和倒计时。击杀、拆塔和占领奖励只有一次；内城预备队开局已存在，数量有限，沿城门与道路增援。魔王阵亡仍可战斗；时间耗尽或彻底力竭则失败。</p><button class="primary" data-action="close-help">明白了，准备出征 →</button></section>`;
+  div.innerHTML = `<section class="manual"><button class="close" data-action="close-help">×</button><span class="eyebrow">FIELD MANUAL</span><h2>让每一支军团，抵达该去的战场。</h2><div class="manual-grid"><div><h3>01 / 部署与经济</h3><p>购买只扣一次魔晶，兵力进入库存。可从东南西北四面出兵。选卡后反复点地图，长按同一位置连续投放；1/3/5/10批或全部库存可调，默认3批。先设集结点，再点卡片下方出兵按钮；Shift一键投全部。拖放仍可用，300只以外的兵力保留在队列。</p><h3>02 / 指挥</h3><p>部署后原地待命。左键点选/框选，双击选择同类；底栏切换战场选兵后，点卡片选择全场同类，Shift追加。按住右键拖画行军轨迹，Shift+右键追加路点；单击敌人则集火。沿路攻击附近的优先目标，击退后继续行军，到终点停下；S立即待命。A全选，Tab切换底栏，Ctrl+1/2/3存编队，1/2/3选编队。全军自动进攻是明确命令，后续新部署仍待命。中键拖镜头，滚轮缩放，小地图定位。</p></div><div><h3>03 / 英雄与技能</h3><p>魔王F，统帅按招募顺序Q/W/E/R。先把英雄拖到合法区域，再按技能键，瞄准后左键确认。技能有距离和冷却；Esc取消。巨王必须指定可见墙段，龙息是扇形。通用魔王法术用Z/X/C/V或拖放图标：狂暴/治疗/守护/陨星，消耗随时间恢复的魔力，需要附近友军提供无遮挡视野。</p><h3>04 / 胜利之路</h3><p>核心节奏：外城掠夺→购买援军→拆城防/占前线→内城决战。资源设施奖励360–600魔晶，掠夺者击毁另加90。各方向守军可沿道路支援，核心有日轮守护骑士与精锐守军，注意护盾和震荡。无需清空所有资源；摧毁中央日轮圣晶即可胜利。巨人破侧墙，狼骑猎杀射手，地面拆防空后飞龙进军。四个前线据点需打通地面、清除守军、站稳8秒，随后+200魔晶并可就地部署援军。掠夺者对资源设施伤害×3且击毁额外+90；精灵范围魔法必须保护好。</p></div></div><p class="manual-footer">空格暂停，暂停时计时和技能冷却停止；2×同时加快战斗和倒计时。击杀、拆塔和占领奖励只有一次；内城预备队开局已存在，数量有限，沿城门与道路增援。魔王阵亡仍可战斗；时间耗尽或彻底力竭则失败。</p><button class="primary" data-action="close-help">明白了，准备出征 →</button></section>`;
   app.append(div);
 }
 async function boot() {

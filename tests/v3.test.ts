@@ -403,6 +403,7 @@ describe("V3 route and commander regressions", () => {
       if (!["wall", "gate", "crystal"].includes(s.kind)) b.damage(s, s.hp);
     const p = FRONTS[front];
     for (let i = 0; i < 4; i++) b.spawn("golem", p.x + i * 12, p.y);
+    b.charge();
     let entered = false;
     for (let n = 0; n < 180 && !entered; n++) {
       run(b, 1);

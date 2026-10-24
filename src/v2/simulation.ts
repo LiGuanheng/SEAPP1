@@ -17,6 +17,7 @@ import {
 } from "./data";
 import { batchPrice, purchase, unlocked, type Loadout } from "./economy";
 import { Navigation, type Point } from "./navigation";
+import { PRIORITIES, routePoints, segmentDistance, type Priority, type RoutePlan } from "./orders";
 import {
   createStructures,
   OUTPOSTS,
@@ -24,12 +25,15 @@ import {
   FRONT_KEYS,
   frontAt,
   districtAt,
+  towerRange,
+  towerCovers,
   type Front,
   type Structure,
 } from "./world";
 export type Order =
   | { type: "move"; x: number; y: number; anchorX?: number; anchorY?: number }
-  | { type: "attack"; target: number };
+  | { type: "attack"; target: number }
+  | { type: "hold"; x: number; y: number };
 export interface Unit extends Stats {
   id: number;
   kind: Kind;
@@ -44,6 +48,12 @@ export interface Unit extends Stats {
   think: number;
   target: number;
   order?: Order;
+  route?: RoutePlan;
+  priority: Priority;
+  engagement?: Point;
+  resumeAt: number;
+  sacredShield: number;
+  sacredCooldown: number;
   rally?: Point[];
   lane: number;
   facing: number;
@@ -89,6 +99,7 @@ interface Queue {
   y: number;
   small: boolean;
   lane: number;
+  assault?: boolean;
 }
 interface Projectile {
   x: number;
@@ -102,6 +113,7 @@ interface Projectile {
   fromX: number;
   fromY: number;
   source: number;
+  elevation?: { district: string; reach: number };
 }
 export interface SpellZone {
   spell: Spell;
@@ -113,6 +125,13 @@ export interface SpellZone {
 type Target = Unit | Structure;
 const distance = (a: Point, b: Point) => Math.hypot(a.x - b.x, a.y - b.y);
 const isStructure = (t: Target): t is Structure => "w" in t;
+const attackDistance = (u: Unit, t: Target) =>
+  isStructure(t)
+    ? Math.hypot(
+        Math.max(0, Math.abs(u.x - t.x) - t.w / 2),
+        Math.max(0, Math.abs(u.y - t.y) - t.h / 2),
+      )
+    : distance(u, t) - t.size * 0.28;
 class Spatial {
   private cells = new Map<string, Unit[]>();
   rebuild(units: Unit[]) {
@@ -154,6 +173,9 @@ export class Battle {
     peak: 0,
     resourceIncome: 0,
     spells: 0,
+    lootSites: 0,
+    reliefTransfers: 0,
+    guardianBursts: 0,
     towerShots: { field: 0, outer: 0, inner: 0, core: 0 },
     destroyed: { field: 0, outer: 0, inner: 0, core: 0 },
   };
@@ -181,6 +203,9 @@ export class Battle {
   private reinforcementWave = 0;
   private navDirty = false;
   private accumulator = 0;
+  private nextRouteId = 1;
+  private garrisons: Record<Front, number[]> = { north: [], south: [], east: [], west: [] };
+  private reliefSent = new Set<Front>();
   time = 0;
   paused = false;
   speed = 1;
@@ -240,12 +265,13 @@ export class Battle {
         dy = Math.sign(1800 - p.gateY);
       for (let i = 0; i < Math.round(11 * density); i++) {
         const kind: Kind = i < 5 ? "soldier" : i < 9 ? "archer" : f === "north" ? "mage" : "knight";
-        this.spawn(
+        const guard = this.spawn(
           kind,
           p.gateX + dx * 135 + (this.random() - 0.5) * 140,
           p.gateY + dy * 135 + (this.random() - 0.5) * 140,
           1,
         );
+        this.garrisons[f].push(guard.id);
       }
       for (let i = 0; i < 3; i++)
         this.spawn(
@@ -268,14 +294,17 @@ export class Battle {
           y + (this.random() - 0.5) * 110,
           1,
         );
-    for (let i = 0; i < Math.round(7 * density); i++)
+    const coreCount =
+      this.loadout.difficulty === "easy" ? 10 : this.loadout.difficulty === "hard" ? 18 : 16;
+    for (let i = 0; i < coreCount; i++)
       this.spawn(
-        i % 3 === 0 ? "mage" : "paladin",
-        1850 + (i % 3) * 120,
-        1720 + Math.floor(i / 3) * 100,
+        i % 5 === 0 ? "mage" : i % 5 === 1 ? "knight" : "paladin",
+        1750 + (i % 5) * 110,
+        1620 + Math.floor(i / 5) * 105,
         1,
       );
-    this.spawn("captain", 2000, 1900, 1);
+    const guardian = this.spawn("captain", 2000, 1880, 1);
+    guardian.guardRadius = 430;
     const teamCount =
       this.loadout.difficulty === "easy" ? 2 : this.loadout.difficulty === "hard" ? 4 : 3;
     const camps = this.structures.filter((s) => s.kind === "barracks");
@@ -310,12 +339,25 @@ export class Battle {
           ? KING
           : ENEMIES[kind]!;
     if (!base) throw new Error(`Invalid unit ${kind}`);
+    if (this.nav.obstacleAt(x, y, kind === "spider" || kind === "web", side === 1)) {
+      const p = this.freePoint({ x, y }, WORLD.crystal);
+      x = p.x;
+      y = p.y;
+    }
     const evo =
       side === 0 && this.loadout.spec === "evolve" && isArmy(kind) && ARMIES[kind].commander
         ? 1.1
         : 1;
     const elemental = side === 0 && this.loadout.spec === "element" && base.range > 80 ? 1.1 : 1;
-    const hp = base.hp * evo * (small ? 0.32 : 1);
+    const guardian =
+      kind === "captain"
+        ? this.loadout.difficulty === "hard"
+          ? 1.25
+          : this.loadout.difficulty === "easy"
+            ? 0.75
+            : 1
+        : 1;
+    const hp = base.hp * evo * (small ? 0.32 : 1) * guardian;
     const u: Unit = {
       ...base,
       hp,
@@ -332,6 +374,11 @@ export class Battle {
       cooldown: this.random() * 0.6,
       think: 0,
       target: 0,
+      order: side === 0 ? { type: "hold", x, y } : undefined,
+      priority: "auto",
+      resumeAt: 0,
+      sacredShield: 0,
+      sacredCooldown: 8,
       lane,
       facing: -1,
       moving: false,
@@ -427,51 +474,187 @@ export class Battle {
     if (this.status !== "battle") return 0;
     return purchase(this.loadout, k, n);
   }
-  command(ids: Iterable<number>, order: Order) {
-    const members = [...ids].filter((id) => {
-      const u = this.byId.get(id);
-      return u && !isStructure(u) && u.side === 0 && u.hp > 0;
-    });
-    const columns = Math.ceil(Math.sqrt(members.length)),
-      rows = Math.ceil(members.length / columns);
-    for (const [index, id] of members.entries()) {
-      const u = this.byId.get(id);
-      if (u && !isStructure(u) && u.side === 0 && u.hp > 0) {
-        u.order = { ...order };
-        if (u.order.type === "move" && members.length > 1) {
-          if (order.type === "move") {
-            u.order.anchorX = order.x;
-            u.order.anchorY = order.y;
-          }
-          u.order.x = Math.max(
-            40,
-            Math.min(
-              WORLD.width - 40,
-              order.type === "move" ? order.x + ((index % columns) - (columns - 1) / 2) * 22 : 0,
-            ),
-          );
-          u.order.y = Math.max(
-            40,
-            Math.min(
-              WORLD.height - 40,
-              order.type === "move"
-                ? order.y + (Math.floor(index / columns) - (rows - 1) / 2) * 22
-                : 0,
-            ),
-          );
+  members(ids: Iterable<number>) {
+    return [...ids]
+      .map((id) => this.byId.get(id))
+      .filter((u): u is Unit => !!u && !isStructure(u) && u.side === 0 && u.hp > 0);
+  }
+  private freePoint(point: Point, from: Point): Point {
+    const p = {
+      x: Math.max(40, Math.min(WORLD.width - 40, point.x)),
+      y: Math.max(40, Math.min(WORLD.height - 40, point.y)),
+    };
+    if (!this.nav.obstacleAt(p.x, p.y)) return p;
+    let best: Point | undefined,
+      score = Infinity;
+    for (let r = 16; r <= 192; r += 16)
+      for (let i = 0; i < 16; i++) {
+        const q = {
+          x: p.x + Math.cos((i * Math.PI) / 8) * r,
+          y: p.y + Math.sin((i * Math.PI) / 8) * r,
+        };
+        if (
+          q.x < 40 ||
+          q.y < 40 ||
+          q.x > WORLD.width - 40 ||
+          q.y > WORLD.height - 40 ||
+          this.nav.obstacleAt(q.x, q.y)
+        )
+          continue;
+        const d = r + distance(q, from) * 0.15;
+        if (d < score) {
+          best = q;
+          score = d;
         }
-        u.target = order.type === "attack" ? order.target : 0;
-        u.think = 0;
       }
+    return best ?? p;
+  }
+  private routeStep(u: Unit) {
+    const r = u.route!,
+      p = r.points[r.index],
+      last = r.index === r.points.length - 1;
+    const desired = last ? { x: p.x + r.offset.x, y: p.y + r.offset.y } : p;
+    let goal = this.freePoint(desired, p);
+    if (last && !this.nav.clear(p, goal)) goal = p;
+    u.order = { type: "move", x: goal.x, y: goal.y, anchorX: p.x, anchorY: p.y };
+  }
+  followRoute(ids: Iterable<number>, points: Point[], append = false) {
+    if (this.status !== "battle") return 0;
+    const path = routePoints(points),
+      members = this.members(ids);
+    if (!path.length || !members.length) return 0;
+    const center = {
+      x: members.reduce((n, u) => n + u.x, 0) / members.length,
+      y: members.reduce((n, u) => n + u.y, 0) / members.length,
+    };
+    const clean: Point[] = [];
+    for (const p of path) clean.push(this.freePoint(p, clean.at(-1) ?? center));
+    const columns = Math.ceil(Math.sqrt(members.length)),
+      rows = Math.ceil(members.length / columns),
+      id = this.nextRouteId++;
+    for (const [i, u] of members.entries()) {
+      const existing = append && u.order?.type === "move" ? u.route : undefined;
+      const pending = existing ? [...existing.points.slice(existing.index), ...clean] : clean;
+      const bounded =
+        pending.length <= 48
+          ? pending
+          : Array.from(
+              { length: 48 },
+              (_, j) => pending[Math.round((j * (pending.length - 1)) / 47)],
+            );
+      u.route = {
+        id: existing?.id ?? id,
+        points: structuredClone(bounded),
+        index: 0,
+        origin: existing
+          ? existing.index
+            ? existing.points[existing.index - 1]
+            : existing.origin
+          : { x: u.x, y: u.y },
+        offset: {
+          x: ((i % columns) - (columns - 1) / 2) * 22,
+          y: (Math.floor(i / columns) - (rows - 1) / 2) * 22,
+        },
+      };
+      this.routeStep(u);
+      u.target = 0;
+      u.think = 0;
+      u.castTime = 0;
+      u.engagement = undefined;
+      u.resumeAt = 0;
+    }
+    return members.length;
+  }
+  halt(ids: Iterable<number>) {
+    for (const u of this.members(ids)) {
+      u.order = { type: "hold", x: u.x, y: u.y };
+      u.route = undefined;
+      u.target = 0;
+      u.think = 0;
+      u.castTime = 0;
+      u.engagement = undefined;
+    }
+  }
+  setPriority(ids: Iterable<number>, priority: Priority) {
+    if (!Object.hasOwn(PRIORITIES, priority)) return;
+    for (const u of this.members(ids)) {
+      u.priority = priority;
+      u.target = 0;
+      u.think = 0;
+      u.castTime = 0;
+      u.engagement = undefined;
+    }
+  }
+  command(ids: Iterable<number>, order: Order) {
+    if (order.type === "move") {
+      this.followRoute(ids, [order]);
+      return;
+    }
+    if (order.type === "hold") {
+      this.halt(ids);
+      return;
+    }
+    const t = this.byId.get(order.target);
+    if (!t || t.hp <= 0 || (!isStructure(t) && t.side === 0)) return;
+    for (const u of this.members(ids)) {
+      u.order = { ...order };
+      u.route = undefined;
+      u.target = t.id;
+      u.think = 0;
+      u.castTime = 0;
+      u.engagement = undefined;
     }
   }
   charge() {
     for (const u of this.units)
       if (u.side === 0 && u.hp > 0 && u.order?.type !== "attack") {
         u.order = undefined;
+        u.route = undefined;
         u.target = 0;
         u.think = 0;
+        u.castTime = 0;
+        u.engagement = undefined;
       }
+    for (const q of this.queue) q.assault = true;
+  }
+  selectKind(kind: Kind, append = false) {
+    if (!append) this.selected.clear();
+    for (const u of this.units)
+      if (u.side === 0 && u.hp > 0 && u.kind === kind) this.selected.add(u.id);
+  }
+  friendlyAt(x: number, y: number) {
+    return this.units
+      .filter((u) => u.side === 0 && u.hp > 0)
+      .sort((a, b) => b.y + (b.flying ? 100 : 0) - a.y - (a.flying ? 100 : 0))
+      .find(
+        (u) =>
+          Math.abs(x - u.x) <= u.size * 0.45 + 6 &&
+          y >= u.y - u.size - (u.flying ? 30 : 0) &&
+          y <= u.y + 14,
+      );
+  }
+  private progressRoute(u: Unit) {
+    if (u.side !== 0) return;
+    if (u.order?.type === "attack" && !this.byId.get(u.order.target)?.hp) {
+      this.halt([u.id]);
+      return;
+    }
+    if (u.order?.type !== "move") return;
+    if (!u.route) {
+      if (distance(u, u.order) <= 18) this.halt([u.id]);
+      return;
+    }
+    const last = u.route.index === u.route.points.length - 1;
+    if (distance(u, u.order) > (last ? 20 : 38)) return;
+    if (last) {
+      this.halt([u.id]);
+      return;
+    }
+    u.route.index++;
+    this.routeStep(u);
+    u.target = 0;
+    u.think = 0;
+    u.engagement = undefined;
   }
   select(x1: number, y1: number, x2: number, y2: number, append = false) {
     if (!append) this.selected.clear();
@@ -530,6 +713,7 @@ export class Battle {
         walls: this.stats.walls,
       };
     if (!isStructure(target) && target.side === 0 && target.ward > 0) amount *= 0.6;
+    if (!isStructure(target) && target.kind === "captain" && target.sacredShield > 0) amount *= 0.5;
     target.hp -= amount;
     if (!isStructure(target)) target.hit = 0.16;
     if (target.hp > 0) return;
@@ -539,6 +723,7 @@ export class Battle {
         const bonus = target.resource && source?.kind === "raider" ? 90 : 0;
         this.reward(target.reward + bonus);
         if (target.resource) {
+          this.stats.lootSites++;
           this.stats.resourceIncome += target.reward + bonus;
           this.events.push({
             type: "loot",
@@ -888,6 +1073,58 @@ export class Battle {
     for (let i = this.zones.length - 1; i >= 0; i--)
       if (this.zones[i].remaining <= 0) this.zones.splice(i, 1);
   }
+  private sendToFront(ids: number[], front: Front, source?: Front) {
+    const p = this.outposts.find((p) => p.front === front)!;
+    let path: Point[] = [];
+    if (source) {
+      const ring = [
+          { x: 2000, y: 850 },
+          { x: 3080, y: 850 },
+          { x: 3080, y: 1800 },
+          { x: 3080, y: 2770 },
+          { x: 2000, y: 2770 },
+          { x: 950, y: 2770 },
+          { x: 950, y: 1800 },
+          { x: 950, y: 850 },
+        ],
+        indices = { north: 0, east: 2, south: 4, west: 6 };
+      const start = indices[source],
+        end = indices[front],
+        clockwise = (end - start + 8) % 8,
+        counter = (start - end + 8) % 8,
+        step = clockwise <= counter ? 1 : -1;
+      path.push(ring[start]);
+      for (let i = start; i !== end;) {
+        i = (i + step + 8) % 8;
+        path.push(ring[i]);
+      }
+    } else {
+      const gate = this.structures.find(
+        (s) => s.kind === "gate" && s.district === "inner" && s.front === front,
+      )!;
+      path = [{ x: gate.x, y: gate.y }];
+    }
+    for (const [i, id] of ids.entries()) {
+      const u = this.byId.get(id) as Unit;
+      if (!u || u.hp <= 0) continue;
+      u.reserve = false;
+      u.front = front;
+      u.homeX = p.x + ((i % 3) - 1) * 30;
+      u.homeY = p.y + Math.floor(i / 3) * 30;
+      u.guardRadius = 470;
+      u.rally = [...structuredClone(path), { x: u.homeX, y: u.homeY }];
+      u.target = 0;
+      u.think = 0;
+    }
+    this.events.push({
+      type: "reinforce",
+      x: p.x,
+      y: p.y,
+      text: source
+        ? `${FRONTS[source].name.slice(0, 2)}抽调守军 → ${FRONTS[front].name.slice(0, 2)}增援`
+        : `${FRONTS[front].name.slice(0, 2)}承压 · 内城预备队增援`,
+    });
+  }
   private directReserves(dt: number) {
     this.responseClock += dt;
     if (this.responseClock < DIFFICULTIES[this.loadout.difficulty].response) return;
@@ -900,53 +1137,54 @@ export class Battle {
             u.side === 0 &&
             u.hp > 0 &&
             frontAt(u.x, u.y) === front &&
-            distance(u, { x: FRONTS[front].gateX, y: FRONTS[front].gateY }) < 950,
+            distance(u, { x: FRONTS[front].gateX, y: FRONTS[front].gateY }) < 1050,
         )
-        .reduce((sum, u) => sum + Math.min(5, u.maxHp / 120), 0),
+        .reduce((n, u) => n + Math.min(5, u.maxHp / 120), 0),
     })).sort((a, b) => b.score - a.score);
-    const threat = threats.find(
-      (t) =>
-        t.score >= 7 &&
-        this.reserveTeams.filter(
-          (r) =>
-            r.dispatched &&
-            r.front === t.front &&
-            r.ids.some((id) => (this.byId.get(id)?.hp ?? 0) > 0),
-        ).length < 2,
-    );
+    const threat = threats[0];
+    if (threat.score < 8) return;
+    const maxTeams = threat.score > 70 && this.loadout.difficulty === "hard" ? 4 : 2;
+    const assigned = this.reserveTeams.filter(
+      (r) =>
+        r.dispatched &&
+        r.front === threat.front &&
+        r.ids.some((id) => (this.byId.get(id)?.hp ?? 0) > 0),
+    ).length;
     const team = this.reserveTeams.find(
       (t) => !t.dispatched && t.ids.some((id) => (this.byId.get(id)?.hp ?? 0) > 0),
     );
-    if (!threat || !team) return;
-    team.dispatched = true;
-    team.front = threat.front;
-    team.dispatchedAt = this.time;
-    this.reinforcementWave++;
-    const p = this.outposts.find((p) => p.front === threat.front)!;
-    const innerGate = this.structures.find(
-      (s) => s.kind === "gate" && s.district === "inner" && s.front === threat.front,
-    )!;
-    for (const [i, id] of team.ids.entries()) {
-      const u = this.byId.get(id) as Unit;
-      if (!u || u.hp <= 0) continue;
-      u.reserve = false;
-      u.front = threat.front;
-      u.homeX = p.x + ((i % 3) - 1) * 32;
-      u.homeY = p.y + Math.floor(i / 3) * 32;
-      u.guardRadius = 420;
-      u.rally = [
-        { x: innerGate.x, y: innerGate.y },
-        { x: u.homeX, y: u.homeY },
-      ];
-      u.target = 0;
-      u.think = 0;
+    if (team && assigned < maxTeams) {
+      team.dispatched = true;
+      team.front = threat.front;
+      team.dispatchedAt = this.time;
+      this.reinforcementWave++;
+      this.sendToFront(team.ids, threat.front);
     }
-    this.events.push({
-      type: "reinforce",
-      x: innerGate.x,
-      y: innerGate.y,
-      text: `${FRONTS[threat.front].name.slice(0, 2)}承压 · 内城预备队沿道路增援`,
-    });
+    if (
+      this.loadout.difficulty === "easy" ||
+      threat.score < 55 ||
+      (this.loadout.difficulty === "normal" && this.reinforcementWave < 2)
+    )
+      return;
+    const quiet = threats
+      .slice()
+      .reverse()
+      .find((t) => t.front !== threat.front && t.score < 12 && !this.reliefSent.has(t.front));
+    if (!quiet) return;
+    const guards = this.garrisons[quiet.front]
+      .map((id) => this.byId.get(id) as Unit)
+      .filter((u) => u && u.hp > 0 && !u.rally?.length);
+    const n = Math.min(this.loadout.difficulty === "hard" ? 5 : 4, guards.length - 6);
+    if (n <= 0) return;
+    guards.sort(
+      (a, b) =>
+        (b.kind === "knight" ? 3 : b.kind === "soldier" ? 2 : 1) -
+        (a.kind === "knight" ? 3 : a.kind === "soldier" ? 2 : 1),
+    );
+    const ids = guards.slice(0, n).map((u) => u.id);
+    this.reliefSent.add(quiet.front);
+    this.stats.reliefTransfers += ids.length;
+    this.sendToFront(ids, threat.front, quiet.front);
   }
   advance(realSeconds: number) {
     if (this.paused || this.status !== "battle") return;
@@ -980,7 +1218,8 @@ export class Battle {
         x = q.x;
         y = q.y;
       }
-      this.spawn(q.kind, x, y, 0, q.small, q.lane);
+      const spawnedUnit = this.spawn(q.kind, x, y, 0, q.small, q.lane);
+      if (q.assault) spawnedUnit.order = undefined;
       q.count--;
       if (q.count <= 0) this.queue.shift();
     }
@@ -998,7 +1237,7 @@ export class Battle {
       const t = this.byId.get(p.target);
       const source = this.byId.get(p.source),
         caster = source && !isStructure(source) ? source : undefined;
-      const clear = this.nav.clear({ x: p.fromX, y: p.fromY }, p, p.source, p.target);
+      const clear = this.nav.clear({ x: p.fromX, y: p.fromY }, p, p.source, p.target, p.elevation);
       if (p.splash && clear) {
         this.splash(
           p.x,
@@ -1025,6 +1264,7 @@ export class Battle {
     this.projectiles = this.projectiles.filter((p) => p.time > 0);
     for (const u of this.units) {
       if (u.hp <= 0) continue;
+      this.progressRoute(u);
       u.cooldown -= dt;
       u.think -= dt;
       u.hit = Math.max(0, u.hit - dt);
@@ -1034,6 +1274,30 @@ export class Battle {
       u.frenzy = Math.max(0, u.frenzy - dt);
       u.ward = Math.max(0, u.ward - dt);
       u.moving = false;
+      if (u.kind === "captain") {
+        u.sacredShield = Math.max(0, u.sacredShield - dt);
+        u.sacredCooldown -= dt;
+        const foes = this.spatial
+          .near(u.x, u.y, 180)
+          .filter((v) => v.side === 0 && this.nav.clear(u, v, u.id, v.id));
+        if (u.root <= 0 && u.sacredCooldown <= 0 && foes.length) {
+          u.sacredCooldown = this.loadout.difficulty === "hard" ? 16 : 20;
+          u.sacredShield = 5;
+          this.stats.guardianBursts++;
+          for (const v of foes) {
+            this.damage(v, this.loadout.difficulty === "hard" ? 80 : 64, u);
+            if (!v.flying) v.root = Math.max(v.root, 1.4);
+          }
+          this.events.push({
+            type: "skill",
+            kind: "captain",
+            x: u.x,
+            y: u.y,
+            radius: 180,
+            text: "圣辉震荡 · 日轮守护",
+          });
+        }
+      }
       if (u.poison > 0) {
         u.poison -= dt;
         this.damage(u, dt * 3);
@@ -1074,12 +1338,7 @@ export class Battle {
       }
       const target = this.byId.get(u.target);
       if (target && target.hp > 0) {
-        const d = isStructure(target)
-          ? Math.hypot(
-              Math.max(0, Math.abs(u.x - target.x) - target.w / 2),
-              Math.max(0, Math.abs(u.y - target.y) - target.h / 2),
-            )
-          : distance(u, target) - target.size * 0.28;
+        const d = attackDistance(u, target);
         if (d <= u.range && this.nav.clear(u, target, u.id, target.id)) {
           if (u.cooldown <= 0) {
             if (u.kind === "elf") {
@@ -1105,37 +1364,78 @@ export class Battle {
     this.stats.peak = Math.max(this.stats.peak, this.active);
     this.checkResult();
   }
-  private chooseTarget(u: Unit) {
-    if (u.order?.type === "move") {
-      if (distance(u, u.order) >= 25) {
-        u.target = 0;
-        return;
-      }
+  private priorityScore(u: Unit, t: Target) {
+    let factor = 1;
+    const structure = isStructure(t);
+    if (u.priority === "troops" && !structure) factor = 0.35;
+    if (
+      u.priority === "defenses" &&
+      structure &&
+      ["arrow", "cannon", "antiAir", "holy", "barracks"].includes(t.kind)
+    )
+      factor = 0.3;
+    if (u.priority === "resources" && structure && t.resource) factor = 0.24;
+    if (u.priority === "ranged" && ["archer", "mage"].includes(t.kind)) factor = 0.3;
+    if (u.priority === "armor" && ["knight", "paladin", "captain"].includes(t.kind)) factor = 0.3;
+    if (u.priority === "auto") {
+      if (["wolf", "rider", "moon"].includes(u.kind) && ["archer", "mage"].includes(t.kind))
+        factor = 0.55;
+      if (u.kind === "raider" && structure && t.resource) factor = 0.25;
+      if (u.flying && t.kind === "antiAir") factor = 0.45;
     }
+    if (!structure && distance(u, t) < 100 && (u.priority === "auto" || u.hp < u.maxHp * 0.35))
+      factor *= 0.35;
+    return factor;
+  }
+  private chooseTarget(u: Unit) {
     if (u.order?.type === "attack") {
       const t = this.byId.get(u.order.target);
       if (t && t.hp > 0) {
         u.target = t.id;
         return;
       }
-      u.order = undefined;
+      this.halt([u.id]);
     }
-    const nearby = this.spatial.near(u.x, u.y, u.side === 0 ? 300 : 300);
-    let target: Target | undefined;
-    let best = Infinity;
-    for (const v of nearby) {
-      if (v.side === u.side || (v.flying && u.range < 80)) continue;
+    const route = u.order?.type === "move" ? u.route : undefined;
+    const start = route ? (route.index ? route.points[route.index - 1] : route.origin) : undefined,
+      end = route?.points[route.index];
+    if (
+      route &&
+      ((u.engagement && distance(u, u.engagement) > 190) ||
+        (start && end && segmentDistance(u, start, end) > 210))
+    ) {
+      u.engagement = undefined;
+      u.resumeAt = this.time + 1.2;
+      u.target = 0;
+      return;
+    }
+    if (route && this.time < u.resumeAt) {
+      u.target = 0;
+      return;
+    }
+    const hold = u.side === 0 && u.order?.type === "hold";
+    const allowed = (t: Target) => {
+      if (hold) return attackDistance(u, t) <= u.range;
+      return (
+        !route ||
+        (distance(u, t) <= Math.max(240, u.range + 60) &&
+          (!start || !end || segmentDistance(t, start, end) <= 175))
+      );
+    };
+    let target: Target | undefined,
+      best = Infinity;
+    for (const v of this.spatial.near(u.x, u.y, Math.max(300, u.range + 60))) {
+      if (v.side === u.side || (v.flying && u.range < 80) || !allowed(v)) continue;
       if (
         u.side === 1 &&
         distance(v, { x: u.homeX, y: u.homeY }) > u.guardRadius &&
         !u.rally?.length
       )
         continue;
-      if (!this.nav.clear(u, v, u.id, v.id)) continue;
-      let score = distance(u, v);
-      if (["wolf", "rider", "moon"].includes(u.kind) && ["archer", "mage"].includes(v.kind))
-        score *= 0.55;
-      if (u.kind === "raider" && distance(u, v) < 150) score *= 0.3;
+      const clear = this.nav.clear(u, v, u.id, v.id);
+      // Guards can move through their own gates towards a nearby alarm; firing still needs LOS.
+      if (!clear && !(u.side === 1 && distance(u, v) < 320)) continue;
+      const score = distance(u, v) * this.priorityScore(u, v);
       if (score < best) {
         best = score;
         target = v;
@@ -1143,46 +1443,43 @@ export class Battle {
     }
     if (u.side === 0)
       for (const s of this.structures) {
-        if (s.hp <= 0 || ["wall", "gate", "cityblock"].includes(s.kind)) continue;
-        const d = distance(u, s);
-        const score =
-          d *
-          (u.kind === "raider" && s.resource
-            ? 0.25
-            : u.flying && s.kind === "antiAir"
-              ? 0.45
-              : 0.9);
-        if (
-          d < (u.kind === "raider" && s.resource ? 700 : 320) &&
-          score < best &&
-          this.nav.clear(u, s, u.id, s.id)
-        ) {
-          target = s;
+        if (s.hp <= 0 || ["wall", "gate", "cityblock"].includes(s.kind) || !allowed(s)) continue;
+        const d = distance(u, s),
+          reach = u.kind === "raider" && s.resource && !u.order ? 700 : Math.max(320, u.range + 70);
+        const score = d * 0.9 * this.priorityScore(u, s);
+        if (d < reach && score < best && this.nav.clear(u, s, u.id, s.id)) {
           best = score;
+          target = s;
         }
       }
+    if (route && target && !u.engagement) u.engagement = { x: u.x, y: u.y };
+    if (!target) u.engagement = undefined;
     u.target = target?.id ?? 0;
   }
   private move(u: Unit, target: Target | undefined, dt: number) {
     let tx: number,
       ty: number,
       flow = false;
-    if (u.order?.type === "move") {
-      if (distance(u, u.order) < 18) return;
-      tx = u.order.x;
-      ty = u.order.y;
-      flow = true;
-      if (u.order.anchorX !== undefined && u.order.anchorY !== undefined) {
-        if (distance(u, u.order) < 240) flow = false;
-        else {
-          tx = u.order.anchorX;
-          ty = u.order.anchorY;
-        }
-      }
-    } else if (target) {
+    if (u.side === 0 && u.order?.type === "hold") return;
+    if (target) {
       tx = target.x;
       ty = target.y;
       flow = !this.nav.clear(u, target, u.id, target.id);
+    } else if (u.order?.type === "move") {
+      if (distance(u, u.order) < 18) return;
+      tx = u.order.x;
+      ty = u.order.y;
+      flow = !this.nav.clear(u, u.order, u.id) || distance(u, u.order) > 120;
+      if (
+        u.order.anchorX !== undefined &&
+        u.order.anchorY !== undefined &&
+        distance(u, { x: u.order.anchorX, y: u.order.anchorY }) > 240 &&
+        distance(u, u.order) > 240
+      ) {
+        tx = u.order.anchorX;
+        ty = u.order.anchorY;
+        flow = true;
+      }
     } else if (u.side === 1) {
       tx = u.rally?.[0]?.x ?? u.homeX;
       ty = u.rally?.[0]?.y ?? u.homeY;
@@ -1261,15 +1558,15 @@ export class Battle {
         continue;
       s.cooldown -= dt;
       if (s.cooldown > 0) continue;
-      const range =
-        s.kind === "crystal" ? 170 : s.kind === "cannon" ? 370 : s.kind === "holy" ? 300 : 340;
+      const range = towerRange(s),
+        elevation = { district: s.district, reach: s.kind === "cannon" ? 280 : 165 };
       const targets = this.spatial
         .near(s.x, s.y, range)
         .filter(
           (u) =>
             u.side === 0 &&
-            (s.district === "field" || districtAt(u.x, u.y) === s.district) &&
-            this.nav.clear(s, u, s.id, u.id) &&
+            towerCovers(s, u) &&
+            this.nav.clear(s, u, s.id, u.id, elevation) &&
             (s.kind !== "antiAir" || u.flying) &&
             (s.kind !== "cannon" || !u.flying),
         );
@@ -1292,7 +1589,7 @@ export class Battle {
       else target = targets.sort((a, b) => distance(a, s) - distance(b, s))[0];
       const damage =
         s.kind === "cannon"
-          ? 88
+          ? 66
           : s.kind === "antiAir"
             ? s.district === "core"
               ? 110
@@ -1300,12 +1597,12 @@ export class Battle {
                 ? 100
                 : 90
             : s.kind === "holy"
-              ? 62
+              ? 50
               : s.kind === "crystal"
                 ? 28
                 : 16;
       const splash =
-        s.kind === "cannon" ? 110 : s.kind === "antiAir" ? 65 : s.kind === "crystal" ? 75 : 0;
+        s.kind === "cannon" ? 90 : s.kind === "antiAir" ? 65 : s.kind === "crystal" ? 75 : 0;
       s.cooldown =
         s.kind === "cannon" ? 4.4 : s.kind === "holy" ? 2.3 : s.kind === "crystal" ? 3 : 1.35;
       s.attackFlash = 0.3;
@@ -1333,6 +1630,7 @@ export class Battle {
         fromX: s.x,
         fromY: s.y,
         source: s.id,
+        elevation,
       });
     }
   }

@@ -1861,3 +1861,145 @@ em {
   stroke: #f0cf9c;
   fill: #d7aa6030;
 }
+.command-footer {
+  height: 46px;
+  gap: 10px;
+  justify-content: flex-start;
+}
+.army-tabs {
+  display: flex;
+  gap: 3px;
+  flex-shrink: 0;
+}
+.army-tabs button {
+  font-size: 10px;
+  padding: 5px 9px;
+  border: 1px solid #788d7650;
+}
+.army-tabs button.active {
+  background: #45645180;
+  border-color: #c5bd89;
+  color: #e7d6a3;
+}
+.selection-summary {
+  min-width: 130px;
+  max-width: 320px;
+  flex: 1;
+  overflow: hidden;
+}
+.selection-summary > span {
+  font-size: 10px;
+  color: #bbcfba;
+  white-space: nowrap;
+}
+.selection-summary > div {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  margin-top: 3px;
+}
+.selection-summary button {
+  padding: 1px 5px;
+  font-size: 8px;
+  white-space: nowrap;
+  border: 1px solid #829e7040;
+  background: #38523b60;
+  color: #c4d8b9;
+}
+.priority-label {
+  font-size: 10px;
+  color: #c5caaa;
+  white-space: nowrap;
+}
+.priority-label select {
+  font-size: 10px;
+  background: #263e3b;
+  color: #e0d5b2;
+  border: 1px solid #81966c70;
+  padding: 4px;
+  max-width: 120px;
+}
+.priority-label select:disabled {
+  opacity: 0.5;
+}
+.route-help {
+  font-size: 9px;
+  color: #97b6a5;
+  margin-left: auto;
+  white-space: nowrap;
+}
+.field-selected {
+  border-color: #8ee6bb !important;
+  box-shadow: inset 0 0 14px #6cd6a71b;
+}
+.field-mode .troop-deploy {
+  cursor: pointer;
+}
+.field-mode .troop-stock {
+  color: #b4efd0;
+}
+.field-mode .troop-info {
+  color: #9ecdad;
+}
+.troop-deploy:disabled {
+  opacity: 0.35;
+}
+.guardian-status {
+  display: block;
+  border: 0;
+  background: transparent;
+  color: #e6c18b;
+  font-size: 9px;
+  padding: 4px 0 0;
+  width: 100%;
+  text-align: left;
+}
+.guardian-status:hover {
+  color: #ffdfa7;
+}
+#battle-canvas:focus {
+  outline: none;
+}
+#halt-command {
+  white-space: nowrap;
+  border: 1px solid #7c947766;
+  padding: 5px 7px;
+  color: #d7d6af;
+}
+#halt-command:disabled {
+  opacity: 0.4;
+}
+#campaign-phase {
+  max-width: 230px;
+  line-height: 1.7;
+}
+@media (max-width: 1450px) {
+  .route-help {
+    display: none;
+  }
+  .selection-summary {
+    max-width: 260px;
+  }
+  .command-footer {
+    gap: 7px;
+  }
+}
+@media (max-height: 800px) {
+  .command-footer {
+    height: 44px;
+  }
+  .selection-summary > span {
+    font-size: 9px;
+  }
+  .army-tabs button {
+    padding: 4px 6px;
+  }
+  .priority-label {
+    font-size: 9px;
+  }
+  .guardian-status {
+    font-size: 8px;
+    padding-top: 2px;
+  }
+}

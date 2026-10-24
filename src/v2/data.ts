@@ -429,13 +429,13 @@ export const DIFFICULTIES: Record<
 > = {
   easy: {
     name: "简单",
-    money: 3400,
+    money: 3200,
     seconds: 1080,
     density: 0.75,
     response: 18,
   },
-  normal: { name: "普通", money: 3000, seconds: 900, density: 1, response: 12 },
-  hard: { name: "困难", money: 2800, seconds: 840, density: 1.15, response: 8 },
+  normal: { name: "普通", money: 2800, seconds: 900, density: 1, response: 12 },
+  hard: { name: "困难", money: 2500, seconds: 900, density: 1.15, response: 8 },
 };
 export const ENEMIES: Partial<Record<Kind, Stats>> = {
   soldier: {
@@ -495,15 +495,15 @@ export const ENEMIES: Partial<Record<Kind, Stats>> = {
     color: "#f5db8a",
   },
   captain: {
-    name: "圣剑骑士长",
-    hp: 2200,
-    damage: 62,
-    speed: 72,
-    range: 70,
+    name: "日轮守护骑士",
+    hp: 3200,
+    damage: 52,
+    speed: 68,
+    range: 75,
     period: 2,
-    size: 75,
+    size: 125,
     sprite: 14,
-    splash: 90,
+    splash: 105,
     color: "#ffe2a0",
   },
 };

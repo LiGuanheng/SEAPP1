@@ -1,0 +1,4203 @@
+{
+  "date": "2026-10-24T07:45:55.260Z",
+  "seed": 20261024,
+  "results": [
+    {
+      "difficulty": "hard",
+      "mode": "direct",
+      "front": "west",
+      "phase": 0,
+      "purchases": 0,
+      "trace": [],
+      "time": 70,
+      "remaining": 830,
+      "money": 2234,
+      "active": 0,
+      "queued": 0,
+      "reserves": 0,
+      "crystalHp": 5600,
+      "status": "battle",
+      "outposts": [
+        {
+          "name": "南境前线",
+          "front": "south",
+          "x": 2000,
+          "y": 2770,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        },
+        {
+          "name": "西境前线",
+          "front": "west",
+          "x": 950,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 8,
+          "captured": true,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "东境前线",
+          "front": "east",
+          "x": 3050,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "北境前线",
+          "front": "north",
+          "x": 2000,
+          "y": 820,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        }
+      ],
+      "stats": {
+        "deployed": 198,
+        "kills": 49,
+        "lost": 198,
+        "income": 2154,
+        "walls": 5,
+        "skills": 0,
+        "peak": 198,
+        "resourceIncome": 1630,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 15,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 25,
+          "inner": 15,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 8,
+          "inner": 2,
+          "core": 0
+        }
+      },
+      "mana": 100,
+      "firstCoreHit": null,
+      "reservesDispatched": 4,
+      "armyLost": true,
+      "guardian": [
+        {
+          "hp": 4000,
+          "maxHp": 4000
+        }
+      ],
+      "alive": []
+    },
+    {
+      "difficulty": "easy",
+      "mode": "raid",
+      "front": "west",
+      "phase": 6,
+      "purchases": 34,
+      "trace": [
+        {
+          "time": 0.24999999999999997,
+          "phase": 0,
+          "active": 24,
+          "money": 500,
+          "loot": 0,
+          "hp": 1728,
+          "center": {
+            "x": 251,
+            "y": 1795
+          },
+          "types": {
+            "raider": 24
+          },
+          "kills": 0,
+          "spells": 0
+        },
+        {
+          "time": 10.500000000000101,
+          "phase": 0,
+          "active": 254,
+          "money": 370,
+          "loot": 2,
+          "hp": 54157,
+          "center": {
+            "x": 271,
+            "y": 1797
+          },
+          "types": {
+            "raider": 24,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "elf": 30,
+            "slime": 40,
+            "goblin": 60,
+            "wolf": 12,
+            "lizard": 24,
+            "golem": 36,
+            "treant": 24
+          },
+          "kills": 0,
+          "spells": 0
+        },
+        {
+          "time": 20.500000000000117,
+          "phase": 0,
+          "active": 264,
+          "money": 80,
+          "loot": 2,
+          "hp": 56886,
+          "center": {
+            "x": 354,
+            "y": 1804
+          },
+          "types": {
+            "raider": 24,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "elf": 36,
+            "slime": 40,
+            "goblin": 60,
+            "wolf": 12,
+            "lizard": 24,
+            "golem": 40,
+            "treant": 24
+          },
+          "kills": 0,
+          "spells": 2
+        },
+        {
+          "time": 31.749999999999478,
+          "phase": 1,
+          "active": 300,
+          "money": 97,
+          "loot": 4,
+          "hp": 70366,
+          "center": {
+            "x": 742,
+            "y": 2017
+          },
+          "types": {
+            "raider": 24,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "elf": 48,
+            "slime": 40,
+            "goblin": 60,
+            "wolf": 12,
+            "lizard": 24,
+            "golem": 52,
+            "treant": 36
+          },
+          "kills": 7,
+          "spells": 3
+        },
+        {
+          "time": 42.99999999999884,
+          "phase": 1,
+          "active": 203,
+          "money": 943,
+          "loot": 7,
+          "hp": 68352,
+          "center": {
+            "x": 966,
+            "y": 1967
+          },
+          "types": {
+            "raider": 19,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "slime": 2,
+            "goblin": 38,
+            "wolf": 3,
+            "lizard": 10,
+            "golem": 64,
+            "treant": 48,
+            "elf": 15
+          },
+          "kills": 13,
+          "spells": 3
+        },
+        {
+          "time": 54.2499999999982,
+          "phase": 3,
+          "active": 199,
+          "money": 23,
+          "loot": 7,
+          "hp": 79059,
+          "center": {
+            "x": 962,
+            "y": 1951
+          },
+          "types": {
+            "raider": 7,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "slime": 2,
+            "goblin": 24,
+            "lizard": 4,
+            "golem": 80,
+            "treant": 60,
+            "elf": 18
+          },
+          "kills": 13,
+          "spells": 4
+        },
+        {
+          "time": 65.49999999999757,
+          "phase": 4,
+          "active": 159,
+          "money": 76,
+          "loot": 7,
+          "hp": 64942,
+          "center": {
+            "x": 1237,
+            "y": 1997
+          },
+          "types": {
+            "raider": 1,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "goblin": 2,
+            "golem": 80,
+            "treant": 60,
+            "elf": 12
+          },
+          "kills": 17,
+          "spells": 5
+        },
+        {
+          "time": 76.74999999999693,
+          "phase": 4,
+          "active": 162,
+          "money": 96,
+          "loot": 7,
+          "hp": 69345,
+          "center": {
+            "x": 1343,
+            "y": 1532
+          },
+          "types": {
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "goblin": 2,
+            "golem": 84,
+            "treant": 60,
+            "elf": 12
+          },
+          "kills": 21,
+          "spells": 5
+        },
+        {
+          "time": 87.99999999999629,
+          "phase": 5,
+          "active": 153,
+          "money": 56,
+          "loot": 7,
+          "hp": 63191,
+          "center": {
+            "x": 1658,
+            "y": 1771
+          },
+          "types": {
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "golem": 84,
+            "treant": 59,
+            "elf": 6
+          },
+          "kills": 21,
+          "spells": 6
+        }
+      ],
+      "time": 96.52,
+      "remaining": 983.48,
+      "money": 105,
+      "active": 136,
+      "queued": 0,
+      "reserves": 0,
+      "crystalHp": 0,
+      "status": "victory",
+      "outposts": [
+        {
+          "name": "南境前线",
+          "front": "south",
+          "x": 2000,
+          "y": 2770,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        },
+        {
+          "name": "西境前线",
+          "front": "west",
+          "x": 950,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 8,
+          "captured": true,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "东境前线",
+          "front": "east",
+          "x": 3050,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "北境前线",
+          "front": "north",
+          "x": 2000,
+          "y": 820,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        }
+      ],
+      "stats": {
+        "deployed": 380,
+        "kills": 24,
+        "lost": 244,
+        "income": 4375,
+        "walls": 11,
+        "skills": 6,
+        "peak": 300,
+        "resourceIncome": 3750,
+        "spells": 6,
+        "lootSites": 7,
+        "reliefTransfers": 0,
+        "guardianBursts": 1,
+        "towerShots": {
+          "field": 0,
+          "outer": 75,
+          "inner": 10,
+          "core": 12
+        },
+        "destroyed": {
+          "field": 6,
+          "outer": 6,
+          "inner": 9,
+          "core": 4
+        }
+      },
+      "mana": 35.83,
+      "firstCoreHit": {
+        "time": 92.63333333332936,
+        "x": 1782.041254350971,
+        "y": 1836.1486327068196,
+        "walls": 11
+      },
+      "reservesDispatched": 2,
+      "armyLost": false,
+      "guardian": [
+        {
+          "hp": 0,
+          "maxHp": 2400
+        }
+      ],
+      "alive": [
+        {
+          "kind": "king",
+          "hp": 1615,
+          "x": 1760,
+          "y": 1827,
+          "order": "attack"
+        },
+        {
+          "kind": "titan",
+          "hp": 1920,
+          "x": 1895,
+          "y": 1819,
+          "order": "attack"
+        },
+        {
+          "kind": "web",
+          "hp": 836,
+          "x": 1782,
+          "y": 1836,
+          "order": "attack"
+        },
+        {
+          "kind": "forest",
+          "hp": 1013,
+          "x": 1761,
+          "y": 1802,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 199,
+          "x": 1894,
+          "y": 1829,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 117,
+          "x": 1894,
+          "y": 1837,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 66,
+          "x": 1894,
+          "y": 1808,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 127,
+          "x": 1894,
+          "y": 1804,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 61,
+          "x": 1894,
+          "y": 1822,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 92,
+          "x": 1894,
+          "y": 1826,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 19,
+          "x": 1895,
+          "y": 1802,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 93,
+          "x": 1895,
+          "y": 1821,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 102,
+          "x": 1894,
+          "y": 1849,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 431,
+          "x": 1896,
+          "y": 1815,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 318,
+          "x": 1894,
+          "y": 1790,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 376,
+          "x": 1894,
+          "y": 1792,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 426,
+          "x": 1894,
+          "y": 1845,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 431,
+          "x": 1889,
+          "y": 1773,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 369,
+          "x": 1896,
+          "y": 1783,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 229,
+          "x": 1875,
+          "y": 1828,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 330,
+          "x": 1886,
+          "y": 1799,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 234,
+          "x": 1890,
+          "y": 1764,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 31,
+          "x": 1891,
+          "y": 1776,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 176,
+          "x": 1891,
+          "y": 1786,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 10,
+          "x": 1880,
+          "y": 1800,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 116,
+          "x": 1890,
+          "y": 1828,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 16,
+          "x": 1883,
+          "y": 1825,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 232,
+          "x": 1881,
+          "y": 1827,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 369,
+          "x": 1872,
+          "y": 1814,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 376,
+          "x": 1895,
+          "y": 1778,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 321,
+          "x": 1894,
+          "y": 1771,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 364,
+          "x": 1877,
+          "y": 1813,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 35,
+          "x": 1895,
+          "y": 1845,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 155,
+          "x": 1895,
+          "y": 1822,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 296,
+          "x": 1890,
+          "y": 1801,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 220,
+          "x": 1874,
+          "y": 1800,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 207,
+          "x": 1890,
+          "y": 1814,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 309,
+          "x": 1890,
+          "y": 1768,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 179,
+          "x": 1891,
+          "y": 1766,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 296,
+          "x": 1888,
+          "y": 1794,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 443,
+          "x": 1895,
+          "y": 1790,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 376,
+          "x": 1894,
+          "y": 1809,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 105,
+          "x": 1894,
+          "y": 1818,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 235,
+          "x": 1894,
+          "y": 1786,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 261,
+          "x": 1895,
+          "y": 1766,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 399,
+          "x": 1880,
+          "y": 1814,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 232,
+          "x": 1894,
+          "y": 1796,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 402,
+          "x": 1878,
+          "y": 1813,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 244,
+          "x": 1885,
+          "y": 1801,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 367,
+          "x": 1823,
+          "y": 1797,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 306,
+          "x": 1885,
+          "y": 1785,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 329,
+          "x": 1891,
+          "y": 1853,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 27,
+          "x": 1890,
+          "y": 1837,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 105,
+          "x": 1894,
+          "y": 1813,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 271,
+          "x": 1895,
+          "y": 1794,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 42,
+          "x": 1895,
+          "y": 1810,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 32,
+          "x": 1896,
+          "y": 1805,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 235,
+          "x": 1894,
+          "y": 1795,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 409,
+          "x": 1880,
+          "y": 1813,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 376,
+          "x": 1890,
+          "y": 1814,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 443,
+          "x": 1895,
+          "y": 1787,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 33,
+          "x": 1877,
+          "y": 1842,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 95,
+          "x": 1891,
+          "y": 1792,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 33,
+          "x": 1891,
+          "y": 1840,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 77,
+          "x": 1891,
+          "y": 1785,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 81,
+          "x": 1895,
+          "y": 1835,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 366,
+          "x": 1894,
+          "y": 1852,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 149,
+          "x": 1895,
+          "y": 1841,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 235,
+          "x": 1895,
+          "y": 1815,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 42,
+          "x": 1894,
+          "y": 1811,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 227,
+          "x": 1894,
+          "y": 1798,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 145,
+          "x": 1894,
+          "y": 1835,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 443,
+          "x": 1895,
+          "y": 1781,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 296,
+          "x": 1891,
+          "y": 1776,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 167,
+          "x": 1890,
+          "y": 1801,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 244,
+          "x": 1889,
+          "y": 1787,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 10,
+          "x": 1891,
+          "y": 1827,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 334,
+          "x": 1888,
+          "y": 1840,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 443,
+          "x": 1895,
+          "y": 1813,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 416,
+          "x": 1894,
+          "y": 1855,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 105,
+          "x": 1894,
+          "y": 1829,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 381,
+          "x": 1895,
+          "y": 1772,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 167,
+          "x": 1895,
+          "y": 1834,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 173,
+          "x": 1895,
+          "y": 1824,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 297,
+          "x": 1895,
+          "y": 1792,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 149,
+          "x": 1894,
+          "y": 1827,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 185,
+          "x": 1890,
+          "y": 1778,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 33,
+          "x": 1887,
+          "y": 1825,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 30,
+          "x": 1895,
+          "y": 1806,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 103,
+          "x": 1894,
+          "y": 1811,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 105,
+          "x": 1894,
+          "y": 1811,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 105,
+          "x": 1894,
+          "y": 1798,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 235,
+          "x": 1895,
+          "y": 1801,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 328,
+          "x": 1894,
+          "y": 1783,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 268,
+          "x": 1886,
+          "y": 1800,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 95,
+          "x": 1890,
+          "y": 1827,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 306,
+          "x": 1888,
+          "y": 1812,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 95,
+          "x": 1883,
+          "y": 1841,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 61,
+          "x": 1891,
+          "y": 1847,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 238,
+          "x": 1890,
+          "y": 1783,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 238,
+          "x": 1883,
+          "y": 1827,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 173,
+          "x": 1895,
+          "y": 1837,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 105,
+          "x": 1894,
+          "y": 1834,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 105,
+          "x": 1895,
+          "y": 1802,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 376,
+          "x": 1895,
+          "y": 1824,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 476,
+          "x": 1896,
+          "y": 1767,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 428,
+          "x": 1895,
+          "y": 1762,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 504,
+          "x": 1831,
+          "y": 1781,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 431,
+          "x": 1890,
+          "y": 1812,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 277,
+          "x": 1874,
+          "y": 1789,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 305,
+          "x": 1808,
+          "y": 1794,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 358,
+          "x": 1873,
+          "y": 1793,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 295,
+          "x": 1844,
+          "y": 1791,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 339,
+          "x": 1877,
+          "y": 1770,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 339,
+          "x": 1881,
+          "y": 1801,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 476,
+          "x": 1880,
+          "y": 1783,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 476,
+          "x": 1875,
+          "y": 1783,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 465,
+          "x": 1820,
+          "y": 1786,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 492,
+          "x": 1814,
+          "y": 1774,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 117,
+          "x": 1895,
+          "y": 1808,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 165,
+          "x": 1895,
+          "y": 1823,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 167,
+          "x": 1896,
+          "y": 1798,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 139,
+          "x": 1879,
+          "y": 1815,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 324,
+          "x": 1886,
+          "y": 1813,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 358,
+          "x": 1803,
+          "y": 1781,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 33,
+          "x": 1889,
+          "y": 1838,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 65,
+          "x": 1890,
+          "y": 1852,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 324,
+          "x": 1877,
+          "y": 1784,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 476,
+          "x": 1886,
+          "y": 1826,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 476,
+          "x": 1884,
+          "y": 1799,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 476,
+          "x": 1879,
+          "y": 1786,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 476,
+          "x": 1887,
+          "y": 1800,
+          "order": "hold"
+        },
+        {
+          "kind": "elf",
+          "hp": 62,
+          "x": 1166,
+          "y": 1682,
+          "order": "hold"
+        },
+        {
+          "kind": "elf",
+          "hp": 62,
+          "x": 1166,
+          "y": 1682,
+          "order": "hold"
+        },
+        {
+          "kind": "elf",
+          "hp": 62,
+          "x": 1166,
+          "y": 1682,
+          "order": "hold"
+        },
+        {
+          "kind": "elf",
+          "hp": 62,
+          "x": 1485,
+          "y": 1744,
+          "order": "hold"
+        }
+      ]
+    },
+    {
+      "difficulty": "normal",
+      "mode": "raid",
+      "front": "west",
+      "phase": 6,
+      "purchases": 31,
+      "trace": [
+        {
+          "time": 0.24999999999999997,
+          "phase": 0,
+          "active": 24,
+          "money": 100,
+          "loot": 0,
+          "hp": 1728,
+          "center": {
+            "x": 254,
+            "y": 1810
+          },
+          "types": {
+            "raider": 24
+          },
+          "kills": 0,
+          "spells": 0
+        },
+        {
+          "time": 10.500000000000101,
+          "phase": 0,
+          "active": 259,
+          "money": 285,
+          "loot": 2,
+          "hp": 48586,
+          "center": {
+            "x": 273,
+            "y": 1798
+          },
+          "types": {
+            "raider": 24,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "elf": 30,
+            "slime": 39,
+            "goblin": 80,
+            "wolf": 12,
+            "lizard": 24,
+            "golem": 28,
+            "treant": 18
+          },
+          "kills": 0,
+          "spells": 0
+        },
+        {
+          "time": 20.500000000000117,
+          "phase": 0,
+          "active": 268,
+          "money": 15,
+          "loot": 2,
+          "hp": 53754,
+          "center": {
+            "x": 354,
+            "y": 1805
+          },
+          "types": {
+            "raider": 24,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "elf": 29,
+            "slime": 39,
+            "goblin": 80,
+            "wolf": 12,
+            "lizard": 24,
+            "golem": 32,
+            "treant": 24
+          },
+          "kills": 0,
+          "spells": 0
+        },
+        {
+          "time": 31.749999999999478,
+          "phase": 1,
+          "active": 300,
+          "money": 38,
+          "loot": 4,
+          "hp": 65461,
+          "center": {
+            "x": 747,
+            "y": 1890
+          },
+          "types": {
+            "raider": 24,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "elf": 41,
+            "slime": 39,
+            "goblin": 80,
+            "wolf": 12,
+            "lizard": 24,
+            "golem": 46,
+            "treant": 30
+          },
+          "kills": 10,
+          "spells": 1
+        },
+        {
+          "time": 42.99999999999884,
+          "phase": 1,
+          "active": 235,
+          "money": 1220,
+          "loot": 7,
+          "hp": 65352,
+          "center": {
+            "x": 957,
+            "y": 1964
+          },
+          "types": {
+            "raider": 18,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "elf": 15,
+            "slime": 2,
+            "goblin": 80,
+            "wolf": 9,
+            "lizard": 9,
+            "golem": 56,
+            "treant": 42
+          },
+          "kills": 16,
+          "spells": 1
+        },
+        {
+          "time": 54.2499999999982,
+          "phase": 4,
+          "active": 175,
+          "money": 0,
+          "loot": 7,
+          "hp": 70622,
+          "center": {
+            "x": 1165,
+            "y": 2067
+          },
+          "types": {
+            "raider": 7,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "goblin": 20,
+            "wolf": 5,
+            "golem": 76,
+            "treant": 54,
+            "elf": 9
+          },
+          "kills": 16,
+          "spells": 3
+        },
+        {
+          "time": 65.49999999999757,
+          "phase": 4,
+          "active": 155,
+          "money": 129,
+          "loot": 7,
+          "hp": 70433,
+          "center": {
+            "x": 1135,
+            "y": 1748
+          },
+          "types": {
+            "raider": 3,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "goblin": 8,
+            "wolf": 2,
+            "golem": 76,
+            "treant": 54,
+            "elf": 8
+          },
+          "kills": 26,
+          "spells": 3
+        },
+        {
+          "time": 76.74999999999693,
+          "phase": 4,
+          "active": 146,
+          "money": 65,
+          "loot": 7,
+          "hp": 71495,
+          "center": {
+            "x": 1351,
+            "y": 1516
+          },
+          "types": {
+            "raider": 3,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "goblin": 1,
+            "wolf": 1,
+            "golem": 80,
+            "treant": 54,
+            "elf": 3
+          },
+          "kills": 41,
+          "spells": 3
+        },
+        {
+          "time": 87.99999999999629,
+          "phase": 5,
+          "active": 132,
+          "money": 36,
+          "loot": 7,
+          "hp": 45699,
+          "center": {
+            "x": 1715,
+            "y": 1799
+          },
+          "types": {
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "golem": 83,
+            "treant": 43,
+            "elf": 2
+          },
+          "kills": 42,
+          "spells": 5
+        }
+      ],
+      "time": 96.63,
+      "remaining": 803.37,
+      "money": 49,
+      "active": 129,
+      "queued": 0,
+      "reserves": 0,
+      "crystalHp": 0,
+      "status": "victory",
+      "outposts": [
+        {
+          "name": "南境前线",
+          "front": "south",
+          "x": 2000,
+          "y": 2770,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        },
+        {
+          "name": "西境前线",
+          "front": "west",
+          "x": 950,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 8,
+          "captured": true,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "东境前线",
+          "front": "east",
+          "x": 3050,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "北境前线",
+          "front": "north",
+          "x": 2000,
+          "y": 820,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        }
+      ],
+      "stats": {
+        "deployed": 382,
+        "kills": 46,
+        "lost": 253,
+        "income": 4384,
+        "walls": 10,
+        "skills": 7,
+        "peak": 300,
+        "resourceIncome": 3750,
+        "spells": 6,
+        "lootSites": 7,
+        "reliefTransfers": 12,
+        "guardianBursts": 1,
+        "towerShots": {
+          "field": 0,
+          "outer": 69,
+          "inner": 9,
+          "core": 14
+        },
+        "destroyed": {
+          "field": 6,
+          "outer": 4,
+          "inner": 10,
+          "core": 3
+        }
+      },
+      "mana": 15.79,
+      "firstCoreHit": {
+        "time": 92.5666666666627,
+        "x": 1780.7360272251628,
+        "y": 1832.2557550929741,
+        "walls": 10
+      },
+      "reservesDispatched": 2,
+      "armyLost": false,
+      "guardian": [
+        {
+          "hp": 0,
+          "maxHp": 3200
+        }
+      ],
+      "alive": [
+        {
+          "kind": "king",
+          "hp": 1704,
+          "x": 1761,
+          "y": 1828,
+          "order": "attack"
+        },
+        {
+          "kind": "titan",
+          "hp": 2495,
+          "x": 1894,
+          "y": 1845,
+          "order": "attack"
+        },
+        {
+          "kind": "web",
+          "hp": 1110,
+          "x": 1781,
+          "y": 1832,
+          "order": "attack"
+        },
+        {
+          "kind": "forest",
+          "hp": 1327,
+          "x": 1761,
+          "y": 1814,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 460,
+          "x": 1881,
+          "y": 1810,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 353,
+          "x": 1835,
+          "y": 1793,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 361,
+          "x": 1894,
+          "y": 1796,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 306,
+          "x": 1894,
+          "y": 1830,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 236,
+          "x": 1895,
+          "y": 1828,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 460,
+          "x": 1894,
+          "y": 1800,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 298,
+          "x": 1894,
+          "y": 1817,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 534,
+          "x": 1765,
+          "y": 1775,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 361,
+          "x": 1894,
+          "y": 1794,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 497,
+          "x": 1766,
+          "y": 1774,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 387,
+          "x": 1894,
+          "y": 1798,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 527,
+          "x": 1895,
+          "y": 1788,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 150,
+          "x": 1895,
+          "y": 1841,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 460,
+          "x": 1881,
+          "y": 1810,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 208,
+          "x": 1894,
+          "y": 1825,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 360,
+          "x": 1875,
+          "y": 1796,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 248,
+          "x": 1890,
+          "y": 1784,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 359,
+          "x": 1766,
+          "y": 1775,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 359,
+          "x": 1765,
+          "y": 1775,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 359,
+          "x": 1859,
+          "y": 1789,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 186,
+          "x": 1891,
+          "y": 1774,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 359,
+          "x": 1766,
+          "y": 1775,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 66,
+          "x": 1890,
+          "y": 1786,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 320,
+          "x": 1796,
+          "y": 1790,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 271,
+          "x": 1876,
+          "y": 1810,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 480,
+          "x": 1820,
+          "y": 1792,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 298,
+          "x": 1895,
+          "y": 1818,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 460,
+          "x": 1895,
+          "y": 1801,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 298,
+          "x": 1894,
+          "y": 1823,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 488,
+          "x": 1895,
+          "y": 1785,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 422,
+          "x": 1895,
+          "y": 1807,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 361,
+          "x": 1895,
+          "y": 1812,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 418,
+          "x": 1887,
+          "y": 1796,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 118,
+          "x": 1890,
+          "y": 1802,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 215,
+          "x": 1891,
+          "y": 1776,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 124,
+          "x": 1883,
+          "y": 1782,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 345,
+          "x": 1765,
+          "y": 1775,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 214,
+          "x": 1890,
+          "y": 1859,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 124,
+          "x": 1890,
+          "y": 1784,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 121,
+          "x": 1896,
+          "y": 1814,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 286,
+          "x": 1894,
+          "y": 1806,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 277,
+          "x": 1895,
+          "y": 1812,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 428,
+          "x": 1894,
+          "y": 1793,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 402,
+          "x": 1895,
+          "y": 1768,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 480,
+          "x": 1764,
+          "y": 1774,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 450,
+          "x": 1884,
+          "y": 1823,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 235,
+          "x": 1894,
+          "y": 1803,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 301,
+          "x": 1890,
+          "y": 1775,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 368,
+          "x": 1765,
+          "y": 1775,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 144,
+          "x": 1891,
+          "y": 1792,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 209,
+          "x": 1880,
+          "y": 1796,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 436,
+          "x": 1740,
+          "y": 1772,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 243,
+          "x": 1873,
+          "y": 1811,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 137,
+          "x": 1894,
+          "y": 1825,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 162,
+          "x": 1894,
+          "y": 1804,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 350,
+          "x": 1894,
+          "y": 1808,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 537,
+          "x": 1890,
+          "y": 1797,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 244,
+          "x": 1895,
+          "y": 1812,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 353,
+          "x": 1894,
+          "y": 1799,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 263,
+          "x": 1896,
+          "y": 1801,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 210,
+          "x": 1895,
+          "y": 1815,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 179,
+          "x": 1877,
+          "y": 1810,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 167,
+          "x": 1847,
+          "y": 1794,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 191,
+          "x": 1894,
+          "y": 1837,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 156,
+          "x": 1895,
+          "y": 1821,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 280,
+          "x": 1895,
+          "y": 1837,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 242,
+          "x": 1895,
+          "y": 1818,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 137,
+          "x": 1894,
+          "y": 1829,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 388,
+          "x": 1894,
+          "y": 1842,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 163,
+          "x": 1894,
+          "y": 1825,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 294,
+          "x": 1894,
+          "y": 1842,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 386,
+          "x": 1755,
+          "y": 1774,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 225,
+          "x": 1878,
+          "y": 1796,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 223,
+          "x": 1884,
+          "y": 1782,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 243,
+          "x": 1890,
+          "y": 1773,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 73,
+          "x": 1876,
+          "y": 1791,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 264,
+          "x": 1894,
+          "y": 1839,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 500,
+          "x": 1895,
+          "y": 1784,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 202,
+          "x": 1883,
+          "y": 1810,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 202,
+          "x": 1894,
+          "y": 1837,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 484,
+          "x": 1894,
+          "y": 1798,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 202,
+          "x": 1889,
+          "y": 1810,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 292,
+          "x": 1895,
+          "y": 1798,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 202,
+          "x": 1894,
+          "y": 1829,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 209,
+          "x": 1891,
+          "y": 1773,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 299,
+          "x": 1885,
+          "y": 1849,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 224,
+          "x": 1880,
+          "y": 1838,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 186,
+          "x": 1890,
+          "y": 1812,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 186,
+          "x": 1891,
+          "y": 1816,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 156,
+          "x": 1891,
+          "y": 1782,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 255,
+          "x": 1894,
+          "y": 1799,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 228,
+          "x": 1895,
+          "y": 1814,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 286,
+          "x": 1895,
+          "y": 1855,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 294,
+          "x": 1895,
+          "y": 1844,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 450,
+          "x": 1895,
+          "y": 1849,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 153,
+          "x": 1894,
+          "y": 1815,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 306,
+          "x": 1888,
+          "y": 1824,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 236,
+          "x": 1885,
+          "y": 1824,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 11,
+          "x": 1881,
+          "y": 1839,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 92,
+          "x": 1885,
+          "y": 1838,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 74,
+          "x": 1891,
+          "y": 1793,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 79,
+          "x": 1890,
+          "y": 1853,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 366,
+          "x": 1877,
+          "y": 1824,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 169,
+          "x": 1894,
+          "y": 1862,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 321,
+          "x": 1879,
+          "y": 1825,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 192,
+          "x": 1894,
+          "y": 1841,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 67,
+          "x": 1896,
+          "y": 1833,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 317,
+          "x": 1894,
+          "y": 1851,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 129,
+          "x": 1882,
+          "y": 1824,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 112,
+          "x": 1890,
+          "y": 1786,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 63,
+          "x": 1891,
+          "y": 1863,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 97,
+          "x": 1891,
+          "y": 1814,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 196,
+          "x": 1879,
+          "y": 1798,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 192,
+          "x": 1895,
+          "y": 1828,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 369,
+          "x": 1894,
+          "y": 1849,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 306,
+          "x": 1887,
+          "y": 1827,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 244,
+          "x": 1894,
+          "y": 1832,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 388,
+          "x": 1877,
+          "y": 1778,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 388,
+          "x": 1885,
+          "y": 1797,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 500,
+          "x": 1895,
+          "y": 1785,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 368,
+          "x": 1895,
+          "y": 1769,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 605,
+          "x": 1618,
+          "y": 1762,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 605,
+          "x": 1605,
+          "y": 1757,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 235,
+          "x": 1504,
+          "y": 1892,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 542,
+          "x": 1771,
+          "y": 1789,
+          "order": "hold"
+        }
+      ]
+    },
+    {
+      "difficulty": "hard",
+      "mode": "raid",
+      "front": "west",
+      "phase": 6,
+      "purchases": 32,
+      "trace": [
+        {
+          "time": 0.24999999999999997,
+          "phase": 0,
+          "active": 24,
+          "money": 80,
+          "loot": 0,
+          "hp": 1728,
+          "center": {
+            "x": 253,
+            "y": 1807
+          },
+          "types": {
+            "raider": 24
+          },
+          "kills": 0,
+          "spells": 0
+        },
+        {
+          "time": 10.500000000000101,
+          "phase": 0,
+          "active": 267,
+          "money": 280,
+          "loot": 2,
+          "hp": 44992,
+          "center": {
+            "x": 269,
+            "y": 1801
+          },
+          "types": {
+            "raider": 24,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "elf": 24,
+            "slime": 79,
+            "goblin": 60,
+            "wolf": 12,
+            "lizard": 24,
+            "golem": 28,
+            "treant": 12
+          },
+          "kills": 0,
+          "spells": 0
+        },
+        {
+          "time": 20.500000000000117,
+          "phase": 0,
+          "active": 277,
+          "money": 10,
+          "loot": 2,
+          "hp": 50250,
+          "center": {
+            "x": 347,
+            "y": 1807
+          },
+          "types": {
+            "raider": 24,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "elf": 24,
+            "slime": 79,
+            "goblin": 60,
+            "wolf": 12,
+            "lizard": 24,
+            "golem": 32,
+            "treant": 18
+          },
+          "kills": 0,
+          "spells": 0
+        },
+        {
+          "time": 31.749999999999478,
+          "phase": 1,
+          "active": 185,
+          "money": 45,
+          "loot": 4,
+          "hp": 55898,
+          "center": {
+            "x": 792,
+            "y": 1874
+          },
+          "types": {
+            "raider": 24,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "elf": 36,
+            "slime": 15,
+            "goblin": 4,
+            "lizard": 24,
+            "golem": 48,
+            "treant": 30
+          },
+          "kills": 13,
+          "spells": 1
+        },
+        {
+          "time": 42.99999999999884,
+          "phase": 1,
+          "active": 118,
+          "money": 1039,
+          "loot": 7,
+          "hp": 45007,
+          "center": {
+            "x": 993,
+            "y": 2013
+          },
+          "types": {
+            "raider": 17,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "golem": 55,
+            "treant": 36,
+            "elf": 6
+          },
+          "kills": 25,
+          "spells": 3
+        },
+        {
+          "time": 54.2499999999982,
+          "phase": 1,
+          "active": 120,
+          "money": 73,
+          "loot": 7,
+          "hp": 36224,
+          "center": {
+            "x": 854,
+            "y": 1864
+          },
+          "types": {
+            "raider": 8,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "golem": 54,
+            "treant": 36,
+            "elf": 18
+          },
+          "kills": 37,
+          "spells": 3
+        },
+        {
+          "time": 65.49999999999757,
+          "phase": 1,
+          "active": 68,
+          "money": 332,
+          "loot": 7,
+          "hp": 25342,
+          "center": {
+            "x": 905,
+            "y": 1951
+          },
+          "types": {
+            "raider": 1,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "golem": 36,
+            "treant": 24,
+            "elf": 3
+          },
+          "kills": 44,
+          "spells": 4
+        },
+        {
+          "time": 76.74999999999693,
+          "phase": 3,
+          "active": 71,
+          "money": 62,
+          "loot": 7,
+          "hp": 29963,
+          "center": {
+            "x": 1308,
+            "y": 2184
+          },
+          "types": {
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "golem": 38,
+            "treant": 29
+          },
+          "kills": 44,
+          "spells": 5
+        },
+        {
+          "time": 87.99999999999629,
+          "phase": 4,
+          "active": 66,
+          "money": 235,
+          "loot": 7,
+          "hp": 31702,
+          "center": {
+            "x": 1312,
+            "y": 1936
+          },
+          "types": {
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "golem": 35,
+            "treant": 27
+          },
+          "kills": 55,
+          "spells": 5
+        },
+        {
+          "time": 99.24999999999565,
+          "phase": 4,
+          "active": 72,
+          "money": 129,
+          "loot": 7,
+          "hp": 33671,
+          "center": {
+            "x": 1325,
+            "y": 1586
+          },
+          "types": {
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "golem": 35,
+            "treant": 27,
+            "elf": 6
+          },
+          "kills": 59,
+          "spells": 6
+        },
+        {
+          "time": 110.49999999999501,
+          "phase": 5,
+          "active": 82,
+          "money": 11,
+          "loot": 7,
+          "hp": 32522,
+          "center": {
+            "x": 1513,
+            "y": 1766
+          },
+          "types": {
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "golem": 39,
+            "treant": 33,
+            "elf": 6
+          },
+          "kills": 61,
+          "spells": 6
+        },
+        {
+          "time": 121.74999999999437,
+          "phase": 5,
+          "active": 34,
+          "money": 15,
+          "loot": 7,
+          "hp": 12263,
+          "center": {
+            "x": 1633,
+            "y": 1834
+          },
+          "types": {
+            "king": 1,
+            "titan": 1,
+            "forest": 1,
+            "treant": 14,
+            "golem": 11,
+            "elf": 6
+          },
+          "kills": 62,
+          "spells": 7
+        },
+        {
+          "time": 131.9999999999972,
+          "phase": 6,
+          "active": 19,
+          "money": 16,
+          "loot": 7,
+          "hp": 8175,
+          "center": {
+            "x": 1801,
+            "y": 1806
+          },
+          "types": {
+            "king": 1,
+            "titan": 1,
+            "forest": 1,
+            "treant": 7,
+            "golem": 5,
+            "elf": 4
+          },
+          "kills": 63,
+          "spells": 8
+        },
+        {
+          "time": 142.00000000000514,
+          "phase": 6,
+          "active": 17,
+          "money": 16,
+          "loot": 7,
+          "hp": 7366,
+          "center": {
+            "x": 1826,
+            "y": 1804
+          },
+          "types": {
+            "king": 1,
+            "titan": 1,
+            "forest": 1,
+            "treant": 5,
+            "golem": 5,
+            "elf": 4
+          },
+          "kills": 63,
+          "spells": 8
+        }
+      ],
+      "time": 144.23,
+      "remaining": 755.77,
+      "money": 16,
+      "active": 17,
+      "queued": 0,
+      "reserves": 0,
+      "crystalHp": 0,
+      "status": "victory",
+      "outposts": [
+        {
+          "name": "南境前线",
+          "front": "south",
+          "x": 2000,
+          "y": 2770,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        },
+        {
+          "name": "西境前线",
+          "front": "west",
+          "x": 950,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 8,
+          "captured": true,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "东境前线",
+          "front": "east",
+          "x": 3050,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "北境前线",
+          "front": "north",
+          "x": 2000,
+          "y": 820,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        }
+      ],
+      "stats": {
+        "deployed": 398,
+        "kills": 63,
+        "lost": 381,
+        "income": 4496,
+        "walls": 7,
+        "skills": 9,
+        "peak": 300,
+        "resourceIncome": 3750,
+        "spells": 8,
+        "lootSites": 7,
+        "reliefTransfers": 15,
+        "guardianBursts": 1,
+        "towerShots": {
+          "field": 0,
+          "outer": 72,
+          "inner": 13,
+          "core": 32
+        },
+        "destroyed": {
+          "field": 6,
+          "outer": 4,
+          "inner": 9,
+          "core": 3
+        }
+      },
+      "mana": 33.72,
+      "firstCoreHit": {
+        "time": 122.44999999999433,
+        "x": 1761.179909852392,
+        "y": 1814.2662433463838,
+        "walls": 6
+      },
+      "reservesDispatched": 4,
+      "armyLost": false,
+      "guardian": [
+        {
+          "hp": 0,
+          "maxHp": 4000
+        }
+      ],
+      "alive": [
+        {
+          "kind": "king",
+          "hp": 1448,
+          "x": 1761,
+          "y": 1814,
+          "order": "attack"
+        },
+        {
+          "kind": "titan",
+          "hp": 476,
+          "x": 1894,
+          "y": 1838,
+          "order": "attack"
+        },
+        {
+          "kind": "forest",
+          "hp": 792,
+          "x": 1760,
+          "y": 1835,
+          "order": "attack"
+        },
+        {
+          "kind": "treant",
+          "hp": 384,
+          "x": 1766,
+          "y": 1775,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 116,
+          "x": 1895,
+          "y": 1818,
+          "order": "attack"
+        },
+        {
+          "kind": "elf",
+          "hp": 34,
+          "x": 1706,
+          "y": 1770,
+          "order": "attack"
+        },
+        {
+          "kind": "elf",
+          "hp": 62,
+          "x": 1706,
+          "y": 1769,
+          "order": "attack"
+        },
+        {
+          "kind": "elf",
+          "hp": 62,
+          "x": 1705,
+          "y": 1768,
+          "order": "attack"
+        },
+        {
+          "kind": "elf",
+          "hp": 34,
+          "x": 1705,
+          "y": 1769,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 561,
+          "x": 1895,
+          "y": 1815,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 561,
+          "x": 1895,
+          "y": 1817,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 430,
+          "x": 1894,
+          "y": 1812,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 555,
+          "x": 1894,
+          "y": 1814,
+          "order": "attack"
+        },
+        {
+          "kind": "treant",
+          "hp": 426,
+          "x": 1890,
+          "y": 1813,
+          "order": "attack"
+        },
+        {
+          "kind": "treant",
+          "hp": 270,
+          "x": 1891,
+          "y": 1812,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 174,
+          "x": 1890,
+          "y": 1823,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 352,
+          "x": 1890,
+          "y": 1813,
+          "order": "hold"
+        }
+      ]
+    },
+    {
+      "difficulty": "normal",
+      "mode": "raid",
+      "front": "north",
+      "phase": 6,
+      "purchases": 28,
+      "trace": [
+        {
+          "time": 0.24999999999999997,
+          "phase": 0,
+          "active": 24,
+          "money": 100,
+          "loot": 0,
+          "hp": 1728,
+          "center": {
+            "x": 2079,
+            "y": 240
+          },
+          "types": {
+            "raider": 24
+          },
+          "kills": 0,
+          "spells": 0
+        },
+        {
+          "time": 10.500000000000101,
+          "phase": 0,
+          "active": 260,
+          "money": 285,
+          "loot": 2,
+          "hp": 47819,
+          "center": {
+            "x": 2007,
+            "y": 221
+          },
+          "types": {
+            "raider": 24,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "elf": 30,
+            "slime": 40,
+            "goblin": 80,
+            "wolf": 12,
+            "lizard": 24,
+            "golem": 28,
+            "treant": 18
+          },
+          "kills": 0,
+          "spells": 0
+        },
+        {
+          "time": 20.500000000000117,
+          "phase": 0,
+          "active": 270,
+          "money": 15,
+          "loot": 2,
+          "hp": 52995,
+          "center": {
+            "x": 1996,
+            "y": 298
+          },
+          "types": {
+            "raider": 24,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "elf": 30,
+            "slime": 40,
+            "goblin": 80,
+            "wolf": 12,
+            "lizard": 24,
+            "golem": 32,
+            "treant": 24
+          },
+          "kills": 0,
+          "spells": 2
+        },
+        {
+          "time": 31.749999999999478,
+          "phase": 1,
+          "active": 285,
+          "money": 16,
+          "loot": 4,
+          "hp": 64043,
+          "center": {
+            "x": 1707,
+            "y": 473
+          },
+          "types": {
+            "raider": 24,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "elf": 37,
+            "slime": 34,
+            "goblin": 76,
+            "wolf": 12,
+            "lizard": 20,
+            "golem": 48,
+            "treant": 30
+          },
+          "kills": 1,
+          "spells": 3
+        },
+        {
+          "time": 42.99999999999884,
+          "phase": 1,
+          "active": 176,
+          "money": 28,
+          "loot": 4,
+          "hp": 49780,
+          "center": {
+            "x": 1887,
+            "y": 826
+          },
+          "types": {
+            "raider": 22,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "elf": 6,
+            "slime": 3,
+            "goblin": 49,
+            "lizard": 16,
+            "golem": 46,
+            "treant": 30
+          },
+          "kills": 13,
+          "spells": 3
+        },
+        {
+          "time": 54.2499999999982,
+          "phase": 1,
+          "active": 102,
+          "money": 111,
+          "loot": 4,
+          "hp": 37691,
+          "center": {
+            "x": 2006,
+            "y": 928
+          },
+          "types": {
+            "raider": 12,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "lizard": 11,
+            "golem": 45,
+            "treant": 30
+          },
+          "kills": 16,
+          "spells": 4
+        },
+        {
+          "time": 65.49999999999757,
+          "phase": 1,
+          "active": 131,
+          "money": 202,
+          "loot": 6,
+          "hp": 46134,
+          "center": {
+            "x": 1926,
+            "y": 843
+          },
+          "types": {
+            "raider": 12,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "lizard": 11,
+            "golem": 55,
+            "treant": 37,
+            "elf": 12
+          },
+          "kills": 25,
+          "spells": 5
+        },
+        {
+          "time": 76.74999999999693,
+          "phase": 3,
+          "active": 138,
+          "money": 7,
+          "loot": 6,
+          "hp": 52255,
+          "center": {
+            "x": 2017,
+            "y": 979
+          },
+          "types": {
+            "raider": 10,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "lizard": 11,
+            "golem": 60,
+            "treant": 41,
+            "elf": 12
+          },
+          "kills": 31,
+          "spells": 5
+        },
+        {
+          "time": 87.99999999999629,
+          "phase": 3,
+          "active": 111,
+          "money": 7,
+          "loot": 6,
+          "hp": 52517,
+          "center": {
+            "x": 2602,
+            "y": 1056
+          },
+          "types": {
+            "raider": 3,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "lizard": 1,
+            "golem": 60,
+            "treant": 38,
+            "elf": 5
+          },
+          "kills": 31,
+          "spells": 6
+        },
+        {
+          "time": 99.24999999999565,
+          "phase": 3,
+          "active": 104,
+          "money": 7,
+          "loot": 6,
+          "hp": 45927,
+          "center": {
+            "x": 2903,
+            "y": 1368
+          },
+          "types": {
+            "raider": 1,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "golem": 60,
+            "treant": 38,
+            "elf": 1
+          },
+          "kills": 31,
+          "spells": 6
+        },
+        {
+          "time": 110.49999999999501,
+          "phase": 3,
+          "active": 102,
+          "money": 7,
+          "loot": 6,
+          "hp": 39839,
+          "center": {
+            "x": 2762,
+            "y": 1804
+          },
+          "types": {
+            "raider": 1,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "golem": 60,
+            "treant": 37
+          },
+          "kills": 31,
+          "spells": 7
+        },
+        {
+          "time": 121.74999999999437,
+          "phase": 4,
+          "active": 83,
+          "money": 201,
+          "loot": 6,
+          "hp": 31465,
+          "center": {
+            "x": 2631,
+            "y": 1908
+          },
+          "types": {
+            "raider": 1,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "golem": 49,
+            "treant": 29
+          },
+          "kills": 32,
+          "spells": 8
+        },
+        {
+          "time": 131.9999999999972,
+          "phase": 4,
+          "active": 75,
+          "money": 117,
+          "loot": 6,
+          "hp": 31084,
+          "center": {
+            "x": 2401,
+            "y": 1461
+          },
+          "types": {
+            "raider": 1,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "golem": 42,
+            "treant": 28
+          },
+          "kills": 36,
+          "spells": 8
+        },
+        {
+          "time": 142.00000000000514,
+          "phase": 4,
+          "active": 71,
+          "money": 130,
+          "loot": 6,
+          "hp": 28840,
+          "center": {
+            "x": 2163,
+            "y": 1214
+          },
+          "types": {
+            "raider": 1,
+            "king": 1,
+            "titan": 1,
+            "forest": 1,
+            "golem": 42,
+            "treant": 25
+          },
+          "kills": 43,
+          "spells": 9
+        },
+        {
+          "time": 152.0000000000131,
+          "phase": 4,
+          "active": 72,
+          "money": 49,
+          "loot": 6,
+          "hp": 32937,
+          "center": {
+            "x": 1903,
+            "y": 1248
+          },
+          "types": {
+            "king": 1,
+            "titan": 1,
+            "forest": 1,
+            "golem": 38,
+            "treant": 31
+          },
+          "kills": 49,
+          "spells": 9
+        },
+        {
+          "time": 162.00000000002106,
+          "phase": 5,
+          "active": 72,
+          "money": 50,
+          "loot": 6,
+          "hp": 35036,
+          "center": {
+            "x": 2114,
+            "y": 1567
+          },
+          "types": {
+            "king": 1,
+            "titan": 1,
+            "forest": 1,
+            "golem": 38,
+            "treant": 31
+          },
+          "kills": 50,
+          "spells": 10
+        },
+        {
+          "time": 172.00000000002902,
+          "phase": 6,
+          "active": 70,
+          "money": 58,
+          "loot": 6,
+          "hp": 23192,
+          "center": {
+            "x": 2131,
+            "y": 1697
+          },
+          "types": {
+            "king": 1,
+            "titan": 1,
+            "golem": 38,
+            "treant": 30
+          },
+          "kills": 52,
+          "spells": 10
+        }
+      ],
+      "time": 175.27,
+      "remaining": 724.73,
+      "money": 58,
+      "active": 70,
+      "queued": 0,
+      "reserves": 0,
+      "crystalHp": 0,
+      "status": "victory",
+      "outposts": [
+        {
+          "name": "南境前线",
+          "front": "south",
+          "x": 2000,
+          "y": 2770,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        },
+        {
+          "name": "西境前线",
+          "front": "west",
+          "x": 950,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "东境前线",
+          "front": "east",
+          "x": 3050,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "北境前线",
+          "front": "north",
+          "x": 2000,
+          "y": 820,
+          "w": 260,
+          "h": 220,
+          "progress": 8,
+          "captured": true,
+          "contested": false,
+          "connected": true
+        }
+      ],
+      "stats": {
+        "deployed": 368,
+        "kills": 52,
+        "lost": 298,
+        "income": 3963,
+        "walls": 16,
+        "skills": 10,
+        "peak": 290,
+        "resourceIncome": 3310,
+        "spells": 10,
+        "lootSites": 6,
+        "reliefTransfers": 12,
+        "guardianBursts": 1,
+        "towerShots": {
+          "field": 0,
+          "outer": 78,
+          "inner": 21,
+          "core": 29
+        },
+        "destroyed": {
+          "field": 5,
+          "outer": 11,
+          "inner": 12,
+          "core": 4
+        }
+      },
+      "mana": 40.83,
+      "firstCoreHit": {
+        "time": 169.81666666669395,
+        "x": 2081.6874965331745,
+        "y": 1787.738657993343,
+        "walls": 15
+      },
+      "reservesDispatched": 3,
+      "armyLost": false,
+      "guardian": [
+        {
+          "hp": 0,
+          "maxHp": 3200
+        }
+      ],
+      "alive": [
+        {
+          "kind": "king",
+          "hp": 715,
+          "x": 2100,
+          "y": 1685,
+          "order": "attack"
+        },
+        {
+          "kind": "titan",
+          "hp": 2067,
+          "x": 2101,
+          "y": 1779,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 394,
+          "x": 2070,
+          "y": 1785,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 382,
+          "x": 2070,
+          "y": 1787,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 384,
+          "x": 2102,
+          "y": 1797,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 214,
+          "x": 2080,
+          "y": 1786,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 394,
+          "x": 2095,
+          "y": 1792,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 108,
+          "x": 2089,
+          "y": 1790,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 394,
+          "x": 2100,
+          "y": 1795,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 218,
+          "x": 2094,
+          "y": 1792,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 394,
+          "x": 2098,
+          "y": 1794,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 194,
+          "x": 2082,
+          "y": 1788,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 133,
+          "x": 2069,
+          "y": 1794,
+          "order": "attack"
+        },
+        {
+          "kind": "treant",
+          "hp": 95,
+          "x": 2099,
+          "y": 1780,
+          "order": "attack"
+        },
+        {
+          "kind": "treant",
+          "hp": 230,
+          "x": 2102,
+          "y": 1792,
+          "order": "attack"
+        },
+        {
+          "kind": "treant",
+          "hp": 254,
+          "x": 2105,
+          "y": 1794,
+          "order": "attack"
+        },
+        {
+          "kind": "treant",
+          "hp": 221,
+          "x": 2097,
+          "y": 1784,
+          "order": "attack"
+        },
+        {
+          "kind": "treant",
+          "hp": 161,
+          "x": 2085,
+          "y": 1773,
+          "order": "attack"
+        },
+        {
+          "kind": "treant",
+          "hp": 206,
+          "x": 2099,
+          "y": 1790,
+          "order": "attack"
+        },
+        {
+          "kind": "treant",
+          "hp": 172,
+          "x": 2071,
+          "y": 1782,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 88,
+          "x": 2070,
+          "y": 1785,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 382,
+          "x": 2070,
+          "y": 1785,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 373,
+          "x": 2070,
+          "y": 1787,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 92,
+          "x": 2083,
+          "y": 1788,
+          "order": "attack"
+        },
+        {
+          "kind": "treant",
+          "hp": 273,
+          "x": 2094,
+          "y": 1776,
+          "order": "attack"
+        },
+        {
+          "kind": "treant",
+          "hp": 10,
+          "x": 2072,
+          "y": 1767,
+          "order": "attack"
+        },
+        {
+          "kind": "treant",
+          "hp": 154,
+          "x": 2083,
+          "y": 1784,
+          "order": "attack"
+        },
+        {
+          "kind": "treant",
+          "hp": 254,
+          "x": 2083,
+          "y": 1783,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 394,
+          "x": 2070,
+          "y": 1787,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 394,
+          "x": 2070,
+          "y": 1785,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 148,
+          "x": 2082,
+          "y": 1787,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 291,
+          "x": 2084,
+          "y": 1788,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 394,
+          "x": 2081,
+          "y": 1788,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 228,
+          "x": 2095,
+          "y": 1792,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 96,
+          "x": 2093,
+          "y": 1791,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 239,
+          "x": 2082,
+          "y": 1787,
+          "order": "attack"
+        },
+        {
+          "kind": "treant",
+          "hp": 15,
+          "x": 2071,
+          "y": 1781,
+          "order": "attack"
+        },
+        {
+          "kind": "treant",
+          "hp": 105,
+          "x": 2071,
+          "y": 1781,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 382,
+          "x": 2082,
+          "y": 1787,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 382,
+          "x": 2101,
+          "y": 1796,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 311,
+          "x": 2070,
+          "y": 1785,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 382,
+          "x": 2085,
+          "y": 1789,
+          "order": "attack"
+        },
+        {
+          "kind": "treant",
+          "hp": 473,
+          "x": 2073,
+          "y": 1434,
+          "order": "attack"
+        },
+        {
+          "kind": "treant",
+          "hp": 234,
+          "x": 2088,
+          "y": 1776,
+          "order": "attack"
+        },
+        {
+          "kind": "treant",
+          "hp": 404,
+          "x": 2087,
+          "y": 1434,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 382,
+          "x": 2072,
+          "y": 1772,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 382,
+          "x": 2070,
+          "y": 1786,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 170,
+          "x": 2070,
+          "y": 1785,
+          "order": "attack"
+        },
+        {
+          "kind": "treant",
+          "hp": 336,
+          "x": 2087,
+          "y": 1432,
+          "order": "attack"
+        },
+        {
+          "kind": "treant",
+          "hp": 301,
+          "x": 2072,
+          "y": 1774,
+          "order": "attack"
+        },
+        {
+          "kind": "treant",
+          "hp": 340,
+          "x": 2086,
+          "y": 1774,
+          "order": "attack"
+        },
+        {
+          "kind": "treant",
+          "hp": 220,
+          "x": 2109,
+          "y": 1796,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 382,
+          "x": 2070,
+          "y": 1786,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 359,
+          "x": 2082,
+          "y": 1432,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 382,
+          "x": 2094,
+          "y": 1791,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 392,
+          "x": 2070,
+          "y": 1784,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 382,
+          "x": 2070,
+          "y": 1786,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 382,
+          "x": 2066,
+          "y": 1772,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 382,
+          "x": 2071,
+          "y": 1770,
+          "order": "attack"
+        },
+        {
+          "kind": "treant",
+          "hp": 140,
+          "x": 2072,
+          "y": 1771,
+          "order": "attack"
+        },
+        {
+          "kind": "treant",
+          "hp": 206,
+          "x": 2109,
+          "y": 1796,
+          "order": "attack"
+        },
+        {
+          "kind": "treant",
+          "hp": 292,
+          "x": 2084,
+          "y": 1778,
+          "order": "attack"
+        },
+        {
+          "kind": "treant",
+          "hp": 253,
+          "x": 2080,
+          "y": 1772,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 382,
+          "x": 2087,
+          "y": 1790,
+          "order": "attack"
+        },
+        {
+          "kind": "treant",
+          "hp": 208,
+          "x": 2756,
+          "y": 1051,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 208,
+          "x": 2748,
+          "y": 1039,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 208,
+          "x": 2772,
+          "y": 1091,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 271,
+          "x": 2775,
+          "y": 1106,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 208,
+          "x": 2769,
+          "y": 1078,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 208,
+          "x": 2763,
+          "y": 1065,
+          "order": "hold"
+        }
+      ]
+    }
+  ]
+}

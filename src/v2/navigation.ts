@@ -10,6 +10,7 @@ export interface Obstacle extends Point {
   hp: number;
   weak?: boolean;
   kind: string;
+  district?: string;
 }
 const CELL = 40,
   W = Math.ceil(WORLD.width / CELL),
@@ -65,7 +66,13 @@ export class Navigation {
     return 0;
   }
   /** Actual segment/rectangle occlusion, not a distance-only combat approximation. */
-  clear(a: Point, b: Point, excludeA = 0, excludeB = 0): boolean {
+  clear(
+    a: Point,
+    b: Point,
+    excludeA = 0,
+    excludeB = 0,
+    elevation?: { district: string; reach: number },
+  ): boolean {
     const dx = b.x - a.x,
       dy = b.y - a.y;
     const steps = Math.max(1, Math.ceil(Math.max(Math.abs(dx), Math.abs(dy)) / 20));
@@ -75,6 +82,17 @@ export class Navigation {
       for (const o of this.buckets.get(i) ?? []) {
         if (o.id === excludeA || o.id === excludeB || checked.has(o.id)) continue;
         checked.add(o.id);
+        // Raised bastions overlook only their adjacent wall, not another ring or buildings.
+        if (
+          elevation &&
+          o.district === elevation.district &&
+          ["wall", "gate"].includes(o.kind) &&
+          Math.hypot(
+            Math.max(0, Math.abs(a.x - o.x) - o.w / 2),
+            Math.max(0, Math.abs(a.y - o.y) - o.h / 2),
+          ) <= elevation.reach
+        )
+          continue;
         let lo = 0,
           hi = 1;
         for (const [start, d, min, max] of [

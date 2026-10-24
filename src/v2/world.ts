@@ -38,7 +38,7 @@ export const FRONTS: Record<
     x: 2000,
     y: 3370,
     w: 2300,
-    h: 240,
+    h: 360,
     gateX: 2000,
     gateY: 3050,
     description: "重炮与主门，正面破城；军需充足",
@@ -47,7 +47,7 @@ export const FRONTS: Record<
     name: "西境 · 裂石",
     x: 250,
     y: 1800,
-    w: 240,
+    w: 360,
     h: 2200,
     gateX: 600,
     gateY: 1900,
@@ -57,7 +57,7 @@ export const FRONTS: Record<
     name: "东境 · 鹰卫",
     x: 3750,
     y: 1800,
-    w: 240,
+    w: 360,
     h: 2200,
     gateX: 3400,
     gateY: 1700,
@@ -104,6 +104,23 @@ export const RESOURCE_NAMES: Partial<Record<Kind, string>> = {
   mine: "魔晶矿场",
   transport: "帝国运输车",
 };
+export function towerRange(s: Pick<Structure, "kind" | "district">): number {
+  if (s.kind === "crystal") return 250;
+  if (s.kind === "cannon") return s.district === "inner" ? 540 : 500;
+  if (s.kind === "antiAir") return s.district === "inner" ? 480 : 460;
+  return s.district === "core" ? 430 : s.district === "inner" ? 440 : 420;
+}
+export function towerCovers(s: Structure, p: { x: number; y: number }): boolean {
+  if (s.district === "field" || s.district === "outer") return true;
+  const margin = s.district === "inner" ? 260 : 210;
+  const box = s.district === "inner" ? [1200, 1100, 2800, 2500] : [1600, 1450, 2400, 2150];
+  return (
+    p.x >= box[0] - margin &&
+    p.x <= box[2] + margin &&
+    p.y >= box[1] - margin &&
+    p.y <= box[3] + margin
+  );
+}
 export function createStructures(difficulty: Difficulty): Structure[] {
   const a: Structure[] = [];
   let id = 1;
@@ -121,10 +138,12 @@ export function createStructures(difficulty: Difficulty): Structure[] {
     const resource = kind in RESOURCE_NAMES;
     const reward = resource
       ? kind === "warehouse"
-        ? 220
+        ? 600
         : kind === "mine"
-          ? 200
-          : 150
+          ? 500
+          : kind === "transport"
+            ? 360
+            : 450
       : kind === "barracks"
         ? 110
         : ["arrow", "cannon", "antiAir", "holy"].includes(kind)

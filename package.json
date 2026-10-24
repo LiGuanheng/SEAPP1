@@ -1,7 +1,7 @@
 {
   "name": "monster-siege-sovereign",
   "private": true,
-  "version": "3.0.0",
+  "version": "3.1.0",
   "type": "module",
   "description": "《异界围城：魔物之王》— 原创奇幻魔物军团实时攻城策略游戏",
   "scripts": {

@@ -1,0 +1,44 @@
+{
+  "date": "2026-10-24T07:46:12.302Z",
+  "results": [
+    {
+      "name": "deployed troops wait in place",
+      "ok": true
+    },
+    {
+      "name": "field card selects living troops instead of spending stock",
+      "ok": true
+    },
+    {
+      "name": "right drag creates route bends",
+      "ok": true
+    },
+    {
+      "name": "Shift right click appends waypoint",
+      "ok": true
+    },
+    {
+      "name": "priority dropdown updates selected troops",
+      "ok": true
+    },
+    {
+      "name": "stop key cancels all current routes",
+      "ok": true
+    },
+    {
+      "name": "guardian HUD and core elites exist",
+      "ok": true
+    },
+    {
+      "name": "commands fit 720p",
+      "ok": true
+    },
+    {
+      "name": "no browser errors",
+      "ok": true,
+      "evidence": []
+    }
+  ],
+  "errors": [],
+  "pass": true
+}

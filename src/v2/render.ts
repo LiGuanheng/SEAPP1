@@ -1,6 +1,7 @@
 import { COMMANDERS, SPELLS, WORLD, isCommander, type Kind, type Spell } from "./data";
 import type { Battle, Event, Unit } from "./simulation";
-import { FRONTS, FRONT_KEYS, RESOURCE_NAMES, type Structure } from "./world";
+import { FRONTS, FRONT_KEYS, RESOURCE_NAMES, towerRange, type Structure } from "./world";
+import type { Point } from "./navigation";
 export const artUrl = (s: string) => `${import.meta.env.BASE_URL}art/${s}.webp`;
 const images = new Map<string, HTMLImageElement>();
 const atlasFrames = new Map<string, HTMLCanvasElement>();
@@ -79,6 +80,8 @@ export class Renderer {
     | { type: "rally" } = { type: "none" };
   rally: { x: number; y: number } | null = null;
   selection: { x: number; y: number; tx: number; ty: number } | null = null;
+  routeDraft: Point[] | null = null;
+  hoverTarget = 0;
   onFrame: () => void = () => {};
   onInputFrame: (now: number) => void = () => {};
   onEvent: (e: Event) => void = () => {};
@@ -89,6 +92,7 @@ export class Renderer {
   ) {
     this.canvas = document.createElement("canvas");
     this.canvas.id = "battle-canvas";
+    this.canvas.tabIndex = 0;
     this.canvas.setAttribute("aria-label", "圣曜城实时攻城战场");
     container.append(this.canvas);
     this.ctx = this.canvas.getContext("2d")!;
@@ -496,6 +500,7 @@ export class Renderer {
     c.translate(-this.camera.x, -this.camera.y);
     c.drawImage(this.ground, 0, 0);
     this.drawZones(c, t);
+    this.drawOrders(c, t);
     for (const s of this.battle.structures.filter((s) => s.hp <= 0 && s.kind !== "crystal"))
       this.drawRuin(c, s);
     const objects: (
@@ -610,6 +615,101 @@ export class Renderer {
         p.captured ? "#b5f3d5" : "#e4d1a7",
       );
       this.flag(c, p.x - 50, p.y - 10, t, p.captured);
+    }
+  }
+  private drawOrders(c: CanvasRenderingContext2D, t: number) {
+    const members = this.battle.members(this.battle.selected),
+      groups = new Map<number, Unit[]>();
+    for (const u of members)
+      if (u.route) {
+        const group = groups.get(u.route.id);
+        if (group) group.push(u);
+        else groups.set(u.route.id, [u]);
+      }
+    const line = (points: Point[], draft = false) => {
+      if (points.length < 2) return;
+      c.save();
+      c.strokeStyle = draft ? "#a5f0d5" : "#e6c681";
+      c.fillStyle = c.strokeStyle;
+      c.lineWidth = (draft ? 2.5 : 1.8) / this.camera.zoom;
+      c.setLineDash([10 / this.camera.zoom, 7 / this.camera.zoom]);
+      c.lineDashOffset = (-t * 18) / this.camera.zoom;
+      c.beginPath();
+      points.forEach((p, i) => (i ? c.lineTo(p.x, p.y) : c.moveTo(p.x, p.y)));
+      c.stroke();
+      c.setLineDash([]);
+      for (let i = 1; i < points.length; i++) {
+        const p = points[i],
+          last = i === points.length - 1;
+        c.beginPath();
+        c.arc(p.x, p.y, (last ? 9 : 5) / this.camera.zoom, 0, 7);
+        c.fill();
+        if (this.camera.zoom >= 0.32)
+          this.text(
+            c,
+            last ? "停" : String(i),
+            p.x,
+            p.y - (last ? 17 : 11) / this.camera.zoom,
+            12 / this.camera.zoom,
+            draft ? "#b7f4de" : "#efdbac",
+          );
+        const prev = points[i - 1],
+          angle = Math.atan2(p.y - prev.y, p.x - prev.x),
+          mx = (p.x + prev.x) / 2,
+          my = (p.y + prev.y) / 2,
+          size = 9 / this.camera.zoom;
+        c.beginPath();
+        c.moveTo(mx - Math.cos(angle - 0.5) * size, my - Math.sin(angle - 0.5) * size);
+        c.lineTo(mx, my);
+        c.lineTo(mx - Math.cos(angle + 0.5) * size, my - Math.sin(angle + 0.5) * size);
+        c.stroke();
+      }
+      c.restore();
+    };
+    for (const group of groups.values()) {
+      const u = group.reduce((a, b) => (a.route!.index < b.route!.index ? a : b)),
+        origin = {
+          x: group.reduce((n, u) => n + u.x, 0) / group.length,
+          y: group.reduce((n, u) => n + u.y, 0) / group.length,
+        };
+      line([origin, ...u.route!.points.slice(u.route!.index)]);
+    }
+    if (this.routeDraft && members.length)
+      line(
+        [
+          {
+            x: members.reduce((n, u) => n + u.x, 0) / members.length,
+            y: members.reduce((n, u) => n + u.y, 0) / members.length,
+          },
+          ...this.routeDraft,
+        ],
+        true,
+      );
+    const s = this.battle.structures.find(
+      (s) =>
+        s.id === this.hoverTarget &&
+        s.hp > 0 &&
+        ["arrow", "cannon", "antiAir", "holy", "crystal"].includes(s.kind),
+    );
+    if (s && !this.routeDraft && this.mode.type === "none") {
+      c.save();
+      c.fillStyle = "rgba(220,135,84,.05)";
+      c.strokeStyle = "rgba(238,178,119,.7)";
+      c.lineWidth = 1.5 / this.camera.zoom;
+      c.setLineDash([14, 10]);
+      c.beginPath();
+      c.arc(s.x, s.y, towerRange(s), 0, 7);
+      c.fill();
+      c.stroke();
+      c.restore();
+      this.text(
+        c,
+        `城防最大射程 ${towerRange(s)} · 建筑仍会遮挡`,
+        s.x,
+        s.y - towerRange(s) - 15,
+        17 / Math.max(0.5, this.camera.zoom),
+        "#ecd2a5",
+      );
     }
   }
   private text(
@@ -857,7 +957,7 @@ export class Renderer {
   private drawUnit(c: CanvasRenderingContext2D, u: Unit, t: number) {
     const dead = u.hp <= 0;
     const death = dead ? Math.min(1, (this.battle.time - u.deadAt) / 1.4) : 0;
-    const hero = isCommander(u.kind) || u.kind === "king";
+    const hero = isCommander(u.kind) || u.kind === "king" || u.kind === "captain";
     const selected = this.battle.selected.has(u.id);
     const size = u.size;
     const phase =
@@ -877,6 +977,18 @@ export class Renderer {
       c.beginPath();
       c.ellipse(u.x, u.y, size * 0.43, size * 0.17, 0, 0, 7);
       c.stroke();
+    }
+    if (u.kind === "captain" && u.sacredShield > 0) {
+      c.save();
+      c.strokeStyle = "#ffe7a3";
+      c.fillStyle = "rgba(253,220,126,.13)";
+      c.lineWidth = 3;
+      c.beginPath();
+      c.ellipse(u.x, u.y - u.size * 0.48, u.size * 0.62, u.size * 0.85, 0, 0, 7);
+      c.fill();
+      c.stroke();
+      this.text(c, "日轮守护", u.x, u.y - u.size * 1.5, 19, "#ffe7ac");
+      c.restore();
     }
     if (u.buff > 0 || u.hunt > 0 || u.frenzy > 0 || u.ward > 0 || u.castTime > 0) {
       c.strokeStyle =
@@ -1072,17 +1184,37 @@ export class Renderer {
       if (f.text) this.text(c, f.text, x, y - 90 - p * 30, 25, "#b6f0cd");
     } else if (f.type === "skill") {
       const color =
-        f.kind === "dragon"
-          ? "#8bdbff"
-          : f.kind === "titan"
-            ? "#efca88"
-            : f.kind === "web"
-              ? "#d0a3ed"
-              : "#9bf0c1";
+        f.kind === "captain"
+          ? "#ffe0a0"
+          : f.kind === "dragon"
+            ? "#8bdbff"
+            : f.kind === "titan"
+              ? "#efca88"
+              : f.kind === "web"
+                ? "#d0a3ed"
+                : "#9bf0c1";
       c.strokeStyle = color;
       c.fillStyle = color;
       c.lineWidth = 4;
-      if (f.kind === "titan") {
+      if (f.kind === "captain") {
+        c.globalAlpha = alpha * 0.18;
+        c.beginPath();
+        c.arc(x, y, r * (0.5 + p), 0, 7);
+        c.fill();
+        c.globalAlpha = alpha;
+        c.lineWidth = 5;
+        c.beginPath();
+        c.arc(x, y, r * (0.4 + p), 0, 7);
+        c.stroke();
+        for (let i = 0; i < 12; i++) {
+          const a = (i * Math.PI) / 6;
+          c.beginPath();
+          c.moveTo(x + Math.cos(a) * r * 0.35, y + Math.sin(a) * r * 0.35);
+          c.lineTo(x + Math.cos(a) * r * (0.6 + p), y + Math.sin(a) * r * (0.6 + p));
+          c.stroke();
+        }
+        this.text(c, "圣辉震荡", x, y - 155 - p * 30, 26, "#ffe8b1");
+      } else if (f.kind === "titan") {
         c.strokeStyle = "#e7bf80";
         c.lineWidth = 7;
         c.globalAlpha = alpha * 0.8;

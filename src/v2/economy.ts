@@ -78,7 +78,7 @@ export function preset(
   const l = createLoadout(difficulty, spec);
   const cs: Commander[] =
     strategy === "breach"
-      ? ["titan", "moon", "forest"]
+      ? ["titan", "web", "forest"]
       : strategy === "sky"
         ? ["dragon", "web", "forest"]
         : ["emperor", "titan"];
@@ -86,31 +86,38 @@ export function preset(
   const plan: [Army, number][] =
     strategy === "breach"
       ? [
-          ["golem", 4],
-          ["elf", 3],
-          ["treant", 2],
-          ["lizard", 2],
           ["raider", 2],
           ["goblin", 3],
-          ["wolf", 2],
-          ["slime", 2],
+          ["golem", 2],
+          ["lizard", 2],
+          ["elf", 2],
+          ["treant", 1],
+          ["wolf", 1],
+          ["slime", 1],
+          ["golem", 2],
+          ["elf", 1],
+          ["treant", 1],
         ]
       : strategy === "sky"
         ? [
-            ["wyvern", 5],
-            ["elf", 2],
             ["raider", 2],
-            ["goblin", 4],
-            ["lizard", 3],
-            ["spider", 2],
-            ["treant", 2],
+            ["goblin", 2],
+            ["wyvern", 3],
+            ["lizard", 2],
+            ["elf", 2],
+            ["treant", 1],
+            ["spider", 1],
             ["slime", 1],
+            ["wyvern", 2],
           ]
         : [
-            ["split", 8],
-            ["golem", 3],
-            ["lizard", 3],
-            ["slime", 5],
+            ["raider", 3],
+            ["split", 4],
+            ["golem", 2],
+            ["lizard", 2],
+            ["elf", 1],
+            ["slime", 2],
+            ["split", 2],
           ];
   plan.forEach(([k, n]) => purchase(l, k, n));
   return l;
