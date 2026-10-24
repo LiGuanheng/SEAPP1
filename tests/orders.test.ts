@@ -4,7 +4,7 @@ import { createLoadout, purchase } from "../src/v2/economy";
 import { routePoints } from "../src/v2/orders";
 import { towerRange } from "../src/v2/world";
 const clean = () => {
-  const b = new Battle(createLoadout());
+  const b = new Battle(createLoadout(), undefined, false);
   b.units.forEach((u) => (u.hp = 0));
   for (const s of b.structures)
     if (["arrow", "cannon", "antiAir", "holy"].includes(s.kind)) b.damage(s, s.hp);
@@ -48,7 +48,7 @@ describe("3.1 tactical routes and waiting orders", () => {
   it("new paid troops remain at their deployment locations until commanded", () => {
     const l = createLoadout();
     purchase(l, "goblin", 1);
-    const b = new Battle(l);
+    const b = new Battle(l, undefined, false);
     b.deploy("goblin", 1050, 3420);
     run(b, 1);
     const poses = b
@@ -172,7 +172,7 @@ describe("3.1 tactical routes and waiting orders", () => {
   it("explicit auto assault applies to pending summons but subsequent deployments still wait", () => {
     const l = createLoadout();
     purchase(l, "goblin", 2);
-    const b = new Battle(l);
+    const b = new Battle(l, undefined, false);
     b.deploy("goblin", 1050, 3420, 1);
     b.charge();
     run(b, 1);

@@ -26,11 +26,15 @@ export class Navigation {
   private fields = new Map<string, Float32Array>();
   private obstacles: Obstacle[] = [];
   private buckets = new Map<number, Obstacle[]>();
+  private components: Int32Array | null = null;
+  private danger = new Float32Array(W * H);
+  readonly metrics = { fieldBuilds: 0, componentBuilds: 0 };
   rebuild(obstacles: Obstacle[]) {
     this.obstacles = obstacles.filter((o) => o.hp > 0);
     this.costs.fill(1);
     this.solids.fill(0);
     this.fields.clear();
+    this.components = null;
     this.buckets.clear();
     for (const o of this.obstacles) {
       for (
@@ -57,6 +61,29 @@ export class Navigation {
       Math.max(0, Math.min(H - 1, Math.floor(y / CELL))) * W +
       Math.max(0, Math.min(W - 1, Math.floor(x / CELL)))
     );
+  }
+  private walkIndex(p: Point) {
+    const original = this.index(p.x, p.y);
+    if (!this.solids[original] || this.obstacleAt(p.x, p.y)) return original;
+    const cx = original % W,
+      cy = Math.floor(original / W);
+    let best = original,
+      score = Infinity;
+    for (let dy = -2; dy <= 2; dy++)
+      for (let dx = -2; dx <= 2; dx++) {
+        const x = cx + dx,
+          y = cy + dy;
+        if (x < 0 || y < 0 || x >= W || y >= H) continue;
+        const i = y * W + x,
+          q = { x: (x + 0.5) * CELL, y: (y + 0.5) * CELL };
+        if (this.solids[i] || !this.clear(p, q)) continue;
+        const d = Math.hypot(q.x - p.x, q.y - p.y);
+        if (d < score) {
+          score = d;
+          best = i;
+        }
+      }
+    return best;
   }
   obstacleAt(x: number, y: number, climber = false, defender = false): number {
     for (const o of this.buckets.get(this.index(x, y)) ?? []) {
@@ -116,11 +143,29 @@ export class Navigation {
     }
     return true;
   }
-  field(x: number, y: number, defender = false) {
+  setDanger(sources: { x: number; y: number; radius: number; weight: number }[]) {
+    this.danger.fill(0);
+    for (const s of sources)
+      for (
+        let y = Math.max(0, Math.floor((s.y - s.radius) / CELL));
+        y <= Math.min(H - 1, Math.ceil((s.y + s.radius) / CELL));
+        y++
+      )
+        for (
+          let x = Math.max(0, Math.floor((s.x - s.radius) / CELL));
+          x <= Math.min(W - 1, Math.ceil((s.x + s.radius) / CELL));
+          x++
+        )
+          if (Math.hypot((x + 0.5) * CELL - s.x, (y + 0.5) * CELL - s.y) < s.radius)
+            this.danger[y * W + x] += s.weight;
+    for (const k of this.fields.keys()) if (k.endsWith(":safe")) this.fields.delete(k);
+  }
+  field(x: number, y: number, defender: boolean | "safe" = false) {
     const target = this.index(x, y),
       key = `${target}:${defender}`;
     let f = this.fields.get(key);
     if (f) return f;
+    this.metrics.fieldBuilds++;
     f = new Float32Array(W * H).fill(Infinity);
     f[target] = 0;
     const heap: [number, number][] = [];
@@ -171,12 +216,24 @@ export class Navigation {
           ny = cy + dy;
         if (nx < 0 || ny < 0 || nx >= W || ny >= H) continue;
         const ni = ny * W + nx,
-          cost = defender
-            ? this.buckets.get(ni)?.some((o) => o.kind !== "gate")
-              ? 1000
-              : 1
-            : this.costs[ni],
+          cost =
+            defender === "safe"
+              ? this.solids[ni]
+                ? Infinity
+                : 1 + this.danger[ni]
+              : defender
+                ? this.buckets.get(ni)?.some((o) => o.kind !== "gate")
+                  ? 1000
+                  : 1
+                : this.costs[ni],
           nd = d + cost * (dx && dy ? 1.414 : 1);
+        if (
+          defender === "safe" &&
+          dx &&
+          dy &&
+          (this.solids[cy * W + nx] || this.solids[ny * W + cx])
+        )
+          continue;
         if (nd < f[ni] - 0.0001) {
           f[ni] = nd;
           push(ni, nd);
@@ -187,9 +244,15 @@ export class Navigation {
     if (this.fields.size > 48) this.fields.delete(this.fields.keys().next().value!);
     return f;
   }
-  direction(x: number, y: number, tx: number, ty: number, defender = false): Point {
+  direction(
+    x: number,
+    y: number,
+    tx: number,
+    ty: number,
+    defender: boolean | "safe" = false,
+  ): Point {
     const f = this.field(tx, ty, defender),
-      i = this.index(x, y),
+      i = defender === "safe" ? this.walkIndex({ x, y }) : this.index(x, y),
       cx = i % W,
       cy = Math.floor(i / W);
     let best = f[i],
@@ -209,6 +272,11 @@ export class Navigation {
         ny = cy + dy;
       if (nx < 0 || ny < 0 || nx >= W || ny >= H) continue;
       const ni = ny * W + nx;
+      if (
+        defender === "safe" &&
+        (this.solids[ni] || (dx && dy && (this.solids[cy * W + nx] || this.solids[ny * W + cx])))
+      )
+        continue;
       if (f[ni] < best) {
         best = f[ni];
         bx = (nx + 0.5) * CELL;
@@ -219,30 +287,37 @@ export class Navigation {
     return { x: (bx - x) / len, y: (by - y) / len };
   }
   connected(a: Point, b: Point): boolean {
-    const start = this.index(a.x, a.y),
-      end = this.index(b.x, b.y),
-      seen = new Uint8Array(W * H),
-      q = [start];
-    seen[start] = 1;
-    for (let n = 0; n < q.length; n++) {
-      const i = q[n];
-      if (i === end) return true;
-      const x = i % W,
-        y = Math.floor(i / W);
-      for (const [dx, dy] of [
-        [1, 0],
-        [-1, 0],
-        [0, 1],
-        [0, -1],
-      ]) {
-        const xx = x + dx,
-          yy = y + dy,
-          j = yy * W + xx;
-        if (xx < 0 || yy < 0 || xx >= W || yy >= H || seen[j] || this.solids[j]) continue;
-        seen[j] = 1;
-        q.push(j);
+    if (!this.components) {
+      this.metrics.componentBuilds++;
+      this.components = new Int32Array(W * H);
+      let label = 0;
+      for (let start = 0; start < W * H; start++) {
+        if (this.solids[start] || this.components[start]) continue;
+        const q = [start];
+        this.components[start] = ++label;
+        for (let n = 0; n < q.length; n++) {
+          const i = q[n],
+            x = i % W,
+            y = Math.floor(i / W);
+          for (const [dx, dy] of [
+            [1, 0],
+            [-1, 0],
+            [0, 1],
+            [0, -1],
+          ]) {
+            const xx = x + dx,
+              yy = y + dy,
+              j = yy * W + xx;
+            if (xx < 0 || yy < 0 || xx >= W || yy >= H || this.solids[j] || this.components[j])
+              continue;
+            this.components[j] = label;
+            q.push(j);
+          }
+        }
       }
     }
-    return false;
+    const ca = this.components[this.walkIndex(a)],
+      cb = this.components[this.walkIndex(b)];
+    return ca > 0 && ca === cb;
   }
 }

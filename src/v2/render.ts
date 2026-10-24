@@ -77,7 +77,8 @@ export class Renderer {
     | { type: "deploy"; kind: Kind | "all" }
     | { type: "skill"; kind: Kind }
     | { type: "spell"; kind: Spell }
-    | { type: "rally" } = { type: "none" };
+    | { type: "rally" }
+    | { type: "muster" } = { type: "none" };
   rally: { x: number; y: number } | null = null;
   selection: { x: number; y: number; tx: number; ty: number } | null = null;
   routeDraft: Point[] | null = null;
@@ -618,6 +619,35 @@ export class Renderer {
     }
   }
   private drawOrders(c: CanvasRenderingContext2D, t: number) {
+    const muster = this.battle.legion.effectiveMuster;
+    if (muster) {
+      const troops = this.battle.units.filter(
+        (u) =>
+          u.hp > 0 &&
+          u.side === 0 &&
+          u.control === "auto" &&
+          this.battle.legion.stance(u) === "rally",
+      );
+      if (troops.length) {
+        c.save();
+        c.strokeStyle = "#95d5b0";
+        c.lineWidth = 2 / this.camera.zoom;
+        c.setLineDash([14, 9]);
+        c.beginPath();
+        c.arc(muster.x, muster.y, 180, 0, 7);
+        c.stroke();
+        c.restore();
+        this.flag(c, muster.x, muster.y, t, true);
+        this.text(
+          c,
+          `军团集结 ${troops.filter((u) => Math.hypot(u.x - muster.x, u.y - muster.y) < 205).length}/${troops.length}`,
+          muster.x,
+          muster.y - 110,
+          22,
+          "#bce9c8",
+        );
+      }
+    }
     const members = this.battle.members(this.battle.selected),
       groups = new Map<number, Unit[]>();
     for (const u of members)
@@ -1373,9 +1403,13 @@ export class Renderer {
   private drawPointer(c: CanvasRenderingContext2D, t: number) {
     if (this.mode.type === "none") return;
     const { x, y } = this.pointer;
-    if (this.mode.type === "spell" || this.mode.type === "rally") {
+    if (this.mode.type === "spell" || this.mode.type === "rally" || this.mode.type === "muster") {
       const isSpell = this.mode.type === "spell",
-        legal = isSpell ? this.battle.canCastSpell(x, y) : this.battle.canDeploy(x, y);
+        legal = isSpell
+          ? this.battle.canCastSpell(x, y)
+          : this.mode.type === "muster"
+            ? this.battle.legion.safe({ x, y })
+            : this.battle.canDeploy(x, y);
       const radius = this.mode.type === "spell" ? SPELLS[this.mode.kind].radius : 70;
       c.fillStyle = legal ? "rgba(130,218,189,.15)" : "rgba(238,128,103,.18)";
       c.strokeStyle = legal ? "#a5e8d2" : "#ed988a";
@@ -1391,8 +1425,10 @@ export class Renderer {
         isSpell
           ? "指定法术区域 · Esc取消"
           : legal
-            ? "点击设为快速集结点"
-            : "集结点必须位于合法部署区",
+            ? this.mode.type === "muster"
+              ? "军团实际汇合 · 点击安全集结点"
+              : "点击设为快速出兵点"
+            : "避开守军、炮火或未控制区域",
         x,
         y - radius - 20,
         22,

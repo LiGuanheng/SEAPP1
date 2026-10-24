@@ -4,7 +4,7 @@ import { createLoadout, purchase } from "../src/v2/economy";
 import { DeploymentStream } from "../src/v2/deployment";
 import type { Kind } from "../src/v2/data";
 const field = () => {
-  const b = new Battle(createLoadout());
+  const b = new Battle(createLoadout(), undefined, false);
   b.units.forEach((u) => (u.hp = 0));
   for (const s of b.structures) if (s.kind !== "crystal") b.damage(s, s.hp);
   b.advance(0.02);
@@ -118,7 +118,7 @@ describe("3.2 directional assault and self defense", () => {
     expect(u.threat).toBeUndefined();
     expect(u.x).toBe(950);
   });
-  it("retaliates even while focusing a building, then resumes that focus", () => {
+  it("manual focus has priority over automatic target changes", () => {
     const b = field(),
       s = site(b, "cityblock", 1090, 3350),
       u = b.spawn("golem", 950, 3400),
@@ -127,9 +127,9 @@ describe("3.2 directional assault and self defense", () => {
     b.command([u.id], { type: "attack", target: s.id });
     b.damage(u, 1, e);
     run(b, 0.02);
-    expect(u.target).toBe(e.id);
+    expect(u.target).toBe(s.id);
     run(b, 35);
-    expect(e.hp).toBe(0);
+    expect(u.control).toBe("manual");
     expect(s.hp).toBe(0);
   });
   it("finishing a focus does not forget an ongoing local attack", () => {

@@ -19,6 +19,13 @@ import { batchPrice, purchase, unlocked, type Loadout } from "./economy";
 import { Navigation, type Point } from "./navigation";
 import { PRIORITIES, routePoints, segmentDistance, type Priority, type RoutePlan } from "./orders";
 import {
+  LegionDirector,
+  LEGION_COMMANDS,
+  type LegionCommand,
+  type ControlOwner,
+  type LegionGoal,
+} from "./legion";
+import {
   createStructures,
   OUTPOSTS,
   FRONTS,
@@ -47,6 +54,11 @@ export interface Unit extends Stats {
   cooldown: number;
   think: number;
   target: number;
+  control: ControlOwner;
+  tactic?: LegionCommand;
+  autoGoal?: LegionGoal;
+  musterPoint?: Point;
+  targetSince: number;
   order?: Order;
   route?: RoutePlan;
   priority: Priority;
@@ -100,7 +112,7 @@ interface Queue {
   y: number;
   small: boolean;
   lane: number;
-  assault?: boolean;
+  command?: LegionCommand;
 }
 interface Projectile {
   x: number;
@@ -157,6 +169,8 @@ class Spatial {
   }
 }
 export class Battle {
+  readonly legion: LegionDirector;
+  automatic: boolean;
   readonly loadout: Loadout;
   readonly structures: Structure[];
   readonly units: Unit[] = [];
@@ -215,7 +229,8 @@ export class Battle {
   seed: number;
   selected = new Set<number>();
   groups = [new Set<number>(), new Set<number>(), new Set<number>()];
-  constructor(loadout: Loadout, seed = 20261024) {
+  constructor(loadout: Loadout, seed = 20261024, automatic = true) {
+    this.automatic = automatic;
     this.loadout = structuredClone(loadout);
     this.seed = seed;
     this.rngState = seed;
@@ -225,6 +240,7 @@ export class Battle {
     for (const c of loadout.commanders) this.heroInventory.add(c);
     this.refreshNav();
     this.createDefenders();
+    this.legion = new LegionDirector(this);
   }
   random() {
     this.rngState = (Math.imul(this.rngState, 1664525) + 1013904223) >>> 0;
@@ -375,7 +391,9 @@ export class Battle {
       cooldown: this.random() * 0.6,
       think: 0,
       target: 0,
-      order: side === 0 ? { type: "hold", x, y } : undefined,
+      control: side === 0 ? (this.automatic ? "auto" : "idle") : "idle",
+      targetSince: 0,
+      order: side === 0 && !this.automatic ? { type: "hold", x, y } : undefined,
       priority: "auto",
       resumeAt: 0,
       sacredShield: 0,
@@ -406,6 +424,7 @@ export class Battle {
     this.units.push(u);
     this.byId.set(u.id, u);
     if (side === 0) this.stats.deployed++;
+    if (side === 0) this.legion?.invalidate();
     return u;
   }
   canDeploy(x: number, y: number): boolean {
@@ -534,6 +553,9 @@ export class Battle {
       rows = Math.ceil(members.length / columns),
       id = this.nextRouteId++;
     for (const [i, u] of members.entries()) {
+      u.control = "manual";
+      u.autoGoal = undefined;
+      u.tactic = undefined;
       const existing = append && u.order?.type === "move" ? u.route : undefined;
       const pending = existing ? [...existing.points.slice(existing.index), ...clean] : clean;
       const bounded =
@@ -568,6 +590,9 @@ export class Battle {
   }
   halt(ids: Iterable<number>) {
     for (const u of this.members(ids)) {
+      u.control = "manual";
+      u.autoGoal = undefined;
+      u.tactic = undefined;
       u.order = { type: "hold", x: u.x, y: u.y };
       u.route = undefined;
       u.target = 0;
@@ -600,6 +625,9 @@ export class Battle {
     if (!t || t.hp <= 0 || (!isStructure(t) && t.side === 0)) return;
     for (const u of this.members(ids)) {
       u.order = { ...order };
+      u.control = "manual";
+      u.autoGoal = undefined;
+      u.tactic = undefined;
       u.route = undefined;
       u.target = t.id;
       u.think = 0;
@@ -608,16 +636,62 @@ export class Battle {
     }
   }
   charge() {
+    this.issueLegion("assault");
+  }
+  setAutomatic(enabled: boolean) {
+    this.automatic = enabled;
     for (const u of this.units)
-      if (u.side === 0 && u.hp > 0 && u.order?.type !== "attack") {
-        u.order = undefined;
+      if (u.side === 0 && u.hp > 0 && u.control !== "manual") {
+        u.control = enabled ? "auto" : "idle";
+        u.order = enabled ? undefined : { type: "hold", x: u.x, y: u.y };
+        u.autoGoal = undefined;
         u.route = undefined;
         u.target = 0;
         u.think = 0;
         u.castTime = 0;
-        u.engagement = undefined;
       }
-    for (const q of this.queue) q.assault = true;
+    this.legion.invalidate();
+  }
+  resumeAutomatic(ids: Iterable<number>) {
+    for (const u of this.members(ids)) {
+      u.control = "auto";
+      u.order = undefined;
+      u.route = undefined;
+      u.autoGoal = undefined;
+      u.tactic = undefined;
+      u.target = 0;
+      u.think = 0;
+      u.castTime = 0;
+    }
+    this.legion.invalidate();
+  }
+  issueLegion(command: LegionCommand, ids?: Iterable<number>, muster?: Point): string {
+    if (this.status !== "battle" || !Object.hasOwn(LEGION_COMMANDS, command)) return "无效军团命令";
+    if (command === "rally" && (!muster || !this.legion.safe(muster)))
+      return "集结点必须在己方控制的安全区域，避开守军与火力覆盖";
+    const members = ids
+      ? this.members(ids)
+      : this.units.filter((u) => u.side === 0 && u.hp > 0 && u.control !== "manual");
+    if (ids && !members.length) return "请先选择部队";
+    if (!ids) {
+      this.legion.command = command;
+      if (muster) this.legion.muster = { ...muster };
+      for (const q of this.queue) q.command = command;
+    }
+    for (const u of members) {
+      u.control = "auto";
+      u.tactic = ids ? command : undefined;
+      u.musterPoint = ids && muster ? { ...muster } : undefined;
+      u.order = undefined;
+      u.route = undefined;
+      u.autoGoal = undefined;
+      u.target = 0;
+      u.think = 0;
+      u.castTime = 0;
+      u.threat = undefined;
+    }
+    this.legion.invalidate();
+    return "";
   }
   selectKind(kind: Kind, append = false) {
     if (!append) this.selected.clear();
@@ -1263,12 +1337,17 @@ export class Battle {
         y = q.y;
       }
       const spawnedUnit = this.spawn(q.kind, x, y, 0, q.small, q.lane);
-      if (q.assault) spawnedUnit.order = undefined;
+      if (q.command) {
+        spawnedUnit.control = "auto";
+        spawnedUnit.order = undefined;
+        spawnedUnit.tactic = q.command;
+      }
       q.count--;
       if (q.count <= 0) this.queue.shift();
     }
     this.spawnClock = Math.min(this.spawnClock, 0.1);
     this.spatial.rebuild(this.units);
+    this.legion.update();
     this.updateSpells(dt);
     for (const p of this.projectiles) {
       const tracked = this.byId.get(p.target);
@@ -1376,7 +1455,7 @@ export class Battle {
         }
       }
       if (u.think <= 0) {
-        u.think = 0.3 + this.random() * 0.2;
+        u.think = (u.control === "auto" ? 0.5 : 0.3) + this.random() * 0.25;
         this.chooseTarget(u);
       }
       const target = this.byId.get(u.target);
@@ -1389,6 +1468,16 @@ export class Battle {
               u.castTarget = target.id;
               this.events.push({ type: "chant", x: u.x, y: u.y, kind: u.kind, radius: 35 });
             } else this.hit(u, target);
+          }
+          if (u.control === "auto" && u.kind === "elf" && !isStructure(target) && d < 110) {
+            const dd = distance(u, target) || 1,
+              nx = u.x + ((u.x - target.x) / dd) * u.speed * dt,
+              ny = u.y + ((u.y - target.y) / dd) * u.speed * dt;
+            if (!this.nav.obstacleAt(nx, ny) && this.nav.clear(u, { x: nx, y: ny }, u.id)) {
+              u.x = nx;
+              u.y = ny;
+              u.moving = true;
+            }
           }
           continue;
         }
@@ -1447,12 +1536,16 @@ export class Battle {
     return t;
   }
   private chooseTarget(u: Unit) {
+    if (u.side === 0 && u.control === "auto") {
+      this.chooseLegionTarget(u);
+      return;
+    }
     const threat = this.threatTarget(u);
     if (u.order?.type === "attack") {
       const t = this.byId.get(u.order.target);
       if (t && t.hp > 0) {
         // Self-defense interrupts a focus temporarily; the original order remains queued.
-        u.target = threat?.id ?? t.id;
+        u.target = t.id;
         return;
       }
       const alarm = u.threat;
@@ -1522,11 +1615,121 @@ export class Battle {
     if (!target) u.engagement = undefined;
     u.target = target?.id ?? 0;
   }
+  private chooseLegionTarget(u: Unit) {
+    const goal = u.autoGoal,
+      stance = this.legion.stance(u),
+      alarm = this.threatTarget(u);
+    if (stance === "rally") {
+      const anchor = goal?.anchor ?? goal ?? u;
+      const t =
+        alarm && distance(u, alarm) < 220 && distance(alarm, anchor) < 260
+          ? alarm
+          : this.spatial
+              .near(u.x, u.y, u.range + 20)
+              .find(
+                (v) =>
+                  v.side === 1 &&
+                  (!v.flying || u.range >= 80) &&
+                  distance(v, anchor) < 230 &&
+                  this.nav.clear(u, v, u.id, v.id),
+              );
+      u.target = t?.id ?? 0;
+      return;
+    }
+    if (alarm) {
+      u.target = alarm.id;
+      return;
+    }
+    let best = Infinity,
+      chosen: Target | undefined;
+    const consider = (t: Target, score: number) => {
+      if (t.id === u.target) score *= 0.72;
+      if (score < best) {
+        best = score;
+        chosen = t;
+      }
+    };
+    for (const e of this.spatial.near(u.x, u.y, 520)) {
+      if (e.side === 0 || (e.flying && u.range < 80)) continue;
+      if (
+        ["treant", "forest"].includes(u.kind) &&
+        goal?.kind === "escort" &&
+        distance(e, goal) > 200
+      )
+        continue;
+      const visible = this.nav.clear(u, e, u.id, e.id);
+      if (!visible && (!this.nav.connected(u, e) || distance(u, e) > 320)) continue;
+      let factor = this.priorityScore(u, e);
+      if (["wolf", "rider", "moon"].includes(u.kind) && ["archer", "mage"].includes(e.kind))
+        factor *= 0.3;
+      if (u.kind === "elf") factor /= 1 + (this.legion.clusters.get(e.id) ?? 1) * 0.3;
+      consider(e, Math.max(25, attackDistance(u, e)) * factor);
+    }
+    const strategic = goal?.target ? this.byId.get(goal.target) : undefined;
+    if (strategic && strategic.hp > 0 && isStructure(strategic)) {
+      if (
+        (u.kind === "raider" && goal?.kind === "raid") ||
+        (["golem", "titan"].includes(u.kind) && goal?.kind === "breach")
+      ) {
+        consider(
+          strategic,
+          Math.max(20, attackDistance(u, strategic)) * (u.kind === "raider" ? 0.08 : 0.16),
+        );
+      } else if (
+        attackDistance(u, strategic) < 500 &&
+        this.nav.clear(u, strategic, u.id, strategic.id)
+      )
+        consider(strategic, Math.max(20, attackDistance(u, strategic)) * 0.7);
+    }
+    for (const s of this.legion.nearStructures(u, 500)) {
+      const surface = attackDistance(u, s);
+      if (surface > 440) continue;
+      const wall = ["wall", "gate"].includes(s.kind);
+      if (wall && (surface > 110 || goal?.kind !== "breach")) continue;
+      if (s.kind === "cityblock" && (surface > 100 || !goal || this.nav.clear(u, goal, u.id)))
+        continue;
+      if (!this.nav.clear(u, s, u.id, s.id)) continue;
+      if (u.flying && goal?.kind === "air-cover" && s.kind === "antiAir") continue;
+      let factor = this.priorityScore(u, s);
+      if (s.resource && u.kind === "raider") factor *= 0.2;
+      else if (s.resource && this.legion.stance(u) === "assault") factor *= 5;
+      else if (wall && ["golem", "titan"].includes(u.kind)) factor *= 0.3;
+      else if (wall || s.kind === "cityblock") factor *= 3;
+      consider(s, Math.max(20, surface) * factor);
+    }
+    if (chosen?.id !== u.target) u.targetSince = this.time;
+    u.target = chosen?.id ?? 0;
+  }
   private move(u: Unit, target: Target | undefined, dt: number) {
     let tx: number,
       ty: number,
       flow = false;
-    if (u.side === 0 && u.order?.type === "hold" && !target) {
+    let safePath = false;
+    if (u.side === 0 && u.control === "auto" && !target) {
+      const goal = u.autoGoal;
+      if (!goal) return;
+      if (goal.blocked) return;
+      const stop =
+        goal.kind === "rally"
+          ? 28
+          : goal.kind === "escort"
+            ? 70
+            : goal.kind === "air-cover"
+              ? 45
+              : 25;
+      if (distance(u, goal) < stop) return;
+      tx = goal.x;
+      ty = goal.y;
+      flow = !this.nav.clear(u, goal, u.id);
+      if (goal.kind === "rally" && goal.anchor) {
+        safePath = distance(u, goal.anchor) > 160;
+        if (safePath || flow) {
+          tx = goal.anchor.x;
+          ty = goal.anchor.y;
+          flow = true;
+        }
+      }
+    } else if (u.side === 0 && u.order?.type === "hold" && !target) {
       if (distance(u, u.order) <= 18) return;
       tx = u.order.x;
       ty = u.order.y;
@@ -1572,7 +1775,7 @@ export class Battle {
     dx /= len;
     dy /= len;
     if (!u.flying && flow) {
-      const direction = this.nav.direction(u.x, u.y, tx, ty, u.side === 1);
+      const direction = this.nav.direction(u.x, u.y, tx, ty, safePath ? "safe" : u.side === 1);
       dx = direction.x;
       dy = direction.y;
     }
@@ -1587,6 +1790,19 @@ export class Battle {
         u.side === 1,
       );
       if (blocker) {
+        if (u.side === 0 && u.control === "auto" && this.legion.stance(u) === "rally") {
+          for (const q of [
+            { x: nx, y: u.y },
+            { x: u.x, y: ny },
+          ])
+            if (!this.nav.obstacleAt(q.x, q.y)) {
+              u.x = q.x;
+              u.y = q.y;
+              u.moving = true;
+              break;
+            }
+          return;
+        }
         const wall = this.byId.get(blocker);
         if (wall && u.side === 0) {
           u.target = blocker;
@@ -1765,6 +1981,16 @@ export class Battle {
       mana: +this.mana.toFixed(2),
       firstCoreHit: this.firstCoreHit,
       reservesDispatched: this.reinforcementWave,
+      automation: {
+        enabled: this.automatic,
+        command: this.legion.command,
+        automatic: this.units.filter((u) => u.side === 0 && u.hp > 0 && u.control === "auto")
+          .length,
+        manual: this.units.filter((u) => u.side === 0 && u.hp > 0 && u.control === "manual").length,
+        muster: this.legion.effectiveMuster,
+        advice: this.legion.advice,
+        metrics: { ...this.legion.metrics, ...this.nav.metrics },
+      },
     };
   }
 }

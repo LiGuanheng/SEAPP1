@@ -1,0 +1,172 @@
+{
+  "date": "2026-10-24T14:46:44.752Z",
+  "url": "http://127.0.0.1:4186/SEAPP1/",
+  "checks": [
+    {
+      "name": "automatic control and four legion commands are the default",
+      "ok": true
+    },
+    {
+      "name": "one batch deploys exactly twelve raiders and immediately gives them automatic tasks",
+      "ok": true
+    },
+    {
+      "name": "raiders earn actual resource income without any target or route command",
+      "ok": true
+    },
+    {
+      "name": "whole-army final assault preserves an independently drawn route",
+      "ok": true
+    },
+    {
+      "name": "selected command changes only the selected troops",
+      "ok": true
+    },
+    {
+      "name": "manual mode leaves newly deployed units idle",
+      "ok": true
+    },
+    {
+      "name": "re-enabled auto and global sweep still respect a later manual task",
+      "ok": true
+    },
+    {
+      "name": "explicit selected resume releases that task back to AI",
+      "ok": true
+    },
+    {
+      "name": "commands and unit dock fit a 720p screen",
+      "ok": true
+    },
+    {
+      "name": "rally is a real map command rather than a deployment marker",
+      "ok": true
+    },
+    {
+      "name": "wolves deployed on four sides actually gather at the safe location",
+      "ok": true,
+      "evidence": {
+        "count": 48,
+        "within": 48,
+        "maxDistance": 146.40304436671013,
+        "stats": {
+          "time": 109.7,
+          "remaining": 790.3,
+          "money": 2000,
+          "active": 48,
+          "queued": 0,
+          "reserves": 26,
+          "crystalHp": 5600,
+          "status": "battle",
+          "outposts": [
+            {
+              "name": "南境前线",
+              "front": "south",
+              "x": 2000,
+              "y": 2770,
+              "w": 260,
+              "h": 220,
+              "progress": 0,
+              "captured": false,
+              "contested": true,
+              "connected": false
+            },
+            {
+              "name": "西境前线",
+              "front": "west",
+              "x": 950,
+              "y": 1800,
+              "w": 260,
+              "h": 220,
+              "progress": 0,
+              "captured": false,
+              "contested": true,
+              "connected": false
+            },
+            {
+              "name": "东境前线",
+              "front": "east",
+              "x": 3050,
+              "y": 1800,
+              "w": 260,
+              "h": 220,
+              "progress": 0,
+              "captured": false,
+              "contested": false,
+              "connected": false
+            },
+            {
+              "name": "北境前线",
+              "front": "north",
+              "x": 2000,
+              "y": 820,
+              "w": 260,
+              "h": 220,
+              "progress": 0,
+              "captured": false,
+              "contested": true,
+              "connected": false
+            }
+          ],
+          "stats": {
+            "deployed": 48,
+            "kills": 0,
+            "lost": 0,
+            "income": 0,
+            "walls": 0,
+            "skills": 0,
+            "peak": 48,
+            "resourceIncome": 0,
+            "spells": 0,
+            "lootSites": 0,
+            "reliefTransfers": 0,
+            "guardianBursts": 0,
+            "towerShots": {
+              "field": 0,
+              "outer": 0,
+              "inner": 0,
+              "core": 0
+            },
+            "destroyed": {
+              "field": 0,
+              "outer": 0,
+              "inner": 0,
+              "core": 0
+            }
+          },
+          "mana": 100,
+          "firstCoreHit": null,
+          "reservesDispatched": 2,
+          "automation": {
+            "enabled": true,
+            "command": "rally",
+            "automatic": 48,
+            "manual": 0,
+            "muster": {
+              "x": 249.99986585679972,
+              "y": 899.9999552855999
+            },
+            "advice": "物资充足 · 可购买援军，从安全前线继续部署",
+            "metrics": {
+              "updates": 136,
+              "assignments": 48,
+              "fieldBuilds": 15,
+              "componentBuilds": 1
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "final assault resumes the gathered army without spending or casting",
+      "ok": true
+    },
+    {
+      "name": "no browser errors",
+      "ok": true,
+      "evidence": []
+    }
+  ],
+  "errors": [],
+  "pass": true
+}

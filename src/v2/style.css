@@ -980,6 +980,65 @@ em {
   display: flex;
   gap: 14px;
 }
+.legion-strip {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 16px;
+  border-bottom: 1px solid #6c89644a;
+  background: #152d2b;
+  min-height: 43px;
+}
+.legion-strip button,
+.legion-strip select {
+  font-size: 11px;
+  padding: 6px 9px;
+  border: 1px solid #71846b66;
+  color: #c7d2ba;
+  background: #1c3934;
+  white-space: nowrap;
+}
+.legion-strip button.active {
+  border-color: #d5bc79;
+  color: #ffdf90;
+  background: #3a4d34;
+}
+.legion-buttons {
+  display: flex;
+  gap: 5px;
+}
+.legion-strip label,
+.legion-strip small {
+  font-size: 10px;
+  color: #a8bfaf;
+  white-space: nowrap;
+}
+#legion-status {
+  color: #b8ceb9;
+  font-size: 11px;
+  white-space: nowrap;
+}
+#legion-advice {
+  margin-left: auto;
+  max-width: 390px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+@media (max-width: 1400px) {
+  .legion-strip {
+    gap: 5px;
+    padding: 6px 10px;
+    flex-wrap: wrap;
+  }
+  .legion-strip button,
+  .legion-strip select {
+    padding: 5px 7px;
+    font-size: 10px;
+  }
+  #legion-advice {
+    max-width: 230px;
+  }
+}
 .batch-control label {
   font-size: 9px;
   color: #a1b4a7;
