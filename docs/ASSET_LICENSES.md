@@ -1,16 +1,21 @@
-# V2 资源与依赖登记
+# V3 资源与依赖登记
 
-原创图片的用途与生成来源见 [V2_ASSETS.md](V2_ASSETS.md)。原始PNG位于art-source，正式WebP及尺寸/体积清单见V2_ART_MANIFEST.json。原图和发布图片都实际保存在项目内，运行时不依赖会话生成目录。
+新增原创图集：
 
-未整合第三方商业游戏图像、角色、商标或音轨。音效为Web Audio代码合成；字体使用系统字体，不加载外部字体服务。早期统帅图集heroes.png仅留作开发来源，不作为正式战斗素材。
+| 文件 | 用途与来源 |
+|---|---|
+| art-source/v3-units.png | 内置image_gen生成，2×2掠夺者/流亡精灵静态与动作姿态，透明alpha |
+| art-source/v3-city.png | 内置image_gen生成，4×2仓库/营地/矿场/运输车/骑士团/魔法学院/市集/庭院，透明alpha |
+| public/art/v3-units.webp、v3-city.webp | 上述原图通过浏览器Canvas编码为WebP，用于正式游戏 |
+| src/v2/app.ts、render.ts | 统一SVG法术小图标、程序化特效、真实实体与材质渲染 |
 
-| 代码依赖 | 许可 | 用途 |
-|---|---|---|
-| TypeScript | Apache-2.0 | 类型检查 |
-| Puppeteer Core | Apache-2.0 | 本机浏览器验收与编码 |
-| Vite | MIT | 开发与静态构建 |
-| Vitest | MIT | 逻辑验证 |
-| Prettier | MIT | 格式检查 |
-| tsx | MIT | 策略仿真脚本 |
+完整生成提示词见[v3/ART_PROMPTS.md](v3/ART_PROMPTS.md)。所有项目引用资源均复制到本仓库，运行不依赖会话生成目录。原有原创PNG、独立六统帅、美术生成记录和旧清单保留于art-source、V2_ASSETS及V2_ART_MANIFEST；本轮完整运行资源清单为v3/ART_MANIFEST.json。
 
-精确版本及其传递依赖以package-lock.json和各依赖自带许可证为准。项目不自行替第三方代码改授许可。V1资源另见archive/v1/ASSET_LICENSES.md，不进入V2正式运行包。
+未引入未经授权的商业游戏角色、贴图或音轨。音效是WebAudio合成；系统字体不加载外部CDN。图像生成是开发期工具，不是游戏运行依赖。未对第三方依赖重新授予许可。
+
+| 开发依赖 | 许可 |
+|---|---|
+| TypeScript、Puppeteer Core | Apache-2.0 |
+| Vite、Vitest、Prettier、tsx | MIT |
+
+精确版本、传递依赖与原许可见package-lock.json和各包许可证。旧V1/V2材料按原样归档，不冒充本轮新增成果。

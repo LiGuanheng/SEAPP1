@@ -1,0 +1,127 @@
+{
+  "date": "2026-10-24T06:16:20.705Z",
+  "url": "http://127.0.0.1:4186/SEAPP1/",
+  "results": [
+    {
+      "name": "default bulk mode is three batches",
+      "ok": true
+    },
+    {
+      "name": "purchase clamps to affordable batches exactly once",
+      "ok": true,
+      "evidence": {
+        "moneyBefore": 130,
+        "moneyAfter": 50
+      }
+    },
+    {
+      "name": "real mouse hold commits more than one batch",
+      "ok": true,
+      "evidence": {
+        "before": 60,
+        "after": 0
+      }
+    },
+    {
+      "name": "release stops the stream",
+      "ok": true
+    },
+    {
+      "name": "mode stays selected after deployment",
+      "ok": true
+    },
+    {
+      "name": "two ordinary clicks repeat without selecting card again",
+      "ok": true
+    },
+    {
+      "name": "one-click deploy uses the configured rally point",
+      "ok": true,
+      "evidence": {
+        "x": 250,
+        "y": 1600
+      }
+    },
+    {
+      "name": "Shift commits all remaining stock once",
+      "ok": true
+    },
+    {
+      "name": "illegal core click consumes no inventory",
+      "ok": true
+    },
+    {
+      "name": "real deployed units appear at all four fronts",
+      "ok": true,
+      "evidence": [
+        "west",
+        "north",
+        "east",
+        "south"
+      ]
+    },
+    {
+      "name": "native hero drag still deploys",
+      "ok": true
+    },
+    {
+      "name": "pause freezes actual time",
+      "ok": true
+    },
+    {
+      "name": "rage keyboard + real target casts",
+      "ok": true
+    },
+    {
+      "name": "heal keyboard + real target casts",
+      "ok": true
+    },
+    {
+      "name": "barrier keyboard + real target casts",
+      "ok": true
+    },
+    {
+      "name": "insufficient mana gives feedback without spending",
+      "ok": true
+    },
+    {
+      "name": "native spell drag uses mana and commits meteor",
+      "ok": true
+    },
+    {
+      "name": "real mouse box selection",
+      "ok": true
+    },
+    {
+      "name": "control group saves and recalls living units",
+      "ok": true
+    },
+    {
+      "name": "right click issues actual movement orders",
+      "ok": true
+    },
+    {
+      "name": "visible tower receives explicit focus orders",
+      "ok": true
+    },
+    {
+      "name": "720p spell and deployment controls stay inside viewport",
+      "ok": true
+    },
+    {
+      "name": "manual includes new fast-deploy instructions",
+      "ok": true
+    },
+    {
+      "name": "menu disposes battle canvas",
+      "ok": true
+    },
+    {
+      "name": "no page or resource errors",
+      "ok": true,
+      "evidence": []
+    }
+  ],
+  "errors": [],
+  "pass": true
+}

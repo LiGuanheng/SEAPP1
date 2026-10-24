@@ -1,11 +1,5 @@
 import { spawnSync } from "node:child_process";
-for (const script of [
-  "v2-browser.mjs",
-  "v2-input.mjs",
-  "v2-tour.mjs",
-  "v2-performance.mjs",
-  "v2-acceptance.mjs",
-]) {
+for (const script of ["v3-input.mjs", "v3-tour.mjs", "v3-performance.mjs"]) {
   const result = spawnSync(process.execPath, [`scripts/${script}`, ...process.argv.slice(2)], {
     stdio: "inherit",
   });

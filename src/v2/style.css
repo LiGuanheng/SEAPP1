@@ -1828,3 +1828,36 @@ em {
     font-size: 10px;
   }
 }
+.spell-icon {
+  width: 22px;
+  height: 22px;
+  display: block;
+  fill: #7bafbd30;
+  stroke: #b4d8dc;
+  stroke-width: 1.2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+}
+.spell-button kbd {
+  position: relative;
+  padding-right: 6px;
+}
+.spell-button kbd i {
+  position: absolute;
+  right: 0;
+  bottom: -3px;
+  font: 9px Georgia;
+  color: #efd69b;
+}
+.spell-button[data-key="rage"] .spell-icon {
+  stroke: #e8aa85;
+  fill: #dd8c6430;
+}
+.spell-button[data-key="heal"] .spell-icon {
+  stroke: #a8dfb0;
+  fill: #71c79730;
+}
+.spell-button[data-key="meteor"] .spell-icon {
+  stroke: #f0cf9c;
+  fill: #d7aa6030;
+}

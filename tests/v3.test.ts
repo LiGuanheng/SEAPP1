@@ -490,3 +490,35 @@ describe("V3 route and commander regressions", () => {
     },
   );
 });
+
+describe("V3 invalid payload and finite lifecycle", () => {
+  it("unknown dragged spells cannot poison mana or cooldown maps", () => {
+    const b = fresh();
+    for (const k of ["constructor", "__proto__", "unknown"])
+      expect(b.castSpell(k as never, 2000, 3370)).toBe("未知法术");
+    expect(b.mana).toBe(100);
+    expect(b.spellReadyAt.size).toBe(0);
+  });
+  it("ordinary troops cannot impersonate a commander active skill", () => {
+    const b = fresh();
+    b.spawn("golem", 2000, 3370);
+    expect(b.cast("golem", 2000, 3370)).not.toBe("");
+    expect(b.stats.skills).toBe(0);
+  });
+  it("no defense units appear from a timer after several reserve cycles", () => {
+    const b = fresh(),
+      n = b.units.length;
+    run(b, 100);
+    expect(b.units.length).toBe(n);
+    expect(b.reinforcementCount).toBe(0);
+  });
+  it("empty or concluded all-deploy never reports a successful duplicate", () => {
+    const b = fresh();
+    b.heroInventory.clear();
+    expect(b.deployAll(2000, 3370)).toBe(false);
+    b.status = "victory";
+    b.heroInventory.add("king");
+    expect(b.deployAll(2000, 3370)).toBe(false);
+    expect(b.queued).toBe(0);
+  });
+});

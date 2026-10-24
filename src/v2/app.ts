@@ -71,6 +71,15 @@ const skillIcon = (kind: Kind, spec: Specialization) => {
   };
   return `<svg class="skill-icon" viewBox="0 0 18 18" aria-hidden="true"><path d="${paths[kind] ?? paths[spec]}"/></svg>`;
 };
+const spellIcon = (k: Spell) => {
+  const paths = {
+    rage: "M9 1C8 7 3 6 4 12S14 19 15 11L12 6 11 12 8 10Z",
+    heal: "M6 2H12V6H16V12H12V16H6V12H2V6H6Z",
+    barrier: "M9 1 16 4 15 12 9 17 3 12 2 4ZM9 4V13",
+    meteor: "M17 1 12 11 6 16 2 12 7 6ZM5 7 10 12M3 3 6 4M12 16 15 15",
+  };
+  return `<svg class="spell-icon" viewBox="0 0 18 18" aria-hidden="true"><path d="${paths[k]}"/></svg><i>${SPELLS[k].key}</i>`;
+};
 function notice(s: string) {
   const n = $("#notice");
   if (!n) return;
@@ -200,14 +209,9 @@ function bindActions() {
       updateHud();
     } else if (a === "overview") renderer?.overview();
     else if (a === "front") {
-      if (renderer)
-        renderer.camera = {
-          x: renderer.rally?.x ?? 2000,
-          y: renderer.rally?.y ?? 2940,
-          zoom: 0.65,
-        };
+      if (renderer) renderer.focus(renderer.rally?.x ?? 2000, renderer.rally?.y ?? 2940, 0.65);
     } else if (a === "crystal") {
-      if (renderer) renderer.camera = { x: 2000, y: 1840, zoom: 0.72 };
+      if (renderer) renderer.focus(2000, 1840, 0.72);
     } else if (a === "charge") {
       battle?.charge();
       notice("全军继续向圣晶推进 · 保留指定集火");
@@ -241,16 +245,17 @@ function bindActions() {
         p.y,
         (ev as MouseEvent).shiftKey ? Infinity : deployBatch,
       );
+      renderer!.mode = { type: "none" };
       notice(ok ? "军团已从集结点出征" : "库存不足或集结点被敌军争夺，请重新设置");
       updateHud();
     } else if (a === "rally-all") {
       const p = renderer!.rally!;
       const ok = battle!.deployAll(p.x, p.y);
-      notice(ok ? "全军已加入集结点召唤队列" : "此集结点已失效，请重新设置");
+      notice(ok ? "全军已加入集结点召唤队列" : "无待部署库存，或集结点被争夺/失效");
       updateHud();
     } else if (a === "direction") {
       const p = FRONTS[b.dataset.key as Front];
-      renderer!.camera = { x: p.gateX, y: p.gateY, zoom: 0.6 };
+      renderer!.focus(p.gateX, p.gateY, 0.6);
       renderer!.rally = { x: p.x, y: p.y };
       renderer!.mode = { type: "none" };
       notice(p.name + " · " + p.description);
@@ -305,7 +310,7 @@ function showWizard() {
       },
     ).join(
       "",
-    )}</section><aside class="briefing"><div class="eyebrow">IMPERIAL INTELLIGENCE</div><h3>圣曜城 · 防御情报</h3><div class="tactical-map"><div class="intel-crystal">✧<span>中央日轮圣晶</span></div><div class="intel-inner"></div><span class="intel-west">重炮 / 西境据点</span><span class="intel-east">防空 / 东境据点</span><div class="intel-wall"></div><span class="intel-gate">正门 · 重装守军</span><div class="intel-arrows">↑　　↑　　↑</div></div><p>正门最短，炮火最密。巨人破开薄弱侧墙，夺下前线据点；地面部队先拆防空，再让飞龙进入内城。</p><div class="loadout-summary"><span>${DIFFICULTIES[loadout.difficulty].name} / ${SPECS[loadout.spec].name}</span><b>${loadout.commanders.map((c) => COMMANDERS[c].name).join(" · ") || "请先选择统帅"}</b><span>军团 ${ARMY_KEYS.reduce((s, k) => s + loadout.inventory[k], 0)} 只 + ${loadout.commanders.length + 1} 名英雄</span></div></aside></div>`;
+    )}</section><aside class="briefing"><div class="eyebrow">IMPERIAL INTELLIGENCE</div><h3>圣曜城 · 防御情报</h3><div class="tactical-map"><div class="intel-crystal">✧<span>中央日轮圣晶</span></div><div class="intel-inner"></div><span class="intel-west">西境薄墙 / 资源矿场</span><span class="intel-east">东境防空 / 弓手</span><div class="intel-wall"></div><span class="intel-gate">四面城门 · 三重防线</span><div class="intel-arrows">↑　　↑　　↑</div></div><p>东南西北均可出兵。西线薄墙利于破壁，东线防空密集，北线资源与法师并存，南线重炮守主门。先掠夺资源，再打通前线；内城与核心还有各自防御。</p><div class="loadout-summary"><span>${DIFFICULTIES[loadout.difficulty].name} / ${SPECS[loadout.spec].name}</span><b>${loadout.commanders.map((c) => COMMANDERS[c].name).join(" · ") || "请先选择统帅"}</b><span>军团 ${ARMY_KEYS.reduce((s, k) => s + loadout.inventory[k], 0)} 只 + ${loadout.commanders.length + 1} 名英雄</span></div></aside></div>`;
   app.innerHTML = `<main class="preparation" style="--cover:url('${artUrl("cover")}')"><header class="prep-header"><button class="back" data-action="prev">← 返回</button><div class="small-brand">异界围城 <span>魔物之王</span></div><div class="wallet">◈ <b>${money(loadout.money)}</b><span>可用魔晶</span></div></header><nav class="steps">${steps}</nav><section class="prep-heading"><div><span class="eyebrow">WAR COUNCIL / 0${wizard + 1}</span><h2>${["选择你的决战", "决定魔王的力量", "召集异界的王者", "铸成你的魔物联军"][wizard]}</h2><p>${["圣晶即将完成充能。选择挑战，然后为最后一战做好准备。", "你的专精会改变军团的价格、血脉或元素之力。", "不同的统帅，带来不同的破城方式。请挑选一至四位。", "购买进入库存；部署不再扣费。未花完的魔晶可在战中继续补兵。"][wizard]}</p></div>${wizard === 2 ? `<div class="selection-count">${loadout.commanders.length}<span>/ 4 位统帅</span></div>` : ""}</section><div class="prep-content">${content}</div><footer class="prep-footer"><span>${wizard === 3 ? "战中可自由购兵 · 可保留预备队 · 仅摧毁中央圣晶即可获胜" : "单场决战 · 无需经营 · 所有英雄均可手动指挥"}</span><button class="primary" data-action="${wizard === 3 ? "launch" : "next"}">${wizard === 3 ? "向圣曜城进军" : "继续"} <span>→</span></button></footer><div id="notice" role="status"></div></main>`;
   bindActions();
 }
@@ -376,7 +381,7 @@ function startBattle(l: Loadout) {
         `<div class="troop-card" data-troop="${k}"><button class="troop-deploy" data-action="deploy" data-key="${k}" draggable="true" data-drag="${k}" title="点击或拖到地图部署">${icon(k)}<span class="troop-name">${ARMIES[k].name}</span><b class="troop-stock">${l.inventory[k]}</b><small>${ARMIES[k].batch}只 / 批</small></button><button class="quick-deploy" data-action="quick-deploy" data-key="${k}" title="一键投往集结点；Shift投全部库存">快速出兵 ↗</button><button class="buy-button" data-action="buy" data-key="${k}">＋ ◈${batchPrice(l, k)}<small class="affordable">可购${Math.floor(l.money / batchPrice(l, k))}批</small></button></div>`,
     )
     .join("");
-  app.innerHTML = `<main class="battle-shell"><header class="battle-top"><button class="battle-brand" data-action="help">异界围城<span>THE LAST SIEGE</span></button><div class="objective"><div><span>摧毁中央日轮圣晶</span><b id="crystal-hp">100%</b></div><div class="objective-track"><i id="crystal-fill"></i></div></div><div class="clock-panel"><div class="clock-caption">距离净化降临 <span>${DIFFICULTIES[l.difficulty].name}</span></div><b id="clock">10:00</b><div class="charge-track"><i id="charge-fill"></i></div></div><div class="top-controls"><button data-action="sound">${sound.muted ? "音效 关" : "音效 开"}</button><button data-action="speed" id="speed">1×</button><button data-action="pause" id="pause">暂停 Ⅱ</button><button data-action="menu">主菜单</button></div></header><div class="battle-view" id="battle-view"><div class="battle-location"><span class="eyebrow">IMPERIAL CAPITAL</span><b>圣 曜 城</b><small>白金帝国 · 最后防线</small></div><aside class="map-panel"><canvas id="minimap" aria-label="点击小地图移动镜头"></canvas><div class="map-actions"><button data-action="overview">全景</button><button data-action="front">集结</button><button data-action="crystal">圣晶</button></div><div class="front-actions">${FRONT_KEYS.map((f) => `<button data-action="direction" data-key="${f}">${FRONTS[f].name.slice(0, 1)}</button>`).join("")}</div></aside><div class="battle-hint" id="mode-hint">拖放军团卡到城外召唤阵 · 框选军队 / 右键移动或集火</div><div id="notice" role="status"></div><div class="pause-indicator" id="pause-indicator">战斗暂停 <small>空格继续 · 暂停时可购买预备军</small></div></div><section class="battle-dock"><div class="resource-row"><div class="crystal-wallet">◈ <b id="battle-money">${money(battle.money)}</b><span>魔晶</span><small id="income">战利品 +0</small></div><div class="force-counter"><span>在场 <b id="active-count">0</b><small>/ 300</small></span><span>预备 <b id="reserve-count">0</b></span><span>选中 <b id="selected-count">0</b></span></div><div class="batch-control"><label>购买 <select id="buy-batch"><option value="1">1批</option><option value="3">3批</option><option value="Infinity">尽可能多</option></select></label><label>部署 <select id="deploy-batch"><option value="1">1批</option><option value="3" selected>3批</option><option value="5">5批</option><option value="10">10批</option><option value="Infinity">全部库存</option></select></label></div><button class="small-gold" data-action="rally">设置集结点 ⚑</button><button class="small-gold" data-action="rally-all">一键全军 ↗</button><button class="small-gold" data-action="all-deploy">指定点全军</button><button class="small-gold" data-action="charge">全军冲锋 ↑</button></div><div class="spell-row"><div class="mana-panel"><span>魔王法力 <b id="mana-value">100 / 100</b></span><div><i id="mana-fill"></i></div><small>每秒 +1.8 · 友军360距离提供施法视野</small></div><div class="spells">${SPELL_KEYS.map((k) => `<button class="spell-button" data-action="spell" data-key="${k}" data-spell="${k}" draggable="true" data-drag-spell="${k}" title="${SPELLS[k].description}"><kbd>${SPELLS[k].key}</kbd><span>${SPELLS[k].name}<small>${SPELLS[k].cost}魔力</small></span><b class="spell-cd">就绪</b></button>`).join("")}</div><span class="rally-label" id="rally-label">集结：南境</span></div><div class="dock-main"><div class="troops-scroll">${cards}</div><div class="heroes-scroll">${heroCards}</div></div><div class="dock-footer"><span id="battle-message">据点需地面连通、无敌军争夺并占领8秒</span><div><button data-action="select-all">全选军队 A</button><button data-action="help">操作手册 ?</button><span id="fps"></span></div></div></section></main><div class="cinematic" id="intro-overlay"><div class="cinematic-copy"><span class="eyebrow">THE LAST SIEGE / 最后的总攻</span><h2>圣曜城的黎明</h2><p>日轮圣晶即将净化这片大地。<br>让群山开路，让风暴撕开天幕。<br>今日，异界的命运由你决定。</p><div class="march-portraits">${l.commanders.map((c) => `<div>${portrait(c)}<span>${COMMANDERS[c].name}</span></div>`).join("")}</div><button class="primary" data-action="skip-intro">开始总攻 / 跳过演出 →</button></div></div>`;
+  app.innerHTML = `<main class="battle-shell"><header class="battle-top"><button class="battle-brand" data-action="help">异界围城<span>THE LAST SIEGE</span></button><div class="objective"><div><span>摧毁中央日轮圣晶</span><b id="crystal-hp">100%</b></div><div class="objective-track"><i id="crystal-fill"></i></div></div><div class="clock-panel"><div class="clock-caption">距离净化降临 <span>${DIFFICULTIES[l.difficulty].name}</span></div><b id="clock">10:00</b><div class="charge-track"><i id="charge-fill"></i></div></div><div class="top-controls"><button data-action="sound">${sound.muted ? "音效 关" : "音效 开"}</button><button data-action="speed" id="speed">1×</button><button data-action="pause" id="pause">暂停 Ⅱ</button><button data-action="menu">主菜单</button></div></header><div class="battle-view" id="battle-view"><div class="battle-location"><span class="eyebrow">IMPERIAL CAPITAL</span><b>圣 曜 城</b><small>白金帝国 · 最后防线</small></div><aside class="map-panel"><canvas id="minimap" aria-label="点击小地图移动镜头"></canvas><div class="map-actions"><button data-action="overview">全景</button><button data-action="front">集结</button><button data-action="crystal">圣晶</button></div><div class="front-actions">${FRONT_KEYS.map((f) => `<button data-action="direction" data-key="${f}">${FRONTS[f].name.slice(0, 1)}</button>`).join("")}</div></aside><div class="battle-hint" id="mode-hint">拖放军团卡到城外召唤阵 · 框选军队 / 右键移动或集火</div><div id="notice" role="status"></div><div class="pause-indicator" id="pause-indicator">战斗暂停 <small>空格继续 · 暂停时可购买预备军</small></div></div><section class="battle-dock"><div class="resource-row"><div class="crystal-wallet">◈ <b id="battle-money">${money(battle.money)}</b><span>魔晶</span><small id="income">战利品 +0</small></div><div class="force-counter"><span>在场 <b id="active-count">0</b><small>/ 300</small></span><span>预备 <b id="reserve-count">0</b></span><span>选中 <b id="selected-count">0</b></span></div><div class="batch-control"><label>购买 <select id="buy-batch"><option value="1">1批</option><option value="3">3批</option><option value="Infinity">尽可能多</option></select></label><label>部署 <select id="deploy-batch"><option value="1">1批</option><option value="3" selected>3批</option><option value="5">5批</option><option value="10">10批</option><option value="Infinity">全部库存</option></select></label></div><button class="small-gold" data-action="rally">设置集结点 ⚑</button><button class="small-gold" data-action="rally-all">一键全军 ↗</button><button class="small-gold" data-action="all-deploy">指定点全军</button><button class="small-gold" data-action="charge">全军冲锋 ↑</button></div><div class="spell-row"><div class="mana-panel"><span>魔王法力 <b id="mana-value">100 / 100</b></span><div><i id="mana-fill"></i></div><small>每秒 +1.8 · 友军360距离提供施法视野</small></div><div class="spells">${SPELL_KEYS.map((k) => `<button class="spell-button" data-action="spell" data-key="${k}" data-spell="${k}" draggable="true" data-drag-spell="${k}" title="${SPELLS[k].description}"><kbd>${spellIcon(k)}</kbd><span>${SPELLS[k].name}<small>${SPELLS[k].cost}魔力</small></span><b class="spell-cd">就绪</b></button>`).join("")}</div><span class="rally-label" id="rally-label">集结：南境</span></div><div class="dock-main"><div class="troops-scroll">${cards}</div><div class="heroes-scroll">${heroCards}</div></div><div class="dock-footer"><span id="battle-message">据点需地面连通、无敌军争夺并占领8秒</span><div><button data-action="select-all">全选军队 A</button><button data-action="help">操作手册 ?</button><span id="fps"></span></div></div></section></main><div class="cinematic" id="intro-overlay"><div class="cinematic-copy"><span class="eyebrow">THE LAST SIEGE / 最后的总攻</span><h2>圣曜城的黎明</h2><p>日轮圣晶即将净化这片大地。<br>让群山开路，让风暴撕开天幕。<br>今日，异界的命运由你决定。</p><div class="march-portraits">${l.commanders.map((c) => `<div>${portrait(c)}<span>${COMMANDERS[c].name}</span></div>`).join("")}</div><button class="primary" data-action="skip-intro">开始总攻 / 跳过演出 →</button></div></div>`;
   renderer = new Renderer(battle, $("#battle-view"), $("#minimap"));
   renderer.rally = { x: FRONTS.south.x, y: FRONTS.south.y };
   bindActions();
@@ -476,6 +481,8 @@ function updateHud() {
     const el = $(`[data-troop="${k}"]`);
     if (!el) continue;
     el.querySelector(".troop-stock")!.textContent = String(b.loadout.inventory[k]);
+    el.querySelector(".quick-deploy")!.textContent =
+      `出兵 ${Math.min(b.loadout.inventory[k], deployBatch * ARMIES[k].batch)} ↗`;
     el.classList.toggle("aiming", renderer.mode.type === "deploy" && renderer.mode.kind === k);
     el.querySelector<HTMLButtonElement>(".buy-button")!.disabled =
       b.money < batchPrice(b.loadout, k);
@@ -675,7 +682,7 @@ function bindBattleInput() {
     }
     if (e.key.toLowerCase() === "f") aimSkill("king");
     const spell = SPELL_KEYS.find((k) => SPELLS[k].key.toLowerCase() === e.key.toLowerCase());
-    if (spell && !e.repeat) {
+    if (spell && !e.repeat && !e.ctrlKey && !e.metaKey && !e.altKey) {
       stream.end();
       aimSpell(spell);
     }
@@ -753,8 +760,10 @@ function bindBattleInput() {
   }) as EventListener);
   on($("#minimap"), "pointerdown", ((e: PointerEvent) => {
     const rect = $("#minimap").getBoundingClientRect();
-    r.camera.x = ((e.clientX - rect.left) / rect.width) * WORLD.width;
-    r.camera.y = ((e.clientY - rect.top) / rect.height) * WORLD.height;
+    r.focus(
+      ((e.clientX - rect.left) / rect.width) * WORLD.width,
+      ((e.clientY - rect.top) / rect.height) * WORLD.height,
+    );
   }) as EventListener);
   on($("#buy-batch"), "change", (() => {
     buyBatch = Number($<HTMLSelectElement>("#buy-batch").value);
@@ -783,7 +792,7 @@ function showHelp() {
   const div = document.createElement("div");
   div.id = "help-modal";
   div.className = "modal";
-  div.innerHTML = `<section class="manual"><button class="close" data-action="close-help">×</button><span class="eyebrow">FIELD MANUAL</span><h2>让每一支军团，抵达该去的战场。</h2><div class="manual-grid"><div><h3>01 / 部署与经济</h3><p>购买只扣一次魔晶，兵力进入库存。拖动兵种或英雄卡到城外三个召唤区，也可点卡后点地图。选择1批、3批或全部库存；大军依次入场，300只上限外的兵力继续排队。</p><h3>02 / 指挥</h3><p>左键框选，右键移动或集火。A全选，Ctrl+1/2/3存编队，1/2/3选编队。全军冲锋恢复自动推进，同时保留你的集火目标。中键拖镜头，滚轮缩放，小地图定位。</p></div><div><h3>03 / 英雄与技能</h3><p>魔王F，统帅按招募顺序Q/W/E/R。先把英雄拖到合法区域，再按技能键，瞄准后左键确认。技能有距离和冷却；Esc取消。巨王必须指定墙段，龙息是扇形。</p><h3>04 / 胜利之路</h3><p>摧毁中央日轮圣晶即可胜利。巨人破侧墙，狼骑猎杀射手，地面拆防空后飞龙进军。两个据点需打通地面、清除守军、站稳8秒，随后+200魔晶并可就地部署援军。</p></div></div><p class="manual-footer">空格暂停，暂停时计时和技能冷却停止；2×同时加快战斗和倒计时。击杀、拆塔和占领奖励只有一次；军营最多出动三波预备队。魔王阵亡仍可战斗；时间耗尽或彻底力竭则失败。</p><button class="primary" data-action="close-help">明白了，准备出征 →</button></section>`;
+  div.innerHTML = `<section class="manual"><button class="close" data-action="close-help">×</button><span class="eyebrow">FIELD MANUAL</span><h2>让每一支军团，抵达该去的战场。</h2><div class="manual-grid"><div><h3>01 / 部署与经济</h3><p>购买只扣一次魔晶，兵力进入库存。可从东南西北四面出兵。选卡后反复点地图，长按同一位置连续投放；1/3/5/10批或全部库存可调，默认3批。先设集结点，再点卡片下方出兵按钮；Shift一键投全部。拖放仍可用，300只以外的兵力保留在队列。</p><h3>02 / 指挥</h3><p>左键框选，右键移动或集火。A全选，Ctrl+1/2/3存编队，1/2/3选编队。全军冲锋恢复自动推进，同时保留你的集火目标。中键拖镜头，滚轮缩放，小地图定位。</p></div><div><h3>03 / 英雄与技能</h3><p>魔王F，统帅按招募顺序Q/W/E/R。先把英雄拖到合法区域，再按技能键，瞄准后左键确认。技能有距离和冷却；Esc取消。巨王必须指定可见墙段，龙息是扇形。通用魔王法术用Z/X/C/V或拖放图标：狂暴/治疗/守护/陨星，消耗随时间恢复的魔力，需要附近友军提供无遮挡视野。</p><h3>04 / 胜利之路</h3><p>摧毁中央日轮圣晶即可胜利。巨人破侧墙，狼骑猎杀射手，地面拆防空后飞龙进军。四个前线据点需打通地面、清除守军、站稳8秒，随后+200魔晶并可就地部署援军。掠夺者对资源设施伤害×3且击毁额外+90；精灵范围魔法必须保护好。</p></div></div><p class="manual-footer">空格暂停，暂停时计时和技能冷却停止；2×同时加快战斗和倒计时。击杀、拆塔和占领奖励只有一次；内城预备队开局已存在，数量有限，沿城门与道路增援。魔王阵亡仍可战斗；时间耗尽或彻底力竭则失败。</p><button class="primary" data-action="close-help">明白了，准备出征 →</button></section>`;
   app.append(div);
 }
 async function boot() {

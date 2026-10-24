@@ -1,0 +1,276 @@
+{
+  "date": "2026-10-24T06:02:44.394Z",
+  "url": "http://127.0.0.1:5186/",
+  "method": "Actual wizard/presets, money purchases, rally-point deployments and mouse casts. Long combat uses the same fixed-60Hz Battle.advance, no HP/money/victory overrides.",
+  "results": [
+    {
+      "name": "easy west full paid-UI campaign wins",
+      "ok": true,
+      "evidence": {
+        "time": 55.32,
+        "firstCoreHit": {
+          "time": 48.4666666666652,
+          "x": 1897.6345183451067,
+          "y": 1877.4557477239189,
+          "walls": 6
+        },
+        "walls": 7,
+        "kills": 30,
+        "spells": 5,
+        "bought": 14,
+        "forward": true
+      }
+    },
+    {
+      "name": "retry resets mana, clock, crystal and inventory",
+      "ok": true
+    },
+    {
+      "name": "normal west full paid-UI campaign wins",
+      "ok": true,
+      "evidence": {
+        "time": 58.47,
+        "firstCoreHit": {
+          "time": 49.19999999999849,
+          "x": 1901.5518316388343,
+          "y": 1883.9911591861062,
+          "walls": 7
+        },
+        "walls": 9,
+        "kills": 38,
+        "spells": 6,
+        "bought": 12,
+        "forward": true
+      }
+    },
+    {
+      "name": "actual titan wall cast, resource loot and paid forward reinforcements",
+      "ok": true,
+      "evidence": {
+        "titan": true,
+        "loot": true,
+        "forward": true,
+        "bought": 12
+      }
+    },
+    {
+      "name": "inner/core defenses actually fired",
+      "ok": true,
+      "evidence": {
+        "field": 0,
+        "outer": 7,
+        "inner": 13,
+        "core": 9
+      }
+    }
+  ],
+  "campaigns": [
+    {
+      "difficulty": "easy",
+      "strategy": "breach",
+      "front": "west",
+      "time": 55.32,
+      "remaining": 1024.68,
+      "money": 62,
+      "active": 70,
+      "queued": 0,
+      "reserves": 0,
+      "crystalHp": 0,
+      "status": "victory",
+      "outposts": [
+        {
+          "name": "南境前线",
+          "front": "south",
+          "x": 2000,
+          "y": 2770,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        },
+        {
+          "name": "西境前线",
+          "front": "west",
+          "x": 950,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 8,
+          "captured": true,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "东境前线",
+          "front": "east",
+          "x": 3050,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "北境前线",
+          "front": "north",
+          "x": 2000,
+          "y": 820,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        }
+      ],
+      "stats": {
+        "deployed": 328,
+        "kills": 30,
+        "lost": 258,
+        "income": 1447,
+        "walls": 7,
+        "skills": 4,
+        "peak": 300,
+        "resourceIncome": 730,
+        "spells": 5,
+        "towerShots": {
+          "field": 0,
+          "outer": 8,
+          "inner": 10,
+          "core": 10
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 7,
+          "inner": 5,
+          "core": 5
+        }
+      },
+      "mana": 25.19,
+      "firstCoreHit": {
+        "time": 48.4666666666652,
+        "x": 1897.6345183451067,
+        "y": 1877.4557477239189,
+        "walls": 6
+      },
+      "reservesDispatched": 2,
+      "ui": {
+        "titan": true,
+        "loot": true,
+        "forward": true,
+        "bought": 14,
+        "inner": true,
+        "core": true
+      }
+    },
+    {
+      "difficulty": "normal",
+      "strategy": "breach",
+      "front": "west",
+      "time": 58.47,
+      "remaining": 841.53,
+      "money": 51,
+      "active": 109,
+      "queued": 0,
+      "reserves": 0,
+      "crystalHp": 0,
+      "status": "victory",
+      "outposts": [
+        {
+          "name": "南境前线",
+          "front": "south",
+          "x": 2000,
+          "y": 2770,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        },
+        {
+          "name": "西境前线",
+          "front": "west",
+          "x": 950,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 8,
+          "captured": true,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "东境前线",
+          "front": "east",
+          "x": 3050,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "北境前线",
+          "front": "north",
+          "x": 2000,
+          "y": 820,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        }
+      ],
+      "stats": {
+        "deployed": 400,
+        "kills": 38,
+        "lost": 291,
+        "income": 1511,
+        "walls": 9,
+        "skills": 4,
+        "peak": 300,
+        "resourceIncome": 820,
+        "spells": 6,
+        "towerShots": {
+          "field": 0,
+          "outer": 7,
+          "inner": 13,
+          "core": 9
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 7,
+          "inner": 5,
+          "core": 6
+        }
+      },
+      "mana": 20.29,
+      "firstCoreHit": {
+        "time": 49.19999999999849,
+        "x": 1901.5518316388343,
+        "y": 1883.9911591861062,
+        "walls": 7
+      },
+      "reservesDispatched": 2,
+      "ui": {
+        "titan": true,
+        "loot": true,
+        "forward": true,
+        "bought": 12,
+        "inner": true,
+        "core": true
+      }
+    }
+  ],
+  "errors": [],
+  "pass": false,
+  "aborted": "Actual process exited 1: TimeoutError waiting for [data-action=\"new\"] after selecting the menu behind the result overlay. Two campaigns completed; remaining cases were not run."
+}

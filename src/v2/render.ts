@@ -52,6 +52,12 @@ export class Renderer {
   readonly mini: HTMLCanvasElement;
   private ground: HTMLCanvasElement;
   private wallPattern: CanvasPattern | string | null = null;
+  private wallFrames = new Map<
+    string,
+    { canvas: HTMLCanvasElement; radius: number; top: number }
+  >();
+  private wallCapture = false;
+  private miniGround = document.createElement("canvas");
   private raf = 0;
   private last = 0;
   private fx: (Event & { age: number; life: number })[] = [];
@@ -88,6 +94,11 @@ export class Renderer {
     this.ctx = this.canvas.getContext("2d")!;
     this.mini = mini;
     this.ground = this.makeGround();
+    this.miniGround.width = 200;
+    this.miniGround.height = 150;
+    this.miniGround.getContext("2d")!.drawImage(this.ground, 0, 0, 200, 150);
+    this.mini.width = 200;
+    this.mini.height = 150;
     this.resizeObserver = new ResizeObserver(() => this.resize());
     this.resizeObserver.observe(container);
     this.resize();
@@ -109,6 +120,23 @@ export class Renderer {
     this.camera.zoom = full
       ? Math.min(this.width / 4200, this.height / 3800)
       : Math.min(this.width / 3400, this.height / 1500);
+    this.constrain();
+  }
+  focus(x: number, y: number, zoom = this.camera.zoom) {
+    this.camera = { x, y, zoom };
+    this.constrain();
+  }
+  private constrain() {
+    const halfX = this.width / 2 / this.camera.zoom,
+      halfY = this.height / 2 / this.camera.zoom;
+    this.camera.x =
+      halfX >= WORLD.width / 2
+        ? WORLD.width / 2
+        : Math.max(halfX, Math.min(WORLD.width - halfX, this.camera.x));
+    this.camera.y =
+      halfY >= WORLD.height / 2
+        ? WORLD.height / 2
+        : Math.max(halfY, Math.min(WORLD.height - halfY, this.camera.y));
   }
 
   screenToWorld(x: number, y: number) {
@@ -131,6 +159,7 @@ export class Renderer {
     const after = this.screenToWorld(x, y);
     this.camera.x += before.x - after.x;
     this.camera.y += before.y - after.y;
+    this.constrain();
   }
   start() {
     this.last = performance.now();
@@ -191,6 +220,13 @@ export class Renderer {
     this.ground.width = 1;
     this.ground.height = 1;
     this.fx.length = 0;
+    this.miniGround.width = 1;
+    this.miniGround.height = 1;
+    for (const frame of this.wallFrames.values()) {
+      frame.canvas.width = 1;
+      frame.canvas.height = 1;
+    }
+    this.wallFrames.clear();
   }
   private drawAtlas(
     c: CanvasRenderingContext2D,
@@ -445,6 +481,7 @@ export class Renderer {
     return a;
   }
   render(t: number) {
+    this.constrain();
     const c = this.ctx,
       dpr = this.canvas.width / this.width;
     c.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -609,6 +646,34 @@ export class Renderer {
     c.fillRect(x + 9, y - 67, 11, 3);
   }
   private drawStructure(c: CanvasRenderingContext2D, s: Structure, t: number) {
+    // Masonry is static between damage stages. Cache its strokes, retain dynamic flags/HP
+    // and the original per-object depth order so moving armies still occlude correctly.
+    if ((s.kind === "wall" || s.kind === "gate") && !this.wallCapture) {
+      const tower = s.id % 13 === 0 && s.w > s.h,
+        arch = s.kind === "gate" && s.w > s.h;
+      const key = `${s.kind}:${s.w.toFixed(2)}:${s.h.toFixed(2)}:${s.district}:${s.weak}:${s.hp < s.maxHp * 0.65}:${tower}`;
+      let f = this.wallFrames.get(key);
+      if (!f) {
+        const radius = Math.ceil(Math.max(s.w / 2 + 30, arch ? 115 : 0, tower ? 80 : 0)),
+          top = Math.ceil(Math.max(s.h / 2 + 115, arch ? 225 : 0, tower ? 195 : 0));
+        const canvas = document.createElement("canvas");
+        canvas.width = radius * 2;
+        canvas.height = Math.ceil(top + s.h / 2 + 45);
+        const ctx = canvas.getContext("2d")!;
+        ctx.translate(radius - s.x, top - s.y);
+        this.wallCapture = true;
+        this.drawStructure(ctx, s, 0);
+        this.wallCapture = false;
+        f = { canvas, radius, top };
+        this.wallFrames.set(key, f);
+      }
+      c.drawImage(f.canvas, s.x - f.radius, s.y - f.top);
+      const tall = s.kind === "gate" ? 82 : s.district === "inner" ? 70 : 55;
+      if (s.id % 5 === 0) this.flag(c, s.x, s.y - tall, t);
+      if (s.hp < s.maxHp)
+        this.health(c, s.x, s.y + 22, Math.max(45, s.w * 0.8), s.hp / s.maxHp, "#dbc08a");
+      return;
+    }
     if (s.kind === "wall" || s.kind === "gate") {
       const tall = s.kind === "gate" ? 82 : s.district === "inner" ? 70 : 55,
         x = s.x - s.w / 2,
@@ -666,7 +731,7 @@ export class Renderer {
         c.lineTo(s.x + 10, y + 15);
         c.stroke();
       }
-      if (s.id % 5 === 0) this.flag(c, s.x, s.y - tall, t);
+      if (!this.wallCapture && s.id % 5 === 0) this.flag(c, s.x, s.y - tall, t);
       if (s.id % 13 === 0 && s.w > s.h) this.drawAtlas(c, "city", 4, 4, 2, s.x, s.y + 14, 140, 180);
       if (s.kind === "gate" && s.w > s.h)
         this.drawAtlas(c, "city", 7, 4, 2, s.x, s.y + 18, 210, 215);
@@ -752,7 +817,7 @@ export class Renderer {
         c.restore();
       }
     }
-    if (s.hp < s.maxHp && s.kind !== "crystal")
+    if (!this.wallCapture && s.hp < s.maxHp && s.kind !== "crystal")
       this.health(c, s.x, s.y + 22, Math.max(45, s.w * 0.8), s.hp / s.maxHp, "#dbc08a");
   }
   private drawRuin(c: CanvasRenderingContext2D, s: Structure) {
@@ -898,7 +963,7 @@ export class Renderer {
     }
     c.restore();
     if (dead) return;
-    if (u.hp < u.maxHp || selected || hero)
+    if (hero || u.hp < u.maxHp * 0.9 || (selected && this.camera.zoom >= 0.9))
       this.health(
         c,
         u.x,
@@ -1252,9 +1317,8 @@ export class Renderer {
   }
   private drawMini() {
     const c = this.mini.getContext("2d")!;
-    this.mini.width = 200;
-    this.mini.height = 150;
-    c.drawImage(this.ground, 0, 0, 200, 150);
+    c.clearRect(0, 0, 200, 150);
+    c.drawImage(this.miniGround, 0, 0);
     const sx = 200 / WORLD.width,
       sy = 150 / WORLD.height;
     for (const s of this.battle.structures)

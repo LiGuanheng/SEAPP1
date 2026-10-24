@@ -1,24 +1,29 @@
 # 异界围城：魔物之王
 
-原创奇幻魔物军团实时攻城游戏 · 软件工程课程项目 V2
+原创奇幻军团实时攻城 · 软件工程课程项目 V3
 
-**[在线游玩](https://liguanheng.github.io/SEAPP1/)** · [验收报告](docs/V2_REPORT.md) · [玩家手册](docs/USER_MANUAL.md) · [真实截图](docs/screenshots/v2)
+**[在线游玩](https://liguanheng.github.io/SEAPP1/)** · [本轮交付与实测](docs/v3/REPORT.md) · [操作手册](docs/USER_MANUAL.md) · [真实截图](docs/screenshots/v3)
 
-选择魔王专精和最多四位统帅，用有限魔晶购买军团，从三路城外召唤，破墙、夺取前线、用战利品补兵，在日轮圣晶完成净化前摧毁它。开局就是最后总攻，没有多日经营或基地建设。
+从东、南、西、北四面集结，掠夺外围资源，突破外城、内城与中央核心。唯一目标始终是摧毁日轮圣晶；无需清除建筑清单，没有多日经营和基地建设。
 
-![圣曜城全景](docs/screenshots/v2/16-city-panorama.png)
+## 下兵更快
 
-## 游戏内容
+- 默认一次 **3批**，可调 **1 / 3 / 5 / 10批 / 全部库存**。
+- 选中兵种卡后反复点地图；**按住同一位置连续出兵**，松开、暂停、取消或失焦即停止。
+- 设置合法集结点后，点卡片下方 **出兵** 按钮即可一键投放，**Shift+点击投全部**；也可一键投入全军。
+- 保留原生拖放与英雄点放。库存只扣一次；召唤约100只/秒，300只以外完整排队。
 
-- 三种专精、六位独立魔物统帅、十种可辨兵种与手动技能。
-- 原生拖放、批量/全部库存、活动300上限与无丢失排队；战前/战中独立购买。
-- 可破坏的两层城墙、炮火与防空、有限守军/预备队、两个8秒前线据点。
-- 框选、右键移动/集火、编队、暂停/倍速；完整胜利、超时、力竭和重试。
-- 原创插画、精灵和城防美术，事件驱动召唤、巨王破墙、龙息、陨星与圣晶演出。
+![内城交战实拍](docs/screenshots/v3/06-inner-battle.png)
 
-![风暴龙王](docs/screenshots/v2/14-dragon-breath.png)
+## 本轮重制
 
-## 运行与验证
+4000×3600的四面战场，外围/外城/内城/核心四层防区、三重真实可破坏围墙、四座前线、不同方向的城防组合。守军有警戒与归位，有限预备队开局即存在，按压力沿城门与道路引导增援；射程、目标类型与真实墙体/建筑遮挡共同决定攻击。
+
+保留三专精、六统帅及手动主动技能，扩展为十二兵种。哥布林掠夺者优先近处资源、额外一次性收益；流亡精灵法师有施法前摇与真实范围焰爆。新增Z/X/C/V四种魔王法术和法力恢复，支持点击、拖放、范围预览与冷却反馈。
+
+圣晶仍为5600HP。难度靠布局、数量有限的守军/预备队和不同压力构成，未使用巨额核心生命或无限刷兵。
+
+## 本地运行
 
 Node.js 22+：
 
@@ -28,23 +33,23 @@ npm run dev
 ```
 
 ```sh
+npm run test
 npm run typecheck
 npm run format:check
-npm run test
 npm run build
 npm run preview -- --host 127.0.0.1 --port 4173
+npm run test:e2e -- http://127.0.0.1:4173/SEAPP1/
+npm run sim
 ```
 
-生产预览访问 `http://127.0.0.1:4173/SEAPP1/`。Windows干净安装前应先停止本项目预览服务以释放esbuild文件锁。
+生产预览路径为 `/SEAPP1/`。浏览器脚本需要本机Chrome或Edge，支持CHROME_PATH。Windows干净安装前应停止本项目预览，以释放esbuild文件锁。
 
-安装Chrome/Edge后，可执行 `npm run test:e2e -- http://127.0.0.1:4173/SEAPP1/` 和 `npm run sim`。浏览器脚本支持CHROME_PATH。最终新版48项逻辑测试、36项真实浏览器检查、固定种子策略与300单位实测分别留证，详见报告；没有把构建成功冒充试玩通过。
+实测使用真实菜单、购买、部署、键鼠施法及同一固定60Hz战斗模型；长战役采用模拟快进，不冒充人类实时盲测。原始JSON、失败样本、性能环境及截图见验收报告。
 
-主要操作：卡片拖到合法区域；左键框选、右键移动/集火，A全选，Ctrl+1–3保存编队，Q/W/E/R统帅技能、F魔王技能，空格暂停，中键拖镜头、滚轮缩放。
+## 课程资料
 
-## 课程资料与来源
+[GDD](docs/GDD.md) · [SRS](docs/SRS.md) · [SDD](docs/SDD.md) · [追溯矩阵](docs/TRACEABILITY.md) · [测试报告](docs/TEST_REPORT.md) · [开发日志](docs/DEV_LOG.md) · [决策](docs/DECISIONS.md) · [AI协作](docs/AI_COLLABORATION.md) · [资源与提示词](docs/ASSET_LICENSES.md) · [部署](docs/DEPLOYMENT.md) · [演示流程](docs/DEMO.md)
 
-[SRS](docs/SRS.md) · [SDD](docs/SDD.md) · [需求追溯](docs/TRACEABILITY.md) · [测试报告](docs/TEST_REPORT.md) · [开发日志](docs/DEV_LOG.md) · [决策](docs/DECISIONS.md) · [AI协作](docs/AI_COLLABORATION.md) · [资源登记](docs/ASSET_LICENSES.md) · [部署](docs/DEPLOYMENT.md) · [课堂演示](docs/DEMO.md)
+TypeScript、Vite、原生Canvas 2D与DOM；AI完全为本地规则，不调用大模型API。原创图片PNG在art-source，正式使用WebP。动画仍以两姿态及程序化动作呈现，移动端、中途存档、完整BGM和低端设备盲测不在已验证范围。
 
-采用TypeScript、Vite、原生Canvas 2D与DOM；战斗AI是有限本地规则，不接大模型API。原始美术保留在art-source，正式资源编码为WebP；没有挪用商业游戏素材。动作仍以两姿态和程序化变形为主，完整方向动画、可破坏民居和独立人类平衡盲测仍有提升空间。
-
-V1历史基线d4aa44d与完整Git历史保留，旧资料在docs/archive/v1。M0–M6按真实阶段正常提交推送，没有强推或伪造历史。正式构建包含build-manifest.json，便于核对部署提交和资源SHA-256。
+V1、V2课程材料原样归档在docs/archive；旧版真实实测仍保留。全部Git历史正常延续，不强推、不改旧提交时间。公开构建含build-manifest.json，可核验源提交及每个文件的SHA-256。

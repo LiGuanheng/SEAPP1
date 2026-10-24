@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "sim": "tsx scripts/v2-simulate.ts",
+    "sim": "tsx scripts/v3-simulate.ts",
     "typecheck": "tsc --noEmit",
     "test:e2e": "node scripts/run-browser.mjs",
     "assets:pack": "node scripts/pack-art.mjs",

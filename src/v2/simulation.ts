@@ -417,10 +417,11 @@ export class Battle {
     return true;
   }
   deployAll(x: number, y: number) {
-    if (!this.canDeploy(x, y)) return false;
-    for (const k of [...this.heroInventory]) this.deploy(k, x, y);
-    for (const k of ARMY_KEYS) this.deploy(k, x, y, Infinity);
-    return true;
+    if (this.status !== "battle" || !this.canDeploy(x, y)) return false;
+    let committed = false;
+    for (const k of [...this.heroInventory]) if (this.deploy(k, x, y)) committed = true;
+    for (const k of ARMY_KEYS) if (this.deploy(k, x, y, Infinity)) committed = true;
+    return committed;
   }
   buy(k: Army, n: number) {
     if (this.status !== "battle") return 0;
@@ -688,6 +689,7 @@ export class Battle {
     };
   }
   cast(kind: Kind, x: number, y: number): string {
+    if (kind !== "king" && !isCommander(kind)) return "该单位没有主动技能";
     const info = this.skillInfo(kind);
     if (!info.unit) return "英雄尚未部署或已阵亡";
     if (this.paused) return "请先恢复战斗";
@@ -807,6 +809,7 @@ export class Battle {
     return "";
   }
   spellInfo(spell: Spell) {
+    if (!Object.hasOwn(SPELLS, spell)) return { cooldown: 0, available: false };
     const data = SPELLS[spell],
       cooldown = Math.max(0, (this.spellReadyAt.get(spell) ?? 0) - this.time);
     return {
@@ -836,6 +839,7 @@ export class Battle {
     );
   }
   castSpell(spell: Spell, x: number, y: number): string {
+    if (!Object.hasOwn(SPELLS, spell)) return "未知法术";
     const d = SPELLS[spell];
     if (!d || this.status !== "battle") return "当前无法施法";
     if (this.paused) return "请先恢复战斗";

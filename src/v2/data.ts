@@ -412,7 +412,7 @@ export const SPECS: Record<
   element: {
     name: "元素魔王",
     title: "群星为我而陨落",
-    description: "远程与法术伤害 +10%。陨星术：范围140伤害，对圣晶仅35。",
+    description: "远程与法术伤害 +10%。元素轰击F：范围140伤害，对圣晶仅35，不消耗通用法力。",
     skill: "元素轰击",
     cooldown: 75,
   },
@@ -524,8 +524,8 @@ export const WORLD = {
   crystal: { x: 2000, y: 1800 },
   cap: 300,
 };
-export const isCommander = (k: Kind): k is Commander => k in COMMANDERS;
-export const isArmy = (k: Kind): k is Army => k in ARMIES;
+export const isCommander = (k: Kind): k is Commander => Object.hasOwn(COMMANDERS, k);
+export const isArmy = (k: Kind): k is Army => Object.hasOwn(ARMIES, k);
 export type Spell = "rage" | "heal" | "barrier" | "meteor";
 export const SPELLS: Record<
   Spell,
