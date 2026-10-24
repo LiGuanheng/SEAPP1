@@ -10,12 +10,13 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "sim": "tsx scripts/v3-simulate.ts",
+    "sim": "tsx scripts/tactical-simulate.ts",
     "typecheck": "tsc --noEmit",
     "test:e2e": "node scripts/run-browser.mjs",
     "assets:pack": "node scripts/pack-art.mjs",
     "format": "prettier --write src tests scripts/*.ts scripts/*.mjs *.json",
-    "format:check": "prettier --check src tests scripts/*.ts scripts/*.mjs *.json"
+    "format:check": "prettier --check src tests scripts/*.ts scripts/*.mjs *.json",
+    "sim:legacy": "tsx scripts/v3-simulate.ts"
   },
   "devDependencies": {
     "@types/node": "^24.19.2",

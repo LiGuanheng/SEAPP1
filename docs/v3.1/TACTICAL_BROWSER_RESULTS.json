@@ -1,0 +1,3557 @@
+{
+  "date": "2026-10-24T07:56:44.373Z",
+  "checks": [
+    {
+      "name": "two physical outer raids award real spendable money",
+      "ok": true,
+      "evidence": {
+        "time": 5.25,
+        "remaining": 894.75,
+        "money": 1230,
+        "active": 210,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": false
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": false
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": false
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": false
+          }
+        ],
+        "stats": {
+          "deployed": 210,
+          "kills": 0,
+          "lost": 0,
+          "income": 1130,
+          "walls": 0,
+          "skills": 0,
+          "peak": 210,
+          "resourceIncome": 1130,
+          "spells": 0,
+          "lootSites": 2,
+          "reliefTransfers": 0,
+          "guardianBursts": 0,
+          "towerShots": {
+            "field": 0,
+            "outer": 3,
+            "inner": 0,
+            "core": 0
+          },
+          "destroyed": {
+            "field": 2,
+            "outer": 0,
+            "inner": 0,
+            "core": 0
+          }
+        },
+        "mana": 100,
+        "firstCoreHit": null,
+        "reservesDispatched": 0
+      }
+    },
+    {
+      "name": "UI route reaches destination and returns to waiting",
+      "ok": true
+    },
+    {
+      "name": "frontline capture permits paid reinforcement",
+      "ok": true,
+      "evidence": {
+        "post": {
+          "name": "西境前线",
+          "front": "west",
+          "x": 950,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 8,
+          "captured": true,
+          "contested": false,
+          "connected": true
+        },
+        "purchases": 19
+      }
+    },
+    {
+      "name": "newly purchased units actually enter at captured front",
+      "ok": true,
+      "evidence": [
+        {
+          "newAtFront": 6,
+          "queuedAtFront": 0
+        },
+        {
+          "newAtFront": 0,
+          "queuedAtFront": 6
+        },
+        {
+          "newAtFront": 0,
+          "queuedAtFront": 4
+        },
+        {
+          "newAtFront": 0,
+          "queuedAtFront": 6
+        },
+        {
+          "newAtFront": 6,
+          "queuedAtFront": 0
+        },
+        {
+          "newAtFront": 0,
+          "queuedAtFront": 6
+        },
+        {
+          "newAtFront": 0,
+          "queuedAtFront": 4
+        },
+        {
+          "newAtFront": 6,
+          "queuedAtFront": 0
+        },
+        {
+          "newAtFront": 6,
+          "queuedAtFront": 0
+        },
+        {
+          "newAtFront": 0,
+          "queuedAtFront": 6
+        },
+        {
+          "newAtFront": 0,
+          "queuedAtFront": 4
+        },
+        {
+          "newAtFront": 0,
+          "queuedAtFront": 6
+        },
+        {
+          "newAtFront": 6,
+          "queuedAtFront": 0
+        }
+      ]
+    },
+    {
+      "name": "paid reinforcements were actually deployed",
+      "ok": true,
+      "evidence": {
+        "deployed": 380,
+        "purchases": 31
+      }
+    },
+    {
+      "name": "normal campaign reaches genuine crystal victory",
+      "ok": true,
+      "evidence": {
+        "status": "victory",
+        "time": 136.67,
+        "crystalHp": 0,
+        "purchases": 31,
+        "stats": {
+          "deployed": 380,
+          "kills": 53,
+          "lost": 300,
+          "income": 4397,
+          "walls": 11,
+          "skills": 5,
+          "peak": 267,
+          "resourceIncome": 3750,
+          "spells": 7,
+          "lootSites": 7,
+          "reliefTransfers": 12,
+          "guardianBursts": 1,
+          "towerShots": {
+            "field": 0,
+            "outer": 112,
+            "inner": 9,
+            "core": 20
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 6,
+            "inner": 10,
+            "core": 2
+          }
+        }
+      }
+    },
+    {
+      "name": "victory retry starts a fresh battle",
+      "ok": true,
+      "evidence": {
+        "time": 0,
+        "remaining": 900,
+        "money": 100,
+        "active": 0,
+        "queued": 0,
+        "reserves": 210,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": false
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": false
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": false
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": false
+          }
+        ],
+        "stats": {
+          "deployed": 0,
+          "kills": 0,
+          "lost": 0,
+          "income": 0,
+          "walls": 0,
+          "skills": 0,
+          "peak": 0,
+          "resourceIncome": 0,
+          "spells": 0,
+          "lootSites": 0,
+          "reliefTransfers": 0,
+          "guardianBursts": 0,
+          "towerShots": {
+            "field": 0,
+            "outer": 0,
+            "inner": 0,
+            "core": 0
+          },
+          "destroyed": {
+            "field": 0,
+            "outer": 0,
+            "inner": 0,
+            "core": 0
+          }
+        },
+        "mana": 100,
+        "firstCoreHit": null,
+        "reservesDispatched": 0
+      }
+    },
+    {
+      "name": "timeout produces genuine defeat",
+      "ok": true
+    },
+    {
+      "name": "defeat retry resets the clock and mana",
+      "ok": true
+    },
+    {
+      "name": "no browser errors",
+      "ok": true,
+      "evidence": []
+    }
+  ],
+  "errors": [],
+  "result": {
+    "time": 136.67,
+    "remaining": 763.33,
+    "money": 87,
+    "active": 80,
+    "queued": 0,
+    "reserves": 0,
+    "crystalHp": 0,
+    "status": "victory",
+    "outposts": [
+      {
+        "name": "南境前线",
+        "front": "south",
+        "x": 2000,
+        "y": 2770,
+        "w": 260,
+        "h": 220,
+        "progress": 0,
+        "captured": false,
+        "contested": true,
+        "connected": true
+      },
+      {
+        "name": "西境前线",
+        "front": "west",
+        "x": 950,
+        "y": 1800,
+        "w": 260,
+        "h": 220,
+        "progress": 8,
+        "captured": true,
+        "contested": false,
+        "connected": true
+      },
+      {
+        "name": "东境前线",
+        "front": "east",
+        "x": 3050,
+        "y": 1800,
+        "w": 260,
+        "h": 220,
+        "progress": 0,
+        "captured": false,
+        "contested": false,
+        "connected": true
+      },
+      {
+        "name": "北境前线",
+        "front": "north",
+        "x": 2000,
+        "y": 820,
+        "w": 260,
+        "h": 220,
+        "progress": 0,
+        "captured": false,
+        "contested": true,
+        "connected": true
+      }
+    ],
+    "stats": {
+      "deployed": 380,
+      "kills": 53,
+      "lost": 300,
+      "income": 4397,
+      "walls": 11,
+      "skills": 5,
+      "peak": 267,
+      "resourceIncome": 3750,
+      "spells": 7,
+      "lootSites": 7,
+      "reliefTransfers": 12,
+      "guardianBursts": 1,
+      "towerShots": {
+        "field": 0,
+        "outer": 112,
+        "inner": 9,
+        "core": 20
+      },
+      "destroyed": {
+        "field": 6,
+        "outer": 6,
+        "inner": 10,
+        "core": 2
+      }
+    },
+    "mana": 27.63,
+    "firstCoreHit": {
+      "time": 131.78333333333035,
+      "x": 1894.141645458636,
+      "y": 1840.3994154141158,
+      "walls": 11
+    },
+    "reservesDispatched": 2,
+    "purchases": 31,
+    "forwardPurchases": [
+      {
+        "newAtFront": 6,
+        "queuedAtFront": 0
+      },
+      {
+        "newAtFront": 0,
+        "queuedAtFront": 6
+      },
+      {
+        "newAtFront": 0,
+        "queuedAtFront": 4
+      },
+      {
+        "newAtFront": 0,
+        "queuedAtFront": 6
+      },
+      {
+        "newAtFront": 6,
+        "queuedAtFront": 0
+      },
+      {
+        "newAtFront": 0,
+        "queuedAtFront": 6
+      },
+      {
+        "newAtFront": 0,
+        "queuedAtFront": 4
+      },
+      {
+        "newAtFront": 6,
+        "queuedAtFront": 0
+      },
+      {
+        "newAtFront": 6,
+        "queuedAtFront": 0
+      },
+      {
+        "newAtFront": 0,
+        "queuedAtFront": 6
+      },
+      {
+        "newAtFront": 0,
+        "queuedAtFront": 4
+      },
+      {
+        "newAtFront": 0,
+        "queuedAtFront": 6
+      },
+      {
+        "newAtFront": 6,
+        "queuedAtFront": 0
+      }
+    ],
+    "history": [
+      {
+        "stage": 0,
+        "time": 65.18,
+        "remaining": 834.82,
+        "money": 2070,
+        "active": 239,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": false
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": false
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": false
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": false
+          }
+        ],
+        "stats": {
+          "deployed": 258,
+          "kills": 0,
+          "lost": 19,
+          "income": 3250,
+          "walls": 0,
+          "skills": 3,
+          "peak": 241,
+          "resourceIncome": 3250,
+          "spells": 3,
+          "lootSites": 6,
+          "reliefTransfers": 12,
+          "guardianBursts": 0,
+          "towerShots": {
+            "field": 0,
+            "outer": 72,
+            "inner": 0,
+            "core": 0
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 0,
+            "inner": 0,
+            "core": 0
+          }
+        },
+        "mana": 13.96,
+        "firstCoreHit": null,
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 0,
+        "time": 67.38,
+        "remaining": 832.62,
+        "money": 1920,
+        "active": 243,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": false
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": false
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": false
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": false
+          }
+        ],
+        "stats": {
+          "deployed": 264,
+          "kills": 0,
+          "lost": 21,
+          "income": 3250,
+          "walls": 0,
+          "skills": 4,
+          "peak": 244,
+          "resourceIncome": 3250,
+          "spells": 3,
+          "lootSites": 6,
+          "reliefTransfers": 12,
+          "guardianBursts": 0,
+          "towerShots": {
+            "field": 0,
+            "outer": 77,
+            "inner": 0,
+            "core": 0
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 0,
+            "inner": 0,
+            "core": 0
+          }
+        },
+        "mana": 17.92,
+        "firstCoreHit": null,
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 0,
+        "time": 69.6,
+        "remaining": 830.4,
+        "money": 1791,
+        "active": 247,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 270,
+          "kills": 1,
+          "lost": 23,
+          "income": 3251,
+          "walls": 1,
+          "skills": 4,
+          "peak": 249,
+          "resourceIncome": 3250,
+          "spells": 3,
+          "lootSites": 6,
+          "reliefTransfers": 12,
+          "guardianBursts": 0,
+          "towerShots": {
+            "field": 0,
+            "outer": 81,
+            "inner": 0,
+            "core": 0
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 1,
+            "inner": 0,
+            "core": 0
+          }
+        },
+        "mana": 21.91,
+        "firstCoreHit": null,
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 0,
+        "time": 71.85,
+        "remaining": 828.15,
+        "money": 1649,
+        "active": 250,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 276,
+          "kills": 6,
+          "lost": 26,
+          "income": 3259,
+          "walls": 2,
+          "skills": 4,
+          "peak": 253,
+          "resourceIncome": 3250,
+          "spells": 3,
+          "lootSites": 6,
+          "reliefTransfers": 12,
+          "guardianBursts": 0,
+          "towerShots": {
+            "field": 0,
+            "outer": 87,
+            "inner": 0,
+            "core": 0
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 2,
+            "inner": 0,
+            "core": 0
+          }
+        },
+        "mana": 25.96,
+        "firstCoreHit": null,
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 0,
+        "time": 74.07,
+        "remaining": 825.93,
+        "money": 1534,
+        "active": 250,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 280,
+          "kills": 19,
+          "lost": 30,
+          "income": 3284,
+          "walls": 4,
+          "skills": 4,
+          "peak": 253,
+          "resourceIncome": 3250,
+          "spells": 3,
+          "lootSites": 6,
+          "reliefTransfers": 12,
+          "guardianBursts": 0,
+          "towerShots": {
+            "field": 0,
+            "outer": 89,
+            "inner": 0,
+            "core": 0
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 4,
+            "inner": 0,
+            "core": 0
+          }
+        },
+        "mana": 29.95,
+        "firstCoreHit": null,
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 0,
+        "time": 76.25,
+        "remaining": 823.75,
+        "money": 1424,
+        "active": 255,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 1.3333333333333333,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 286,
+          "kills": 19,
+          "lost": 31,
+          "income": 3324,
+          "walls": 4,
+          "skills": 4,
+          "peak": 256,
+          "resourceIncome": 3250,
+          "spells": 3,
+          "lootSites": 6,
+          "reliefTransfers": 12,
+          "guardianBursts": 0,
+          "towerShots": {
+            "field": 0,
+            "outer": 92,
+            "inner": 0,
+            "core": 0
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 5,
+            "inner": 0,
+            "core": 0
+          }
+        },
+        "mana": 33.88,
+        "firstCoreHit": null,
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 0,
+        "time": 78.43,
+        "remaining": 821.57,
+        "money": 1304,
+        "active": 261,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 2.6666666666666665,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 292,
+          "kills": 23,
+          "lost": 31,
+          "income": 3334,
+          "walls": 4,
+          "skills": 4,
+          "peak": 261,
+          "resourceIncome": 3250,
+          "spells": 3,
+          "lootSites": 6,
+          "reliefTransfers": 12,
+          "guardianBursts": 0,
+          "towerShots": {
+            "field": 0,
+            "outer": 93,
+            "inner": 1,
+            "core": 0
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 5,
+            "inner": 0,
+            "core": 0
+          }
+        },
+        "mana": 37.81,
+        "firstCoreHit": null,
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 0,
+        "time": 80.63,
+        "remaining": 819.37,
+        "money": 1655,
+        "active": 215,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 3.733333333333333,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 298,
+          "kills": 24,
+          "lost": 83,
+          "income": 3835,
+          "walls": 4,
+          "skills": 4,
+          "peak": 267,
+          "resourceIncome": 3750,
+          "spells": 3,
+          "lootSites": 7,
+          "reliefTransfers": 12,
+          "guardianBursts": 0,
+          "towerShots": {
+            "field": 0,
+            "outer": 95,
+            "inner": 1,
+            "core": 0
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 6,
+            "inner": 0,
+            "core": 0
+          }
+        },
+        "mana": 41.77,
+        "firstCoreHit": null,
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 0,
+        "time": 82.83,
+        "remaining": 817.17,
+        "money": 1515,
+        "active": 219,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 5.866666666666666,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 302,
+          "kills": 24,
+          "lost": 83,
+          "income": 3835,
+          "walls": 4,
+          "skills": 4,
+          "peak": 267,
+          "resourceIncome": 3750,
+          "spells": 3,
+          "lootSites": 7,
+          "reliefTransfers": 12,
+          "guardianBursts": 0,
+          "towerShots": {
+            "field": 0,
+            "outer": 97,
+            "inner": 2,
+            "core": 0
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 6,
+            "inner": 0,
+            "core": 0
+          }
+        },
+        "mana": 45.73,
+        "firstCoreHit": null,
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 0,
+        "time": 85.15,
+        "remaining": 814.85,
+        "money": 1565,
+        "active": 181,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 8,
+            "captured": true,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 308,
+          "kills": 24,
+          "lost": 127,
+          "income": 4035,
+          "walls": 4,
+          "skills": 4,
+          "peak": 267,
+          "resourceIncome": 3750,
+          "spells": 3,
+          "lootSites": 7,
+          "reliefTransfers": 12,
+          "guardianBursts": 0,
+          "towerShots": {
+            "field": 0,
+            "outer": 98,
+            "inner": 2,
+            "core": 0
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 6,
+            "inner": 0,
+            "core": 0
+          }
+        },
+        "mana": 49.9,
+        "firstCoreHit": null,
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 2,
+        "time": 87.68,
+        "remaining": 812.32,
+        "money": 1435,
+        "active": 187,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 8,
+            "captured": true,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 314,
+          "kills": 24,
+          "lost": 127,
+          "income": 4035,
+          "walls": 4,
+          "skills": 4,
+          "peak": 267,
+          "resourceIncome": 3750,
+          "spells": 3,
+          "lootSites": 7,
+          "reliefTransfers": 12,
+          "guardianBursts": 0,
+          "towerShots": {
+            "field": 0,
+            "outer": 100,
+            "inner": 3,
+            "core": 0
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 6,
+            "inner": 0,
+            "core": 0
+          }
+        },
+        "mana": 54.46,
+        "firstCoreHit": null,
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 2,
+        "time": 89.83,
+        "remaining": 810.17,
+        "money": 1285,
+        "active": 190,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 8,
+            "captured": true,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 320,
+          "kills": 24,
+          "lost": 130,
+          "income": 4035,
+          "walls": 4,
+          "skills": 4,
+          "peak": 267,
+          "resourceIncome": 3750,
+          "spells": 3,
+          "lootSites": 7,
+          "reliefTransfers": 12,
+          "guardianBursts": 0,
+          "towerShots": {
+            "field": 0,
+            "outer": 102,
+            "inner": 3,
+            "core": 0
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 6,
+            "inner": 0,
+            "core": 0
+          }
+        },
+        "mana": 58.33,
+        "firstCoreHit": null,
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 2,
+        "time": 92.12,
+        "remaining": 807.88,
+        "money": 1145,
+        "active": 189,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 8,
+            "captured": true,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 324,
+          "kills": 24,
+          "lost": 135,
+          "income": 4035,
+          "walls": 5,
+          "skills": 4,
+          "peak": 267,
+          "resourceIncome": 3750,
+          "spells": 4,
+          "lootSites": 7,
+          "reliefTransfers": 12,
+          "guardianBursts": 0,
+          "towerShots": {
+            "field": 0,
+            "outer": 104,
+            "inner": 4,
+            "core": 0
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 6,
+            "inner": 1,
+            "core": 0
+          }
+        },
+        "mana": 37.44,
+        "firstCoreHit": null,
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 2,
+        "time": 94.32,
+        "remaining": 805.68,
+        "money": 996,
+        "active": 168,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 8,
+            "captured": true,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 330,
+          "kills": 25,
+          "lost": 162,
+          "income": 4036,
+          "walls": 5,
+          "skills": 4,
+          "peak": 267,
+          "resourceIncome": 3750,
+          "spells": 4,
+          "lootSites": 7,
+          "reliefTransfers": 12,
+          "guardianBursts": 0,
+          "towerShots": {
+            "field": 0,
+            "outer": 105,
+            "inner": 4,
+            "core": 0
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 6,
+            "inner": 1,
+            "core": 0
+          }
+        },
+        "mana": 41.4,
+        "firstCoreHit": null,
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 2,
+        "time": 96.52,
+        "remaining": 803.48,
+        "money": 907,
+        "active": 174,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 8,
+            "captured": true,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 336,
+          "kills": 26,
+          "lost": 162,
+          "income": 4077,
+          "walls": 5,
+          "skills": 4,
+          "peak": 267,
+          "resourceIncome": 3750,
+          "spells": 4,
+          "lootSites": 7,
+          "reliefTransfers": 12,
+          "guardianBursts": 0,
+          "towerShots": {
+            "field": 0,
+            "outer": 107,
+            "inner": 4,
+            "core": 0
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 6,
+            "inner": 2,
+            "core": 0
+          }
+        },
+        "mana": 45.36,
+        "firstCoreHit": null,
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 3,
+        "time": 98.78,
+        "remaining": 801.22,
+        "money": 759,
+        "active": 180,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 8,
+            "captured": true,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 342,
+          "kills": 28,
+          "lost": 162,
+          "income": 4079,
+          "walls": 7,
+          "skills": 4,
+          "peak": 267,
+          "resourceIncome": 3750,
+          "spells": 5,
+          "lootSites": 7,
+          "reliefTransfers": 12,
+          "guardianBursts": 0,
+          "towerShots": {
+            "field": 0,
+            "outer": 109,
+            "inner": 4,
+            "core": 0
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 6,
+            "inner": 4,
+            "core": 0
+          }
+        },
+        "mana": 19.44,
+        "firstCoreHit": null,
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 3,
+        "time": 100.98,
+        "remaining": 799.02,
+        "money": 619,
+        "active": 177,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 8,
+            "captured": true,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 346,
+          "kills": 28,
+          "lost": 169,
+          "income": 4079,
+          "walls": 8,
+          "skills": 4,
+          "peak": 267,
+          "resourceIncome": 3750,
+          "spells": 5,
+          "lootSites": 7,
+          "reliefTransfers": 12,
+          "guardianBursts": 0,
+          "towerShots": {
+            "field": 0,
+            "outer": 110,
+            "inner": 4,
+            "core": 0
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 6,
+            "inner": 5,
+            "core": 0
+          }
+        },
+        "mana": 23.4,
+        "firstCoreHit": null,
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 3,
+        "time": 103.22,
+        "remaining": 796.78,
+        "money": 469,
+        "active": 168,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 8,
+            "captured": true,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 352,
+          "kills": 28,
+          "lost": 184,
+          "income": 4079,
+          "walls": 9,
+          "skills": 4,
+          "peak": 267,
+          "resourceIncome": 3750,
+          "spells": 5,
+          "lootSites": 7,
+          "reliefTransfers": 12,
+          "guardianBursts": 0,
+          "towerShots": {
+            "field": 0,
+            "outer": 112,
+            "inner": 5,
+            "core": 0
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 6,
+            "inner": 6,
+            "core": 0
+          }
+        },
+        "mana": 27.42,
+        "firstCoreHit": null,
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 3,
+        "time": 105.4,
+        "remaining": 794.6,
+        "money": 449,
+        "active": 153,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 8,
+            "captured": true,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 358,
+          "kills": 28,
+          "lost": 205,
+          "income": 4189,
+          "walls": 9,
+          "skills": 4,
+          "peak": 267,
+          "resourceIncome": 3750,
+          "spells": 5,
+          "lootSites": 7,
+          "reliefTransfers": 12,
+          "guardianBursts": 0,
+          "towerShots": {
+            "field": 0,
+            "outer": 112,
+            "inner": 6,
+            "core": 0
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 6,
+            "inner": 7,
+            "core": 0
+          }
+        },
+        "mana": 31.35,
+        "firstCoreHit": null,
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 3,
+        "time": 107.58,
+        "remaining": 792.42,
+        "money": 299,
+        "active": 120,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 8,
+            "captured": true,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 364,
+          "kills": 28,
+          "lost": 244,
+          "income": 4189,
+          "walls": 9,
+          "skills": 4,
+          "peak": 267,
+          "resourceIncome": 3750,
+          "spells": 5,
+          "lootSites": 7,
+          "reliefTransfers": 12,
+          "guardianBursts": 0,
+          "towerShots": {
+            "field": 0,
+            "outer": 112,
+            "inner": 7,
+            "core": 0
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 6,
+            "inner": 7,
+            "core": 0
+          }
+        },
+        "mana": 35.28,
+        "firstCoreHit": null,
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 3,
+        "time": 109.73,
+        "remaining": 790.27,
+        "money": 159,
+        "active": 122,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 8,
+            "captured": true,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 368,
+          "kills": 28,
+          "lost": 246,
+          "income": 4189,
+          "walls": 10,
+          "skills": 4,
+          "peak": 267,
+          "resourceIncome": 3750,
+          "spells": 6,
+          "lootSites": 7,
+          "reliefTransfers": 12,
+          "guardianBursts": 0,
+          "towerShots": {
+            "field": 0,
+            "outer": 112,
+            "inner": 8,
+            "core": 0
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 6,
+            "inner": 8,
+            "core": 0
+          }
+        },
+        "mana": 4.15,
+        "firstCoreHit": null,
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 3,
+        "time": 111.92,
+        "remaining": 788.08,
+        "money": 14,
+        "active": 118,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 8,
+            "captured": true,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 374,
+          "kills": 33,
+          "lost": 256,
+          "income": 4194,
+          "walls": 10,
+          "skills": 4,
+          "peak": 267,
+          "resourceIncome": 3750,
+          "spells": 6,
+          "lootSites": 7,
+          "reliefTransfers": 12,
+          "guardianBursts": 0,
+          "towerShots": {
+            "field": 0,
+            "outer": 112,
+            "inner": 9,
+            "core": 0
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 6,
+            "inner": 8,
+            "core": 0
+          }
+        },
+        "mana": 8.08,
+        "firstCoreHit": null,
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 3,
+        "time": 113.97,
+        "remaining": 786.03,
+        "money": 65,
+        "active": 118,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 8,
+            "captured": true,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 374,
+          "kills": 38,
+          "lost": 256,
+          "income": 4245,
+          "walls": 10,
+          "skills": 4,
+          "peak": 267,
+          "resourceIncome": 3750,
+          "spells": 6,
+          "lootSites": 7,
+          "reliefTransfers": 12,
+          "guardianBursts": 0,
+          "towerShots": {
+            "field": 0,
+            "outer": 112,
+            "inner": 9,
+            "core": 0
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 6,
+            "inner": 9,
+            "core": 0
+          }
+        },
+        "mana": 11.77,
+        "firstCoreHit": null,
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 4,
+        "time": 116.4,
+        "remaining": 783.6,
+        "money": 65,
+        "active": 118,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 8,
+            "captured": true,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 374,
+          "kills": 38,
+          "lost": 256,
+          "income": 4245,
+          "walls": 10,
+          "skills": 4,
+          "peak": 267,
+          "resourceIncome": 3750,
+          "spells": 6,
+          "lootSites": 7,
+          "reliefTransfers": 12,
+          "guardianBursts": 0,
+          "towerShots": {
+            "field": 0,
+            "outer": 112,
+            "inner": 9,
+            "core": 0
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 6,
+            "inner": 9,
+            "core": 0
+          }
+        },
+        "mana": 16.15,
+        "firstCoreHit": null,
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 4,
+        "time": 118.47,
+        "remaining": 781.53,
+        "money": 83,
+        "active": 117,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 8,
+            "captured": true,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 374,
+          "kills": 44,
+          "lost": 257,
+          "income": 4263,
+          "walls": 11,
+          "skills": 4,
+          "peak": 267,
+          "resourceIncome": 3750,
+          "spells": 6,
+          "lootSites": 7,
+          "reliefTransfers": 12,
+          "guardianBursts": 0,
+          "towerShots": {
+            "field": 0,
+            "outer": 112,
+            "inner": 9,
+            "core": 1
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 6,
+            "inner": 9,
+            "core": 1
+          }
+        },
+        "mana": 19.87,
+        "firstCoreHit": null,
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 5,
+        "time": 120.58,
+        "remaining": 779.42,
+        "money": 193,
+        "active": 116,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 8,
+            "captured": true,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 374,
+          "kills": 44,
+          "lost": 258,
+          "income": 4373,
+          "walls": 11,
+          "skills": 4,
+          "peak": 267,
+          "resourceIncome": 3750,
+          "spells": 6,
+          "lootSites": 7,
+          "reliefTransfers": 12,
+          "guardianBursts": 0,
+          "towerShots": {
+            "field": 0,
+            "outer": 112,
+            "inner": 9,
+            "core": 2
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 6,
+            "inner": 10,
+            "core": 1
+          }
+        },
+        "mana": 23.68,
+        "firstCoreHit": null,
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 5,
+        "time": 122.75,
+        "remaining": 777.25,
+        "money": 63,
+        "active": 113,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 8,
+            "captured": true,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 380,
+          "kills": 44,
+          "lost": 267,
+          "income": 4373,
+          "walls": 11,
+          "skills": 4,
+          "peak": 267,
+          "resourceIncome": 3750,
+          "spells": 6,
+          "lootSites": 7,
+          "reliefTransfers": 12,
+          "guardianBursts": 0,
+          "towerShots": {
+            "field": 0,
+            "outer": 112,
+            "inner": 9,
+            "core": 4
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 6,
+            "inner": 10,
+            "core": 1
+          }
+        },
+        "mana": 27.58,
+        "firstCoreHit": null,
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 5,
+        "time": 124.87,
+        "remaining": 775.13,
+        "money": 63,
+        "active": 98,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 8,
+            "captured": true,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 380,
+          "kills": 44,
+          "lost": 282,
+          "income": 4373,
+          "walls": 11,
+          "skills": 4,
+          "peak": 267,
+          "resourceIncome": 3750,
+          "spells": 7,
+          "lootSites": 7,
+          "reliefTransfers": 12,
+          "guardianBursts": 1,
+          "towerShots": {
+            "field": 0,
+            "outer": 112,
+            "inner": 9,
+            "core": 6
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 6,
+            "inner": 10,
+            "core": 1
+          }
+        },
+        "mana": 6.39,
+        "firstCoreHit": null,
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 5,
+        "time": 127.28,
+        "remaining": 772.72,
+        "money": 74,
+        "active": 90,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 8,
+            "captured": true,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 380,
+          "kills": 49,
+          "lost": 290,
+          "income": 4384,
+          "walls": 11,
+          "skills": 4,
+          "peak": 267,
+          "resourceIncome": 3750,
+          "spells": 7,
+          "lootSites": 7,
+          "reliefTransfers": 12,
+          "guardianBursts": 1,
+          "towerShots": {
+            "field": 0,
+            "outer": 112,
+            "inner": 9,
+            "core": 9
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 6,
+            "inner": 10,
+            "core": 1
+          }
+        },
+        "mana": 10.74,
+        "firstCoreHit": null,
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 5,
+        "time": 129.37,
+        "remaining": 770.63,
+        "money": 74,
+        "active": 89,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 8,
+            "captured": true,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 380,
+          "kills": 49,
+          "lost": 291,
+          "income": 4384,
+          "walls": 11,
+          "skills": 4,
+          "peak": 267,
+          "resourceIncome": 3750,
+          "spells": 7,
+          "lootSites": 7,
+          "reliefTransfers": 12,
+          "guardianBursts": 1,
+          "towerShots": {
+            "field": 0,
+            "outer": 112,
+            "inner": 9,
+            "core": 12
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 6,
+            "inner": 10,
+            "core": 1
+          }
+        },
+        "mana": 14.49,
+        "firstCoreHit": null,
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 5,
+        "time": 131.48,
+        "remaining": 768.52,
+        "money": 87,
+        "active": 88,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 5600,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 8,
+            "captured": true,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 380,
+          "kills": 53,
+          "lost": 292,
+          "income": 4397,
+          "walls": 11,
+          "skills": 5,
+          "peak": 267,
+          "resourceIncome": 3750,
+          "spells": 7,
+          "lootSites": 7,
+          "reliefTransfers": 12,
+          "guardianBursts": 1,
+          "towerShots": {
+            "field": 0,
+            "outer": 112,
+            "inner": 9,
+            "core": 15
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 6,
+            "inner": 10,
+            "core": 1
+          }
+        },
+        "mana": 18.3,
+        "firstCoreHit": null,
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 6,
+        "time": 133.55,
+        "remaining": 766.45,
+        "money": 87,
+        "active": 83,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 3811.424000000012,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 8,
+            "captured": true,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 380,
+          "kills": 53,
+          "lost": 297,
+          "income": 4397,
+          "walls": 11,
+          "skills": 5,
+          "peak": 267,
+          "resourceIncome": 3750,
+          "spells": 7,
+          "lootSites": 7,
+          "reliefTransfers": 12,
+          "guardianBursts": 1,
+          "towerShots": {
+            "field": 0,
+            "outer": 112,
+            "inner": 9,
+            "core": 17
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 6,
+            "inner": 10,
+            "core": 1
+          }
+        },
+        "mana": 22.02,
+        "firstCoreHit": {
+          "time": 131.78333333333035,
+          "x": 1894.141645458636,
+          "y": 1840.3994154141158,
+          "walls": 11
+        },
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 6,
+        "time": 135.62,
+        "remaining": 764.38,
+        "money": 87,
+        "active": 81,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 1568.6720000000128,
+        "status": "battle",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 8,
+            "captured": true,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 380,
+          "kills": 53,
+          "lost": 299,
+          "income": 4397,
+          "walls": 11,
+          "skills": 5,
+          "peak": 267,
+          "resourceIncome": 3750,
+          "spells": 7,
+          "lootSites": 7,
+          "reliefTransfers": 12,
+          "guardianBursts": 1,
+          "towerShots": {
+            "field": 0,
+            "outer": 112,
+            "inner": 9,
+            "core": 20
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 6,
+            "inner": 10,
+            "core": 1
+          }
+        },
+        "mana": 25.74,
+        "firstCoreHit": {
+          "time": 131.78333333333035,
+          "x": 1894.141645458636,
+          "y": 1840.3994154141158,
+          "walls": 11
+        },
+        "reservesDispatched": 2
+      },
+      {
+        "stage": 6,
+        "time": 136.67,
+        "remaining": 763.33,
+        "money": 87,
+        "active": 80,
+        "queued": 0,
+        "reserves": 0,
+        "crystalHp": 0,
+        "status": "victory",
+        "outposts": [
+          {
+            "name": "南境前线",
+            "front": "south",
+            "x": 2000,
+            "y": 2770,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          },
+          {
+            "name": "西境前线",
+            "front": "west",
+            "x": 950,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 8,
+            "captured": true,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "东境前线",
+            "front": "east",
+            "x": 3050,
+            "y": 1800,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": false,
+            "connected": true
+          },
+          {
+            "name": "北境前线",
+            "front": "north",
+            "x": 2000,
+            "y": 820,
+            "w": 260,
+            "h": 220,
+            "progress": 0,
+            "captured": false,
+            "contested": true,
+            "connected": true
+          }
+        ],
+        "stats": {
+          "deployed": 380,
+          "kills": 53,
+          "lost": 300,
+          "income": 4397,
+          "walls": 11,
+          "skills": 5,
+          "peak": 267,
+          "resourceIncome": 3750,
+          "spells": 7,
+          "lootSites": 7,
+          "reliefTransfers": 12,
+          "guardianBursts": 1,
+          "towerShots": {
+            "field": 0,
+            "outer": 112,
+            "inner": 9,
+            "core": 20
+          },
+          "destroyed": {
+            "field": 6,
+            "outer": 6,
+            "inner": 10,
+            "core": 2
+          }
+        },
+        "mana": 27.63,
+        "firstCoreHit": {
+          "time": 131.78333333333035,
+          "x": 1894.141645458636,
+          "y": 1840.3994154141158,
+          "walls": 11
+        },
+        "reservesDispatched": 2
+      }
+    ]
+  },
+  "pass": true
+}

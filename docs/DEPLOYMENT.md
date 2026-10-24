@@ -1,6 +1,6 @@
-# V3 部署与复现
+# V3.1 部署与复现
 
-[公开游戏](https://liguanheng.github.io/SEAPP1/)｜[源码](https://github.com/LiGuanheng/SEAPP1)｜最新发布的精确提交与核验见v3/REPORT和v3/RELEASE_RESULTS.json。
+[公开游戏](https://liguanheng.github.io/SEAPP1/)｜[源码](https://github.com/LiGuanheng/SEAPP1)｜最新发布的精确提交与核验见v3.1/REPORT和v3.1/RELEASE_RESULTS.json。
 
 ```sh
 npm ci

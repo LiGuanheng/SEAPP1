@@ -670,6 +670,14 @@ export class Battle {
         this.selected.add(u.id);
   }
   targetAt(x: number, y: number): Target | undefined {
+    // Visible bodies remain selectable when a tall building's sprite bounds overlap them.
+    const enemy = this.units
+      .filter((u) => u.side === 1 && u.hp > 0)
+      .sort((a, b) => b.y - a.y)
+      .find(
+        (u) => Math.abs(x - u.x) <= u.size * 0.4 + 4 && y >= u.y - u.size * 0.85 && y <= u.y + 12,
+      );
+    if (enemy) return enemy;
     const visible = [...this.structures, ...this.units.filter((u) => u.side === 1)]
       .filter((t) => t.hp > 0)
       .sort((a, b) => b.y - a.y);

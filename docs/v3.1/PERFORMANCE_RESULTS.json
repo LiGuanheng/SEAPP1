@@ -1,0 +1,47 @@
+{
+  "date": "2026-10-24T07:55:01.568Z",
+  "url": "http://127.0.0.1:4186/SEAPP1/",
+  "machine": {
+    "platform": "win32",
+    "logicalCores": 32,
+    "totalRamGiB": 31.71471405029297
+  },
+  "errors": [],
+  "pass": true,
+  "selected": 300,
+  "stable": {
+    "seconds": 10.004800000002978,
+    "frames": 1445,
+    "averageFps": 144.43067327678412,
+    "p95FrameMs": 5.700000000000728,
+    "longFramesOver50ms": 4,
+    "minFriendly": 300,
+    "maxFriendly": 300,
+    "queuedStart": 7,
+    "queuedEnd": 7,
+    "deployed": 0,
+    "lost": 0,
+    "kills": 0
+  },
+  "jsHeapMiB": 3.1369171142578125,
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+  "attackWarmupSimulationSeconds": 19.999999999999233,
+  "attack": {
+    "seconds": 10.00450000000298,
+    "frames": 1619,
+    "averageFps": 161.8271777699553,
+    "p95FrameMs": 11.099999999998545,
+    "longFramesOver50ms": 1,
+    "minFriendly": 143,
+    "maxFriendly": 297,
+    "queuedStart": 0,
+    "queuedEnd": 0,
+    "deployed": 82,
+    "lost": 231,
+    "kills": 8
+  },
+  "lifecycle": {
+    "canvases": 0,
+    "retiredStopped": true
+  }
+}

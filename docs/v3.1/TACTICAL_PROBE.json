@@ -1,0 +1,1232 @@
+{
+  "date": "2026-10-24T07:43:48.305Z",
+  "seed": 20261024,
+  "results": [
+    {
+      "difficulty": "hard",
+      "mode": "raid",
+      "front": "west",
+      "phase": 6,
+      "purchases": 32,
+      "trace": [
+        {
+          "time": 0.24999999999999997,
+          "phase": 0,
+          "active": 24,
+          "money": 80,
+          "loot": 0,
+          "hp": 1728,
+          "center": {
+            "x": 253,
+            "y": 1807
+          },
+          "types": {
+            "raider": 24
+          },
+          "kills": 0,
+          "spells": 0
+        },
+        {
+          "time": 10.500000000000101,
+          "phase": 0,
+          "active": 267,
+          "money": 280,
+          "loot": 2,
+          "hp": 44992,
+          "center": {
+            "x": 269,
+            "y": 1801
+          },
+          "types": {
+            "raider": 24,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "elf": 24,
+            "slime": 79,
+            "goblin": 60,
+            "wolf": 12,
+            "lizard": 24,
+            "golem": 28,
+            "treant": 12
+          },
+          "kills": 0,
+          "spells": 0
+        },
+        {
+          "time": 20.500000000000117,
+          "phase": 0,
+          "active": 277,
+          "money": 10,
+          "loot": 2,
+          "hp": 50250,
+          "center": {
+            "x": 347,
+            "y": 1807
+          },
+          "types": {
+            "raider": 24,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "elf": 24,
+            "slime": 79,
+            "goblin": 60,
+            "wolf": 12,
+            "lizard": 24,
+            "golem": 32,
+            "treant": 18
+          },
+          "kills": 0,
+          "spells": 0
+        },
+        {
+          "time": 31.749999999999478,
+          "phase": 1,
+          "active": 185,
+          "money": 45,
+          "loot": 4,
+          "hp": 55898,
+          "center": {
+            "x": 792,
+            "y": 1874
+          },
+          "types": {
+            "raider": 24,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "elf": 36,
+            "slime": 15,
+            "goblin": 4,
+            "lizard": 24,
+            "golem": 48,
+            "treant": 30
+          },
+          "kills": 13,
+          "spells": 1
+        },
+        {
+          "time": 42.99999999999884,
+          "phase": 1,
+          "active": 118,
+          "money": 1039,
+          "loot": 7,
+          "hp": 45007,
+          "center": {
+            "x": 993,
+            "y": 2013
+          },
+          "types": {
+            "raider": 17,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "golem": 55,
+            "treant": 36,
+            "elf": 6
+          },
+          "kills": 25,
+          "spells": 3
+        },
+        {
+          "time": 54.2499999999982,
+          "phase": 1,
+          "active": 120,
+          "money": 73,
+          "loot": 7,
+          "hp": 36224,
+          "center": {
+            "x": 854,
+            "y": 1864
+          },
+          "types": {
+            "raider": 8,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "golem": 54,
+            "treant": 36,
+            "elf": 18
+          },
+          "kills": 37,
+          "spells": 3
+        },
+        {
+          "time": 65.49999999999757,
+          "phase": 1,
+          "active": 68,
+          "money": 332,
+          "loot": 7,
+          "hp": 25342,
+          "center": {
+            "x": 905,
+            "y": 1951
+          },
+          "types": {
+            "raider": 1,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "golem": 36,
+            "treant": 24,
+            "elf": 3
+          },
+          "kills": 44,
+          "spells": 4
+        },
+        {
+          "time": 76.74999999999693,
+          "phase": 3,
+          "active": 71,
+          "money": 62,
+          "loot": 7,
+          "hp": 29963,
+          "center": {
+            "x": 1308,
+            "y": 2184
+          },
+          "types": {
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "golem": 38,
+            "treant": 29
+          },
+          "kills": 44,
+          "spells": 5
+        },
+        {
+          "time": 87.99999999999629,
+          "phase": 4,
+          "active": 66,
+          "money": 235,
+          "loot": 7,
+          "hp": 31702,
+          "center": {
+            "x": 1312,
+            "y": 1936
+          },
+          "types": {
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "golem": 35,
+            "treant": 27
+          },
+          "kills": 55,
+          "spells": 5
+        },
+        {
+          "time": 99.24999999999565,
+          "phase": 4,
+          "active": 72,
+          "money": 129,
+          "loot": 7,
+          "hp": 33671,
+          "center": {
+            "x": 1325,
+            "y": 1586
+          },
+          "types": {
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "golem": 35,
+            "treant": 27,
+            "elf": 6
+          },
+          "kills": 59,
+          "spells": 6
+        },
+        {
+          "time": 110.49999999999501,
+          "phase": 5,
+          "active": 82,
+          "money": 11,
+          "loot": 7,
+          "hp": 32522,
+          "center": {
+            "x": 1513,
+            "y": 1766
+          },
+          "types": {
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "golem": 39,
+            "treant": 33,
+            "elf": 6
+          },
+          "kills": 61,
+          "spells": 6
+        },
+        {
+          "time": 121.74999999999437,
+          "phase": 5,
+          "active": 34,
+          "money": 15,
+          "loot": 7,
+          "hp": 12263,
+          "center": {
+            "x": 1633,
+            "y": 1834
+          },
+          "types": {
+            "king": 1,
+            "titan": 1,
+            "forest": 1,
+            "treant": 14,
+            "golem": 11,
+            "elf": 6
+          },
+          "kills": 62,
+          "spells": 7
+        },
+        {
+          "time": 131.9999999999972,
+          "phase": 6,
+          "active": 19,
+          "money": 16,
+          "loot": 7,
+          "hp": 8175,
+          "center": {
+            "x": 1801,
+            "y": 1806
+          },
+          "types": {
+            "king": 1,
+            "titan": 1,
+            "forest": 1,
+            "treant": 7,
+            "golem": 5,
+            "elf": 4
+          },
+          "kills": 63,
+          "spells": 8
+        },
+        {
+          "time": 142.00000000000514,
+          "phase": 6,
+          "active": 17,
+          "money": 16,
+          "loot": 7,
+          "hp": 7366,
+          "center": {
+            "x": 1826,
+            "y": 1804
+          },
+          "types": {
+            "king": 1,
+            "titan": 1,
+            "forest": 1,
+            "treant": 5,
+            "golem": 5,
+            "elf": 4
+          },
+          "kills": 63,
+          "spells": 8
+        }
+      ],
+      "time": 144.23,
+      "remaining": 755.77,
+      "money": 16,
+      "active": 17,
+      "queued": 0,
+      "reserves": 0,
+      "crystalHp": 0,
+      "status": "victory",
+      "outposts": [
+        {
+          "name": "南境前线",
+          "front": "south",
+          "x": 2000,
+          "y": 2770,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        },
+        {
+          "name": "西境前线",
+          "front": "west",
+          "x": 950,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 8,
+          "captured": true,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "东境前线",
+          "front": "east",
+          "x": 3050,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "北境前线",
+          "front": "north",
+          "x": 2000,
+          "y": 820,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        }
+      ],
+      "stats": {
+        "deployed": 398,
+        "kills": 63,
+        "lost": 381,
+        "income": 4496,
+        "walls": 7,
+        "skills": 9,
+        "peak": 300,
+        "resourceIncome": 3750,
+        "spells": 8,
+        "lootSites": 7,
+        "reliefTransfers": 15,
+        "guardianBursts": 1,
+        "towerShots": {
+          "field": 0,
+          "outer": 72,
+          "inner": 13,
+          "core": 32
+        },
+        "destroyed": {
+          "field": 6,
+          "outer": 4,
+          "inner": 9,
+          "core": 3
+        }
+      },
+      "mana": 33.72,
+      "firstCoreHit": {
+        "time": 122.44999999999433,
+        "x": 1761.179909852392,
+        "y": 1814.2662433463838,
+        "walls": 6
+      },
+      "reservesDispatched": 4,
+      "armyLost": false,
+      "guardian": [
+        {
+          "hp": 0,
+          "maxHp": 4000
+        }
+      ],
+      "alive": [
+        {
+          "kind": "king",
+          "hp": 1448,
+          "x": 1761,
+          "y": 1814,
+          "order": "attack"
+        },
+        {
+          "kind": "titan",
+          "hp": 476,
+          "x": 1894,
+          "y": 1838,
+          "order": "attack"
+        },
+        {
+          "kind": "forest",
+          "hp": 792,
+          "x": 1760,
+          "y": 1835,
+          "order": "attack"
+        },
+        {
+          "kind": "treant",
+          "hp": 384,
+          "x": 1766,
+          "y": 1775,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 116,
+          "x": 1895,
+          "y": 1818,
+          "order": "attack"
+        },
+        {
+          "kind": "elf",
+          "hp": 34,
+          "x": 1706,
+          "y": 1770,
+          "order": "attack"
+        },
+        {
+          "kind": "elf",
+          "hp": 62,
+          "x": 1706,
+          "y": 1769,
+          "order": "attack"
+        },
+        {
+          "kind": "elf",
+          "hp": 62,
+          "x": 1705,
+          "y": 1768,
+          "order": "attack"
+        },
+        {
+          "kind": "elf",
+          "hp": 34,
+          "x": 1705,
+          "y": 1769,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 561,
+          "x": 1895,
+          "y": 1815,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 561,
+          "x": 1895,
+          "y": 1817,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 430,
+          "x": 1894,
+          "y": 1812,
+          "order": "attack"
+        },
+        {
+          "kind": "golem",
+          "hp": 555,
+          "x": 1894,
+          "y": 1814,
+          "order": "attack"
+        },
+        {
+          "kind": "treant",
+          "hp": 426,
+          "x": 1890,
+          "y": 1813,
+          "order": "attack"
+        },
+        {
+          "kind": "treant",
+          "hp": 270,
+          "x": 1891,
+          "y": 1812,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 174,
+          "x": 1890,
+          "y": 1823,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 352,
+          "x": 1890,
+          "y": 1813,
+          "order": "hold"
+        }
+      ]
+    },
+    {
+      "difficulty": "hard",
+      "mode": "raid",
+      "front": "north",
+      "phase": 6,
+      "purchases": 28,
+      "trace": [
+        {
+          "time": 0.24999999999999997,
+          "phase": 0,
+          "active": 24,
+          "money": 80,
+          "loot": 0,
+          "hp": 1728,
+          "center": {
+            "x": 2078,
+            "y": 237
+          },
+          "types": {
+            "raider": 24
+          },
+          "kills": 0,
+          "spells": 0
+        },
+        {
+          "time": 10.500000000000101,
+          "phase": 0,
+          "active": 268,
+          "money": 280,
+          "loot": 2,
+          "hp": 44176,
+          "center": {
+            "x": 2007,
+            "y": 224
+          },
+          "types": {
+            "raider": 24,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "elf": 24,
+            "slime": 80,
+            "goblin": 60,
+            "wolf": 12,
+            "lizard": 24,
+            "golem": 28,
+            "treant": 12
+          },
+          "kills": 0,
+          "spells": 0
+        },
+        {
+          "time": 20.500000000000117,
+          "phase": 0,
+          "active": 278,
+          "money": 10,
+          "loot": 2,
+          "hp": 49337,
+          "center": {
+            "x": 1996,
+            "y": 298
+          },
+          "types": {
+            "raider": 24,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "elf": 24,
+            "slime": 80,
+            "goblin": 60,
+            "wolf": 12,
+            "lizard": 24,
+            "golem": 32,
+            "treant": 18
+          },
+          "kills": 0,
+          "spells": 0
+        },
+        {
+          "time": 31.749999999999478,
+          "phase": 1,
+          "active": 300,
+          "money": 18,
+          "loot": 4,
+          "hp": 59477,
+          "center": {
+            "x": 1735,
+            "y": 482
+          },
+          "types": {
+            "raider": 24,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "elf": 34,
+            "slime": 75,
+            "goblin": 60,
+            "wolf": 12,
+            "lizard": 21,
+            "golem": 46,
+            "treant": 24
+          },
+          "kills": 8,
+          "spells": 3
+        },
+        {
+          "time": 42.99999999999884,
+          "phase": 1,
+          "active": 151,
+          "money": 102,
+          "loot": 4,
+          "hp": 43615,
+          "center": {
+            "x": 2065,
+            "y": 793
+          },
+          "types": {
+            "raider": 22,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "elf": 5,
+            "slime": 23,
+            "goblin": 18,
+            "wolf": 5,
+            "lizard": 3,
+            "golem": 47,
+            "treant": 24
+          },
+          "kills": 28,
+          "spells": 3
+        },
+        {
+          "time": 54.2499999999982,
+          "phase": 1,
+          "active": 72,
+          "money": 350,
+          "loot": 5,
+          "hp": 30993,
+          "center": {
+            "x": 1968,
+            "y": 892
+          },
+          "types": {
+            "raider": 12,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "elf": 7,
+            "goblin": 1,
+            "golem": 28,
+            "treant": 20
+          },
+          "kills": 41,
+          "spells": 4
+        },
+        {
+          "time": 65.49999999999757,
+          "phase": 1,
+          "active": 75,
+          "money": 252,
+          "loot": 6,
+          "hp": 24663,
+          "center": {
+            "x": 1881,
+            "y": 927
+          },
+          "types": {
+            "raider": 12,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "elf": 13,
+            "golem": 24,
+            "treant": 22
+          },
+          "kills": 53,
+          "spells": 4
+        },
+        {
+          "time": 76.74999999999693,
+          "phase": 3,
+          "active": 86,
+          "money": 32,
+          "loot": 6,
+          "hp": 30156,
+          "center": {
+            "x": 2221,
+            "y": 1121
+          },
+          "types": {
+            "raider": 11,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "elf": 17,
+            "golem": 27,
+            "treant": 27
+          },
+          "kills": 53,
+          "spells": 5
+        },
+        {
+          "time": 87.99999999999629,
+          "phase": 3,
+          "active": 71,
+          "money": 32,
+          "loot": 6,
+          "hp": 29780,
+          "center": {
+            "x": 2704,
+            "y": 1232
+          },
+          "types": {
+            "raider": 5,
+            "king": 1,
+            "titan": 1,
+            "web": 1,
+            "forest": 1,
+            "elf": 8,
+            "golem": 27,
+            "treant": 27
+          },
+          "kills": 53,
+          "spells": 6
+        },
+        {
+          "time": 99.24999999999565,
+          "phase": 3,
+          "active": 59,
+          "money": 72,
+          "loot": 6,
+          "hp": 25687,
+          "center": {
+            "x": 2776,
+            "y": 1598
+          },
+          "types": {
+            "raider": 2,
+            "king": 1,
+            "titan": 1,
+            "forest": 1,
+            "elf": 5,
+            "golem": 23,
+            "treant": 26
+          },
+          "kills": 53,
+          "spells": 6
+        },
+        {
+          "time": 110.49999999999501,
+          "phase": 3,
+          "active": 47,
+          "money": 72,
+          "loot": 6,
+          "hp": 16901,
+          "center": {
+            "x": 2650,
+            "y": 1968
+          },
+          "types": {
+            "raider": 1,
+            "king": 1,
+            "titan": 1,
+            "forest": 1,
+            "elf": 1,
+            "golem": 22,
+            "treant": 20
+          },
+          "kills": 53,
+          "spells": 7
+        },
+        {
+          "time": 121.74999999999437,
+          "phase": 4,
+          "active": 46,
+          "money": 29,
+          "loot": 6,
+          "hp": 18422,
+          "center": {
+            "x": 2546,
+            "y": 1777
+          },
+          "types": {
+            "raider": 1,
+            "king": 1,
+            "titan": 1,
+            "forest": 1,
+            "golem": 25,
+            "treant": 17
+          },
+          "kills": 61,
+          "spells": 8
+        },
+        {
+          "time": 131.9999999999972,
+          "phase": 4,
+          "active": 49,
+          "money": 10,
+          "loot": 6,
+          "hp": 19189,
+          "center": {
+            "x": 2370,
+            "y": 1435
+          },
+          "types": {
+            "raider": 1,
+            "king": 1,
+            "titan": 1,
+            "forest": 1,
+            "golem": 23,
+            "treant": 22
+          },
+          "kills": 62,
+          "spells": 8
+        },
+        {
+          "time": 142.00000000000514,
+          "phase": 4,
+          "active": 46,
+          "money": 57,
+          "loot": 6,
+          "hp": 18508,
+          "center": {
+            "x": 2103,
+            "y": 1218
+          },
+          "types": {
+            "raider": 1,
+            "king": 1,
+            "titan": 1,
+            "forest": 1,
+            "golem": 20,
+            "treant": 22
+          },
+          "kills": 66,
+          "spells": 8
+        },
+        {
+          "time": 152.0000000000131,
+          "phase": 4,
+          "active": 45,
+          "money": 111,
+          "loot": 6,
+          "hp": 19238,
+          "center": {
+            "x": 1858,
+            "y": 1231
+          },
+          "types": {
+            "king": 1,
+            "titan": 1,
+            "forest": 1,
+            "golem": 20,
+            "treant": 22
+          },
+          "kills": 71,
+          "spells": 9
+        },
+        {
+          "time": 162.00000000002106,
+          "phase": 5,
+          "active": 44,
+          "money": 115,
+          "loot": 6,
+          "hp": 22165,
+          "center": {
+            "x": 2058,
+            "y": 1500
+          },
+          "types": {
+            "king": 1,
+            "titan": 1,
+            "forest": 1,
+            "golem": 20,
+            "treant": 21
+          },
+          "kills": 72,
+          "spells": 10
+        },
+        {
+          "time": 172.00000000002902,
+          "phase": 5,
+          "active": 38,
+          "money": 115,
+          "loot": 6,
+          "hp": 11184,
+          "center": {
+            "x": 2054,
+            "y": 1689
+          },
+          "types": {
+            "king": 1,
+            "titan": 1,
+            "forest": 1,
+            "golem": 20,
+            "treant": 15
+          },
+          "kills": 72,
+          "spells": 10
+        },
+        {
+          "time": 182.00000000003698,
+          "phase": 6,
+          "active": 33,
+          "money": 24,
+          "loot": 6,
+          "hp": 5897,
+          "center": {
+            "x": 1955,
+            "y": 1403
+          },
+          "types": {
+            "king": 1,
+            "titan": 1,
+            "golem": 6,
+            "treant": 5,
+            "goblin": 20
+          },
+          "kills": 73,
+          "spells": 11
+        },
+        {
+          "time": 192.00000000004493,
+          "phase": 6,
+          "active": 13,
+          "money": 24,
+          "loot": 6,
+          "hp": 1994,
+          "center": {
+            "x": 1912,
+            "y": 1295
+          },
+          "types": {
+            "king": 1,
+            "goblin": 12
+          },
+          "kills": 73,
+          "spells": 12
+        },
+        {
+          "time": 202.0000000000529,
+          "phase": 6,
+          "active": 7,
+          "money": 24,
+          "loot": 6,
+          "hp": 645,
+          "center": {
+            "x": 1891,
+            "y": 1192
+          },
+          "types": {
+            "goblin": 7
+          },
+          "kills": 73,
+          "spells": 12
+        }
+      ],
+      "time": 208.57,
+      "remaining": 691.43,
+      "money": 24,
+      "active": 0,
+      "queued": 0,
+      "reserves": 0,
+      "crystalHp": 3722.6399999999876,
+      "status": "defeat",
+      "outposts": [
+        {
+          "name": "南境前线",
+          "front": "south",
+          "x": 2000,
+          "y": 2770,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        },
+        {
+          "name": "西境前线",
+          "front": "west",
+          "x": 950,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "东境前线",
+          "front": "east",
+          "x": 3050,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "北境前线",
+          "front": "north",
+          "x": 2000,
+          "y": 820,
+          "w": 260,
+          "h": 220,
+          "progress": 8,
+          "captured": true,
+          "contested": false,
+          "connected": true
+        }
+      ],
+      "stats": {
+        "deployed": 398,
+        "kills": 73,
+        "lost": 398,
+        "income": 4039,
+        "walls": 17,
+        "skills": 10,
+        "peak": 300,
+        "resourceIncome": 3310,
+        "spells": 12,
+        "lootSites": 6,
+        "reliefTransfers": 15,
+        "guardianBursts": 1,
+        "towerShots": {
+          "field": 0,
+          "outer": 86,
+          "inner": 26,
+          "core": 57
+        },
+        "destroyed": {
+          "field": 5,
+          "outer": 12,
+          "inner": 13,
+          "core": 4
+        }
+      },
+      "mana": 31.27,
+      "firstCoreHit": {
+        "time": 175.60000000003188,
+        "x": 2089.1195813632935,
+        "y": 1806.594366852628,
+        "walls": 14
+      },
+      "reservesDispatched": 4,
+      "armyLost": true,
+      "guardian": [
+        {
+          "hp": 0,
+          "maxHp": 4000
+        }
+      ],
+      "alive": []
+    },
+    {
+      "difficulty": "hard",
+      "mode": "direct",
+      "front": "north",
+      "phase": 0,
+      "purchases": 0,
+      "trace": [],
+      "time": 48.75,
+      "remaining": 851.25,
+      "money": 961,
+      "active": 0,
+      "queued": 0,
+      "reserves": 0,
+      "crystalHp": 5600,
+      "status": "battle",
+      "outposts": [
+        {
+          "name": "南境前线",
+          "front": "south",
+          "x": 2000,
+          "y": 2770,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        },
+        {
+          "name": "西境前线",
+          "front": "west",
+          "x": 950,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "东境前线",
+          "front": "east",
+          "x": 3050,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "北境前线",
+          "front": "north",
+          "x": 2000,
+          "y": 820,
+          "w": 260,
+          "h": 220,
+          "progress": 8,
+          "captured": true,
+          "contested": true,
+          "connected": true
+        }
+      ],
+      "stats": {
+        "deployed": 198,
+        "kills": 24,
+        "lost": 198,
+        "income": 881,
+        "walls": 3,
+        "skills": 0,
+        "peak": 198,
+        "resourceIncome": 590,
+        "spells": 0,
+        "lootSites": 1,
+        "reliefTransfers": 15,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 0,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 1,
+          "outer": 4,
+          "inner": 0,
+          "core": 0
+        }
+      },
+      "mana": 100,
+      "firstCoreHit": null,
+      "reservesDispatched": 4,
+      "armyLost": true,
+      "guardian": [
+        {
+          "hp": 4000,
+          "maxHp": 4000
+        }
+      ],
+      "alive": []
+    }
+  ]
+}

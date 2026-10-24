@@ -1,0 +1,461 @@
+{
+  "sourceCommit": "ba58d66 (game a64c48f)",
+  "method": "same legal preset, full army deploy and auto assault; no active skills or further purchases",
+  "results": [
+    {
+      "difficulty": "normal",
+      "strategy": "breach",
+      "front": "west",
+      "time": 148.48,
+      "remaining": 751.52,
+      "money": 1597,
+      "active": 2,
+      "queued": 0,
+      "reserves": 0,
+      "crystalHp": 0,
+      "status": "victory",
+      "outposts": [
+        {
+          "name": "南境前线",
+          "front": "south",
+          "x": 2000,
+          "y": 2770,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        },
+        {
+          "name": "西境前线",
+          "front": "west",
+          "x": 950,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 8,
+          "captured": true,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "东境前线",
+          "front": "east",
+          "x": 3050,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "北境前线",
+          "front": "north",
+          "x": 2000,
+          "y": 820,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        }
+      ],
+      "stats": {
+        "deployed": 262,
+        "kills": 37,
+        "lost": 260,
+        "income": 1467,
+        "walls": 6,
+        "skills": 0,
+        "peak": 262,
+        "resourceIncome": 820,
+        "spells": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 6,
+          "inner": 3,
+          "core": 23
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 7,
+          "inner": 3,
+          "core": 4
+        }
+      },
+      "mana": 100,
+      "firstCoreHit": {
+        "time": 70.44999999999729,
+        "x": 1903.3059841498505,
+        "y": 1887.0313392718645,
+        "walls": 6
+      },
+      "reservesDispatched": 2,
+      "armyLost": false
+    },
+    {
+      "difficulty": "hard",
+      "strategy": "breach",
+      "front": "west",
+      "time": 51,
+      "remaining": 789,
+      "money": 1107,
+      "active": 0,
+      "queued": 0,
+      "reserves": 0,
+      "crystalHp": 5600,
+      "status": "battle",
+      "outposts": [
+        {
+          "name": "南境前线",
+          "front": "south",
+          "x": 2000,
+          "y": 2770,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        },
+        {
+          "name": "西境前线",
+          "front": "west",
+          "x": 950,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 8,
+          "captured": true,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "东境前线",
+          "front": "east",
+          "x": 3050,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "北境前线",
+          "front": "north",
+          "x": 2000,
+          "y": 820,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        }
+      ],
+      "stats": {
+        "deployed": 222,
+        "kills": 26,
+        "lost": 222,
+        "income": 1097,
+        "walls": 5,
+        "skills": 0,
+        "peak": 222,
+        "resourceIncome": 730,
+        "spells": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 11,
+          "inner": 0,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 8,
+          "inner": 1,
+          "core": 0
+        }
+      },
+      "mana": 100,
+      "firstCoreHit": null,
+      "reservesDispatched": 3,
+      "armyLost": true
+    },
+    {
+      "difficulty": "hard",
+      "strategy": "breach",
+      "front": "south",
+      "time": 75.5,
+      "remaining": 764.5,
+      "money": 1210,
+      "active": 0,
+      "queued": 0,
+      "reserves": 0,
+      "crystalHp": 5600,
+      "status": "battle",
+      "outposts": [
+        {
+          "name": "南境前线",
+          "front": "south",
+          "x": 2000,
+          "y": 2770,
+          "w": 260,
+          "h": 220,
+          "progress": 8,
+          "captured": true,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "西境前线",
+          "front": "west",
+          "x": 950,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "东境前线",
+          "front": "east",
+          "x": 3050,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "北境前线",
+          "front": "north",
+          "x": 2000,
+          "y": 820,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        }
+      ],
+      "stats": {
+        "deployed": 222,
+        "kills": 45,
+        "lost": 222,
+        "income": 1200,
+        "walls": 3,
+        "skills": 0,
+        "peak": 222,
+        "resourceIncome": 790,
+        "spells": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 10,
+          "inner": 0,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 5,
+          "inner": 2,
+          "core": 0
+        }
+      },
+      "mana": 100,
+      "firstCoreHit": null,
+      "reservesDispatched": 4,
+      "armyLost": true
+    },
+    {
+      "difficulty": "hard",
+      "strategy": "sky",
+      "front": "south",
+      "time": 112.5,
+      "remaining": 727.5,
+      "money": 1415,
+      "active": 0,
+      "queued": 0,
+      "reserves": 0,
+      "crystalHp": 5600,
+      "status": "battle",
+      "outposts": [
+        {
+          "name": "南境前线",
+          "front": "south",
+          "x": 2000,
+          "y": 2770,
+          "w": 260,
+          "h": 220,
+          "progress": 8,
+          "captured": true,
+          "contested": true,
+          "connected": true
+        },
+        {
+          "name": "西境前线",
+          "front": "west",
+          "x": 950,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "东境前线",
+          "front": "east",
+          "x": 3050,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        },
+        {
+          "name": "北境前线",
+          "front": "north",
+          "x": 2000,
+          "y": 820,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        }
+      ],
+      "stats": {
+        "deployed": 191,
+        "kills": 31,
+        "lost": 191,
+        "income": 1355,
+        "walls": 3,
+        "skills": 0,
+        "peak": 191,
+        "resourceIncome": 790,
+        "spells": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 11,
+          "inner": 14,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 5,
+          "inner": 5,
+          "core": 0
+        }
+      },
+      "mana": 100,
+      "firstCoreHit": null,
+      "reservesDispatched": 4,
+      "armyLost": true
+    },
+    {
+      "difficulty": "hard",
+      "strategy": "sky",
+      "front": "west",
+      "time": 106.5,
+      "remaining": 733.5,
+      "money": 1618,
+      "active": 0,
+      "queued": 0,
+      "reserves": 0,
+      "crystalHp": 5600,
+      "status": "battle",
+      "outposts": [
+        {
+          "name": "南境前线",
+          "front": "south",
+          "x": 2000,
+          "y": 2770,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        },
+        {
+          "name": "西境前线",
+          "front": "west",
+          "x": 950,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 8,
+          "captured": true,
+          "contested": true,
+          "connected": true
+        },
+        {
+          "name": "东境前线",
+          "front": "east",
+          "x": 3050,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "北境前线",
+          "front": "north",
+          "x": 2000,
+          "y": 820,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        }
+      ],
+      "stats": {
+        "deployed": 191,
+        "kills": 42,
+        "lost": 191,
+        "income": 1558,
+        "walls": 5,
+        "skills": 0,
+        "peak": 191,
+        "resourceIncome": 820,
+        "spells": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 9,
+          "inner": 5,
+          "core": 14
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 7,
+          "inner": 4,
+          "core": 3
+        }
+      },
+      "mana": 100,
+      "firstCoreHit": null,
+      "reservesDispatched": 4,
+      "armyLost": true
+    }
+  ]
+}

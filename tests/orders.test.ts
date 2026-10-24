@@ -15,6 +15,31 @@ const run = (b: Battle, n: number) => {
   b.events.length = 0;
 };
 describe("3.1 tactical routes and waiting orders", () => {
+  it("a guardian body can be focused in front of a tall crystal without losing building selection", () => {
+    const b = clean(),
+      g = b.spawn("captain", 1950, 1760, 1);
+    expect(b.targetAt(g.x, g.y)?.id).toBe(g.id);
+    expect(b.targetAt(2000, 1540)?.id).toBe(b.crystal.id);
+    g.hp = 0;
+    expect(b.targetAt(g.x, g.y)?.id).toBe(b.crystal.id);
+  });
+  it("long appended routes discard completed history and retain the newest destination", () => {
+    const b = clean(),
+      u = b.spawn("goblin", 950, 3400);
+    b.followRoute(
+      [u.id],
+      [
+        { x: 1000, y: 3400 },
+        { x: 1100, y: 3400 },
+      ],
+    );
+    run(b, 1.5);
+    for (let i = 0; i < 60; i++)
+      b.followRoute([u.id], [{ x: 1200 + i * 10, y: 3300 + (i % 2) * 40 }], true);
+    expect(u.route!.points.length).toBeLessThanOrEqual(48);
+    expect(u.route!.points.at(-1)).toEqual({ x: 1790, y: 3340 });
+    expect(u.route!.index).toBe(0);
+  });
   it("new paid troops remain at their deployment locations until commanded", () => {
     const l = createLoadout();
     purchase(l, "goblin", 1);

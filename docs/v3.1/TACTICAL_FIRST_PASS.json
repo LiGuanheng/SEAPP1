@@ -1,0 +1,1884 @@
+{
+  "date": "2026-10-24T07:27:20.713Z",
+  "seed": 20261024,
+  "results": [
+    {
+      "difficulty": "hard",
+      "mode": "direct",
+      "front": "west",
+      "phase": 0,
+      "purchases": 0,
+      "time": 61.25,
+      "remaining": 838.75,
+      "money": 1464,
+      "active": 0,
+      "queued": 0,
+      "reserves": 0,
+      "crystalHp": 5600,
+      "status": "battle",
+      "outposts": [
+        {
+          "name": "南境前线",
+          "front": "south",
+          "x": 2000,
+          "y": 2770,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        },
+        {
+          "name": "西境前线",
+          "front": "west",
+          "x": 950,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 8,
+          "captured": true,
+          "contested": true,
+          "connected": true
+        },
+        {
+          "name": "东境前线",
+          "front": "east",
+          "x": 3050,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "北境前线",
+          "front": "north",
+          "x": 2000,
+          "y": 820,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        }
+      ],
+      "stats": {
+        "deployed": 138,
+        "kills": 37,
+        "lost": 138,
+        "income": 1414,
+        "walls": 3,
+        "skills": 0,
+        "peak": 138,
+        "resourceIncome": 1070,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 15,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 31,
+          "inner": 1,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 6,
+          "inner": 0,
+          "core": 0
+        }
+      },
+      "mana": 100,
+      "firstCoreHit": null,
+      "reservesDispatched": 4,
+      "armyLost": true,
+      "guardian": [
+        {
+          "hp": 4000,
+          "maxHp": 4000
+        }
+      ],
+      "alive": []
+    },
+    {
+      "difficulty": "easy",
+      "mode": "raid",
+      "front": "west",
+      "phase": 2,
+      "purchases": 17,
+      "time": 59.9,
+      "remaining": 1020.1,
+      "money": 67,
+      "active": 100,
+      "queued": 0,
+      "reserves": 0,
+      "crystalHp": 0,
+      "status": "victory",
+      "outposts": [
+        {
+          "name": "南境前线",
+          "front": "south",
+          "x": 2000,
+          "y": 2770,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        },
+        {
+          "name": "西境前线",
+          "front": "west",
+          "x": 950,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 8,
+          "captured": true,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "东境前线",
+          "front": "east",
+          "x": 3050,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "北境前线",
+          "front": "north",
+          "x": 2000,
+          "y": 820,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        }
+      ],
+      "stats": {
+        "deployed": 294,
+        "kills": 31,
+        "lost": 194,
+        "income": 2137,
+        "walls": 7,
+        "skills": 4,
+        "peak": 254,
+        "resourceIncome": 1680,
+        "spells": 5,
+        "lootSites": 5,
+        "reliefTransfers": 0,
+        "guardianBursts": 1,
+        "towerShots": {
+          "field": 0,
+          "outer": 24,
+          "inner": 16,
+          "core": 13
+        },
+        "destroyed": {
+          "field": 4,
+          "outer": 7,
+          "inner": 3,
+          "core": 3
+        }
+      },
+      "mana": 19.32,
+      "firstCoreHit": {
+        "time": 54.59999999999818,
+        "x": 1935.3912191846875,
+        "y": 1756.5472771141278,
+        "walls": 7
+      },
+      "reservesDispatched": 2,
+      "armyLost": false,
+      "guardian": [
+        {
+          "hp": 0,
+          "maxHp": 2400
+        }
+      ],
+      "alive": [
+        {
+          "kind": "raider",
+          "hp": 72,
+          "x": 1057,
+          "y": 1519,
+          "order": "move",
+          "routeIndex": 0
+        },
+        {
+          "kind": "raider",
+          "hp": 4,
+          "x": 1801,
+          "y": 1742,
+          "order": "move",
+          "routeIndex": 0
+        },
+        {
+          "kind": "raider",
+          "hp": 6,
+          "x": 1923,
+          "y": 1718,
+          "order": "move",
+          "routeIndex": 0
+        },
+        {
+          "kind": "raider",
+          "hp": 72,
+          "x": 1058,
+          "y": 1516,
+          "order": "move",
+          "routeIndex": 0
+        },
+        {
+          "kind": "raider",
+          "hp": 10,
+          "x": 1187,
+          "y": 1748,
+          "order": "move",
+          "routeIndex": 0
+        },
+        {
+          "kind": "raider",
+          "hp": 72,
+          "x": 1199,
+          "y": 1740,
+          "order": "move",
+          "routeIndex": 0
+        },
+        {
+          "kind": "king",
+          "hp": 1767,
+          "x": 1762,
+          "y": 1812,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "titan",
+          "hp": 2528,
+          "x": 1918,
+          "y": 1792,
+          "order": "hold"
+        },
+        {
+          "kind": "moon",
+          "hp": 433,
+          "x": 1935,
+          "y": 1757,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "forest",
+          "hp": 1500,
+          "x": 1819,
+          "y": 1729,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 419,
+          "x": 1923,
+          "y": 1789,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 375,
+          "x": 1935,
+          "y": 1781,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 244,
+          "x": 1895,
+          "y": 1839,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 416,
+          "x": 1935,
+          "y": 1781,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 48,
+          "x": 1894,
+          "y": 1842,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 305,
+          "x": 1895,
+          "y": 1822,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 275,
+          "x": 1895,
+          "y": 1816,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 269,
+          "x": 1846,
+          "y": 1825,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 400,
+          "x": 1894,
+          "y": 1805,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 252,
+          "x": 1888,
+          "y": 1825,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 386,
+          "x": 1927,
+          "y": 1795,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 319,
+          "x": 1926,
+          "y": 1800,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 241,
+          "x": 1895,
+          "y": 1838,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 386,
+          "x": 1934,
+          "y": 1780,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 244,
+          "x": 1895,
+          "y": 1829,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 315,
+          "x": 1935,
+          "y": 1781,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 281,
+          "x": 1915,
+          "y": 1787,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 300,
+          "x": 1904,
+          "y": 1806,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 154,
+          "x": 1897,
+          "y": 1807,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 146,
+          "x": 1890,
+          "y": 1801,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 77,
+          "x": 1890,
+          "y": 1818,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 124,
+          "x": 1902,
+          "y": 1809,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 271,
+          "x": 1890,
+          "y": 1808,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 126,
+          "x": 1911,
+          "y": 1815,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 275,
+          "x": 1890,
+          "y": 1816,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 61,
+          "x": 1910,
+          "y": 1798,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 229,
+          "x": 1891,
+          "y": 1825,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 219,
+          "x": 1905,
+          "y": 1788,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 228,
+          "x": 1895,
+          "y": 1832,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 331,
+          "x": 1921,
+          "y": 1773,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 293,
+          "x": 1932,
+          "y": 1781,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 409,
+          "x": 1895,
+          "y": 1814,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 407,
+          "x": 1895,
+          "y": 1824,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 408,
+          "x": 1895,
+          "y": 1795,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 312,
+          "x": 1896,
+          "y": 1819,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 293,
+          "x": 1928,
+          "y": 1806,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 306,
+          "x": 1913,
+          "y": 1814,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 120,
+          "x": 1914,
+          "y": 1809,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 303,
+          "x": 1919,
+          "y": 1792,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 148,
+          "x": 1916,
+          "y": 1802,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 221,
+          "x": 1911,
+          "y": 1770,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 221,
+          "x": 1909,
+          "y": 1783,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 354,
+          "x": 1935,
+          "y": 1781,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 351,
+          "x": 1936,
+          "y": 1781,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 351,
+          "x": 1895,
+          "y": 1796,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 448,
+          "x": 1925,
+          "y": 1814,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 283,
+          "x": 1920,
+          "y": 1800,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 368,
+          "x": 1913,
+          "y": 1824,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 252,
+          "x": 1895,
+          "y": 1851,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 367,
+          "x": 1923,
+          "y": 1814,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 387,
+          "x": 1889,
+          "y": 1811,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 390,
+          "x": 1891,
+          "y": 1858,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 390,
+          "x": 1891,
+          "y": 1845,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 362,
+          "x": 1930,
+          "y": 1819,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 362,
+          "x": 1890,
+          "y": 1833,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 362,
+          "x": 1915,
+          "y": 1825,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 543,
+          "x": 1693,
+          "y": 1820,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 509,
+          "x": 1820,
+          "y": 1920,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 531,
+          "x": 1898,
+          "y": 1876,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 550,
+          "x": 1860,
+          "y": 1916,
+          "order": "hold"
+        },
+        {
+          "kind": "elf",
+          "hp": 62,
+          "x": 1713,
+          "y": 1807,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "elf",
+          "hp": 62,
+          "x": 1716,
+          "y": 1834,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 230,
+          "x": 1923,
+          "y": 1770,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 347,
+          "x": 1933,
+          "y": 1781,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 160,
+          "x": 1924,
+          "y": 1792,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 397,
+          "x": 1934,
+          "y": 1780,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 142,
+          "x": 1906,
+          "y": 1771,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 142,
+          "x": 1918,
+          "y": 1782,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 227,
+          "x": 1909,
+          "y": 1796,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 153,
+          "x": 1914,
+          "y": 1791,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 306,
+          "x": 1913,
+          "y": 1788,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 257,
+          "x": 1909,
+          "y": 1800,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 340,
+          "x": 1923,
+          "y": 1770,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 370,
+          "x": 1924,
+          "y": 1784,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 398,
+          "x": 1932,
+          "y": 1771,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 342,
+          "x": 1928,
+          "y": 1781,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 494,
+          "x": 1925,
+          "y": 1769,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 425,
+          "x": 1926,
+          "y": 1783,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 284,
+          "x": 1896,
+          "y": 1834,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 357,
+          "x": 1922,
+          "y": 1786,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 362,
+          "x": 1895,
+          "y": 1791,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 362,
+          "x": 1890,
+          "y": 1829,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 362,
+          "x": 1891,
+          "y": 1811,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 352,
+          "x": 1891,
+          "y": 1810,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 352,
+          "x": 1907,
+          "y": 1811,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 362,
+          "x": 1895,
+          "y": 1796,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 543,
+          "x": 1410,
+          "y": 1816,
+          "order": "move",
+          "routeIndex": 1
+        },
+        {
+          "kind": "golem",
+          "hp": 605,
+          "x": 1439,
+          "y": 1818,
+          "order": "move",
+          "routeIndex": 1
+        },
+        {
+          "kind": "golem",
+          "hp": 543,
+          "x": 1379,
+          "y": 1808,
+          "order": "move",
+          "routeIndex": 1
+        },
+        {
+          "kind": "golem",
+          "hp": 543,
+          "x": 1475,
+          "y": 1819,
+          "order": "move",
+          "routeIndex": 1
+        }
+      ]
+    },
+    {
+      "difficulty": "normal",
+      "mode": "raid",
+      "front": "west",
+      "phase": 2,
+      "purchases": 15,
+      "time": 68.02,
+      "remaining": 831.98,
+      "money": 134,
+      "active": 56,
+      "queued": 0,
+      "reserves": 0,
+      "crystalHp": 0,
+      "status": "victory",
+      "outposts": [
+        {
+          "name": "南境前线",
+          "front": "south",
+          "x": 2000,
+          "y": 2770,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        },
+        {
+          "name": "西境前线",
+          "front": "west",
+          "x": 950,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 8,
+          "captured": true,
+          "contested": true,
+          "connected": true
+        },
+        {
+          "name": "东境前线",
+          "front": "east",
+          "x": 3050,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "北境前线",
+          "front": "north",
+          "x": 2000,
+          "y": 820,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        }
+      ],
+      "stats": {
+        "deployed": 264,
+        "kills": 47,
+        "lost": 208,
+        "income": 2174,
+        "walls": 7,
+        "skills": 6,
+        "peak": 219,
+        "resourceIncome": 1680,
+        "spells": 6,
+        "lootSites": 5,
+        "reliefTransfers": 12,
+        "guardianBursts": 1,
+        "towerShots": {
+          "field": 0,
+          "outer": 28,
+          "inner": 15,
+          "core": 21
+        },
+        "destroyed": {
+          "field": 4,
+          "outer": 7,
+          "inner": 3,
+          "core": 3
+        }
+      },
+      "mana": 8.93,
+      "firstCoreHit": {
+        "time": 59.383333333331244,
+        "x": 1918.4634305661637,
+        "y": 1804.4393749150904,
+        "walls": 7
+      },
+      "reservesDispatched": 2,
+      "armyLost": false,
+      "guardian": [
+        {
+          "hp": 0,
+          "maxHp": 3200
+        }
+      ],
+      "alive": [
+        {
+          "kind": "king",
+          "hp": 1752,
+          "x": 1911,
+          "y": 1805,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "titan",
+          "hp": 2441,
+          "x": 1917,
+          "y": 1797,
+          "order": "hold"
+        },
+        {
+          "kind": "moon",
+          "hp": 95,
+          "x": 1928,
+          "y": 1782,
+          "order": "hold"
+        },
+        {
+          "kind": "forest",
+          "hp": 1500,
+          "x": 1825,
+          "y": 1742,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 561,
+          "x": 1906,
+          "y": 1754,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 194,
+          "x": 1928,
+          "y": 1782,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 61,
+          "x": 1928,
+          "y": 1782,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 561,
+          "x": 1903,
+          "y": 1750,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 526,
+          "x": 1904,
+          "y": 1745,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 534,
+          "x": 1788,
+          "y": 1854,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 278,
+          "x": 1811,
+          "y": 1831,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 145,
+          "x": 1858,
+          "y": 1859,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 157,
+          "x": 1876,
+          "y": 1833,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 252,
+          "x": 1912,
+          "y": 1852,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 270,
+          "x": 1936,
+          "y": 1790,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 60,
+          "x": 1895,
+          "y": 1855,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 218,
+          "x": 1920,
+          "y": 1790,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 169,
+          "x": 1915,
+          "y": 1752,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 250,
+          "x": 1936,
+          "y": 1776,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 101,
+          "x": 1921,
+          "y": 1788,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 17,
+          "x": 1873,
+          "y": 1870,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 315,
+          "x": 1894,
+          "y": 1868,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 279,
+          "x": 1907,
+          "y": 1861,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 225,
+          "x": 1917,
+          "y": 1804,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 181,
+          "x": 1922,
+          "y": 1759,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 162,
+          "x": 1907,
+          "y": 1835,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 40,
+          "x": 1923,
+          "y": 1762,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 308,
+          "x": 1891,
+          "y": 1870,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 170,
+          "x": 1821,
+          "y": 1870,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 474,
+          "x": 1895,
+          "y": 1742,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 341,
+          "x": 1873,
+          "y": 1868,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 411,
+          "x": 1884,
+          "y": 1871,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 460,
+          "x": 1934,
+          "y": 1776,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 462,
+          "x": 1920,
+          "y": 1812,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 478,
+          "x": 1896,
+          "y": 1878,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 506,
+          "x": 1901,
+          "y": 1885,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 432,
+          "x": 1889,
+          "y": 1857,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 422,
+          "x": 1894,
+          "y": 1880,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 417,
+          "x": 1894,
+          "y": 1879,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 432,
+          "x": 1903,
+          "y": 1869,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 433,
+          "x": 1917,
+          "y": 1894,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "treant",
+          "hp": 354,
+          "x": 1913,
+          "y": 1761,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 460,
+          "x": 1912,
+          "y": 1749,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 522,
+          "x": 1923,
+          "y": 1764,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 494,
+          "x": 1931,
+          "y": 1768,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 550,
+          "x": 1899,
+          "y": 1741,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "elf",
+          "hp": 62,
+          "x": 1736,
+          "y": 1822,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 190,
+          "x": 1923,
+          "y": 1816,
+          "order": "hold"
+        },
+        {
+          "kind": "treant",
+          "hp": 40,
+          "x": 1903,
+          "y": 1837,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 189,
+          "x": 1914,
+          "y": 1805,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 203,
+          "x": 1919,
+          "y": 1790,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 78,
+          "x": 1920,
+          "y": 1765,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 465,
+          "x": 1896,
+          "y": 1786,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 589,
+          "x": 1895,
+          "y": 1821,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 577,
+          "x": 1895,
+          "y": 1833,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 577,
+          "x": 1896,
+          "y": 1786,
+          "order": "move",
+          "routeIndex": 2
+        }
+      ]
+    },
+    {
+      "difficulty": "hard",
+      "mode": "raid",
+      "front": "west",
+      "phase": 2,
+      "purchases": 15,
+      "time": 147.77,
+      "remaining": 752.23,
+      "money": 52,
+      "active": 0,
+      "queued": 0,
+      "reserves": 0,
+      "crystalHp": 5600,
+      "status": "defeat",
+      "outposts": [
+        {
+          "name": "南境前线",
+          "front": "south",
+          "x": 2000,
+          "y": 2770,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        },
+        {
+          "name": "西境前线",
+          "front": "west",
+          "x": 950,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 8,
+          "captured": true,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "东境前线",
+          "front": "east",
+          "x": 3050,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "北境前线",
+          "front": "north",
+          "x": 2000,
+          "y": 820,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        }
+      ],
+      "stats": {
+        "deployed": 252,
+        "kills": 62,
+        "lost": 252,
+        "income": 2192,
+        "walls": 5,
+        "skills": 6,
+        "peak": 162,
+        "resourceIncome": 1680,
+        "spells": 11,
+        "lootSites": 5,
+        "reliefTransfers": 15,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 84,
+          "inner": 30,
+          "core": 8
+        },
+        "destroyed": {
+          "field": 4,
+          "outer": 4,
+          "inner": 4,
+          "core": 1
+        }
+      },
+      "mana": 16.98,
+      "firstCoreHit": null,
+      "reservesDispatched": 4,
+      "armyLost": true,
+      "guardian": [
+        {
+          "hp": 4000,
+          "maxHp": 4000
+        }
+      ],
+      "alive": []
+    },
+    {
+      "difficulty": "normal",
+      "mode": "raid",
+      "front": "north",
+      "phase": 2,
+      "purchases": 13,
+      "time": 73.2,
+      "remaining": 826.8,
+      "money": 70,
+      "active": 20,
+      "queued": 0,
+      "reserves": 0,
+      "crystalHp": 0,
+      "status": "victory",
+      "outposts": [
+        {
+          "name": "南境前线",
+          "front": "south",
+          "x": 2000,
+          "y": 2770,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": true,
+          "connected": true
+        },
+        {
+          "name": "西境前线",
+          "front": "west",
+          "x": 950,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "东境前线",
+          "front": "east",
+          "x": 3050,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 0,
+          "captured": false,
+          "contested": false,
+          "connected": true
+        },
+        {
+          "name": "北境前线",
+          "front": "north",
+          "x": 2000,
+          "y": 820,
+          "w": 260,
+          "h": 220,
+          "progress": 8,
+          "captured": true,
+          "contested": false,
+          "connected": true
+        }
+      ],
+      "stats": {
+        "deployed": 254,
+        "kills": 55,
+        "lost": 234,
+        "income": 1820,
+        "walls": 5,
+        "skills": 5,
+        "peak": 202,
+        "resourceIncome": 1370,
+        "spells": 6,
+        "lootSites": 4,
+        "reliefTransfers": 12,
+        "guardianBursts": 1,
+        "towerShots": {
+          "field": 0,
+          "outer": 24,
+          "inner": 5,
+          "core": 29
+        },
+        "destroyed": {
+          "field": 3,
+          "outer": 7,
+          "inner": 3,
+          "core": 2
+        }
+      },
+      "mana": 18.26,
+      "firstCoreHit": {
+        "time": 57.91666666666466,
+        "x": 2010.4694503583914,
+        "y": 1719.2404254926341,
+        "walls": 5
+      },
+      "reservesDispatched": 3,
+      "armyLost": false,
+      "guardian": [
+        {
+          "hp": 2511.9999999999995,
+          "maxHp": 3200
+        }
+      ],
+      "alive": [
+        {
+          "kind": "raider",
+          "hp": 72,
+          "x": 565,
+          "y": 524,
+          "order": "move",
+          "routeIndex": 0
+        },
+        {
+          "kind": "king",
+          "hp": 1800,
+          "x": 1958,
+          "y": 1550,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "titan",
+          "hp": 1769,
+          "x": 1952,
+          "y": 1656,
+          "order": "hold"
+        },
+        {
+          "kind": "forest",
+          "hp": 1477,
+          "x": 1980,
+          "y": 1555,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 92,
+          "x": 2045,
+          "y": 1697,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 113,
+          "x": 1975,
+          "y": 1727,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 204,
+          "x": 2018,
+          "y": 1710,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 205,
+          "x": 2036,
+          "y": 1722,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 87,
+          "x": 2017,
+          "y": 1718,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 141,
+          "x": 1965,
+          "y": 1719,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 141,
+          "x": 2016,
+          "y": 1724,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 141,
+          "x": 2010,
+          "y": 1719,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 108,
+          "x": 1972,
+          "y": 1717,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 293,
+          "x": 1983,
+          "y": 1725,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 65,
+          "x": 2015,
+          "y": 1720,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 167,
+          "x": 2022,
+          "y": 1709,
+          "order": "hold"
+        },
+        {
+          "kind": "golem",
+          "hp": 313,
+          "x": 2040,
+          "y": 1709,
+          "order": "move",
+          "routeIndex": 2
+        },
+        {
+          "kind": "golem",
+          "hp": 17,
+          "x": 1774,
+          "y": 1194,
+          "order": "move",
+          "routeIndex": 1
+        },
+        {
+          "kind": "golem",
+          "hp": 180,
+          "x": 1786,
+          "y": 1187,
+          "order": "move",
+          "routeIndex": 1
+        },
+        {
+          "kind": "golem",
+          "hp": 74,
+          "x": 1782,
+          "y": 1205,
+          "order": "move",
+          "routeIndex": 1
+        }
+      ]
+    }
+  ]
+}

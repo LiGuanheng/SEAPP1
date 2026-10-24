@@ -1,3 +1,26 @@
+# V3.1 测试报告
+
+当前汇总见[v3.1/REPORT.md](v3.1/REPORT.md)，原始数据与本次截图均单独保存。
+
+新增orders.test与原有v3.test合并回归；orders-browser验证真实选兵/绘线，tactical-browser验证掠夺/购买/前线/决战/重开，tactical-performance记录300驻留与真实战斗各10秒。浏览器战役通过按钮和鼠标执行命令，长战斗采用同一模型advance快进；不修改HP/钱包/结果。局部单元测试可隔离敌人，不能作为完整通关证据。
+
+实际发现与修复：明确出兵模式后，浏览器脚本需先切回库存才能再下兵；Shift追加应验证剩余路线与新终点，不能假定保留已完成路点。真实回归发现高建筑图像点击范围吞掉守军，已优先检测守军身体并加用例。结算有1.6秒演出，脚本应等待结算按钮出现；战役中止、超时和阵容失败均保留，未计作通过。
+
+```sh
+npm test -- --reporter=json --outputFile=docs/v3.1/UNIT_RESULTS.json
+npm run build
+npm run preview -- --host 127.0.0.1 --port 4173
+npm run test:e2e -- http://127.0.0.1:4173/SEAPP1/
+npx tsx scripts/tactical-simulate.ts
+npx tsx scripts/tactical-simulate.ts --sweep
+npx tsx scripts/tactical-simulate.ts --sky
+node scripts/verify-release.mjs https://liguanheng.github.io/SEAPP1/ EXPECTED_SHA
+```
+
+未覆盖的V3旧交互与初次验证详情仍见[v3/REPORT.md](v3/REPORT.md)及Git历史。下列保留3.0原测试报告，不能冒充本次新结果。
+
+---
+
 # V3 测试报告
 
 2026-10-24。最终汇总与公开版本状态见[v3/REPORT.md](v3/REPORT.md)。原始机器数据分别保留，没有把编译成功或直接修改胜利状态冒充通关。

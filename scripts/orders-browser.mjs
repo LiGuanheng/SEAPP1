@@ -1,7 +1,8 @@
 import puppeteer from "puppeteer-core";
 import { writeFileSync, mkdirSync } from "node:fs";
 const browser = await puppeteer.launch({
-    executablePath: "C:/Program Files/Google/Chrome/Application/chrome.exe",
+    executablePath:
+      process.env.CHROME_PATH ?? "C:/Program Files/Google/Chrome/Application/chrome.exe",
     headless: true,
     args: ["--no-sandbox", "--mute-audio"],
     defaultViewport: { width: 1600, height: 1000 },
