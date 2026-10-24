@@ -985,6 +985,16 @@ em {
   color: #a1b4a7;
   white-space: nowrap;
 }
+.batch-control .continuous-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  cursor: pointer;
+}
+.continuous-toggle input {
+  accent-color: #cbb174;
+  margin: 0;
+}
 .batch-control select {
   border: 1px solid #6b7c6540;
   background: #203e3a;

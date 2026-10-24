@@ -8,11 +8,11 @@ export class DeploymentStream {
   get active() {
     return this.hold !== null;
   }
-  begin(kind: Kind, x: number, y: number, batches: number, now: number) {
+  begin(kind: Kind, x: number, y: number, batches: number, now: number, repeat = false) {
     this.end();
     const ok = this.battle.deploy(kind, x, y, batches);
-    if (ok && isArmy(kind) && batches !== Infinity && !this.battle.paused)
-      this.hold = { kind, x, y, batches, next: now + 320 };
+    if (ok && repeat && isArmy(kind) && batches !== Infinity && !this.battle.paused)
+      this.hold = { kind, x, y, batches, next: now + 600 };
     return ok;
   }
   tick(now: number, enabled = true) {
@@ -26,7 +26,7 @@ export class DeploymentStream {
       this.end();
       return;
     }
-    h.next = now + 160;
+    h.next = now + 500;
   }
   end() {
     this.hold = null;

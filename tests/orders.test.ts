@@ -10,6 +10,11 @@ const clean = () => {
     if (["arrow", "cannon", "antiAir", "holy"].includes(s.kind)) b.damage(s, s.hp);
   return b;
 };
+const quiet = () => {
+  const b = clean();
+  for (const s of b.structures) if (s.kind !== "crystal") b.damage(s, s.hp);
+  return b;
+};
 const run = (b: Battle, n: number) => {
   b.advance(n);
   b.events.length = 0;
@@ -74,7 +79,7 @@ describe("3.1 tactical routes and waiting orders", () => {
     ]);
   });
   it("troops visit route bends and stop at the final destination", () => {
-    const b = clean(),
+    const b = quiet(),
       u = b.spawn("goblin", 950, 3400);
     b.followRoute(
       [u.id],
@@ -97,7 +102,7 @@ describe("3.1 tactical routes and waiting orders", () => {
     expect({ x: u.x, y: u.y }).toEqual(p);
   });
   it("Shift-style appending keeps the current path and adds a later point", () => {
-    const b = clean(),
+    const b = quiet(),
       u = b.spawn("goblin", 950, 3400);
     b.followRoute([u.id], [{ x: 1100, y: 3400 }]);
     run(b, 0.5);
@@ -108,7 +113,7 @@ describe("3.1 tactical routes and waiting orders", () => {
     expect(u.x).toBeGreaterThan(1275);
   });
   it("marching troops kill nearby targets then resume the same route", () => {
-    const b = clean(),
+    const b = quiet(),
       u = b.spawn("goblin", 950, 3400),
       e = b.spawn("archer", 1070, 3420, 1);
     e.root = 100;
@@ -120,9 +125,9 @@ describe("3.1 tactical routes and waiting orders", () => {
     expect(Math.hypot(u.x - 1320, u.y - 3400)).toBeLessThan(22);
   });
   it("off-route targets do not drag a marching group away", () => {
-    const b = clean(),
+    const b = quiet(),
       u = b.spawn("goblin", 950, 3400),
-      e = b.spawn("archer", 1110, 3190, 1);
+      e = b.spawn("archer", 1110, 2550, 1);
     e.root = 100;
     b.followRoute([u.id], [{ x: 1320, y: 3400 }]);
     run(b, 8);

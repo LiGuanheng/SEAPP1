@@ -64,11 +64,11 @@ describe("V3 money, inventory and rapid deployment", () => {
     purchase(l, "slime", 10);
     const b = new Battle(l),
       stream = new DeploymentStream(b);
-    expect(stream.begin("slime", 2000, 3370, 1, 0)).toBe(true);
-    stream.tick(319);
+    expect(stream.begin("slime", 2000, 3370, 1, 0, true)).toBe(true);
+    stream.tick(599);
     expect(b.queued).toBe(40);
-    stream.tick(320);
-    stream.tick(480);
+    stream.tick(600);
+    stream.tick(1100);
     expect(b.queued).toBe(120);
     stream.end();
     stream.tick(1000);
@@ -82,9 +82,9 @@ describe("V3 money, inventory and rapid deployment", () => {
       purchase(l, "slime", mode === "empty" ? 1 : 4);
       const b = new Battle(l),
         stream = new DeploymentStream(b);
-      stream.begin("slime", 2000, 3370, 1, 0);
+      stream.begin("slime", 2000, 3370, 1, 0, true);
       if (mode === "pause") b.paused = true;
-      stream.tick(400, mode !== "disabled");
+      stream.tick(700, mode !== "disabled");
       expect(stream.active).toBe(false);
       expect(b.queued).toBe(40);
     },
@@ -103,6 +103,9 @@ describe("V3 money, inventory and rapid deployment", () => {
     const b = new Battle(l);
     b.deploy("slime", 2000, 3370, Infinity);
     const total = b.queued;
+    b.units.forEach((u) => (u.hp = 0));
+    for (const s of b.structures)
+      if (["arrow", "cannon", "holy", "antiAir"].includes(s.kind)) b.damage(s, s.hp);
     run(b, 3.2);
     expect(b.active).toBe(300);
     expect(b.queued + b.active + b.stats.lost).toBe(total);

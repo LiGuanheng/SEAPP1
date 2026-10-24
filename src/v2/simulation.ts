@@ -52,6 +52,7 @@ export interface Unit extends Stats {
   priority: Priority;
   engagement?: Point;
   resumeAt: number;
+  threat?: { id: number; until: number; origin: Point };
   sacredShield: number;
   sacredCooldown: number;
   rally?: Point[];
@@ -573,6 +574,7 @@ export class Battle {
       u.think = 0;
       u.castTime = 0;
       u.engagement = undefined;
+      u.threat = undefined;
     }
   }
   setPriority(ids: Iterable<number>, priority: Priority) {
@@ -647,6 +649,8 @@ export class Battle {
     const last = u.route.index === u.route.points.length - 1;
     if (distance(u, u.order) > (last ? 20 : 38)) return;
     if (last) {
+      this.chooseTarget(u);
+      if ((this.byId.get(u.target)?.hp ?? 0) > 0) return;
       this.halt([u.id]);
       return;
     }
@@ -711,7 +715,7 @@ export class Battle {
     this.loadout.money += n;
     this.stats.income += n;
   }
-  damage(target: Target, amount: number, source?: Unit) {
+  damage(target: Target, amount: number, source?: Target) {
     if (target.hp <= 0) return;
     if (target.kind === "crystal" && !this.firstCoreHit)
       this.firstCoreHit = {
@@ -723,6 +727,33 @@ export class Battle {
     if (!isStructure(target) && target.side === 0 && target.ward > 0) amount *= 0.6;
     if (!isStructure(target) && target.kind === "captain" && target.sacredShield > 0) amount *= 0.5;
     target.hp -= amount;
+    if (
+      amount > 0 &&
+      !isStructure(target) &&
+      target.side === 0 &&
+      source &&
+      (isStructure(source) || source.side === 1) &&
+      source.hp > 0
+    ) {
+      // Alert the victim and its local squad, including the origin of tower projectiles.
+      for (const ally of new Set([target, ...this.spatial.near(target.x, target.y, 220)])) {
+        if (ally.side !== 0 || ally.hp <= 0) continue;
+        const previous = ally.threat;
+        if (
+          previous &&
+          previous.id !== source.id &&
+          previous.until > this.time &&
+          distance(ally, this.byId.get(previous.id) ?? source) < distance(ally, source)
+        )
+          continue;
+        ally.threat = {
+          id: source.id,
+          until: this.time + 10,
+          origin: previous?.id === source.id ? previous.origin : { x: ally.x, y: ally.y },
+        };
+        ally.think = 0;
+      }
+    }
     if (!isStructure(target)) target.hit = 0.16;
     if (target.hp > 0) return;
     target.hp = 0;
@@ -855,7 +886,7 @@ export class Battle {
     d: number,
     side: number,
     exclude = 0,
-    source?: Unit,
+    source?: Target,
     originId = 0,
     airOnly = false,
   ) {
@@ -1243,8 +1274,7 @@ export class Battle {
       p.time -= dt;
       if (p.time > 0) continue;
       const t = this.byId.get(p.target);
-      const source = this.byId.get(p.source),
-        caster = source && !isStructure(source) ? source : undefined;
+      const source = this.byId.get(p.source);
       const clear = this.nav.clear({ x: p.fromX, y: p.fromY }, p, p.source, p.target, p.elevation);
       if (p.splash && clear) {
         this.splash(
@@ -1254,13 +1284,13 @@ export class Battle {
           p.damage,
           p.side,
           0,
-          caster,
+          source,
           p.target,
           p.kind === "antiAir",
         );
         if (t && isStructure(t) && t.hp > 0 && distance(t, p) < p.splash + 40)
-          this.damage(t, p.damage, caster);
-      } else if (!p.splash && clear && t && t.hp > 0) this.damage(t, p.damage, caster);
+          this.damage(t, p.damage, source);
+      } else if (!p.splash && clear && t && t.hp > 0) this.damage(t, p.damage, source);
       this.events.push({
         type: "impact",
         x: p.x,
@@ -1321,7 +1351,7 @@ export class Battle {
         if (
           !target ||
           target.hp <= 0 ||
-          distance(u, target) > u.range + 40 ||
+          attackDistance(u, target) > u.range + 40 ||
           !this.nav.clear(u, target, u.id, target.id)
         ) {
           u.castTime = 0;
@@ -1395,44 +1425,55 @@ export class Battle {
       factor *= 0.35;
     return factor;
   }
+  private threatTarget(u: Unit) {
+    const alarm = u.threat,
+      t = alarm && this.byId.get(alarm.id);
+    if (
+      !alarm ||
+      !t ||
+      t.hp <= 0 ||
+      alarm.until <= this.time ||
+      (!isStructure(t) && t.flying && u.range < 80) ||
+      distance(t, alarm.origin) > 700
+    ) {
+      u.threat = undefined;
+      return undefined;
+    }
+    return t;
+  }
   private chooseTarget(u: Unit) {
+    const threat = this.threatTarget(u);
     if (u.order?.type === "attack") {
       const t = this.byId.get(u.order.target);
       if (t && t.hp > 0) {
-        u.target = t.id;
+        // Self-defense interrupts a focus temporarily; the original order remains queued.
+        u.target = threat?.id ?? t.id;
         return;
       }
       this.halt([u.id]);
     }
+    if (threat) {
+      u.target = threat.id;
+      return;
+    }
     const route = u.order?.type === "move" ? u.route : undefined;
     const start = route ? (route.index ? route.points[route.index - 1] : route.origin) : undefined,
       end = route?.points[route.index];
-    if (
-      route &&
-      ((u.engagement && distance(u, u.engagement) > 190) ||
-        (start && end && segmentDistance(u, start, end) > 210))
-    ) {
-      u.engagement = undefined;
-      u.resumeAt = this.time + 1.2;
-      u.target = 0;
-      return;
-    }
-    if (route && this.time < u.resumeAt) {
-      u.target = 0;
-      return;
-    }
     const hold = u.side === 0 && u.order?.type === "hold";
     const allowed = (t: Target) => {
       if (hold) return attackDistance(u, t) <= u.range;
       return (
         !route ||
-        (distance(u, t) <= Math.max(240, u.range + 60) &&
-          (!start || !end || segmentDistance(t, start, end) <= 175))
+        (attackDistance(u, t) <= Math.max(440, u.range + 150) &&
+          (!start ||
+            !end ||
+            segmentDistance(t, start, end) <=
+              520 + (isStructure(t) ? Math.hypot(t.w, t.h) / 2 : 0)))
       );
     };
     let target: Target | undefined,
       best = Infinity;
-    for (const v of this.spatial.near(u.x, u.y, Math.max(300, u.range + 60))) {
+    for (const v of this.spatial.near(u.x, u.y, Math.max(route ? 480 : 300, u.range + 60))) {
       if (v.side === u.side || (v.flying && u.range < 80) || !allowed(v)) continue;
       if (
         u.side === 1 &&
@@ -1451,11 +1492,21 @@ export class Battle {
     }
     if (u.side === 0)
       for (const s of this.structures) {
-        if (s.hp <= 0 || ["wall", "gate", "cityblock"].includes(s.kind) || !allowed(s)) continue;
-        const d = distance(u, s),
-          reach = u.kind === "raider" && s.resource && !u.order ? 700 : Math.max(320, u.range + 70);
-        const score = d * 0.9 * this.priorityScore(u, s);
-        if (d < reach && score < best && this.nav.clear(u, s, u.id, s.id)) {
+        if (s.hp <= 0 || !allowed(s)) continue;
+        const wall = ["wall", "gate"].includes(s.kind);
+        // Distant wall segments aren't a reason to abandon a breach. Nearby obstacles are fair targets.
+        if (wall && (!route || attackDistance(u, s) > 90)) continue;
+        const d = attackDistance(u, s),
+          reach = route
+            ? Math.max(440, u.range + 150)
+            : u.kind === "raider" && s.resource && !u.order
+              ? 700
+              : Math.max(320, u.range + 70);
+        const score =
+          Math.max(20, d) *
+          (wall ? 3 : s.kind === "cityblock" ? 1.7 : 0.9) *
+          this.priorityScore(u, s);
+        if (d <= reach && score < best && this.nav.clear(u, s, u.id, s.id)) {
           best = score;
           target = s;
         }
@@ -1468,8 +1519,13 @@ export class Battle {
     let tx: number,
       ty: number,
       flow = false;
-    if (u.side === 0 && u.order?.type === "hold") return;
-    if (target) {
+    if (u.side === 0 && u.order?.type === "hold" && !target) {
+      if (distance(u, u.order) <= 18) return;
+      tx = u.order.x;
+      ty = u.order.y;
+      flow = true;
+    } else if (target) {
+      if (u.side === 0 && u.order?.type === "hold" && !this.threatTarget(u)) return;
       tx = target.x;
       ty = target.y;
       flow = !this.nav.clear(u, target, u.id, target.id);
