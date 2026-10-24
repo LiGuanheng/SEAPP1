@@ -1,0 +1,3534 @@
+{
+  "date": "2026-10-24T15:18:08.943Z",
+  "url": "http://127.0.0.1:4186/SEAPP1/",
+  "checks": [
+    {
+      "name": "automatic army captured a genuine front and looted actual resources",
+      "ok": true,
+      "evidence": {
+        "income": 1720,
+        "post": {
+          "name": "西境前线",
+          "front": "west",
+          "x": 950,
+          "y": 1800,
+          "w": 260,
+          "h": 220,
+          "progress": 8,
+          "captured": true,
+          "contested": false,
+          "connected": true
+        }
+      }
+    },
+    {
+      "name": "player purchased and deployed reinforcements without issuing routes or focus targets",
+      "ok": true,
+      "evidence": {
+        "purchases": 19,
+        "forward": 10,
+        "casts": 8
+      }
+    },
+    {
+      "name": "player explicitly requested safe regroup and final assault",
+      "ok": true
+    },
+    {
+      "name": "normal low-input campaign genuinely wins",
+      "ok": true,
+      "evidence": {
+        "status": "victory",
+        "time": 150.52,
+        "stats": {
+          "deployed": 344,
+          "kills": 56,
+          "lost": 301,
+          "income": 2496,
+          "walls": 21,
+          "skills": 8,
+          "peak": 265,
+          "resourceIncome": 1720,
+          "spells": 0,
+          "lootSites": 3,
+          "reliefTransfers": 12,
+          "guardianBursts": 2,
+          "towerShots": {
+            "field": 0,
+            "outer": 20,
+            "inner": 13,
+            "core": 39
+          },
+          "destroyed": {
+            "field": 2,
+            "outer": 13,
+            "inner": 12,
+            "core": 6
+          }
+        }
+      }
+    },
+    {
+      "name": "manual task count stayed zero throughout automatic combat",
+      "ok": true
+    },
+    {
+      "name": "active skills stayed within the finite player budget",
+      "ok": true,
+      "evidence": {
+        "casts": 8,
+        "skills": 8,
+        "spells": 0
+      }
+    },
+    {
+      "name": "victory retry restores default automatic sweep and clean inventory accounting",
+      "ok": true
+    },
+    {
+      "name": "real timeout defeat remains available",
+      "ok": true
+    },
+    {
+      "name": "defeat retry resets commander and legion state",
+      "ok": true
+    },
+    {
+      "name": "no browser errors",
+      "ok": true,
+      "evidence": []
+    }
+  ],
+  "errors": [],
+  "result": {
+    "time": 150.52,
+    "remaining": 749.48,
+    "money": 101,
+    "active": 43,
+    "queued": 0,
+    "reserves": 0,
+    "crystalHp": 0,
+    "status": "victory",
+    "outposts": [
+      {
+        "name": "南境前线",
+        "front": "south",
+        "x": 2000,
+        "y": 2770,
+        "w": 260,
+        "h": 220,
+        "progress": 0,
+        "captured": false,
+        "contested": true,
+        "connected": true
+      },
+      {
+        "name": "西境前线",
+        "front": "west",
+        "x": 950,
+        "y": 1800,
+        "w": 260,
+        "h": 220,
+        "progress": 8,
+        "captured": true,
+        "contested": false,
+        "connected": true
+      },
+      {
+        "name": "东境前线",
+        "front": "east",
+        "x": 3050,
+        "y": 1800,
+        "w": 260,
+        "h": 220,
+        "progress": 0,
+        "captured": false,
+        "contested": false,
+        "connected": true
+      },
+      {
+        "name": "北境前线",
+        "front": "north",
+        "x": 2000,
+        "y": 820,
+        "w": 260,
+        "h": 220,
+        "progress": 0,
+        "captured": false,
+        "contested": true,
+        "connected": true
+      }
+    ],
+    "stats": {
+      "deployed": 344,
+      "kills": 56,
+      "lost": 301,
+      "income": 2496,
+      "walls": 21,
+      "skills": 8,
+      "peak": 265,
+      "resourceIncome": 1720,
+      "spells": 0,
+      "lootSites": 3,
+      "reliefTransfers": 12,
+      "guardianBursts": 2,
+      "towerShots": {
+        "field": 0,
+        "outer": 20,
+        "inner": 13,
+        "core": 39
+      },
+      "destroyed": {
+        "field": 2,
+        "outer": 13,
+        "inner": 12,
+        "core": 6
+      }
+    },
+    "mana": 100,
+    "firstCoreHit": {
+      "time": 127.43333333332738,
+      "x": 1751.2915774472463,
+      "y": 1781.4517827713976,
+      "walls": 20
+    },
+    "reservesDispatched": 2,
+    "automation": {
+      "enabled": true,
+      "command": "assault",
+      "automatic": 43,
+      "manual": 0,
+      "muster": {
+        "x": 250,
+        "y": 900
+      },
+      "advice": "重要防线已打通 · 可集结援军或提前总攻",
+      "metrics": {
+        "updates": 150,
+        "assignments": 3185,
+        "fieldBuilds": 303,
+        "componentBuilds": 34
+      }
+    }
+  },
+  "history": [
+    {
+      "time": 0.4,
+      "stats": {
+        "deployed": 39,
+        "kills": 0,
+        "lost": 0,
+        "income": 0,
+        "walls": 0,
+        "skills": 0,
+        "peak": 39,
+        "resourceIncome": 0,
+        "spells": 0,
+        "lootSites": 0,
+        "reliefTransfers": 0,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 0,
+          "inner": 0,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 0,
+          "outer": 0,
+          "inner": 0,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "sweep",
+        "automatic": 39,
+        "manual": 0,
+        "muster": null,
+        "advice": "自动分路推进 · 主动技能仍由你掌控",
+        "metrics": {
+          "updates": 1,
+          "assignments": 39,
+          "fieldBuilds": 0,
+          "componentBuilds": 1
+        }
+      },
+      "goals": {
+        "掠夺可到达的物资": 24,
+        "突破外城防线": 15
+      },
+      "core": 5600
+    },
+    {
+      "time": 2.6,
+      "stats": {
+        "deployed": 210,
+        "kills": 3,
+        "lost": 0,
+        "income": 3,
+        "walls": 0,
+        "skills": 1,
+        "peak": 210,
+        "resourceIncome": 0,
+        "spells": 0,
+        "lootSites": 0,
+        "reliefTransfers": 0,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 1,
+          "inner": 0,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 0,
+          "outer": 0,
+          "inner": 0,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "sweep",
+        "automatic": 210,
+        "manual": 0,
+        "muster": null,
+        "advice": "自动分路推进 · 主动技能仍由你掌控",
+        "metrics": {
+          "updates": 3,
+          "assignments": 212,
+          "fieldBuilds": 2,
+          "componentBuilds": 1
+        }
+      },
+      "goals": {
+        "掠夺可到达的物资": 24,
+        "突破外城防线": 173,
+        "跟随主力、保护治疗": 13
+      },
+      "core": 5600
+    },
+    {
+      "time": 4.83,
+      "stats": {
+        "deployed": 210,
+        "kills": 3,
+        "lost": 1,
+        "income": 1133,
+        "walls": 0,
+        "skills": 2,
+        "peak": 210,
+        "resourceIncome": 1130,
+        "spells": 0,
+        "lootSites": 2,
+        "reliefTransfers": 0,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 5,
+          "inner": 0,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 0,
+          "inner": 0,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "sweep",
+        "automatic": 209,
+        "manual": 0,
+        "muster": null,
+        "advice": "物资充足 · 可购买援军，从安全前线继续部署",
+        "metrics": {
+          "updates": 5,
+          "assignments": 274,
+          "fieldBuilds": 22,
+          "componentBuilds": 3
+        }
+      },
+      "goals": {
+        "突破外城防线": 196,
+        "跟随主力、保护治疗": 13
+      },
+      "core": 5600
+    },
+    {
+      "time": 7.37,
+      "stats": {
+        "deployed": 214,
+        "kills": 3,
+        "lost": 1,
+        "income": 1133,
+        "walls": 0,
+        "skills": 3,
+        "peak": 213,
+        "resourceIncome": 1130,
+        "spells": 0,
+        "lootSites": 2,
+        "reliefTransfers": 0,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 8,
+          "inner": 0,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 0,
+          "inner": 0,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "sweep",
+        "automatic": 213,
+        "manual": 0,
+        "muster": null,
+        "advice": "物资充足 · 可购买援军，从安全前线继续部署",
+        "metrics": {
+          "updates": 8,
+          "assignments": 305,
+          "fieldBuilds": 28,
+          "componentBuilds": 3
+        }
+      },
+      "goals": {
+        "突破外城防线": 200,
+        "跟随主力、保护治疗": 13
+      },
+      "core": 5600
+    },
+    {
+      "time": 9.88,
+      "stats": {
+        "deployed": 220,
+        "kills": 4,
+        "lost": 1,
+        "income": 1134,
+        "walls": 2,
+        "skills": 3,
+        "peak": 219,
+        "resourceIncome": 1130,
+        "spells": 0,
+        "lootSites": 2,
+        "reliefTransfers": 0,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 12,
+          "inner": 0,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 2,
+          "inner": 0,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "sweep",
+        "automatic": 219,
+        "manual": 0,
+        "muster": null,
+        "advice": "物资充足 · 可购买援军，从安全前线继续部署",
+        "metrics": {
+          "updates": 10,
+          "assignments": 543,
+          "fieldBuilds": 54,
+          "componentBuilds": 5
+        }
+      },
+      "goals": {
+        "掠夺可到达的物资": 24,
+        "清理并占领前线": 182,
+        "跟随主力、保护治疗": 13
+      },
+      "core": 5600
+    },
+    {
+      "time": 12.68,
+      "stats": {
+        "deployed": 226,
+        "kills": 14,
+        "lost": 3,
+        "income": 1150,
+        "walls": 4,
+        "skills": 4,
+        "peak": 225,
+        "resourceIncome": 1130,
+        "spells": 0,
+        "lootSites": 2,
+        "reliefTransfers": 0,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 16,
+          "inner": 0,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 4,
+          "inner": 0,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "sweep",
+        "automatic": 223,
+        "manual": 0,
+        "muster": null,
+        "advice": "物资充足 · 可购买援军，从安全前线继续部署",
+        "metrics": {
+          "updates": 13,
+          "assignments": 600,
+          "fieldBuilds": 77,
+          "componentBuilds": 7
+        }
+      },
+      "goals": {
+        "掠夺可到达的物资": 23,
+        "清理并占领前线": 181,
+        "跟随主力、保护治疗": 19
+      },
+      "core": 5600
+    },
+    {
+      "time": 15.02,
+      "stats": {
+        "deployed": 238,
+        "kills": 14,
+        "lost": 3,
+        "income": 1190,
+        "walls": 6,
+        "skills": 4,
+        "peak": 235,
+        "resourceIncome": 1130,
+        "spells": 0,
+        "lootSites": 2,
+        "reliefTransfers": 0,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 18,
+          "inner": 0,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 7,
+          "inner": 0,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "sweep",
+        "automatic": 235,
+        "manual": 0,
+        "muster": null,
+        "advice": "物资充足 · 可购买援军，从安全前线继续部署",
+        "metrics": {
+          "updates": 15,
+          "assignments": 631,
+          "fieldBuilds": 86,
+          "componentBuilds": 10
+        }
+      },
+      "goals": {
+        "掠夺可到达的物资": 23,
+        "清理并占领前线": 193,
+        "跟随主力、保护治疗": 19
+      },
+      "core": 5600
+    },
+    {
+      "time": 17.63,
+      "stats": {
+        "deployed": 242,
+        "kills": 14,
+        "lost": 3,
+        "income": 1780,
+        "walls": 6,
+        "skills": 4,
+        "peak": 239,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 0,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 0,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 8,
+          "inner": 0,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "sweep",
+        "automatic": 239,
+        "manual": 0,
+        "muster": null,
+        "advice": "物资充足 · 可购买援军，从安全前线继续部署",
+        "metrics": {
+          "updates": 18,
+          "assignments": 696,
+          "fieldBuilds": 91,
+          "componentBuilds": 11
+        }
+      },
+      "goals": {
+        "清理并占领前线": 220,
+        "跟随主力、保护治疗": 19
+      },
+      "core": 5600
+    },
+    {
+      "time": 20.13,
+      "stats": {
+        "deployed": 248,
+        "kills": 14,
+        "lost": 4,
+        "income": 1820,
+        "walls": 6,
+        "skills": 4,
+        "peak": 245,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 0,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 0,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 9,
+          "inner": 0,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "sweep",
+        "automatic": 244,
+        "manual": 0,
+        "muster": null,
+        "advice": "物资充足 · 可购买援军，从安全前线继续部署",
+        "metrics": {
+          "updates": 20,
+          "assignments": 740,
+          "fieldBuilds": 98,
+          "componentBuilds": 12
+        }
+      },
+      "goals": {
+        "清理并占领前线": 225,
+        "跟随主力、保护治疗": 19
+      },
+      "core": 5600
+    },
+    {
+      "time": 22.58,
+      "stats": {
+        "deployed": 254,
+        "kills": 15,
+        "lost": 4,
+        "income": 1824,
+        "walls": 6,
+        "skills": 4,
+        "peak": 250,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 0,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 0,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 9,
+          "inner": 0,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "sweep",
+        "automatic": 250,
+        "manual": 0,
+        "muster": null,
+        "advice": "物资充足 · 可购买援军，从安全前线继续部署",
+        "metrics": {
+          "updates": 23,
+          "assignments": 815,
+          "fieldBuilds": 100,
+          "componentBuilds": 12
+        }
+      },
+      "goals": {
+        "清理并占领前线": 225,
+        "跟随主力、保护治疗": 25
+      },
+      "core": 5600
+    },
+    {
+      "time": 24.93,
+      "stats": {
+        "deployed": 266,
+        "kills": 15,
+        "lost": 4,
+        "income": 2024,
+        "walls": 6,
+        "skills": 4,
+        "peak": 262,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 4,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 0,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 9,
+          "inner": 0,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "sweep",
+        "automatic": 262,
+        "manual": 0,
+        "muster": null,
+        "advice": "物资充足 · 可购买援军，从安全前线继续部署",
+        "metrics": {
+          "updates": 25,
+          "assignments": 1114,
+          "fieldBuilds": 111,
+          "componentBuilds": 12
+        }
+      },
+      "goals": {
+        "突破内城防线": 237,
+        "跟随主力、保护治疗": 25
+      },
+      "core": 5600
+    },
+    {
+      "time": 28.33,
+      "stats": {
+        "deployed": 270,
+        "kills": 17,
+        "lost": 129,
+        "income": 2029,
+        "walls": 8,
+        "skills": 4,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 4,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 1,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 10,
+          "inner": 1,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "sweep",
+        "automatic": 141,
+        "manual": 0,
+        "muster": null,
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 29,
+          "assignments": 1341,
+          "fieldBuilds": 149,
+          "componentBuilds": 14
+        }
+      },
+      "goals": {
+        "压制本路城防": 116,
+        "跟随主力、保护治疗": 25
+      },
+      "core": 5600
+    },
+    {
+      "time": 30.73,
+      "stats": {
+        "deployed": 276,
+        "kills": 28,
+        "lost": 168,
+        "income": 2052,
+        "walls": 9,
+        "skills": 4,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 4,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 3,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 10,
+          "inner": 2,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "sweep",
+        "automatic": 108,
+        "manual": 0,
+        "muster": null,
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 31,
+          "assignments": 1373,
+          "fieldBuilds": 166,
+          "componentBuilds": 15
+        }
+      },
+      "goals": {
+        "压制本路城防": 82,
+        "掠夺可到达的物资": 1,
+        "跟随主力、保护治疗": 25
+      },
+      "core": 5600
+    },
+    {
+      "time": 33.15,
+      "stats": {
+        "deployed": 282,
+        "kills": 32,
+        "lost": 169,
+        "income": 2059,
+        "walls": 10,
+        "skills": 4,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 4,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 4,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 10,
+          "inner": 3,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "sweep",
+        "automatic": 113,
+        "manual": 0,
+        "muster": null,
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 33,
+          "assignments": 1404,
+          "fieldBuilds": 172,
+          "componentBuilds": 16
+        }
+      },
+      "goals": {
+        "压制本路城防": 81,
+        "掠夺可到达的物资": 1,
+        "跟随主力、保护治疗": 31
+      },
+      "core": 5600
+    },
+    {
+      "time": 35.52,
+      "stats": {
+        "deployed": 294,
+        "kills": 33,
+        "lost": 179,
+        "income": 2060,
+        "walls": 10,
+        "skills": 4,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 4,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 6,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 10,
+          "inner": 3,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "sweep",
+        "automatic": 115,
+        "manual": 0,
+        "muster": null,
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 36,
+          "assignments": 1571,
+          "fieldBuilds": 174,
+          "componentBuilds": 16
+        }
+      },
+      "goals": {
+        "压制本路城防": 83,
+        "掠夺可到达的物资": 1,
+        "跟随主力、保护治疗": 31
+      },
+      "core": 5600
+    },
+    {
+      "time": 37.88,
+      "stats": {
+        "deployed": 298,
+        "kills": 33,
+        "lost": 179,
+        "income": 2100,
+        "walls": 10,
+        "skills": 4,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 8,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 7,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 10,
+          "inner": 4,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "sweep",
+        "automatic": 119,
+        "manual": 0,
+        "muster": null,
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 38,
+          "assignments": 1693,
+          "fieldBuilds": 181,
+          "componentBuilds": 17
+        }
+      },
+      "goals": {
+        "压制本路城防": 87,
+        "掠夺可到达的物资": 1,
+        "跟随主力、保护治疗": 31
+      },
+      "core": 5600
+    },
+    {
+      "time": 40.25,
+      "stats": {
+        "deployed": 304,
+        "kills": 33,
+        "lost": 190,
+        "income": 2210,
+        "walls": 11,
+        "skills": 4,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 8,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 8,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 10,
+          "inner": 6,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "sweep",
+        "automatic": 114,
+        "manual": 0,
+        "muster": null,
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 40,
+          "assignments": 1824,
+          "fieldBuilds": 192,
+          "componentBuilds": 19
+        }
+      },
+      "goals": {
+        "压制本路城防": 82,
+        "掠夺可到达的物资": 1,
+        "跟随主力、保护治疗": 31
+      },
+      "core": 5600
+    },
+    {
+      "time": 42.62,
+      "stats": {
+        "deployed": 310,
+        "kills": 33,
+        "lost": 190,
+        "income": 2320,
+        "walls": 11,
+        "skills": 4,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 8,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 8,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 10,
+          "inner": 7,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "sweep",
+        "automatic": 120,
+        "manual": 0,
+        "muster": null,
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 43,
+          "assignments": 1954,
+          "fieldBuilds": 193,
+          "componentBuilds": 20
+        }
+      },
+      "goals": {
+        "掠夺可到达的物资": 4,
+        "压制本路城防": 79,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5600
+    },
+    {
+      "time": 45.03,
+      "stats": {
+        "deployed": 322,
+        "kills": 33,
+        "lost": 216,
+        "income": 2320,
+        "walls": 11,
+        "skills": 4,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 8,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 9,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 10,
+          "inner": 7,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "sweep",
+        "automatic": 106,
+        "manual": 0,
+        "muster": null,
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 45,
+          "assignments": 2107,
+          "fieldBuilds": 202,
+          "componentBuilds": 20
+        }
+      },
+      "goals": {
+        "掠夺可到达的物资": 4,
+        "突破核心防线": 65,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5600
+    },
+    {
+      "time": 47.45,
+      "stats": {
+        "deployed": 326,
+        "kills": 33,
+        "lost": 216,
+        "income": 2320,
+        "walls": 11,
+        "skills": 4,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 8,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 10,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 10,
+          "inner": 7,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "rally",
+        "automatic": 110,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "安全集结 0/110 · 可随时发动总攻",
+        "metrics": {
+          "updates": 48,
+          "assignments": 2111,
+          "fieldBuilds": 204,
+          "componentBuilds": 20
+        }
+      },
+      "goals": {
+        "向安全区域集结": 110
+      },
+      "core": 5600
+    },
+    {
+      "time": 49.9,
+      "stats": {
+        "deployed": 332,
+        "kills": 33,
+        "lost": 230,
+        "income": 2320,
+        "walls": 11,
+        "skills": 4,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 10,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 10,
+          "inner": 7,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "rally",
+        "automatic": 102,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "安全集结 0/102 · 可随时发动总攻",
+        "metrics": {
+          "updates": 50,
+          "assignments": 2111,
+          "fieldBuilds": 206,
+          "componentBuilds": 20
+        }
+      },
+      "goals": {
+        "向安全区域集结": 102
+      },
+      "core": 5600
+    },
+    {
+      "time": 52.08,
+      "stats": {
+        "deployed": 332,
+        "kills": 33,
+        "lost": 230,
+        "income": 2320,
+        "walls": 11,
+        "skills": 4,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 10,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 10,
+          "inner": 7,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "rally",
+        "automatic": 102,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "安全集结 0/102 · 可随时发动总攻",
+        "metrics": {
+          "updates": 52,
+          "assignments": 2111,
+          "fieldBuilds": 207,
+          "componentBuilds": 20
+        }
+      },
+      "goals": {
+        "向安全区域集结": 102
+      },
+      "core": 5600
+    },
+    {
+      "time": 54.25,
+      "stats": {
+        "deployed": 332,
+        "kills": 33,
+        "lost": 230,
+        "income": 2320,
+        "walls": 11,
+        "skills": 4,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 10,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 10,
+          "inner": 7,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "rally",
+        "automatic": 102,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "安全集结 0/102 · 可随时发动总攻",
+        "metrics": {
+          "updates": 54,
+          "assignments": 2111,
+          "fieldBuilds": 207,
+          "componentBuilds": 20
+        }
+      },
+      "goals": {
+        "向安全区域集结": 102
+      },
+      "core": 5600
+    },
+    {
+      "time": 56.42,
+      "stats": {
+        "deployed": 332,
+        "kills": 33,
+        "lost": 230,
+        "income": 2320,
+        "walls": 11,
+        "skills": 4,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 10,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 10,
+          "inner": 7,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "rally",
+        "automatic": 102,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "安全集结 0/102 · 可随时发动总攻",
+        "metrics": {
+          "updates": 56,
+          "assignments": 2111,
+          "fieldBuilds": 208,
+          "componentBuilds": 20
+        }
+      },
+      "goals": {
+        "向安全区域集结": 102
+      },
+      "core": 5600
+    },
+    {
+      "time": 58.6,
+      "stats": {
+        "deployed": 332,
+        "kills": 33,
+        "lost": 230,
+        "income": 2320,
+        "walls": 11,
+        "skills": 4,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 10,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 10,
+          "inner": 7,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "rally",
+        "automatic": 102,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "安全集结 0/102 · 可随时发动总攻",
+        "metrics": {
+          "updates": 59,
+          "assignments": 2111,
+          "fieldBuilds": 209,
+          "componentBuilds": 20
+        }
+      },
+      "goals": {
+        "向安全区域集结": 102
+      },
+      "core": 5600
+    },
+    {
+      "time": 60.77,
+      "stats": {
+        "deployed": 332,
+        "kills": 33,
+        "lost": 231,
+        "income": 2320,
+        "walls": 11,
+        "skills": 4,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 10,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 10,
+          "inner": 7,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "rally",
+        "automatic": 101,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "安全集结 1/101 · 可随时发动总攻",
+        "metrics": {
+          "updates": 61,
+          "assignments": 2111,
+          "fieldBuilds": 210,
+          "componentBuilds": 20
+        }
+      },
+      "goals": {
+        "向安全区域集结": 100,
+        "集结就绪": 1
+      },
+      "core": 5600
+    },
+    {
+      "time": 62.93,
+      "stats": {
+        "deployed": 332,
+        "kills": 33,
+        "lost": 231,
+        "income": 2320,
+        "walls": 11,
+        "skills": 4,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 10,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 10,
+          "inner": 7,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "rally",
+        "automatic": 101,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "安全集结 5/101 · 可随时发动总攻",
+        "metrics": {
+          "updates": 63,
+          "assignments": 2111,
+          "fieldBuilds": 210,
+          "componentBuilds": 20
+        }
+      },
+      "goals": {
+        "集结就绪": 5,
+        "向安全区域集结": 96
+      },
+      "core": 5600
+    },
+    {
+      "time": 65.1,
+      "stats": {
+        "deployed": 332,
+        "kills": 33,
+        "lost": 231,
+        "income": 2320,
+        "walls": 11,
+        "skills": 4,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 10,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 10,
+          "inner": 7,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "rally",
+        "automatic": 101,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "安全集结 13/101 · 可随时发动总攻",
+        "metrics": {
+          "updates": 65,
+          "assignments": 2111,
+          "fieldBuilds": 211,
+          "componentBuilds": 20
+        }
+      },
+      "goals": {
+        "集结就绪": 12,
+        "向安全区域集结": 89
+      },
+      "core": 5600
+    },
+    {
+      "time": 68.02,
+      "stats": {
+        "deployed": 332,
+        "kills": 34,
+        "lost": 232,
+        "income": 2321,
+        "walls": 12,
+        "skills": 4,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 10,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 11,
+          "inner": 7,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 100,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 69,
+          "assignments": 2254,
+          "fieldBuilds": 217,
+          "componentBuilds": 21
+        }
+      },
+      "goals": {
+        "突破核心防线": 63,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5600
+    },
+    {
+      "time": 70.3,
+      "stats": {
+        "deployed": 332,
+        "kills": 37,
+        "lost": 232,
+        "income": 2324,
+        "walls": 12,
+        "skills": 5,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 10,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 11,
+          "inner": 7,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 100,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 71,
+          "assignments": 2288,
+          "fieldBuilds": 217,
+          "componentBuilds": 21
+        }
+      },
+      "goals": {
+        "突破核心防线": 63,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5600
+    },
+    {
+      "time": 72.5,
+      "stats": {
+        "deployed": 332,
+        "kills": 37,
+        "lost": 233,
+        "income": 2324,
+        "walls": 13,
+        "skills": 5,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 10,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 12,
+          "inner": 7,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 99,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 73,
+          "assignments": 2359,
+          "fieldBuilds": 223,
+          "componentBuilds": 22
+        }
+      },
+      "goals": {
+        "突破核心防线": 62,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5600
+    },
+    {
+      "time": 74.68,
+      "stats": {
+        "deployed": 332,
+        "kills": 37,
+        "lost": 234,
+        "income": 2324,
+        "walls": 13,
+        "skills": 5,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 10,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 12,
+          "inner": 7,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 98,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 75,
+          "assignments": 2433,
+          "fieldBuilds": 225,
+          "componentBuilds": 22
+        }
+      },
+      "goals": {
+        "突破核心防线": 61,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5600
+    },
+    {
+      "time": 76.85,
+      "stats": {
+        "deployed": 332,
+        "kills": 39,
+        "lost": 234,
+        "income": 2332,
+        "walls": 14,
+        "skills": 5,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 10,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 7,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 98,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 77,
+          "assignments": 2470,
+          "fieldBuilds": 230,
+          "componentBuilds": 23
+        }
+      },
+      "goals": {
+        "突破核心防线": 61,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5600
+    },
+    {
+      "time": 79.08,
+      "stats": {
+        "deployed": 332,
+        "kills": 41,
+        "lost": 234,
+        "income": 2340,
+        "walls": 14,
+        "skills": 6,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 10,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 7,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 98,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 80,
+          "assignments": 2544,
+          "fieldBuilds": 230,
+          "componentBuilds": 23
+        }
+      },
+      "goals": {
+        "突破核心防线": 61,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5600
+    },
+    {
+      "time": 81.28,
+      "stats": {
+        "deployed": 332,
+        "kills": 42,
+        "lost": 234,
+        "income": 2341,
+        "walls": 14,
+        "skills": 6,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 10,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 7,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 98,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 82,
+          "assignments": 2581,
+          "fieldBuilds": 230,
+          "componentBuilds": 23
+        }
+      },
+      "goals": {
+        "突破核心防线": 61,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5600
+    },
+    {
+      "time": 83.52,
+      "stats": {
+        "deployed": 332,
+        "kills": 43,
+        "lost": 237,
+        "income": 2342,
+        "walls": 15,
+        "skills": 7,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 11,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 8,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 95,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 84,
+          "assignments": 2618,
+          "fieldBuilds": 234,
+          "componentBuilds": 24
+        }
+      },
+      "goals": {
+        "突破核心防线": 58,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5600
+    },
+    {
+      "time": 85.67,
+      "stats": {
+        "deployed": 332,
+        "kills": 43,
+        "lost": 237,
+        "income": 2342,
+        "walls": 15,
+        "skills": 7,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 11,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 8,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 95,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 86,
+          "assignments": 2655,
+          "fieldBuilds": 234,
+          "componentBuilds": 24
+        }
+      },
+      "goals": {
+        "突破核心防线": 58,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5600
+    },
+    {
+      "time": 87.83,
+      "stats": {
+        "deployed": 332,
+        "kills": 43,
+        "lost": 261,
+        "income": 2342,
+        "walls": 15,
+        "skills": 7,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 12,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 8,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 71,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 88,
+          "assignments": 2692,
+          "fieldBuilds": 234,
+          "componentBuilds": 24
+        }
+      },
+      "goals": {
+        "突破核心防线": 34,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5600
+    },
+    {
+      "time": 89.98,
+      "stats": {
+        "deployed": 332,
+        "kills": 43,
+        "lost": 261,
+        "income": 2342,
+        "walls": 16,
+        "skills": 7,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 12,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 9,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 71,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 90,
+          "assignments": 2729,
+          "fieldBuilds": 238,
+          "componentBuilds": 25
+        }
+      },
+      "goals": {
+        "突破核心防线": 34,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5600
+    },
+    {
+      "time": 92.2,
+      "stats": {
+        "deployed": 332,
+        "kills": 43,
+        "lost": 262,
+        "income": 2382,
+        "walls": 16,
+        "skills": 7,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 13,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 10,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 70,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 92,
+          "assignments": 2774,
+          "fieldBuilds": 241,
+          "componentBuilds": 26
+        }
+      },
+      "goals": {
+        "突破核心防线": 33,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5600
+    },
+    {
+      "time": 94.47,
+      "stats": {
+        "deployed": 332,
+        "kills": 43,
+        "lost": 262,
+        "income": 2382,
+        "walls": 16,
+        "skills": 8,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 13,
+          "core": 0
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 10,
+          "core": 0
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 70,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 95,
+          "assignments": 2813,
+          "fieldBuilds": 241,
+          "componentBuilds": 26
+        }
+      },
+      "goals": {
+        "突破核心防线": 33,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5600
+    },
+    {
+      "time": 96.65,
+      "stats": {
+        "deployed": 332,
+        "kills": 43,
+        "lost": 262,
+        "income": 2382,
+        "walls": 17,
+        "skills": 8,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 13,
+          "core": 1
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 10,
+          "core": 1
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 70,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 97,
+          "assignments": 2846,
+          "fieldBuilds": 255,
+          "componentBuilds": 27
+        }
+      },
+      "goals": {
+        "中央圣晶决战": 33,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5600
+    },
+    {
+      "time": 99.57,
+      "stats": {
+        "deployed": 332,
+        "kills": 46,
+        "lost": 262,
+        "income": 2385,
+        "walls": 18,
+        "skills": 8,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 13,
+          "core": 2
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 10,
+          "core": 2
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 70,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 100,
+          "assignments": 2846,
+          "fieldBuilds": 262,
+          "componentBuilds": 28
+        }
+      },
+      "goals": {
+        "中央圣晶决战": 33,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5600
+    },
+    {
+      "time": 101.7,
+      "stats": {
+        "deployed": 332,
+        "kills": 47,
+        "lost": 263,
+        "income": 2389,
+        "walls": 18,
+        "skills": 8,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 0,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 13,
+          "core": 3
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 10,
+          "core": 2
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 69,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 102,
+          "assignments": 2846,
+          "fieldBuilds": 262,
+          "componentBuilds": 28
+        }
+      },
+      "goals": {
+        "中央圣晶决战": 32,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5600
+    },
+    {
+      "time": 103.88,
+      "stats": {
+        "deployed": 332,
+        "kills": 49,
+        "lost": 265,
+        "income": 2397,
+        "walls": 18,
+        "skills": 8,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 1,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 13,
+          "core": 5
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 10,
+          "core": 2
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 67,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 104,
+          "assignments": 2846,
+          "fieldBuilds": 264,
+          "componentBuilds": 28
+        }
+      },
+      "goals": {
+        "中央圣晶决战": 30,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5600
+    },
+    {
+      "time": 106.3,
+      "stats": {
+        "deployed": 344,
+        "kills": 49,
+        "lost": 265,
+        "income": 2437,
+        "walls": 18,
+        "skills": 8,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 1,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 13,
+          "core": 7
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 10,
+          "core": 3
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 79,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 106,
+          "assignments": 2858,
+          "fieldBuilds": 268,
+          "componentBuilds": 29
+        }
+      },
+      "goals": {
+        "中央圣晶决战": 42,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5600
+    },
+    {
+      "time": 108.47,
+      "stats": {
+        "deployed": 344,
+        "kills": 50,
+        "lost": 275,
+        "income": 2441,
+        "walls": 19,
+        "skills": 8,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 1,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 13,
+          "core": 8
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 11,
+          "core": 3
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 69,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 108,
+          "assignments": 2858,
+          "fieldBuilds": 277,
+          "componentBuilds": 30
+        }
+      },
+      "goals": {
+        "中央圣晶决战": 32,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5600
+    },
+    {
+      "time": 110.58,
+      "stats": {
+        "deployed": 344,
+        "kills": 50,
+        "lost": 282,
+        "income": 2441,
+        "walls": 19,
+        "skills": 8,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 1,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 13,
+          "core": 10
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 11,
+          "core": 3
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 62,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 110,
+          "assignments": 2884,
+          "fieldBuilds": 277,
+          "componentBuilds": 30
+        }
+      },
+      "goals": {
+        "中央圣晶决战": 25,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5600
+    },
+    {
+      "time": 112.68,
+      "stats": {
+        "deployed": 344,
+        "kills": 52,
+        "lost": 287,
+        "income": 2443,
+        "walls": 19,
+        "skills": 8,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 1,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 13,
+          "core": 12
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 11,
+          "core": 3
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 57,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 113,
+          "assignments": 2884,
+          "fieldBuilds": 279,
+          "componentBuilds": 30
+        }
+      },
+      "goals": {
+        "中央圣晶决战": 20,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5600
+    },
+    {
+      "time": 114.8,
+      "stats": {
+        "deployed": 344,
+        "kills": 52,
+        "lost": 290,
+        "income": 2443,
+        "walls": 19,
+        "skills": 8,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 1,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 13,
+          "core": 13
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 11,
+          "core": 3
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 54,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 115,
+          "assignments": 2884,
+          "fieldBuilds": 279,
+          "componentBuilds": 30
+        }
+      },
+      "goals": {
+        "中央圣晶决战": 17,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5600
+    },
+    {
+      "time": 116.92,
+      "stats": {
+        "deployed": 344,
+        "kills": 52,
+        "lost": 292,
+        "income": 2443,
+        "walls": 19,
+        "skills": 8,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 1,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 13,
+          "core": 15
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 11,
+          "core": 3
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 52,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 117,
+          "assignments": 2884,
+          "fieldBuilds": 279,
+          "componentBuilds": 30
+        }
+      },
+      "goals": {
+        "中央圣晶决战": 15,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5600
+    },
+    {
+      "time": 119.03,
+      "stats": {
+        "deployed": 344,
+        "kills": 52,
+        "lost": 292,
+        "income": 2443,
+        "walls": 19,
+        "skills": 8,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 1,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 13,
+          "core": 17
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 11,
+          "core": 3
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 52,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 119,
+          "assignments": 2884,
+          "fieldBuilds": 279,
+          "componentBuilds": 30
+        }
+      },
+      "goals": {
+        "中央圣晶决战": 15,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5600
+    },
+    {
+      "time": 121.13,
+      "stats": {
+        "deployed": 344,
+        "kills": 52,
+        "lost": 292,
+        "income": 2443,
+        "walls": 19,
+        "skills": 8,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 1,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 13,
+          "core": 18
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 11,
+          "core": 3
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 52,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 121,
+          "assignments": 2884,
+          "fieldBuilds": 279,
+          "componentBuilds": 30
+        }
+      },
+      "goals": {
+        "中央圣晶决战": 15,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5600
+    },
+    {
+      "time": 123.28,
+      "stats": {
+        "deployed": 344,
+        "kills": 52,
+        "lost": 292,
+        "income": 2443,
+        "walls": 19,
+        "skills": 8,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 2,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 13,
+          "core": 20
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 11,
+          "core": 3
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 52,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 123,
+          "assignments": 2958,
+          "fieldBuilds": 280,
+          "componentBuilds": 30
+        }
+      },
+      "goals": {
+        "中央圣晶决战": 15,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5600
+    },
+    {
+      "time": 125.42,
+      "stats": {
+        "deployed": 344,
+        "kills": 53,
+        "lost": 292,
+        "income": 2444,
+        "walls": 20,
+        "skills": 8,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 2,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 13,
+          "core": 22
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 12,
+          "core": 3
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 52,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 125,
+          "assignments": 2995,
+          "fieldBuilds": 282,
+          "componentBuilds": 31
+        }
+      },
+      "goals": {
+        "中央圣晶决战": 15,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5600
+    },
+    {
+      "time": 127.53,
+      "stats": {
+        "deployed": 344,
+        "kills": 53,
+        "lost": 292,
+        "income": 2444,
+        "walls": 20,
+        "skills": 8,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 2,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 13,
+          "core": 24
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 12,
+          "core": 3
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 52,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 127,
+          "assignments": 3028,
+          "fieldBuilds": 283,
+          "componentBuilds": 31
+        }
+      },
+      "goals": {
+        "中央圣晶决战": 15,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5589.2
+    },
+    {
+      "time": 129.68,
+      "stats": {
+        "deployed": 344,
+        "kills": 54,
+        "lost": 293,
+        "income": 2448,
+        "walls": 20,
+        "skills": 8,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 2,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 13,
+          "core": 24
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 12,
+          "core": 3
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 51,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 129,
+          "assignments": 3028,
+          "fieldBuilds": 286,
+          "componentBuilds": 31
+        }
+      },
+      "goals": {
+        "中央圣晶决战": 14,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5567.599999999999
+    },
+    {
+      "time": 131.85,
+      "stats": {
+        "deployed": 344,
+        "kills": 54,
+        "lost": 295,
+        "income": 2448,
+        "walls": 21,
+        "skills": 8,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 2,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 13,
+          "core": 25
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 12,
+          "core": 4
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 49,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 131,
+          "assignments": 3028,
+          "fieldBuilds": 293,
+          "componentBuilds": 32
+        }
+      },
+      "goals": {
+        "中央圣晶决战": 12,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5344.7999999999965
+    },
+    {
+      "time": 133.97,
+      "stats": {
+        "deployed": 344,
+        "kills": 54,
+        "lost": 296,
+        "income": 2488,
+        "walls": 21,
+        "skills": 8,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 2,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 13,
+          "core": 27
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 12,
+          "core": 5
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 48,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 134,
+          "assignments": 3102,
+          "fieldBuilds": 295,
+          "componentBuilds": 33
+        }
+      },
+      "goals": {
+        "中央圣晶决战": 11,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5344.7999999999965
+    },
+    {
+      "time": 136.13,
+      "stats": {
+        "deployed": 344,
+        "kills": 54,
+        "lost": 296,
+        "income": 2488,
+        "walls": 21,
+        "skills": 8,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 2,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 13,
+          "core": 27
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 12,
+          "core": 5
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 48,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 136,
+          "assignments": 3102,
+          "fieldBuilds": 299,
+          "componentBuilds": 33
+        }
+      },
+      "goals": {
+        "中央圣晶决战": 11,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5344.7999999999965
+    },
+    {
+      "time": 138.3,
+      "stats": {
+        "deployed": 344,
+        "kills": 55,
+        "lost": 297,
+        "income": 2492,
+        "walls": 21,
+        "skills": 8,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 2,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 13,
+          "core": 29
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 12,
+          "core": 5
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 47,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 138,
+          "assignments": 3102,
+          "fieldBuilds": 302,
+          "componentBuilds": 33
+        }
+      },
+      "goals": {
+        "中央圣晶决战": 10,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 5245.999999999995
+    },
+    {
+      "time": 140.42,
+      "stats": {
+        "deployed": 344,
+        "kills": 56,
+        "lost": 301,
+        "income": 2496,
+        "walls": 21,
+        "skills": 8,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 2,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 13,
+          "core": 31
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 12,
+          "core": 5
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 43,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 140,
+          "assignments": 3138,
+          "fieldBuilds": 303,
+          "componentBuilds": 33
+        }
+      },
+      "goals": {
+        "中央圣晶决战": 6,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 4587.919999999989
+    },
+    {
+      "time": 142.52,
+      "stats": {
+        "deployed": 344,
+        "kills": 56,
+        "lost": 301,
+        "income": 2496,
+        "walls": 21,
+        "skills": 8,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 2,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 13,
+          "core": 33
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 12,
+          "core": 5
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 43,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 142,
+          "assignments": 3149,
+          "fieldBuilds": 303,
+          "componentBuilds": 33
+        }
+      },
+      "goals": {
+        "中央圣晶决战": 6,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 3765.6799999999816
+    },
+    {
+      "time": 144.62,
+      "stats": {
+        "deployed": 344,
+        "kills": 56,
+        "lost": 301,
+        "income": 2496,
+        "walls": 21,
+        "skills": 8,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 2,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 13,
+          "core": 34
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 12,
+          "core": 5
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 43,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 144,
+          "assignments": 3149,
+          "fieldBuilds": 303,
+          "componentBuilds": 33
+        }
+      },
+      "goals": {
+        "中央圣晶决战": 6,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 2759.2799999999734
+    },
+    {
+      "time": 146.72,
+      "stats": {
+        "deployed": 344,
+        "kills": 56,
+        "lost": 301,
+        "income": 2496,
+        "walls": 21,
+        "skills": 8,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 2,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 13,
+          "core": 36
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 12,
+          "core": 5
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 43,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 146,
+          "assignments": 3149,
+          "fieldBuilds": 303,
+          "componentBuilds": 33
+        }
+      },
+      "goals": {
+        "中央圣晶决战": 6,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 1721.9199999999694
+    },
+    {
+      "time": 148.82,
+      "stats": {
+        "deployed": 344,
+        "kills": 56,
+        "lost": 301,
+        "income": 2496,
+        "walls": 21,
+        "skills": 8,
+        "peak": 265,
+        "resourceIncome": 1720,
+        "spells": 0,
+        "lootSites": 3,
+        "reliefTransfers": 12,
+        "guardianBursts": 2,
+        "towerShots": {
+          "field": 0,
+          "outer": 20,
+          "inner": 13,
+          "core": 38
+        },
+        "destroyed": {
+          "field": 2,
+          "outer": 13,
+          "inner": 12,
+          "core": 5
+        }
+      },
+      "automatic": {
+        "enabled": true,
+        "command": "assault",
+        "automatic": 43,
+        "manual": 0,
+        "muster": {
+          "x": 250,
+          "y": 900
+        },
+        "advice": "重要防线已打通 · 可集结援军或提前总攻",
+        "metrics": {
+          "updates": 148,
+          "assignments": 3149,
+          "fieldBuilds": 303,
+          "componentBuilds": 33
+        }
+      },
+      "goals": {
+        "中央圣晶决战": 6,
+        "跟随主力、保护治疗": 37
+      },
+      "core": 802.3199999999722
+    }
+  ],
+  "purchases": 19,
+  "casts": 8,
+  "forward": 10,
+  "pass": true
+}

@@ -1,6 +1,6 @@
-# V3.2 需求追溯与验收矩阵
+# V4.0 需求追溯与验收矩阵
 
-2026-10-24。以下V3表为3.0历史证据；当前增量与回归见本页V3.1表及v3.1/REPORT。V2旧矩阵原样归档archive/v2，旧测试未冒充V3测试。模型测试为tests/v3.test.ts，真实结果位于v3目录；浏览器操作脚本从当前生产构建启动。
+2026-10-24。当前增量与回归见本页V4表及v4.0/REPORT。以下V3、V3.1、V3.2表保留历史证据；V2旧矩阵原样归档archive/v2。当前模型测试包含tests/legion.test.ts及原100项回归，真实浏览器结果单独保存v4.0；浏览器脚本从实际生产构建启动。
 
 | 需求 | 实现 | 实际验证/证据 |
 |---|---|---|
@@ -37,7 +37,7 @@
 | V31-FR06 | tactical-simulate/tactical-browser | 两种普通阵容胜例、困难直推/掠夺比较；真实通关/超时/重开 |
 | 性能与发布回归 | tactical-performance/verify-release | 当前报告与生产19文件指纹；旧3.0记录不冒充3.1 |
 
-## V3.2 当前增量证据
+## V3.2 历史增量证据
 
 | 需求 | 代码 | 当前实测 |
 |---|---|---|
@@ -45,3 +45,16 @@
 | V32-FR02 | damage/projectiles/threatTarget/move | 实际箭手/塔弹触发、邻队支援、反击归位、路线/集火恢复及局部边界 |
 | V32-FR03 | DeploymentStream/app | 实际长按1.2秒只下20、3批60、原生拖放20、Shift不全下、勾选连下/松开停止 |
 | V32-FR04 | smart-*.mjs | v3.2独立JSON、截图、生产战役/性能与公开发布哈希核验 |
+
+## V4 最新增量
+
+| 需求 | 实现 | 证据 |
+|---|---|---|
+| V4-F01 | spawn/admit/legion/update/chooseLegionTarget | UNIT_RESULTS默认自动；ORDERS_BROWSER无命令部署即前进与资源收入 |
+| V4-F02 | 角色目标、可达组件、airUnsafe、精灵/树人 | 资源、巨人破墙与已有缺口、狼/精灵/树人/飞行风险用例及真实战役 |
+| V4-F03 | issueLegion/commands/安全模式导航 | 四按钮/全军/所选UI；四向48狼实汇合，零破墙；总攻与完整通关 |
+| V4-F04 | control/manual ownership | 手动路线跨全军命令不变、模式切换/显式交回/所选只改所选 |
+| V4-F05 | committedBreaches/保留资源目标/walkIndex | 首轮37/48失败→修复48/48；已开缺口替换无关墙 |
+| V4-F06 | 经济/技能独立接口 | 零自动施法/无自动扣款/有限批数/300队列；性能期间skills/spells=0 |
+| V4-F07 | 每秒规划/局部索引/共享连通和路径 | 连续召唤不重启全图规划用例；300扫荡/掠夺/总攻真实采样 |
+| V4-F08 | legion-* scripts / verify-release | v4.0独立原始结果与截图，旧3.x只作历史 |

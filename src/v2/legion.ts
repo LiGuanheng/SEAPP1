@@ -56,6 +56,14 @@ export class LegionDirector {
   invalidate() {
     this.nextUpdate = 0;
   }
+  admit(u: Unit) {
+    if (u.control !== "auto") return;
+    if (!this.plans.size) {
+      this.invalidate();
+      return;
+    }
+    this.assign(u);
+  }
   stance(u: Unit) {
     return u.tactic ?? this.command;
   }
@@ -65,6 +73,15 @@ export class LegionDirector {
       for (let x = Math.floor((p.x - r) / 320); x <= Math.floor((p.x + r) / 320); x++)
         for (const s of this.localCells.get(`${x},${y}`) ?? []) if (s.hp > 0) found.add(s);
     return [...found];
+  }
+  airUnsafe(u: Unit, p: Point) {
+    return this.towers.some(
+      (s) =>
+        s.kind === "antiAir" &&
+        s.hp / s.maxHp >= 0.35 &&
+        (d(s, p) < towerRange(s) + 75 || segmentDistance(s, u, p) < towerRange(s) + 60) &&
+        this.allies.filter((v) => !v.flying && d(v, s) < 320).length < 5,
+    );
   }
   groundApproach(s: Structure, from: Point): Point | undefined {
     return [
@@ -94,7 +111,7 @@ export class LegionDirector {
     return !this.b.structures.some(
       (s) =>
         s.hp > 0 &&
-        ["arrow", "cannon", "holy", "crystal"].includes(s.kind) &&
+        ["arrow", "cannon", "holy", "crystal", "antiAir"].includes(s.kind) &&
         d(s, p) < towerRange(s) + 50 &&
         this.b.nav.clear(s, p, s.id, 0, {
           district: s.district,
@@ -118,7 +135,6 @@ export class LegionDirector {
   private breach(front: Front, district: "outer" | "inner" | "core", lane: number) {
     const key = `${front}:${district}:${lane}`,
       committed = this.committedBreaches.get(key);
-    if (committed && committed.hp > 0) return committed;
     const gate = this.gateMap.get(`${district}:${front}`)!;
     let choices = this.b.structures.filter(
       (s) =>
@@ -128,6 +144,7 @@ export class LegionDirector {
         d(s, gate) < 540,
     );
     const opened = choices.filter((s) => s.hp <= 0);
+    if (committed && committed.hp > 0 && !opened.length) return committed;
     if (opened.length) choices = opened;
     const score = (s: Structure) =>
       d(s, gate) * 0.35 +
@@ -427,20 +444,27 @@ export class LegionDirector {
     if (managed.some((u) => this.stance(u) === "rally") && b.time >= this.nextDanger) {
       this.nextDanger = b.time + 3;
       b.nav.setDanger([
-        ...this.towers
-          .filter((s) => s.kind !== "antiAir")
-          .map((s) => ({ ...s, radius: towerRange(s) + 50, weight: 25 })),
+        ...this.towers.map((s) => ({ ...s, radius: towerRange(s) + 50, weight: 25 })),
         ...enemies.map((e) => ({ ...e, radius: e.range + 100, weight: 8 })),
       ]);
     }
     for (const u of managed) this.assign(u);
+    const gathering = managed.filter((u) => this.stance(u) === "rally"),
+      arrived = gathering.filter(
+        (u) => u.autoGoal && !u.autoGoal.blocked && d(u, u.autoGoal) < 45,
+      ).length,
+      blocked = gathering.filter((u) => u.autoGoal?.blocked).length;
     this.advice =
       b.remaining < 180
         ? "时间将尽 · 建议准备最终总攻（不会自动花钱或施法）"
-        : [...this.plans.values()].some((p) => p.phase >= 2)
-          ? "重要防线已打通 · 可集结援军或提前总攻"
-          : b.money >= 600
-            ? "物资充足 · 可购买援军，从安全前线继续部署"
-            : "自动分路推进 · 主动技能仍由你掌控";
+        : gathering.length
+          ? `安全集结 ${arrived}/${gathering.length}${blocked ? ` · ${blocked}支暂待通路` : ""} · 可随时发动总攻`
+          : managed.some((u) => u.autoGoal?.kind === "air-cover")
+            ? "空中军团正在规避防空 · 建议地面部队协同压制"
+            : [...this.plans.values()].some((p) => p.phase >= 2)
+              ? "重要防线已打通 · 可集结援军或提前总攻"
+              : b.money >= 600
+                ? "物资充足 · 可购买援军，从安全前线继续部署"
+                : "自动分路推进 · 主动技能仍由你掌控";
   }
 }

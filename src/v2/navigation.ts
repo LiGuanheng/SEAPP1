@@ -158,9 +158,9 @@ export class Navigation {
         )
           if (Math.hypot((x + 0.5) * CELL - s.x, (y + 0.5) * CELL - s.y) < s.radius)
             this.danger[y * W + x] += s.weight;
-    for (const k of this.fields.keys()) if (k.endsWith(":safe")) this.fields.delete(k);
+    for (const k of this.fields.keys()) if (k.endsWith("safe")) this.fields.delete(k);
   }
-  field(x: number, y: number, defender: boolean | "safe" = false) {
+  field(x: number, y: number, defender: boolean | "safe" | "air-safe" = false) {
     const target = this.index(x, y),
       key = `${target}:${defender}`;
     let f = this.fields.get(key);
@@ -217,15 +217,17 @@ export class Navigation {
         if (nx < 0 || ny < 0 || nx >= W || ny >= H) continue;
         const ni = ny * W + nx,
           cost =
-            defender === "safe"
-              ? this.solids[ni]
-                ? Infinity
-                : 1 + this.danger[ni]
-              : defender
-                ? this.buckets.get(ni)?.some((o) => o.kind !== "gate")
-                  ? 1000
-                  : 1
-                : this.costs[ni],
+            defender === "air-safe"
+              ? 1 + this.danger[ni]
+              : defender === "safe"
+                ? this.solids[ni]
+                  ? Infinity
+                  : 1 + this.danger[ni]
+                : defender
+                  ? this.buckets.get(ni)?.some((o) => o.kind !== "gate")
+                    ? 1000
+                    : 1
+                  : this.costs[ni],
           nd = d + cost * (dx && dy ? 1.414 : 1);
         if (
           defender === "safe" &&
@@ -249,7 +251,7 @@ export class Navigation {
     y: number,
     tx: number,
     ty: number,
-    defender: boolean | "safe" = false,
+    defender: boolean | "safe" | "air-safe" = false,
   ): Point {
     const f = this.field(tx, ty, defender),
       i = defender === "safe" ? this.walkIndex({ x, y }) : this.index(x, y),

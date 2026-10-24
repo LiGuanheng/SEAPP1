@@ -1,8 +1,16 @@
-# V3.2 当前测试
+# V4.0 当前测试
+
+当前报告见[v4.0/REPORT.md](v4.0/REPORT.md)。新增智能军团角色、所有权、可达资源/安全集结、墙角与防空风险、共享规划等用例，原待命条款明确在手动模式验证；旧测试不冒充新默认。真实浏览器从菜单、购买、部署、四军团命令与手动技能完成战斗，不覆盖生命/资金/胜利状态。
+
+脚本legion-orders-browser、legion-campaign-browser和legion-performance组成当前test:e2e；legion-simulate为合法预算少操作模型样本。局部隔离测试不是完整通关，模型快进不是真人实时盲测。首次真实集结失败数据保留，最终结果以v4.0为准。
+
+---
+
+# V3.2 历史测试
 
 本轮100项模型测试，真实交互与战役/性能结果见[v3.2/REPORT.md](v3.2/REPORT.md)。增加自主清场、真实受袭和塔弹来源、队友反击/归位、精确批数及显式连投。旧路径测试曾无意依赖附近不攻击的资源和部署点不反击，现为纯路点/队列测试隔离敌军及无关建筑；完整战役保持真实地图、资金和伤害。
 
-当前npm run test:e2e运行smart-orders-browser、smart-campaign-browser、smart-performance；npm run sim结果写v3.2，verify-release核对3.2版本与所有发布文件。旧3.1/3.0报告留存为历史，不能冒充当前结果。
+V3.2当时的test:e2e运行smart-orders-browser、smart-campaign-browser、smart-performance；sim结果写v3.2，verify-release核对3.2版本与所有发布文件。当前入口已升级V4；以下旧报告留存为历史，不能冒充当前结果。
 
 ---
 

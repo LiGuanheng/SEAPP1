@@ -128,10 +128,29 @@ describe("4.0 intelligent legion ownership and commands", () => {
     const us = Array.from({ length: 12 }, (_, i) => b.spawn("golem", 300, 1700 + i * 8));
     run(b, 0.1);
     expect(us.some((u) => u.autoGoal?.kind === "breach")).toBe(true);
-    const old = us[0].autoGoal!.target;
+    const targets = new Set(us.map((u) => u.autoGoal!.target));
     run(b, 35);
-    expect(b.byId.get(old)!.hp).toBe(0);
+    expect([...targets].some((id) => b.byId.get(id)!.hp === 0)).toBe(true);
     expect(us.some((u) => u.x > 650)).toBe(true);
+  });
+  it("an opened neighboring gap replaces an unnecessary intact-wall objective", () => {
+    const b = new Battle(createLoadout()),
+      u = b.spawn("golem", 250, 1800);
+    run(b, 0.1);
+    const old = b.byId.get(u.autoGoal!.target)!;
+    const gap = b.structures.find(
+      (s) =>
+        s.kind === "wall" &&
+        s.district === "outer" &&
+        s.front === "west" &&
+        s.id !== old.id &&
+        Math.hypot(s.x - old.x, s.y - old.y) < 350,
+    )!;
+    b.damage(gap, gap.hp);
+    b.legion.invalidate();
+    run(b, 1.1);
+    expect(u.autoGoal?.target).not.toBe(old.id);
+    expect(old.hp).toBeGreaterThan(0);
   });
   it("elf target choice favors a nearby enemy cluster and never casts its active skill", () => {
     const b = empty(),
@@ -169,6 +188,7 @@ describe("4.0 intelligent legion ownership and commands", () => {
     run(b, 0.1);
     expect(u.autoGoal?.kind).toBe("air-cover");
     expect(u.autoGoal?.target).toBe(0);
+    expect(b.legion.advice).toContain("防空");
   });
   it("strategic scans are throttled and component/path data are shared", () => {
     const b = empty();
@@ -179,6 +199,16 @@ describe("4.0 intelligent legion ownership and commands", () => {
     expect(spy).toHaveBeenCalled();
     expect(b.legion.metrics.updates).toBeLessThanOrEqual(4);
     expect(b.nav.metrics.componentBuilds).toBeLessThanOrEqual(3);
+  });
+  it("continuous summoning does not restart a whole-map planning pass for every new unit", () => {
+    const l = createLoadout();
+    purchase(l, "slime", Infinity);
+    const b = new Battle(l);
+    b.deploy("slime", 1050, 3430, Infinity);
+    run(b, 5);
+    expect(b.active).toBe(300);
+    expect(b.legion.metrics.updates).toBeLessThanOrEqual(7);
+    expect(b.units.filter((u) => u.side === 0).every((u) => u.autoGoal)).toBe(true);
   });
   it("four-front rally crosses real fortress corners without breaking walls or leaving a squad behind", () => {
     const l = createLoadout();
@@ -199,6 +229,15 @@ describe("4.0 intelligent legion ownership and commands", () => {
     const units = b.units.filter((u) => u.side === 0 && u.hp > 0);
     expect(units).toHaveLength(48);
     expect(units.every((u) => Math.hypot(u.x - 250, u.y - 900) < 205)).toBe(true);
+    expect(b.stats.walls).toBe(0);
+  });
+  it("an unsupported flyer uses a safe aerial rally corridor instead of crossing the anti-air district", () => {
+    const b = new Battle(createLoadout()),
+      u = b.spawn("wyvern", 3750, 850);
+    expect(b.issueLegion("rally", undefined, { x: 250, y: 900 })).toBe("");
+    run(b, 80);
+    expect(Math.hypot(u.x - 250, u.y - 900)).toBeLessThan(205);
+    expect(u.hp).toBe(u.maxHp);
     expect(b.stats.walls).toBe(0);
   });
   it("wolves favor nearby fragile back-line units over a heavy knight", () => {

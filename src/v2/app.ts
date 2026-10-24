@@ -551,10 +551,10 @@ function updateHud() {
   for (const el of document.querySelectorAll<HTMLElement>('[data-action="legion"]'))
     el.classList.toggle("active", el.dataset.key === current);
   $("#halt-command").toggleAttribute("disabled", members.length === 0);
-  const travelling = members.filter((u) => u.order?.type === "move").length,
-    waiting = members.filter((u) => u.order?.type === "hold").length;
+  const travelling = members.filter((u) => u.control === "auto").length,
+    waiting = members.filter((u) => u.control === "manual").length;
   $("#selection-label").textContent = members.length
-    ? `已选${members.length} · 行进${travelling} / 待命${waiting}`
+    ? `已选${members.length} · 自动${travelling} / 手动任务${waiting}`
     : armyMode === "field"
       ? "框选部队，或点兵种选同类"
       : "新兵默认自动扫荡 · 主动技能由你掌控";
@@ -790,7 +790,10 @@ function bindBattleInput() {
       } else if (r.mode.type === "muster") {
         const error = b.issueLegion("rally", pendingMuster, p);
         notice(error || "军团正在向安全集结点汇合");
-        if (!error) r.mode = { type: "none" };
+        if (!error) {
+          r.mode = { type: "none" };
+          r.focus(p.x, p.y, 0.65);
+        }
       } else if (r.mode.type === "rally") {
         if (!b.canDeploy(p.x, p.y)) notice("集结点必须在合法部署区");
         else {
@@ -1065,7 +1068,7 @@ function showHelp() {
   const div = document.createElement("div");
   div.id = "help-modal";
   div.className = "modal";
-  div.innerHTML = `<section class="manual"><button class="close" data-action="close-help">×</button><span class="eyebrow">FIELD MANUAL</span><h2>让每一支军团，抵达该去的战场。</h2><div class="manual-grid"><div><h3>01 / 部署与经济</h3><p>购买只扣一次魔晶，兵力进入库存。可从东南西北四面出兵。每次部署默认1批，可选1/3/5/10批。点击、拖放、快速出兵均严格按所选批数扣库存。普通长按也只下一次；明确勾选“长按连下”后，按住600毫秒开始，每500毫秒下所选批数。Shift不再隐式全下；只有明确选择全部库存或全军按钮才会全下。拖放仍可用，300只以外的兵力保留在队列。</p><h3>02 / 指挥</h3><p>部署后原地待命。左键点选/框选，双击选择同类；底栏切换战场选兵后，点卡片选择全场同类，Shift追加。按住右键拖画行军轨迹，Shift+右键追加路点；单击敌人则集火。轨迹是大致进攻方向，部队会自主清理周边守军与各种可攻击建筑（包括城区建筑），优先级只影响先后。受到守军或炮塔攻击时，会与附近友军一起反击，再继续原命令；清完终点附近威胁后停留警戒。S停止推进，仍会自卫。A全选，Tab切换底栏，Ctrl+1/2/3存编队，1/2/3选编队。全军自动进攻是明确命令，后续新部署仍待命。中键拖镜头，滚轮缩放，小地图定位。</p></div><div><h3>03 / 英雄与技能</h3><p>魔王F，统帅按招募顺序Q/W/E/R。先把英雄拖到合法区域，再按技能键，瞄准后左键确认。技能有距离和冷却；Esc取消。巨王必须指定可见墙段，龙息是扇形。通用魔王法术用Z/X/C/V或拖放图标：狂暴/治疗/守护/陨星，消耗随时间恢复的魔力，需要附近友军提供无遮挡视野。</p><h3>04 / 胜利之路</h3><p>核心节奏：外城掠夺→购买援军→拆城防/占前线→内城决战。资源设施奖励360–600魔晶，掠夺者击毁另加90。各方向守军可沿道路支援，核心有日轮守护骑士与精锐守军，注意护盾和震荡。无需清空所有资源；摧毁中央日轮圣晶即可胜利。巨人破侧墙，狼骑猎杀射手，地面拆防空后飞龙进军。四个前线据点需打通地面、清除守军、站稳8秒，随后+200魔晶并可就地部署援军。掠夺者对资源设施伤害×3且击毁额外+90；精灵范围魔法必须保护好。</p></div></div><p class="manual-footer">空格暂停，暂停时计时和技能冷却停止；2×同时加快战斗和倒计时。击杀、拆塔和占领奖励只有一次；内城预备队开局已存在，数量有限，沿城门与道路增援。魔王阵亡仍可战斗；时间耗尽或彻底力竭则失败。</p><button class="primary" data-action="close-help">明白了，准备出征 →</button></section>`;
+  div.innerHTML = `<section class="manual"><button class="close" data-action="close-help">×</button><span class="eyebrow">FIELD MANUAL</span><h2>让每一支军团，抵达该去的战场。</h2><div class="manual-grid"><div><h3>01 / 部署与经济</h3><p>购买只扣一次魔晶，兵力进入库存。可从东南西北四面出兵。每次部署默认1批，可选1/3/5/10批。点击、拖放、快速出兵均严格按所选批数扣库存。普通长按也只下一次；明确勾选“长按连下”后，按住600毫秒开始，每500毫秒下所选批数。Shift不再隐式全下；只有明确选择全部库存或全军按钮才会全下。拖放仍可用，300只以外的兵力保留在队列。</p><h3>02 / 指挥</h3><p>默认部署后自动扫荡、分路索敌和推进；手动指挥模式的新兵待命。左键点选/框选，双击选择同类；底栏切换战场选兵后，点卡片选择全场同类，Shift追加。按住右键拖画行军轨迹，Shift+右键追加路点；单击敌人则集火。轨迹是大致进攻方向，部队会自主清理周边守军与各种可攻击建筑（包括城区建筑），优先级只影响先后。受到守军或炮塔攻击时，会与附近友军一起反击，再继续原命令；清完终点附近威胁后停留警戒。S停止推进，仍会自卫。A全选，Tab切换底栏，Ctrl+1/2/3存编队，1/2/3选编队。底栏有自动扫荡、优先掠夺、集结待命、最终总攻。全军命令只作用于未接手动任务的军队；切换范围到仅所选部队可以明确更改选中任务，所选交回自动可恢复AI。集结需点己方安全位置，部队实际沿路汇合；总攻可随时发动，无需全清资源。中键拖镜头，滚轮缩放，小地图定位。</p></div><div><h3>03 / 英雄与技能</h3><p>魔王F，统帅按招募顺序Q/W/E/R。先把英雄拖到合法区域，再按技能键，瞄准后左键确认。技能有距离和冷却；Esc取消。巨王必须指定可见墙段，龙息是扇形。通用魔王法术用Z/X/C/V或拖放图标：狂暴/治疗/守护/陨星，消耗随时间恢复的魔力，需要附近友军提供无遮挡视野。</p><h3>04 / 胜利之路</h3><p>核心节奏：外城掠夺→购买援军→拆城防/占前线→内城决战。资源设施奖励360–600魔晶，掠夺者击毁另加90。各方向守军可沿道路支援，核心有日轮守护骑士与精锐守军，注意护盾和震荡。无需清空所有资源；摧毁中央日轮圣晶即可胜利。巨人破侧墙，狼骑猎杀射手，地面拆防空后飞龙进军。四个前线据点需打通地面、清除守军、站稳8秒，随后+200魔晶并可就地部署援军。掠夺者对资源设施伤害×3且击毁额外+90；精灵范围魔法必须保护好。</p></div></div><p class="manual-footer">空格暂停，暂停时计时和技能冷却停止；2×同时加快战斗和倒计时。击杀、拆塔和占领奖励只有一次；内城预备队开局已存在，数量有限，沿城门与道路增援。魔王阵亡仍可战斗；时间耗尽或彻底力竭则失败。规则AI不会自动购买、施放主动技能或召唤免费军队。</p><button class="primary" data-action="close-help">明白了，准备出征 →</button></section>`;
   app.append(div);
 }
 async function boot() {

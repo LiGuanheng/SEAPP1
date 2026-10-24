@@ -1,0 +1,279 @@
+{
+  "date": "2026-10-24T15:18:09.907Z",
+  "url": "http://127.0.0.1:4186/SEAPP1/",
+  "machine": {
+    "platform": "win32",
+    "logicalCores": 32,
+    "totalRamGiB": 31.71471405029297
+  },
+  "errors": [],
+  "pass": true,
+  "stable": {
+    "seconds": 10.00949999999404,
+    "frames": 724,
+    "averageFps": 72.33128527902804,
+    "p95FrameMs": 16.800000000000182,
+    "longFramesOver50ms": 1,
+    "minFriendly": 300,
+    "maxFriendly": 300,
+    "queuedStart": 7,
+    "queuedEnd": 7,
+    "deployed": 0,
+    "lost": 0,
+    "kills": 0
+  },
+  "start": {
+    "time": 13.87,
+    "remaining": 886.13,
+    "money": 710,
+    "active": 300,
+    "queued": 7,
+    "reserves": 7,
+    "crystalHp": 5600,
+    "status": "battle",
+    "outposts": [
+      {
+        "name": "南境前线",
+        "front": "south",
+        "x": 2000,
+        "y": 2770,
+        "w": 260,
+        "h": 220,
+        "progress": 0,
+        "captured": false,
+        "contested": true,
+        "connected": false
+      },
+      {
+        "name": "西境前线",
+        "front": "west",
+        "x": 950,
+        "y": 1800,
+        "w": 260,
+        "h": 220,
+        "progress": 0,
+        "captured": false,
+        "contested": false,
+        "connected": false
+      },
+      {
+        "name": "东境前线",
+        "front": "east",
+        "x": 3050,
+        "y": 1800,
+        "w": 260,
+        "h": 220,
+        "progress": 0,
+        "captured": false,
+        "contested": false,
+        "connected": false
+      },
+      {
+        "name": "北境前线",
+        "front": "north",
+        "x": 2000,
+        "y": 820,
+        "w": 260,
+        "h": 220,
+        "progress": 0,
+        "captured": false,
+        "contested": true,
+        "connected": false
+      }
+    ],
+    "stats": {
+      "deployed": 300,
+      "kills": 0,
+      "lost": 0,
+      "income": 0,
+      "walls": 0,
+      "skills": 0,
+      "peak": 300,
+      "resourceIncome": 0,
+      "spells": 0,
+      "lootSites": 0,
+      "reliefTransfers": 0,
+      "guardianBursts": 0,
+      "towerShots": {
+        "field": 0,
+        "outer": 0,
+        "inner": 0,
+        "core": 0
+      },
+      "destroyed": {
+        "field": 0,
+        "outer": 0,
+        "inner": 0,
+        "core": 0
+      }
+    },
+    "mana": 100,
+    "firstCoreHit": null,
+    "reservesDispatched": 1,
+    "automation": {
+      "enabled": false,
+      "command": "sweep",
+      "automatic": 0,
+      "manual": 0,
+      "muster": null,
+      "advice": "物资充足 · 可购买援军，从安全前线继续部署",
+      "metrics": {
+        "updates": 15,
+        "assignments": 0,
+        "fieldBuilds": 1,
+        "componentBuilds": 1
+      }
+    }
+  },
+  "autoSweep": {
+    "seconds": 10.007000000002979,
+    "frames": 702,
+    "averageFps": 70.15089437391735,
+    "p95FrameMs": 17.5,
+    "longFramesOver50ms": 2,
+    "minFriendly": 299,
+    "maxFriendly": 300,
+    "queuedStart": 7,
+    "queuedEnd": 6,
+    "deployed": 1,
+    "lost": 1,
+    "kills": 0
+  },
+  "loot": {
+    "seconds": 10.010699999999996,
+    "frames": 553,
+    "averageFps": 55.240892245297545,
+    "p95FrameMs": 27.799999999999272,
+    "longFramesOver50ms": 8,
+    "minFriendly": 285,
+    "maxFriendly": 300,
+    "queuedStart": 6,
+    "queuedEnd": 0,
+    "deployed": 6,
+    "lost": 21,
+    "kills": 3
+  },
+  "assault": {
+    "seconds": 10.004900000000001,
+    "frames": 802,
+    "averageFps": 80.16072124658916,
+    "p95FrameMs": 16.80000000000291,
+    "longFramesOver50ms": 6,
+    "minFriendly": 172,
+    "maxFriendly": 284,
+    "queuedStart": 0,
+    "queuedEnd": 0,
+    "deployed": 59,
+    "lost": 167,
+    "kills": 12
+  },
+  "final": {
+    "time": 45.92,
+    "remaining": 854.08,
+    "money": 2355,
+    "active": 167,
+    "queued": 0,
+    "reserves": 0,
+    "crystalHp": 5600,
+    "status": "battle",
+    "outposts": [
+      {
+        "name": "南境前线",
+        "front": "south",
+        "x": 2000,
+        "y": 2770,
+        "w": 260,
+        "h": 220,
+        "progress": 0,
+        "captured": false,
+        "contested": true,
+        "connected": true
+      },
+      {
+        "name": "西境前线",
+        "front": "west",
+        "x": 950,
+        "y": 1800,
+        "w": 260,
+        "h": 220,
+        "progress": 0,
+        "captured": false,
+        "contested": false,
+        "connected": true
+      },
+      {
+        "name": "东境前线",
+        "front": "east",
+        "x": 3050,
+        "y": 1800,
+        "w": 260,
+        "h": 220,
+        "progress": 0,
+        "captured": false,
+        "contested": false,
+        "connected": true
+      },
+      {
+        "name": "北境前线",
+        "front": "north",
+        "x": 2000,
+        "y": 820,
+        "w": 260,
+        "h": 220,
+        "progress": 0,
+        "captured": false,
+        "contested": true,
+        "connected": true
+      }
+    ],
+    "stats": {
+      "deployed": 374,
+      "kills": 16,
+      "lost": 207,
+      "income": 1645,
+      "walls": 10,
+      "skills": 0,
+      "peak": 300,
+      "resourceIncome": 1540,
+      "spells": 0,
+      "lootSites": 3,
+      "reliefTransfers": 8,
+      "guardianBursts": 0,
+      "towerShots": {
+        "field": 0,
+        "outer": 25,
+        "inner": 1,
+        "core": 0
+      },
+      "destroyed": {
+        "field": 2,
+        "outer": 13,
+        "inner": 0,
+        "core": 0
+      }
+    },
+    "mana": 100,
+    "firstCoreHit": null,
+    "reservesDispatched": 2,
+    "automation": {
+      "enabled": true,
+      "command": "assault",
+      "automatic": 167,
+      "manual": 0,
+      "muster": null,
+      "advice": "物资充足 · 可购买援军，从安全前线继续部署",
+      "metrics": {
+        "updates": 47,
+        "assignments": 1131,
+        "fieldBuilds": 287,
+        "componentBuilds": 16
+      }
+    }
+  },
+  "jsHeapMiB": 19.75014877319336,
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36",
+  "lifecycle": {
+    "canvases": 0,
+    "retiredStopped": true
+  }
+}

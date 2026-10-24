@@ -424,7 +424,7 @@ export class Battle {
     this.units.push(u);
     this.byId.set(u.id, u);
     if (side === 0) this.stats.deployed++;
-    if (side === 0) this.legion?.invalidate();
+    if (side === 0) this.legion?.admit(u);
     return u;
   }
   canDeploy(x: number, y: number): boolean {
@@ -1341,6 +1341,7 @@ export class Battle {
         spawnedUnit.control = "auto";
         spawnedUnit.order = undefined;
         spawnedUnit.tactic = q.command;
+        this.legion.admit(spawnedUnit);
       }
       q.count--;
       if (q.count <= 0) this.queue.shift();
@@ -1636,7 +1637,7 @@ export class Battle {
       u.target = t?.id ?? 0;
       return;
     }
-    if (alarm) {
+    if (alarm && (!u.flying || !this.legion.airUnsafe(u, alarm))) {
       u.target = alarm.id;
       return;
     }
@@ -1651,6 +1652,7 @@ export class Battle {
     };
     for (const e of this.spatial.near(u.x, u.y, 520)) {
       if (e.side === 0 || (e.flying && u.range < 80)) continue;
+      if (u.flying && this.legion.airUnsafe(u, e)) continue;
       if (
         ["treant", "forest"].includes(u.kind) &&
         goal?.kind === "escort" &&
@@ -1662,11 +1664,23 @@ export class Battle {
       let factor = this.priorityScore(u, e);
       if (["wolf", "rider", "moon"].includes(u.kind) && ["archer", "mage"].includes(e.kind))
         factor *= 0.3;
-      if (u.kind === "elf") factor /= 1 + (this.legion.clusters.get(e.id) ?? 1) * 0.3;
+      if (u.kind === "elf") {
+        let density = this.legion.clusters.get(e.id);
+        if (density === undefined) {
+          density = this.spatial.near(e.x, e.y, 90).filter((v) => v.side === 1).length;
+          this.legion.clusters.set(e.id, density);
+        }
+        factor /= 1 + density * 0.3;
+      }
       consider(e, Math.max(25, attackDistance(u, e)) * factor);
     }
     const strategic = goal?.target ? this.byId.get(goal.target) : undefined;
-    if (strategic && strategic.hp > 0 && isStructure(strategic)) {
+    if (
+      strategic &&
+      strategic.hp > 0 &&
+      isStructure(strategic) &&
+      (!u.flying || !this.legion.airUnsafe(u, strategic))
+    ) {
       if (
         (u.kind === "raider" && goal?.kind === "raid") ||
         (["golem", "titan"].includes(u.kind) && goal?.kind === "breach")
@@ -1681,11 +1695,15 @@ export class Battle {
       )
         consider(strategic, Math.max(20, attackDistance(u, strategic)) * 0.7);
     }
+    const siegeCrowd =
+      ["golem", "titan"].includes(u.kind) &&
+      this.spatial.near(u.x, u.y, 180).filter((v) => v.side === 0).length > 30;
     for (const s of this.legion.nearStructures(u, 500)) {
       const surface = attackDistance(u, s);
       if (surface > 440) continue;
+      if (u.flying && this.legion.airUnsafe(u, s)) continue;
       const wall = ["wall", "gate"].includes(s.kind);
-      if (wall && (surface > 110 || goal?.kind !== "breach")) continue;
+      if (wall && (surface > 110 || (goal?.target !== s.id && !siegeCrowd))) continue;
       if (s.kind === "cityblock" && (surface > 100 || !goal || this.nav.clear(u, goal, u.id)))
         continue;
       if (!this.nav.clear(u, s, u.id, s.id)) continue;
@@ -1774,8 +1792,14 @@ export class Battle {
     const len = Math.hypot(dx, dy) || 1;
     dx /= len;
     dy /= len;
-    if (!u.flying && flow) {
-      const direction = this.nav.direction(u.x, u.y, tx, ty, safePath ? "safe" : u.side === 1);
+    if ((!u.flying || safePath) && flow) {
+      const direction = this.nav.direction(
+        u.x,
+        u.y,
+        tx,
+        ty,
+        safePath ? (u.flying ? "air-safe" : "safe") : u.side === 1,
+      );
       dx = direction.x;
       dy = direction.y;
     }

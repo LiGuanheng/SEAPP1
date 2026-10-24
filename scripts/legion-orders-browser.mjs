@@ -209,7 +209,8 @@ try {
     rally.count === 48 && rally.within === 48,
     rally,
   );
-  await page.click('[data-action="direction"][data-key="west"]');
+  await page.click('[data-action="legion"][data-key="rally"]');
+  await world(250, 900);
   await page.screenshot({ path: shots + "03-four-front-muster.png" });
   const before = await page.evaluate(() => {
     const b = window.__SIEGE__.battle;

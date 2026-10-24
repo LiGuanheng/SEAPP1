@@ -1,5 +1,5 @@
 {
-  "date": "2026-10-24T14:46:44.752Z",
+  "date": "2026-10-24T15:17:28.480Z",
   "url": "http://127.0.0.1:4186/SEAPP1/",
   "checks": [
     {
@@ -48,10 +48,10 @@
       "evidence": {
         "count": 48,
         "within": 48,
-        "maxDistance": 146.40304436671013,
+        "maxDistance": 147.25493705418236,
         "stats": {
-          "time": 109.7,
-          "remaining": 790.3,
+          "time": 111.38,
+          "remaining": 788.62,
           "money": 2000,
           "active": 48,
           "queued": 0,
@@ -146,9 +146,9 @@
               "x": 249.99986585679972,
               "y": 899.9999552855999
             },
-            "advice": "物资充足 · 可购买援军，从安全前线继续部署",
+            "advice": "安全集结 48/48 · 可随时发动总攻",
             "metrics": {
-              "updates": 136,
+              "updates": 111,
               "assignments": 48,
               "fieldBuilds": 15,
               "componentBuilds": 1
